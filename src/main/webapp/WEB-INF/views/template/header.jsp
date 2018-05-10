@@ -38,29 +38,26 @@
 		<div class="row">
 			<div class="col-sm-4">
 				<div class="logo pull-left">
-					<a href="${pageContext.request.contextPath}/home.do"><img
-						src="${pageContext.request.contextPath}/resources/images/home/logo.png"
-						alt="" /></a>
+					<a href="${pageContext.request.contextPath}/home.do">
+					<img src="${pageContext.request.contextPath}/resources/images/home/logo.png" alt="" />
+					</a>
 				</div>
 				<div class="btn-group pull-right"></div>
 			</div>
 			<div class="col-sm-8">
 				<div class="shop-menu pull-right">
 					<ul class="nav navbar-nav">
+					<%--세션에 멤버정보의 유무에 따라 구분  --%>
 						<c:choose>
 							<c:when test="${empty member}">
-								<li><a
-									href="${pageContext.request.contextPath}/member/login_view.do"><i
-										class="fa fa-lock"></i> 로그인</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/login_view.do"><i class="fa fa-lock"></i> 로그인</a></li>
 								<li><a href="#"><i class="fa fa-user-plus"></i> 회원가입</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="#"><i class="fa fa-user"></i> 내 계정</a></li>
-								<li><a href="#"><i class="fa fa-shopping-cart"></i> 찜
-										목록</a></li>
+								<li><a href="#"><i class="fa fa-shopping-cart"></i> 찜목록</a></li>
 								<li><a href="#"><i class="fa fa-envelope"></i> 쪽지</a></li>
-								<li><a href="${pageContext.request.contextPath}/logout.do"><i
-										class="fa fa-unlock"></i> 로그아웃</a></li>
+								<li><a href="${pageContext.request.contextPath}/logout.do"><i class="fa fa-unlock"></i> 로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>
@@ -91,19 +88,13 @@
 						<li class="dropdown"><a href="#this">중고나라<i
 								class="fa fa-angle-down"></i></a>
 							<ul role="menu" class="sub-menu">
-								<li><a
-									href="${pageContext.request.contextPath}/trade/main_buy.do">삽니다</a></li>
-								<li><a
-									href="${pageContext.request.contextPath}/trade/main_sell.do">팝니다</a></li>
-								<li><a
-									href="${pageContext.request.contextPath}/trade/main_share.do">나눔</a></li>
-								<li><a
-									href="${pageContext.request.contextPath}/trade/main_exchange.do">교환</a></li>
+								<li><a href="${pageContext.request.contextPath}/trade/main_buy.do">삽니다</a></li>
+								<li><a href="${pageContext.request.contextPath}/trade/main_sell.do">팝니다</a></li>
+								<li><a	href="${pageContext.request.contextPath}/trade/main_share.do">나눔</a></li>
+								<li><a href="${pageContext.request.contextPath}/trade/main_exchange.do">교환</a></li>
 							</ul></li>
-						<li><a
-							href="${pageContext.request.contextPath}/board/main_free_board.do">자유게시판</a></li>
-						<li><a
-							href="${pageContext.request.contextPath}/board/main_qna_board.do">Q
+						<li><a href="${pageContext.request.contextPath}/board/main_free_board.do">자유게시판</a></li>
+						<li><a href="${pageContext.request.contextPath}/board/main_qna_board.do">Q
 								&amp; A</a></li>
 					</ul>
 				</div>
