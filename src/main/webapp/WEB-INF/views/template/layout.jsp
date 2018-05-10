@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <!-- tiles framework 선언부 -->
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
-
+ <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
