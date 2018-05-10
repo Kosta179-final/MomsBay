@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public abstract class PostVO {
 	private String title;
 	private String content;
-	private String date;
+	private String regdate;
 	private String id;
 }

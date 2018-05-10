@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class TradeHistoryVO {
+public class BayCommentVO {
+	private int thread;
+	private int depth;
+	private String bayComment;
+	private int bayPostNo;
 	private String id;
-	private int tradePostNo;
 }

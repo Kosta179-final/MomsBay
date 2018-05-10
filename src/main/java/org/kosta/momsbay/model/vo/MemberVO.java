@@ -18,6 +18,6 @@ public class MemberVO {
 	private String tel;
 	private int point;
 	private String grade;
-	private int rating; 
+	private int rating;
 	private List<ChildrenVO> list;
 }

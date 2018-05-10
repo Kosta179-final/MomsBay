@@ -15,4 +15,8 @@ public class TradePostVO extends PostVO{
 	private String category;
 	private String type;
 	private String status;
+	private String tradeId;
+	private boolean delete;
+	private int wishPrice;
+	private String suggestContent;
 }

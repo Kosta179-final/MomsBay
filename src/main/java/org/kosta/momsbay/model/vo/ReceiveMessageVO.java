@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class MessageVO extends PostVO{
-	private String send;
+public class ReceiveMessageVO extends PostVO{
+	private String sendId;
 	private boolean status;
 }
