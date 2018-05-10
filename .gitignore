@@ -68,6 +68,6 @@ local.properties
 target/
 
 # SQL File
-.sql
+*.sql
 
 # End of https://www.gitignore.io/api/eclipse,java-web
