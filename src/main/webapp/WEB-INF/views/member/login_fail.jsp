@@ -3,5 +3,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 alert("${message}")
-location.href="member/login_view.do"
+location.href="${pageContext.request.contextPath}/member/login_view.do";
 </script>

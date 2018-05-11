@@ -17,7 +17,7 @@ $(document).ready(function(){
 				<div class="login-form">
 					<!--login form-->
 					<h2>로그인</h2>
-					<form action="${pageContext.request.contextPath}/login.do" id="login_form" method="post">
+					<form action="${pageContext.request.contextPath}/member/login.do" id="login_form" method="post">
 						<input type="text" placeholder="id" name="id" required="required"/>
 						<input type="password" placeholder="password" name="password" required="required"/>
 						<input type="submit" value="로그인" id="login">
