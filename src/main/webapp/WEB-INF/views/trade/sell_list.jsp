@@ -290,7 +290,11 @@
 			</div>
 		</div>
 	</div>
-
+	<div class="col-sm-11 off-set-1">
+		<div align="right">
+			<button name="button" class="btn btn-primary" id="addPost.do">글쓰기</button><br>
+		</div>
+	</div>
 	<ul class="pagination">
 		<li class="active"><a href="">1</a></li>
 		<li><a href="">2</a></li>
