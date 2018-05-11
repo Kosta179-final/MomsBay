@@ -8,6 +8,6 @@ import org.springframework.stereotype.Service;
  * @author Ryu
  */
 @Service
-public class ExchangePostService {
+public class TradePostService {
 
 }
