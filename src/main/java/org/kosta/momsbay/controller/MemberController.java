@@ -7,8 +7,8 @@ import org.kosta.momsbay.model.exception.LoginException;
 import org.kosta.momsbay.model.service.MemberService;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 /**
  * Member관련 mapping처리를 하는 controller.
  * ex)가입, 수정, 탈퇴
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Member관련 요청 Mapping을 처리하는 컨트롤러
  * @author Hwang
  */
+@RequestMapping("/member")
 @Controller
 public class MemberController {
 	@Autowired
@@ -43,15 +44,13 @@ public class MemberController {
 		try {
 			member = memberService.login(userId, userPassword);
 		} catch (LoginException error) {
-			// TODO Auto-generated catch block
 			requset.setAttribute("message", error.getMessage());
-			System.out.println(error.getMessage());
 			return "member/login_fail";
 		}
 		member.setPassword("");
 		HttpSession session =requset.getSession();
 		session.setAttribute("member", member);
-		return "redirect:home.do";
+		return "redirect:/home.do";
 	}
 	
 	/**
@@ -64,6 +63,11 @@ public class MemberController {
 	public String logout(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		session.invalidate();
-		return "redirect:home.do";
+		return "redirect:/home.do";
+	}
+	
+	@RequestMapping("/{viewName}.do")
+	public String showTiles(@PathVariable String viewName) {
+		return "member/" + viewName + ".tiles";
 	}
 }

@@ -4,9 +4,6 @@
         "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-	<!-- Controller에서 반환하는 viewName이 home.tiles 이면
-		 tiles view가 응답
-	-->
 	<definition name="home.tiles" template="/WEB-INF/views/template/layout.jsp">
 		<put-attribute name="title" value="kosta"/>
 		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
@@ -14,12 +11,9 @@
 		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
 	</definition>
 	
-	<definition name="trade/*.tiles" template="/WEB-INF/views/template/layout2.jsp">
-		<put-attribute name="title" value="kosta"/>
-		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
-		<put-attribute name="left" value="/WEB-INF/views/template/left.jsp"/>
-		<put-attribute name="right" value="/WEB-INF/views/trade/{1}.jsp"/>
-		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
+	<definition name="*.tiles" extends="home.tiles">
+		<put-attribute name="title" value="{1}"/>
+		<put-attribute name="main" value="/WEB-INF/views/{1}.jsp"/>
 	</definition>
 	
 	<definition name="*/*.tiles" extends="home.tiles">
@@ -27,6 +21,16 @@
 		<put-attribute name="main" value="/WEB-INF/views/{1}/{2}.jsp"/>
 	</definition>
 	
+	<definition name="service" template="/WEB-INF/views/template/layout2.jsp">
+		<put-attribute name="title" value="kosta"/>
+		<put-attribute name="header" value="/WEB-INF/views/template/header.jsp"/>
+		<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp"/>
+	</definition>
+	
+	<definition name="service_*.page_*" extends="service">
+		<put-attribute name="left" value="/WEB-INF/views/template/{1}_left.jsp"/>
+		<put-attribute name="right" value="/WEB-INF/views/{1}/{2}.jsp"/>
+	</definition>
 	
 </tiles-definitions>
 
