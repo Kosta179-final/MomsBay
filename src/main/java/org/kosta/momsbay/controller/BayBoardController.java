@@ -1,6 +1,11 @@
 package org.kosta.momsbay.controller;
 
+import javax.annotation.Resource;
+
+import org.kosta.momsbay.model.service.BayPostService;
+import org.kosta.momsbay.model.vo.BayPostVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -13,8 +18,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/bay")
 @Controller
 public class BayBoardController {
-	@RequestMapping("/{viewName}.do")
+	@Resource
+	private BayPostService bayPostService;
+	
+	@RequestMapping("{viewName}.do")
 	public String showTiles(@PathVariable String viewName) {
-		return "service_trade" + ".page_" + viewName;
+		return "bay/" + viewName + ".tiles";
+	}
+	@RequestMapping("write.do")
+	public void write(BayPostVO bayBO ) {
+		
+	}
+	@RequestMapping("bulletin_board_list.do")
+	public String list(Model model, String pageNo) {
+		model.addAttribute("lvo",bayPostService.getBayPostList(pageNo));
+		return "bay/bulletin_board_list" + ".tiles";
 	}
 }

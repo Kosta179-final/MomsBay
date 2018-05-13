@@ -1,7 +1,5 @@
 package org.kosta.momsbay;
 
-import javax.swing.plaf.synth.SynthSeparatorUI;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.mapper.MemberMapper;

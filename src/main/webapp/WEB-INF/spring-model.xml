@@ -42,7 +42,7 @@
      </bean>  
     </property>
 	<property name="mapperLocations" value="classpath*:org.kosta.momsbay.model.mapper/*.xml" />
-	<property name="typeAliasesPackage" value="org.kosta.momsbay.model.vo" />
+	<property name="typeAliasesPackage" value="org.kosta.momsbay.model" />
 </bean>
 
 <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

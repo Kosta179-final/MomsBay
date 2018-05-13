@@ -1,6 +1,6 @@
 package org.kosta.momsbay.model.common;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.kosta.momsbay.model.vo.PostVO;
 
@@ -12,12 +12,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListVO {
-	private ArrayList<PostVO> list;
+	private List<PostVO> list;
 	private PagingBean pagingBean;
 	
 	public ListVO(PagingBean pagingBean) {
 		super();
 		this.pagingBean = pagingBean;
 	}
-	
 }

@@ -93,8 +93,8 @@
 								<li><a	href="${pageContext.request.contextPath}/trade/share_list.do">나눔</a></li>
 								<li><a href="${pageContext.request.contextPath}/trade/exchange_list.do">교환</a></li>
 							</ul></li>
-						<li><a href="${pageContext.request.contextPath}/board/free_board_list.do">자유게시판</a></li>
-						<li><a href="${pageContext.request.contextPath}/board/qna_board_list.do">Q &amp; A</a></li>
+						<li><a href="${pageContext.request.contextPath}/bay/bulletin_board_list.do">자유게시판</a></li>
+						<li><a href="${pageContext.request.contextPath}/bay/qna_board_list.do">Q &amp; A</a></li>
 					</ul>
 				</div>
 			</div>

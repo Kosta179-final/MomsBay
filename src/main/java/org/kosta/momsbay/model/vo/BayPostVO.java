@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BayPostVO extends PostVO{
+	private int BayPostNo;
 	private int thread;
 	private int depth;
 	private String type;
-	private String subject; 
+	private String subject;
+	private String name;
 }

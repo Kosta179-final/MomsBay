@@ -17,17 +17,15 @@
 							<td class="description">제목</td>
 							<td class="price">작성자</td>
 							<td class="quantity">작성일</td>
-							<td class="total">조회수</td>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach begin="1" end="10">
+						<c:forEach var="pvo" items="${requestScope.lvo.list }">
 							<tr>
-								<td class="cart_product">1</td>
-								<td class="cart_description">제목1입니다</td>
-								<td class="cart_price">아이유</td>
-				 				<td class="cart_quantity">2018.5.6</td>
-								<td class="cart_total">10</td>
+								<td class="cart_product">${pvo.bayPostNo}</td>
+								<td class="cart_description">${pvo.title}</td>
+								<td class="cart_price">${pvo.name}</td>
+				 				<td class="cart_quantity">${pvo.regdate }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -38,24 +36,24 @@
 				<ul class="pagination">
 					<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="#">&laquo;</a></li>
+							href="bulletin_board_list.do?pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
 						end="${pb.endPageOfPageGroup}">
 						<c:choose>
 							<c:when test="${pb.nowPage!=i}">
 								<li><a
-									href="#">${i}</a></li>
+									href="bulletin_board_list.do?pageNo=${i}">${i}</a></li>
 							</c:when>
 							<c:otherwise>
-								<li class="active"><a href="#">${i}</a></li>
+								<li class="active"><a href="#this">${i}</a></li>
 							</c:otherwise>
 						</c:choose>
 						&nbsp;
 						</c:forEach>
 							<c:if test="${pb.nextPageGroup}">
 						<li><a
-							href="#">&raquo;</a></li>
+							href="bulletin_board_list.do?pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
 						</c:if>
 					</ul>
 				</div>
