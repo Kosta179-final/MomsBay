@@ -1,6 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
+	function addPost(){
+		location.href="add_bay_post.do?type=${requestScope.type}";
+	}
+</script>
+
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -31,19 +37,24 @@
 					</tbody>
 				</table>
 			</div>
+			<div class="col-sm-11 off-set-1">
+					<div align="right">
+						<button name="button" class="btn btn-primary" onclick="addPost()">글쓰기</button><br>
+					</div>
+			</div>
 			<div class="pagingInfo">
 				<c:set var="pb" value="${requestScope.lvo.pagingBean}"></c:set>
 				<ul class="pagination">
 					<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="bulletin_board_list.do?pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
+							href="bulletin_board_list.do?pageNo=${pb.startPageOfPageGroup-1}&type=${requestScope.type}">&laquo;</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
 						end="${pb.endPageOfPageGroup}">
 						<c:choose>
 							<c:when test="${pb.nowPage!=i}">
 								<li><a
-									href="bulletin_board_list.do?pageNo=${i}">${i}</a></li>
+									href="bulletin_board_list.do?pageNo=${i}&type=${requestScope.type}">${i}</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="active"><a href="#this">${i}</a></li>
@@ -53,9 +64,9 @@
 						</c:forEach>
 							<c:if test="${pb.nextPageGroup}">
 						<li><a
-							href="bulletin_board_list.do?pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a></li>
+							href="bulletin_board_list.do?pageNo=${pb.endPageOfPageGroup+1}&type=${requestScope.type}">&raquo;</a></li>
 						</c:if>
 					</ul>
 				</div>
-		</div>
-	</section> <!--/#cart_items-->
+	</div>
+</section> <!--/#cart_items-->

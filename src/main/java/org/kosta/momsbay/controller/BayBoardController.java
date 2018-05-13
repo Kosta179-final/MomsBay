@@ -22,16 +22,21 @@ public class BayBoardController {
 	private BayPostService bayPostService;
 	
 	@RequestMapping("{viewName}.do")
-	public String showTiles(@PathVariable String viewName) {
+	public String showTiles(@PathVariable String viewName,String type, Model model) {
+		model.addAttribute("type", type);
 		return "bay/" + viewName + ".tiles";
 	}
+	
 	@RequestMapping("write.do")
-	public void write(BayPostVO bayBO ) {
-		
+	public String write(BayPostVO bayPostVO) {
+		bayPostService.addPost(bayPostVO);
+		return "redirect:bulletin_board_list.do";
 	}
+	
 	@RequestMapping("bulletin_board_list.do")
-	public String list(Model model, String pageNo) {
+	public String list(Model model, String pageNo, String type) {
 		model.addAttribute("lvo",bayPostService.getBayPostList(pageNo));
+		model.addAttribute("type", type);
 		return "bay/bulletin_board_list" + ".tiles";
 	}
 }

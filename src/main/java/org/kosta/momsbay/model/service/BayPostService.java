@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.BayPostMapper;
+import org.kosta.momsbay.model.vo.BayPostVO;
 import org.springframework.stereotype.Service;
 /**
  * 일반게시판 관련 비즈니스로직 서비스.
@@ -24,5 +25,8 @@ public class BayPostService {
 		else
 			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
 		return new ListVO(bayPostMapper.getBayPostList(pagingBean),pagingBean);
+	}
+	public void addPost(BayPostVO bayPostVO) {
+		bayPostMapper.addPost(bayPostVO);
 	}
 }
