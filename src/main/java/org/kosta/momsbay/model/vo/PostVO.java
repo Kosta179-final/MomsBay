@@ -11,5 +11,5 @@ public abstract class PostVO {
 	private String title;
 	private String content;
 	private String regdate;
-	private String id;
+	private MemberVO memberVO;
 }
