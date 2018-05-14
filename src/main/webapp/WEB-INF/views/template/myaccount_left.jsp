@@ -2,43 +2,44 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 	<div class="left-sidebar">
-		<h2>카테고리</h2>
+		<h2>My Page</h2>
 		<div class="panel-group category-products" id="accordian">
 			<!--category-productsr-->
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4 class="panel-title">
+					<h3 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordian" href="#a">
 							<span class="pull-right"><i class="fa fa-plus"></i></span>
-							아기띠/외출용품
+							거래내역
 						</a>
-					</h4>
+					</h3>
 				</div>
 				<div id="a" class="panel-collapse collapse" style="height: auto;">
 					<div class="panel-body">
 						<ul>
-							<li><a href="#">유모차 </a></li>
-							<li><a href="#">카시트 </a></li>
-							<li><a href="#">아기띠 </a></li>
+							<li><a href="#">총 내역 </a></li>
+							<li><a href="#">판매내역 </a></li>
+							<li><a href="#">구매내역 </a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h4 class="panel-title">
+					<h3 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordian" href="#b">
-							<span class="pull-right"><i class="fa fa-plus"></i></span> 의류/잡화
+							<span class="pull-right"><i class="fa fa-plus"></i></span> 
+							포인트내역
 						</a>
-					</h4>
+					</h3>
 				</div>
 				<div id="b" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul>
-							<li><a href="#">유아동 의류</a></li>
-							<li><a href="#">신생아 의류</a></li>
-							<li><a href="#">신발</a></li>
-							<li><a href="#">인형</a></li>
+							<li><a href="#">총 내역</a></li>
+							<li><a href="#">사용 내역</a></li>
+							<li><a href="#">충전 내역</a></li>
+							<li><a href="#">환전 내역</a></li>
 						</ul>
 					</div>
 				</div>
@@ -48,82 +49,19 @@
 				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordian" href="#c">
-							<span class="pull-right"><i class="fa fa-plus"></i></span> 목욕/위생
+							<span class="pull-right"><i class="fa fa-plus"></i></span> 
+							회원정보 수정
 						</a>
 					</h4>
 				</div>
 				<div id="c" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul>
-							<li><a href="#">물티슈</a></li>
-							<li><a href="#">욕조/탕 온도계/샴푸캡</a></li>
+							<li><a href="#">회원 탈퇴</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="panel panel-default">
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#d">
-							<span class="pull-right"><i class="fa fa-plus"></i></span>
-							수유/분유/이유식
-						</a>
-					</h4>
-				</div>
-				<div id="d" class="panel-collapse collapse">
-					<div class="panel-body">
-						<ul>
-							<li><a href="#">수유용품</a></li>
-							<li><a href="#">분유</a></li>
-							<li><a href="#">이유식</a></li>
-							<li><a href="#">이유용품</a></li>
-						</ul>
-					</div>
-				</div>
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#e">
-							<span class="pull-right"><i class="fa fa"></i></span> 침구류
-						</a>
-					</h4>
-				</div>
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#f">
-							<span class="pull-right"><i class="fa fa"></i></span> 임부복
-						</a>
-					</h4>
-				</div>
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#g">
-							<span class="pull-right"><i class="fa fa"></i></span> 위생용품/안전용품
-						</a>
-					</h4>
-				</div>
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#h">
-							<span class="pull-right"><i class="fa fa"></i></span> 출산용품
-						</a>
-					</h4>
-				</div>
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#h">
-							<span class="pull-right"><i class="fa fa"></i></span> 도서/교육
-						</a>
-					</h4>
-				</div>
-				<div class="panel-heading">
-					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#h">
-							<span class="pull-right"><i class="fa fa"></i></span> 장난감
-						</a>
-					</h4>
-				</div>
-			</div>
-
 		</div>
 		<!--/category-products-->
 
