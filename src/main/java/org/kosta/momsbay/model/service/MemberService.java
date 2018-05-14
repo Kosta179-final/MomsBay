@@ -1,14 +1,18 @@
 package org.kosta.momsbay.model.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.exception.LoginException;
+import org.kosta.momsbay.model.mapper.ChildrenMapper;
 import org.kosta.momsbay.model.mapper.MemberMapper;
 import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 /**
  * 회원관련 서비스 제공.
  * 관련Mapper: MemberMapper
@@ -18,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class MemberService {
 	@Resource
 	private MemberMapper memberMapper;
+	@Resource
+	private ChildrenMapper childrenMapper;
 	
 	/**
 	 * 로그인 비즈니스로직.
@@ -43,5 +49,57 @@ public class MemberService {
 		memberVO.setList(children);
 		return memberVO;
 	}
+	
+	/**
+	 * 아이디가 존재할 경우 false return, 사용가능 할 경우 true return.
+	 * 
+	 * @param id
+	 * @return flag
+	 */
+	public boolean findMemberById(String id) {
+		// TODO Auto-generated method stub
+		String tempId = memberMapper.findMemberById(id);
+		if (tempId == null) {
+			return false;
+		} else
+			return true;
+	}
 
+	/**
+	 * 이메일이 존재할 경우 false return, 사용가능 할 경우 true return.
+	 * 
+	 * @param email
+	 * @return flag
+	 */
+	public boolean findMemberByEmail(String email) {
+		// TODO Auto-generated method stub
+		String tempEmail = memberMapper.findMemberByEmail(email);
+		if (tempEmail == null) {
+			return false;
+		} else
+			return true;
+	}
+
+	/**
+	 * member와 children을 Insert. 별도의 처리임으로 트랜젝션 처리. children은 여럿임으로 한명씩 insert 해주되,
+	 * 부모 아이디가 별도로 추가되어야 해서 map 형태로 전송.
+	 * 
+	 * @param member
+	 * @param children
+	 */
+	@Transactional
+	public void addMember(MemberVO member, List<ChildrenVO> children) {
+		// TODO Auto-generated method stub
+		memberMapper.addMember(member);
+		if (children.size()>0) {
+			for (int i = 0; i < children.size(); i++) {
+				Map<String, String> tempMap = new HashMap<String, String>();
+				tempMap.put("id", member.getId());
+				tempMap.put("gender", children.get(i).getGender());
+				tempMap.put("birth", children.get(i).getBirth());
+				System.out.println(tempMap);
+				childrenMapper.addChildren(tempMap);
+			}
+		}
+	}
 }

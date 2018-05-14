@@ -51,7 +51,7 @@
 						<c:choose>
 							<c:when test="${empty member}">
 								<li><a href="${pageContext.request.contextPath}/member/login_view.do"><i class="fa fa-lock"></i> 로그인</a></li>
-								<li><a href="#"><i class="fa fa-sign-in"></i> 회원가입</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/register_terms.do"><i class="fa fa-user-plus"></i> 회원가입</a></li>
 							</c:when>
 							<c:otherwise>
 								<li><a href="#"><i class="fa fa-user"></i> 내 계정</a></li>
