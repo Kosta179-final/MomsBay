@@ -64,37 +64,3 @@
 	<pre>유모차 급구합니다. 빨리 팔아주세요 ㅎㅎ
 	흥정 안합니다</pre>
 </div>
-
-
-
-
-<%--댓글 보여주는 탭 --%>
-<div class="comment-tab">
-	<div class="row">
-		<div class="col-sm-2">
-			<span>아이디</span>
-		</div>
-		<div class="col-sm-2">
-			<span>날짜</span>
-		</div>
-		<div class="col-sm-2">
-			<span>답글</span>
-		</div>
-	</div>
-	<pre>내용들어가면됨</pre>
-</div>
-
-
-<%--댓글 다는 탭 --%>
-<div class="comment-tab">
-	<div class="row">
-		<div class="col-sm-11">
-			<textarea></textarea>
-		</div>
-		<div class="col-sm-1">
-			<div class="btn-group">
-				<span><button type="button" class="btn btn-primary">등록</button></span>
-			</div>
-		</div>
-	</div>
-</div>

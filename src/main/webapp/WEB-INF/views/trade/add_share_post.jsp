@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<form action="addPost" method="post">
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
@@ -18,7 +18,7 @@
 					<span>희망가격 : </span>
 				</div>
 				<div class="col-sm-7">
-					<span>23023원</span>
+					<span><input type="number" name="price">원</span>
 				</div>
 			</div>
 			<div class="row">
@@ -26,7 +26,7 @@
 					<span>평점 : </span>
 				</div>
 				<div class="col-sm-7">
-					<span>* * * * *</span>
+					<span>(회원평점)</span>
 				</div>
 			</div>
 			<div class="row">
@@ -34,7 +34,7 @@
 					<span>상품 카테고리 : </span>
 				</div>
 				<div class="col-sm-7">
-					<span>유모차</span>
+					<span>(카테고리)</span>
 				</div>
 			</div>
 		</div>
@@ -51,50 +51,19 @@
 		<div class="tab-content">
 			<div class="tab-pane fade active in" id="reviews">
 				<ul>
-					<li><i class="fa fa-user"></i>재상맘스</li>
-					<li><i class="fa fa-clock-o"></i>12:41 PM</li>
-					<li><i class="fa fa-calendar-o"></i>2014.05.18</li>
+					<li><i class="fa fa-user"></i>(작성자)</li>
+					<li><i class="fa fa-clock-o"></i>(작성시간)</li>
+					<li><i class="fa fa-calendar-o"></i>(작성일)</li>
 				</ul>
 			</div>
 		</div>
 		<ul class="nav">
-			<li>제목 : 유모차 삽니다 빨랑 팔아주세요</li>
+			<li><input type="text" name="title" placeholder="제목을 입력하세요"></li>
 		</ul>
+		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
-	<pre>유모차 급구합니다. 빨리 팔아주세요 ㅎㅎ
-	흥정 안합니다</pre>
-</div>
-
-
-
-
-<%--댓글 보여주는 탭 --%>
-<div class="comment-tab">
-	<div class="row">
-		<div class="col-sm-2">
-			<span>아이디</span>
-		</div>
-		<div class="col-sm-2">
-			<span>날짜</span>
-		</div>
-		<div class="col-sm-2">
-			<span>답글</span>
-		</div>
-	</div>
-	<pre>내용들어가면됨</pre>
-</div>
-
-
-<%--댓글 다는 탭 --%>
-<div class="comment-tab">
-	<div class="row">
-		<div class="col-sm-11">
-			<textarea></textarea>
-		</div>
-		<div class="col-sm-1">
-			<div class="btn-group">
-				<span><button type="button" class="btn btn-primary">등록</button></span>
-			</div>
-		</div>
+	<div class="btn-group">
+		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>
 	</div>
 </div>
+</form>

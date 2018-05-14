@@ -779,7 +779,7 @@ h2.title:before {
 .shipping {
 	background-color: #F2F2F2;
 	margin-top: 40px;
-	overflow: hidden;
+	overflow: auto;
 	padding-top: 20px;
 	position: relative;
 }
@@ -979,12 +979,12 @@ h2.title {
 }
 
 .category-tab {
-	overflow: hidden;
+	overflow: auto;
+	margin-bottom: 20px;
 }
 
 .category-tab ul {
 	background: #FFFFFF;
-	border-bottom: 1px solid #FE980F;
 	list-style: none outside none;
 	margin: 0 0 10px;
 	padding: 0;
@@ -1010,6 +1010,44 @@ h2.title {
 }
 
 
+
+
+.comment-tab {
+	overflow: visible;
+	margin-bottom: 20px;
+}
+
+.comment-tab span{
+	list-style: none outside none;
+	margin: 0 0 10px;
+	padding: 0;
+	width: 100%;
+	color: #B3AFA8;
+	display: block;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	text-align: left;
+}
+
+.comment-tab pre{
+	border: none;
+	width: 100%;
+	color: #B3AFA8;
+	display: block;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	text-align: left;
+}
+
+.comment-tab textarea{
+	border: none;
+	width: 100%;
+	color: #B3AFA8;
+	display: block;
+	font-family: 'Roboto', sans-serif;
+	font-size: 15px;
+	text-align: left;
+}
 
 .nav-tabs  li.active  a, .nav-tabs  li.active  a:hover, .nav-tabs  li.active  a:focus
 	{
