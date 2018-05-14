@@ -1,5 +1,6 @@
 package org.kosta.momsbay.model.mapper;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +19,6 @@ public interface MemberMapper {
 	public String findMemberByEmail(String email);
 	public void addMember(MemberVO member);
 	public void addChildren(Map<String, String> tempMap);
+	public void updateMember(MemberVO member);
+	public int findMemberByPasswordAndId(Map<String, String> temp_map);
 }

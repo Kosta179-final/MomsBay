@@ -48,7 +48,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#c">
+						<a data-toggle="collapse" data-parent="#accordian" href="myinfo_modift.do">
 							<span class="pull-right"><i class="fa fa-plus"></i></span> 
 							회원정보 수정
 						</a>
