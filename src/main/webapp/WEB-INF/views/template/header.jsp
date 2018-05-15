@@ -93,9 +93,9 @@
 						<li class="dropdown"><a href="#this">중고나라<i
 								class="fa fa-angle-down"></i></a>
 							<ul role="menu" class="sub-menu">
-								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?typeNo=1">삽니다</a></li>
-								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?typeNo=2">팝니다</a></li>
-								<li><a	href="${pageContext.request.contextPath}/trade/share_list.do?boardTypeNo=3">나눔</a></li>
+								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1">삽니다</a></li>
+								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=2">팝니다</a></li>
+								<li><a	href="${pageContext.request.contextPath}/trade/list_share_post.do?boardTypeNo=3">나눔</a></li>
 								<li><a href="${pageContext.request.contextPath}/trade/exchange_list.do?boardTypeNo=4">교환</a></li>
 							</ul></li>
 						<li><a href="${pageContext.request.contextPath}/bay/bulletin_board_list.do?type=bulletin">자유게시판</a></li>
