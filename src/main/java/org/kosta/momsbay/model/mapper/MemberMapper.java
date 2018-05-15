@@ -12,9 +12,9 @@ import org.kosta.momsbay.model.vo.MemberVO;
  */
 @Mapper
 public interface MemberMapper {
-	public MemberVO login(String id);
+	public MemberVO findMemberById(String id);
 	public List<ChildrenVO> findChildrenByMemberId(String id);
-	public String findMemberById(String id);
+	public boolean findMemberExsitById(String id);
 	public String findMemberByEmail(String email);
 	public void addMember(MemberVO member);
 	public void addChildren(Map<String, String> tempMap);

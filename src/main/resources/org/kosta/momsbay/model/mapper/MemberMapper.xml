@@ -4,7 +4,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.MemberMapper">
-	<select id="login" resultType="memberVO">
+	<select id="findMemberById" resultType="memberVO">
 		SELECT m.id, m.name,m.password, m.address, m.email, m.tel, m.point, g.grade
 		FROM bay_member m, member_grade g
 		WHERE m.member_grade_no=g.member_grade_no
@@ -17,8 +17,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id=#{value}
 	</select>
 
-	<select id="findMemberById" resultType="string">
-		SELECT id
+	<select id="findMemberExsitById" resultType="boolean">
+		SELECT count(*)
 		FROM bay_member
 		Where id = #{values}
 	</select>

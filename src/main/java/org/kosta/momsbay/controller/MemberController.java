@@ -90,9 +90,9 @@ public class MemberController {
 	 */
 	@RequestMapping("idDuplicateCheck.do")
 	public @ResponseBody Map<String, Boolean> idDuplicateCheck(@RequestParam(required = true) String id,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) {
 		Map<String, Boolean> object = new HashMap<String, Boolean>();
-		boolean flag = memberService.findMemberById(id);
+		boolean flag = memberService.findMemberExsitById(id);
 		object.put("duplicate", flag);
 		return object;
 	}
@@ -107,7 +107,7 @@ public class MemberController {
 	 */
 	@RequestMapping("mailDuplicateCheck.do")
 	public @ResponseBody Map<String, Object> emailDuplicateCheck(@RequestParam(required = true) String email,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) {
 		Map<String, Object> object = new HashMap<String, Object>();
 		if (email.contains("@")) {
 			boolean flag = memberService.findMemberByEmail(email);
