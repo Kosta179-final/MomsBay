@@ -55,7 +55,7 @@
 							</c:when>
 							<c:otherwise>
 								<c:if test="${member.grade eq 'member'}">
-								<li><a href="${pageContext.request.contextPath}/myaccount/password_check.do"><i class="fa fa-user"></i> 내 계정</a></li>
+								<li><a href="${pageContext.request.contextPath}/myaccount/getPointHistoryById.do"><i class="fa fa-user"></i> 내 계정</a></li>
 								</c:if>
 								<c:if test="${member.grade  eq 'admin'}">
 								<li><a href="#"><i class="fa fa-user"></i> 관리자 페이지</a></li>
