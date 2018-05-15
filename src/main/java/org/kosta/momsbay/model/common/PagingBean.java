@@ -30,6 +30,14 @@ public class PagingBean {
 	public PagingBean() {
 	}
 
+	public void setPostCountPerPage(int postCountPerPage) {
+		this.postCountPerPage = postCountPerPage;
+	}
+
+	public void setPageCountPerPageGroup(int pageCountPerPageGroup) {
+		this.pageCountPerPageGroup = pageCountPerPageGroup;
+	}
+
 	public PagingBean(int totalPostCount) {
 		this.totalPostCount = totalPostCount;
 	}

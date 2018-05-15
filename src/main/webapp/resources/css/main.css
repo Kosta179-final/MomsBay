@@ -861,7 +861,7 @@ h2.title {
 }
 
 .productinfo h2{
-	color: #FE980F;
+	color: #333;
 	font-family: 'Roboto', sans-serif;
 	font-size: 24px;
 	font-weight: 700;
@@ -876,13 +876,14 @@ h2.title {
 
 .productinfo p{
   font-family: 'Roboto', sans-serif;
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 400;
   color: #696763;
 }
 
 .productinfo img{
-  width: 100%;
+  width: 200px;
+  height: 200px;
 }
 
 .productinfo{
@@ -975,7 +976,6 @@ h2.title {
 }
 
 .choose ul li a {
-  color: #B3AFA8;
   font-family: 'Roboto', sans-serif;
   font-size: 13px;
   padding-left: 0;
@@ -1012,11 +1012,6 @@ h2.title {
   font-family: 'Roboto', sans-serif;
   font-size: 14px;
   text-transform: uppercase;
-}
-
-.category-tab ul  li  a:hover{
-	background:#FE980F;
-	color:#fff;
 }
 
 .nav-tabs  li.active  a, .nav-tabs  li.active  a:hover, .nav-tabs  li.active  a:focus {
@@ -1516,6 +1511,10 @@ h2.title {
 	width: 50px;
 }
 
+.pagingBean{
+	display: inline-block;
+	width: 50%;
+}
 
 /*************************
 *******Cart CSS******
@@ -2391,7 +2390,7 @@ h2.title {
 }
 
 .btn.btn-primary {
-  background:#FE980F;
+  background:#FBFBEF;
   border: 0 none;
   border-radius: 0;
   margin-top: 16px;

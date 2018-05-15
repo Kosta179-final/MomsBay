@@ -10,7 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TradePostVO extends PostVO{
-	private int pick_count;
+	private int tradePostNo;
+	private int pickCount;
 	private int price;
 	private int categoryNo;
 	private int boardTypeNo;
