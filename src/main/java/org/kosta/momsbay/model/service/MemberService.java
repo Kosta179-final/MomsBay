@@ -102,4 +102,20 @@ public class MemberService {
 			}
 		}
 	}
+
+	public void updateMember(MemberVO member) {
+		memberMapper.updateMember(member);
+	}
+
+	public boolean findMemberByPasswordAndId(String id, String password) {
+		Map<String, String> temp_map = new HashMap<String, String>();
+		temp_map.put("id", id);
+		temp_map.put("password", password);
+		int count = memberMapper.findMemberByPasswordAndId(temp_map);
+		if(count==0) {
+			return false;
+		}else {
+			return true;
+		}
+	}
 }

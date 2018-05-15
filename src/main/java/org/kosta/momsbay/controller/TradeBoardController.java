@@ -3,7 +3,12 @@ package org.kosta.momsbay.controller;
 import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.service.CommentService;
+<<<<<<< HEAD
 import org.kosta.momsbay.model.service.TradePostService;
+=======
+import org.kosta.momsbay.model.service.SharePostService;
+import org.kosta.momsbay.model.vo.SharePostVO;
+>>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,10 +36,24 @@ public class TradeBoardController {
 	 * @param model
 	 * @return
 	 */
+	@Resource
+	private SharePostService sharePostService;
+	
 	@RequestMapping("/{viewName}.do")
 	public String showTiles(@PathVariable String viewName, String boardTypeNo,String pageNo, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("listVO", tradePostService.getTradePostList(pageNo));
 		return "service_trade" + ".page_" + viewName;
+	}
+	
+	/**
+	 * 나눔 게시판 글쓰기
+	 * @param tradePostVO
+	 * @return 나눔 게시판 List
+	 */
+	@RequestMapping("shareWrite.do")
+	public String shareWrite(SharePostVO sharePostVO) {
+		sharePostService.addSharePost(sharePostVO);
+		return "redirect:share_list.do";
 	}
 }

@@ -14,10 +14,12 @@ public class MemberVO {
 	private String password;
 	private String name;
 	private String address;
+	private String address2;
 	private String email;
 	private String tel;
 	private int point;
 	private String grade;
 	private int rating;
 	private List<ChildrenVO> list;
+	private int children_no;
 }
