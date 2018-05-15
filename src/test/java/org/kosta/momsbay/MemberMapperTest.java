@@ -18,8 +18,7 @@ public class MemberMapperTest {
 	@Test
 	public void testLogin() {
 		member.setId("java");
-		member.setPassword("1234");
-		
+		member.setPassword("1234");		
 	}
 
 }

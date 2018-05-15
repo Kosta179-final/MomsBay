@@ -3,6 +3,7 @@ package org.kosta.momsbay;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.mapper.MemberMapper;
+import org.kosta.momsbay.model.mapper.PointHistoryMapper;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,7 +16,9 @@ public class MyAccountMapperTest {
 	MemberMapper mapper;
 	MemberVO member= new MemberVO();
 	
-	@Test
+	@Autowired
+	PointHistoryMapper hMapper;
+
 	public void updateMember() {
 		member.setId("java");
 		member.setPassword("1234");
@@ -25,5 +28,11 @@ public class MyAccountMapperTest {
 		
 		mapper.updateMember(member);
 		
+	}
+	
+	@Test
+	public void getPointHistory() {
+		String id="java";
+		System.out.println(hMapper.getPointHistoryById(id));
 	}
 }
