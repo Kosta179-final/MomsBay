@@ -4,5 +4,29 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.TradePostMapper">
-
+	<insert id="addTradePost" parameterType="TradepostVO">
+		INSERT INTO trade_post(trade_post_no,title,content,regdate,
+		price,id,category_no,board_type_no)
+		VALUES (trade_post_SEQ.nextval,#{title},#{content},sysdate,#{price},
+		#{memberVO.id},#{categoryNo},#{boardTypeNo})
+	</insert>
+	
+	<select id="getTotalTradePostCount" resultType="int">
+		SELECT count(*) FROM trade_post
+	</select>
+	
+	<resultMap type="tradePostVO" id="tradePostRM">
+		<result column="name" property="memberVO.name"/>
+		<result column="id" property="memberVO.id"/>
+	</resultMap>
+	
+	<select id="getTradePostList" resultMap="tradePostRM" parameterType="pagingBean">
+		SELECT tp.trade_post_no, tp.title, tp.price, bm.name
+		FROM(
+		SELECT row_number() over(ORDER BY trade_post_no DESC) AS rnum,
+		id, trade_post_no, title, price FROM trade_post
+		)tp, bay_member bm
+		WHERE tp.id=bm.id AND rnum BETWEEN #{startRowNumber}
+		AND #{endRowNumber} ORDER BY trade_post_no DESC
+	</select>
 </mapper>
