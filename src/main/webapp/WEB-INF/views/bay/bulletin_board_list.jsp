@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	function addPost(){
-		location.href="add_bay_post.do?type=${requestScope.type}";
+		location.href="add_bulletin_post.do?type=${requestScope.type}";
 	}
 </script>
 
@@ -26,7 +26,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="pvo" items="${requestScope.lvo.list }">
+						<c:forEach var="pvo" items="${requestScope.lvo.list}">
 							<tr>
 								<td class="cart_product">${pvo.bayPostNo}</td>
 								<td class="cart_description">${pvo.title}</td>
@@ -61,12 +61,13 @@
 							</c:otherwise>
 						</c:choose>
 						&nbsp;
-						</c:forEach>
-							<c:if test="${pb.nextPageGroup}">
+					</c:forEach>
+					<c:if test="${pb.nextPageGroup}">
 						<li><a
-							href="bulletin_board_list.do?pageNo=${pb.endPageOfPageGroup+1}&type=${requestScope.type}">&raquo;</a></li>
-						</c:if>
-					</ul>
-				</div>
-	</div>
+							href="bulletin_board_list.do?pageNo=${pb.endPageOfPageGroup+1}&type=${requestScope.type}">&raquo;</a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
+		</div>
 </section> <!--/#cart_items-->
