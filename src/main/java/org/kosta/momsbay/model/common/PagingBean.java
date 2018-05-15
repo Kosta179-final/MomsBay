@@ -17,7 +17,7 @@ public class PagingBean {
 	 /**
   * 페이지당 게시물수
   */
-	private int postCountPerPage = 5;
+	private int postCountPerPage = 9;
  /**
   * 페이지 그룹당 페이지수
   */
@@ -28,6 +28,14 @@ public class PagingBean {
 	private int totalPostCount;
 
 	public PagingBean() {
+	}
+
+	public void setPostCountPerPage(int postCountPerPage) {
+		this.postCountPerPage = postCountPerPage;
+	}
+
+	public void setPageCountPerPageGroup(int pageCountPerPageGroup) {
+		this.pageCountPerPageGroup = pageCountPerPageGroup;
 	}
 
 	public PagingBean(int totalPostCount) {

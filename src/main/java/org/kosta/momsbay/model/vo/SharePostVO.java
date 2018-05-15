@@ -9,15 +9,8 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class TradePostVO extends PostVO{
-	private int tradePostNo;
-	private int pickCount;
-	private int price;
+public class SharePostVO extends PostVO{
+	private int noneTradePostNo;
 	private int categoryNo;
 	private int boardTypeNo;
-	private String status;
-	private String tradeId;
-	private boolean deleteStatus;
-	private int wishPrice;
-	private String suggestContent;
 }

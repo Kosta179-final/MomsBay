@@ -4,33 +4,48 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.MemberMapper">
-	<select id="findMemberById" resultType="memberVO">
-		SELECT m.id, m.name,m.password, m.address, m.email, m.tel, m.point, g.grade
+	<select id="login" resultType="memberVO">
+		SELECT m.id, m.name,m.password, m.address ,m.address2, m.email, m.tel, m.point, g.grade
 		FROM bay_member m, member_grade g
 		WHERE m.member_grade_no=g.member_grade_no
 		AND id=#{values}
 	</select>
 
 	<select id="findChildrenByMemberId" resultType="childrenVO">
-		SELECT *
+		SELECT gender, TO_CHAR(birth, 'YYYY.MM.DD' ) as birth
 		FROM children
 		WHERE id=#{value}
 	</select>
 
 	<select id="findMemberExsitById" resultType="boolean">
-		SELECT count(*)
+		SELECT COUNT(*)
 		FROM bay_member
 		Where id = #{values}
 	</select>
+	
 	<select id="findMemberByEmail" resultType="string">
 		SELECT email
 		FROM
 		bay_member
 		Where email = #{values}
 	</select>
+	
 	<insert id="addMember" parameterType="memberVO">
 		INSERT INTO
-		bay_member(id,name,password,email,tel,address,member_grade_no)
-		VALUES(#{id},#{name},#{password},#{email},#{tel},#{address},'1')
+		bay_member(id,name,password,email,tel,address,member_grade_no, address2)
+		VALUES(#{id},#{name},#{password},#{email},#{tel},#{address},'1',#{address2})
 	</insert>
+	
+	<update id="updateMember" parameterType="memberVO">
+	UPDATE bay_member
+	SET password=#{password}, name= #{name},address= #{address}, address2=#{address2}
+	WHERE id=#{id}
+	</update>
+	
+	<select id="findMemberByPasswordAndId" parameterType="map" resultType="int">
+	SELECT count(*)
+	FROM bay_member
+	WHERE id=#{id} 
+	AND password=#{password}
+	</select>
 </mapper>
