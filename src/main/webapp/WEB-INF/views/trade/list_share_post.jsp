@@ -26,7 +26,7 @@
 				</div>
 				<div class="choose">
 					<ul class="nav nav-pills nav-justified">
-						<li><a class="btn btn-primary" href="${pageContext.request.contextPath}/trade/detail_share_post.do">
+						<li><a class="btn btn-primary" href="detail_share_post.do?noneTradePostNo=${pvo.noneTradePostNo}">
 							<i class="fa fa-plus-square"></i>상세보기</a>
 						</li>
 					</ul>

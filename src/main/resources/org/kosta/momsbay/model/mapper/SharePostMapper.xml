@@ -26,4 +26,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE n.id=b.id) 
 	WHERE rnum between #{startRowNumber} and #{endRowNumber}
 </select>
+<!-- 나눔 게시글 상세보기 -->
+<select id="findDetailSharePost" parameterType="int" resultMap="sharePostRM">
+	SELECT none_trade_post_no, title, content, regdate, id, category_no, board_type_no
+	FROM none_trade_post 
+	WHERE none_trade_post_no=#{value}
+</select>
 </mapper>
