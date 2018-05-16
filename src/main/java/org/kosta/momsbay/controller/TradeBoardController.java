@@ -65,7 +65,18 @@ public class TradeBoardController {
 	@RequestMapping("shareWrite.do")
 	public String shareWrite(SharePostVO sharePostVO) {
 		sharePostService.addSharePost(sharePostVO);
-		return "redirect:list_share_post.do?boardTypeNo="+sharePostVO.getBoardTypeNo();
+		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo();
 	}
 	
+	@RequestMapping("update_share_post.do")
+	public String updateSharePostView(String noneTradePostNo, Model model) {
+		model.addAttribute("pvo", sharePostService.updateSharePostView(Integer.parseInt(noneTradePostNo)));
+		return "service_trade.page_update_share_post";
+	}
+	
+	@RequestMapping("/updateSharePost.do")
+	public String updateSharePost(SharePostVO sharePostVO) {
+		sharePostService.updateSharePost(sharePostVO);
+		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo();
+	}
 }

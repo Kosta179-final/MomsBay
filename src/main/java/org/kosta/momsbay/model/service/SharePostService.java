@@ -51,8 +51,28 @@ public class SharePostService {
 	 * 나눔게시글 상세보기
 	 * @param noneTradePostNo
 	 * @return SharePostVO
+	 * @author rws
 	 */
 	public SharePostVO findDetailSharePost(int noneTradePostNo) {
 		return sharePostMapper.findDetailSharePost(noneTradePostNo);
+	}
+	
+	/**
+	 * 나눔게시글 수정 화면
+	 * @param noneTradePostNo
+	 * @return SharePostVO
+	 * @author rws
+	 */
+	public SharePostVO updateSharePostView(int noneTradePostNo) {
+		return sharePostMapper.findDetailSharePost(noneTradePostNo);
+	}
+	
+	/**
+	 * 나눔게시글 수정
+	 * @param sharePostVO
+	 * @author rws
+	 */
+	public void updateSharePost(SharePostVO sharePostVO) {
+		sharePostMapper.updateSharePost(sharePostVO);
 	}
 }
