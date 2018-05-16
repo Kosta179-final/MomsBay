@@ -17,6 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<select id="getTotalTradePostCount" resultType="int" parameterType="map">
 		SELECT count(*) FROM trade_post
 		WHERE board_type_no=#{board_type_no} AND category_no=#{category_no}
+		AND delete_status=0
 	</select>
 	
 	<resultMap type="tradePostVO" id="tradePostRM">
@@ -32,7 +33,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		id, trade_post_no, title, price, category_no, board_type_no 
 		FROM trade_post
 		WHERE board_type_no=#{board_type_no} AND 
-		category_no=#{category_no}
+		category_no=#{category_no} AND delete_status=0
 		)tp, bay_member bm
 		WHERE tp.id=bm.id AND 
 		rnum BETWEEN #{pagingBean.startRowNumber} AND 
@@ -40,15 +41,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findTradePostByTradePostNo" parameterType="int" resultMap="tradePostRM">
-		SELECT tp.title, tp.content, tp.regdate, tp.pick_count, tp.price, bm.name, ts.status
+		SELECT tp.trade_post_no, tp.category_no, tp.title, tp.content, tp.board_type_no,
+		tp.regdate,tp.pick_count, tp.price, bm.name, ts.status
 		FROM trade_post tp, bay_member bm, trade_status ts
 		WHERE tp.id=bm.id and tp.trade_status_no=ts.trade_status_no and tp.trade_post_no=#{value}
 	</select>
 	
-	<delete id="deleteTradePost" parameterType="int">
-		DELETE FROM trade_post
-		WHERE trade_post_no = #{value}
-	</delete>
+	<update id="deleteTradePost" parameterType="int">
+		UPDATE trade_post SET delete_status=1
+		WHERE trade_post_no=#{value}
+	</update>
 	
 	
 	

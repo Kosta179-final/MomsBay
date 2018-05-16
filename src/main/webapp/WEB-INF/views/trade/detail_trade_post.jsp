@@ -4,10 +4,10 @@
 
 <script>
 	function updateTradePost(){
-		location.href="${pageContext.request.contextPath}/trade/update_trade_post.do?tradePostNo=${requestScope.tradePostNo}";
+		location.href="${pageContext.request.contextPath}/trade/update_trade_post.do?tradePostNo=${requestScope.tradePostVO.tradePostNo}";
 	}
 	function deleteTradePost(){
-		location.href="${pageContext.request.contextPath}/trade/deleteTradePost.do?tradePostNo=${requestScope.tradePostNo}";
+		location.href="${pageContext.request.contextPath}/trade/deleteTradePost.do?tradePostNo=${requestScope.tradePostVO.tradePostNo}";
 	}
 </script>
 
@@ -65,8 +65,8 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<div align="right">
-				<button name="button" class="btn btn-primary" onclick="updateTradePost()">글쓰기</button>
-				<button name="button" class="btn btn-primary" onclick="deleteTradePost()">글쓰기</button>
+				<button name="button" class="btn btn-primary" onclick="updateTradePost()">글수정</button>
+				<button name="button" class="btn btn-primary" onclick="deleteTradePost()">글삭제</button>
 			</div>
 		</div>
 	</div>

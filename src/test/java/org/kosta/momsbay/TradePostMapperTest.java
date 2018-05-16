@@ -75,12 +75,23 @@ public class TradePostMapperTest {
 	}
 	
 	/**
-	 * 번호에 해당하는 상세보기를 테스트
+	 * 번호에 해당하는 상세보기를 테스트.
 	 * @author Jung
 	 */
 	@Test
 	public void findTradePostByTradePostNo() {
 		assertNotEquals(null, mapper.findTradePostByTradePostNo(2));
+	}
+	
+	
+	/**
+	 * 게시글을 삭제하는 메서드 테스트.
+	 * @author Jung
+	 */
+	@Test
+	public void deleteTradePost() {
+		mapper.deleteTradePost(10);
+		//assertEquals(null, mapper.findTradePostByTradePostNo(10));
 	}
 }
 

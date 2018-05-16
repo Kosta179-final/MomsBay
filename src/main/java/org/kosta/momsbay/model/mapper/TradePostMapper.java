@@ -14,10 +14,10 @@ import org.kosta.momsbay.model.vo.TradePostVO;
  */
 @Mapper
 public interface TradePostMapper {
+	 
 	/**
 	 * 페이징 처리된 거래게시판의 목록을 출력해주는 메서드.
-	 * 
-	 * @param pagingBean
+	 * @param Map<String,Object>
 	 * @return List<PostVO>
 	 * @author Jung
 	 */
@@ -31,13 +31,38 @@ public interface TradePostMapper {
 	 */
 	public void addTradePost(TradePostVO tradePostVO);
 
+
 	/**
-	 * 거래게시판의 총 게시물 숫자를 반환해주는 메서드
-	 * 
+	 * 게시판종류와 카테고리에 맞게 게시글 총 수를 반환해주는 메서드.
+	 * @param map
 	 * @return int
 	 * @author Jung
 	 */
 	public int getTotalTradePostCount(Map map);
 
+	/**
+	 * 게시물번호로 해당 게시물의 상세내용을 반환해주는 메서드.
+	 * @param tradePostNo
+	 * @return TradePostVO
+	 * @author Jung
+	 */
 	public TradePostVO findTradePostByTradePostNo(int tradePostNo);
+	
+	/**
+	 * 게시물번호로 해당 게시물을 삭제하는 메서드.
+	 * @param tradePostNO
+	 * @author Jung
+	 */
+	public void deleteTradePost(int tradePostNo);
+	
 }
+
+
+
+
+
+
+
+
+
+

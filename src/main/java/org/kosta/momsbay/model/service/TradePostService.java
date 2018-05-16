@@ -54,8 +54,25 @@ public class TradePostService {
 		return tradePostMapper.findTradePostByTradePostNo(tradePostNo);
 	}
 
+	/**
+	 * 게시판에 글을쓰고 자신이 쓴 글을 리턴해주는 메서드.
+	 * @param tradePostVO
+	 * @return TradePostVO
+	 * @author Jung
+	 */
 	public TradePostVO addTradePost(TradePostVO tradePostVO) {
 		tradePostMapper.addTradePost(tradePostVO);
 		return tradePostMapper.findTradePostByTradePostNo(tradePostVO.getTradePostNo());
+	}
+
+	/**
+	 * 해당 게시글을 삭제해주는 메서드
+	 * @param tradePostNo
+	 * @return TradePostVO
+	 * @author Jung
+	 */
+	public TradePostVO deleteTradePost(int tradePostNo) {
+		tradePostMapper.deleteTradePost(tradePostNo);
+		return tradePostMapper.findTradePostByTradePostNo(tradePostNo);
 	}
 }

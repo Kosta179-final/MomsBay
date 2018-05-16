@@ -48,6 +48,14 @@ public class TradeBoardController {
 	}
 	
 	
+	/**
+	 * 게시판 종류를 클릭했을때 실행되는 메서드.
+	 * @param categoryNo
+	 * @param boardTypeNo
+	 * @param pageNo
+	 * @param model
+	 * @return list_trade_post.jsp
+	 */
 	@RequestMapping("/list_trade_post.do")
 	public String listTradePostTiles(String categoryNo,String boardTypeNo,String pageNo, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
@@ -83,6 +91,20 @@ public class TradeBoardController {
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
 	
+	/**
+	 * 해당 게시글을 삭제하는 메서드.
+	 * @param tradePostNo
+	 * @return 
+	 */
+	@RequestMapping("/deleteTradePost.do")
+	public String deleteTradePost(String tradePostNo) {
+		TradePostVO tradePostVO = 
+				tradePostService.deleteTradePost(Integer.parseInt(tradePostNo));
+		return "redirect:list_trade_post.do?boardTypeNo="+tradePostVO.getBoardTypeNo()
+				+"&categoryNo="+tradePostVO.getCategoryNo()+"";
+	}
+	
+	
 	
 	
 	/**
@@ -108,6 +130,9 @@ public class TradeBoardController {
 		sharePostService.addSharePost(sharePostVO);
 		return "redirect:share_list.do";
 	}
+	
+	
+	
 }
 
 
