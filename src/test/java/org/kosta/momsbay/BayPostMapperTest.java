@@ -1,5 +1,7 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertNotNull;
+
 import java.util.List;
 
 import org.junit.Test;
@@ -40,21 +42,20 @@ public class BayPostMapperTest {
 		}
 	}
 	
-	/*@Test
+	@Test
 	public void getBayPostList() {
 		int totalCount=mapper.getTotalPostCount();
 		PagingBean pagingBean=null;
 		pagingBean=new PagingBean(totalCount);
 		assertNotNull(mapper.getBayPostList(pagingBean));
 	}
-
-	@Test
+	
+	/*@Test
 	public void getTotalPostCount() {
 		
-	}
-	*/
+	}*/
 
-	@Test
+/*	@Test
 	public void addPost() {
 		BayPostVO bayPostVO=new BayPostVO();
 		bayPostVO.setSubjectNo(1);
@@ -64,19 +65,11 @@ public class BayPostMapperTest {
 		bayPostVO.getMemberVO().setId("java");
 		bayPostVO.setBoardTypeNo(5);
 		mapper.addPost(bayPostVO);
-	}
+	}*/
 
 	@Test
 	public void getPostDetail() {
-		BayPostVO bayPostVO=new BayPostVO();
-		bayPostVO.setSubjectNo(1);
-		bayPostVO.setTitle("test");
-		bayPostVO.setContent("test입니다.");
-		bayPostVO.setMemberVO(new MemberVO());
-		bayPostVO.getMemberVO().setId("java");
-		bayPostVO.setBoardTypeNo(5);
-		mapper.addPost(bayPostVO);
-		BayPostVO dbBayPostVO=mapper.getPostDetail(bayPostVO.getBayPostNo());
+		BayPostVO dbBayPostVO=mapper.getPostDetail(1);
 		//assertEquals(bayPostVO, dbBayPostVO);
 		System.out.println(dbBayPostVO);
 	}
@@ -85,8 +78,19 @@ public class BayPostMapperTest {
 	public void deleteBoard(int bayPostNo) {
 	
 	}
-
+*/
 	@Test
-	public void updateBoard(BayPostVO bayPostVO) {
-	}*/
+	public void updateBoard() {
+		BayPostVO bayPostVO=new BayPostVO();
+		bayPostVO.setBayPostNo(1);
+		bayPostVO.setSubjectNo(1);
+		bayPostVO.setTitle("test");
+		bayPostVO.setContent("test입니다.");
+		bayPostVO.setMemberVO(new MemberVO());
+		bayPostVO.getMemberVO().setId("java");
+		bayPostVO.setBoardTypeNo(5);
+		mapper.updateBoard(bayPostVO);
+		BayPostVO dbBayPostVO=mapper.getPostDetail(bayPostVO.getBayPostNo());
+		System.out.println(dbBayPostVO.getTitle() +" "+ dbBayPostVO.getContent());
+	}
 }

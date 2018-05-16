@@ -32,11 +32,11 @@
 								<td class="cart_description">
 									<c:choose>
 									<c:when test="${sessionScope.member!=null }">
-									<a href="detail_bay.do?bayPostNo=${pvo.bayPostNo }">${pvo.title}</a>
+									<a href="detail_bay.do?bayPostNo=${pvo.bayPostNo }">[${pvo.subjectVO.subject}] &nbsp; ${pvo.title}</a>
 									</c:when>
 									</c:choose>
 									</td>
-								<td class="cart_price">${pvo.name}</td>
+								<td class="cart_price">${pvo.memberVO.name}</td>
 				 				<td class="cart_quantity">${pvo.regdate }</td>
 							</tr>
 						</c:forEach>

@@ -57,7 +57,7 @@ public class BayBoardController {
 	@RequestMapping("detail_bay.do")
 	public String getPostDetail(int bayPostNo,Model model) {
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
-		return "bay/detail_bay" + ".tiles";
+		return "bay/detail_bay_post" + ".tiles";
 	}
 	/**
 	 * @param bayPostNo
@@ -66,7 +66,7 @@ public class BayBoardController {
 	 */
 	@RequestMapping("deleteBoard.do")
 	public ModelAndView deleteBoard(int bayPostNo,String pageNo) {
-		return new ModelAndView("bay/detail_bay","lvo",bayPostService.getBayPostList(pageNo));
+		return new ModelAndView("bay/detail_bay_post","lvo",bayPostService.getBayPostList(pageNo));
 	}
 	
 	/*@RequestMapping("updateBoard.do")
