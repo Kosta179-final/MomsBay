@@ -1,18 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<script>
-	function addPost(){
-		location.href="add_bulletin_post.do?type=${requestScope.type}";
-	}
-</script>
 
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
-				  <h3 class="active">자유게시판</h3>
+				  <h3 class="active">질문게시판</h3>
 				<ol class="breadcrumb">
-					<li class="active">일상적인 이야기를 나눌 수 있는 자유게시판입니다</li>
+					<li class="active">QnA게시판입니다</li>
 				</ol>
 			</div>
 		<div class="table-responsive cart_info">
@@ -42,19 +37,20 @@
 						<button name="button" class="btn btn-primary" onclick="addPost()">글쓰기</button><br>
 					</div>
 			</div>
-			<div class="pagingInfo">
+			<%-- 페이징빈 부분 --%>
+				<div class="pagingInfo">
 				<c:set var="pb" value="${requestScope.lvo.pagingBean}"></c:set>
 				<ul class="pagination">
 					<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="bulletin_board_list.do?pageNo=${pb.startPageOfPageGroup-1}&type=${requestScope.type}">&laquo;</a></li>
+							href="list_qna_post.do?pageNo=${pb.startPageOfPageGroup-1}&type=${requestScope.type}">&laquo;</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
 						end="${pb.endPageOfPageGroup}">
 						<c:choose>
 							<c:when test="${pb.nowPage!=i}">
 								<li><a
-									href="bulletin_board_list.do?pageNo=${i}&type=${requestScope.type}">${i}</a></li>
+									href="list_qna_post.do?pageNo=${i}&type=${requestScope.type}">${i}</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="active"><a href="#this">${i}</a></li>
@@ -64,10 +60,11 @@
 					</c:forEach>
 					<c:if test="${pb.nextPageGroup}">
 						<li><a
-							href="bulletin_board_list.do?pageNo=${pb.endPageOfPageGroup+1}&type=${requestScope.type}">&raquo;</a>
+							href="list_qna_post.do?pageNo=${pb.endPageOfPageGroup+1}&type=${requestScope.type}">&raquo;</a>
 						</li>
 					</c:if>
 				</ul>
 			</div>
 		</div>
+			<%-- 페이징빈 부분 --%>
 </section> <!--/#cart_items-->
