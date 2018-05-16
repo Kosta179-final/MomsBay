@@ -23,6 +23,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<resultMap type="tradePostVO" id="tradePostRM">
 		<result column="name" property="memberVO.name"/>
 		<result column="id" property="memberVO.id"/>
+		<result column="grade" property="memberVO.grade"/>
 	</resultMap>
 	
 	<select id="getTradePostList" resultMap="tradePostRM" parameterType="map">
@@ -42,9 +43,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="findTradePostByTradePostNo" parameterType="int" resultMap="tradePostRM">
 		SELECT tp.trade_post_no, tp.category_no, tp.title, tp.content, tp.board_type_no,
-		tp.regdate,tp.pick_count, tp.price, bm.name, ts.status
-		FROM trade_post tp, bay_member bm, trade_status ts
-		WHERE tp.id=bm.id and tp.trade_status_no=ts.trade_status_no and tp.trade_post_no=#{value}
+		tp.regdate,tp.pick_count, tp.price, tp.id, bm.name, ts.status, mg.grade
+		FROM trade_post tp, bay_member bm, trade_status ts, member_grade mg
+		WHERE tp.id=bm.id AND tp.trade_status_no=ts.trade_status_no 
+		AND tp.trade_post_no=#{value} AND bm.member_grade_no=mg.member_grade_no
 	</select>
 	
 	<update id="deleteTradePost" parameterType="int">

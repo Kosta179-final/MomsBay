@@ -27,11 +27,20 @@
 				</div>
 				<div class="choose">
 					<ul class="nav nav-pills nav-justified">
-						<li><a class = "btn btn-primary" href="${pageContext.request.contextPath}/trade/detail_trade_post.do?tradePostNo=${tpVO.tradePostNo}">
-							<i class="fa fa-plus-square"></i>상세보기
-						</a></li>
-						<li><a href="#" class="btn btn-primary"><i
-							class="fa fa-heart"></i>찜하기</a></li>
+						<c:choose>
+						<c:when test="${empty member}">
+							<li><a class = "btn btn-primary" href="#this">
+								<i class="fa fa-plus-square"></i>상세보기
+							</a></li>
+						</c:when>
+						<c:otherwise>
+							<li><a class = "btn btn-primary" href="${pageContext.request.contextPath}/trade/detail_trade_post.do?tradePostNo=${tpVO.tradePostNo}">
+								<i class="fa fa-plus-square"></i>상세보기
+							</a></li>
+						</c:otherwise>
+						</c:choose>
+						<!-- <li><a href="#" class="btn btn-primary"><i
+							class="fa fa-heart"></i>찜하기</a></li> -->
 					</ul>
 				</div>
 			</div>
