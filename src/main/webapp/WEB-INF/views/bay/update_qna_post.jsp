@@ -19,8 +19,8 @@
 			<br><br>
 			<textarea cols="90" rows="15" name="content" required="required"
 						placeholder="내용을 입력하세요"></textarea>
-			<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
-			<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
+			<input type="hidden" name="id" value="">
+			<input type="hidden" name="type" value="">
 			<input type="submit" class="btn btn-primary" value="작성">
 			<input type="reset" class="btn btn-primary" value="취소">
 		</form>
