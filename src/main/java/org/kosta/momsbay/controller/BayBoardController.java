@@ -47,14 +47,14 @@ public class BayBoardController {
 	public String write(BayPostVO bayPostVO) {
 		System.out.println(bayPostVO);
 		bayPostService.addPost(bayPostVO);
-		return "redirect:list_bulletin_board.do";
+		return "redirect:list_bulletin_post.do";
 	}
 
-	@RequestMapping("list_bulletin_board.do")
+	@RequestMapping("list_bulletin_post.do")
 	public String list(Model model, String pageNo, String boardTypeNo) {
 		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo));
 		model.addAttribute("boardTypeNo", boardTypeNo);
-		return "bay/list_bulletin_board" + ".tiles";
+		return "bay/list_bulletin_post" + ".tiles";
 	}
 	
 	@RequestMapping("detail_bay.do")
