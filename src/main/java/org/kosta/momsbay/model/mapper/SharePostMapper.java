@@ -27,10 +27,17 @@ public interface SharePostMapper {
 	public int getTotalSharePostCount();
 	
 	/**
-	 * 
+	 * 나눔 게시글 리스트
 	 * @param pagingBean
 	 * @return List<VO>
 	 * @author rws
 	 */
 	public List<PostVO> getSharePostList(PagingBean pagingBean);
+	
+	/**
+	 * 나눔 게시글 상세보기
+	 * @param noneTradePostNo
+	 * @return SharePostVO
+	 */
+	public SharePostVO findDetailSharePost(int noneTradePostNo);
 }

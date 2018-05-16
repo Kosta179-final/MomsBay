@@ -46,4 +46,13 @@ public class SharePostService {
 		ListVO listVO=new ListVO(list,pagingBean);
 		return listVO;
 	}
+	
+	/**
+	 * 나눔게시글 상세보기
+	 * @param noneTradePostNo
+	 * @return SharePostVO
+	 */
+	public SharePostVO findDetailSharePost(int noneTradePostNo) {
+		return sharePostMapper.findDetailSharePost(noneTradePostNo);
+	}
 }

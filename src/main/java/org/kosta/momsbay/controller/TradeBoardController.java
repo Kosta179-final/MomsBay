@@ -51,7 +51,8 @@ public class TradeBoardController {
 	 * @return service_trade.page_detail_share_post
 	 */
 	@RequestMapping("/detail_share_post.do")
-	public String detailSharePost() {
+	public String findDetailSharePost(String noneTradePostNo, Model model) {
+		model.addAttribute("pvo", sharePostService.findDetailSharePost(Integer.parseInt(noneTradePostNo)));
 		return "service_trade.page_detail_share_post";
 	}
 	
