@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * BayPost 처리하는 Controller. 관련Service: TradeService, BayPostService,
@@ -48,12 +49,12 @@ public class BayBoardController {
 		return "bay/detail_bay" + ".tiles";
 	}
 	
-	/*@RequestMapping("deleteBoard.do")
+	@RequestMapping("deleteBoard.do")
 	public ModelAndView deleteBoard(int bayPostNo,String pageNo) {
 		return new ModelAndView("bay/detail_bay","lvo",bayPostService.getBayPostList(pageNo));
 	}
 	
-	@RequestMapping("updateBoard.do")
+	/*@RequestMapping("updateBoard.do")
 	public ModelAndView updateBoard(BayPostVO bayPostVO,int bayPostNo) {
 		bayPostService.updateBoard(bayPostVO);
 		return new ModelAndView("bay/update_bay_post","pvo",bayPostService.getPostDetail(bayPostNo));

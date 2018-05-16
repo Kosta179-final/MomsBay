@@ -14,7 +14,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class BayPostMapperTest {
 	@Autowired
 	BayPostMapper mapper;
-/*	@Test
+	/*@Test
 	public void getBayPostList() {
 		int totalCount=mapper.getTotalPostCount();
 		PagingBean pagingBean=null;
@@ -28,7 +28,7 @@ public class BayPostMapperTest {
 	}
 	*/
 
-	/*@Test
+	@Test
 	public void addPost() {
 		BayPostVO bayPostVO=new BayPostVO();
 		bayPostVO.setSubjectNo(1);
@@ -38,7 +38,7 @@ public class BayPostMapperTest {
 		bayPostVO.getMemberVO().setId("java");
 		bayPostVO.setBoardTypeNo(5);
 		mapper.addPost(bayPostVO);
-	}*/
+	}
 
 	@Test
 	public void getPostDetail() {
@@ -57,6 +57,7 @@ public class BayPostMapperTest {
 
 	/*@Test
 	public void deleteBoard(int bayPostNo) {
+	
 	}
 
 	@Test
