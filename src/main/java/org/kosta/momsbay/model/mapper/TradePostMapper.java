@@ -1,9 +1,9 @@
 package org.kosta.momsbay.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 
@@ -14,14 +14,14 @@ import org.kosta.momsbay.model.vo.TradePostVO;
  */
 @Mapper
 public interface TradePostMapper {
+	 
 	/**
 	 * 페이징 처리된 거래게시판의 목록을 출력해주는 메서드.
-	 * 
-	 * @param pagingBean
+	 * @param Map<String,Object>
 	 * @return List<PostVO>
 	 * @author Jung
 	 */
-	public List<PostVO> getTradePostList(PagingBean pagingBean);
+	public List<PostVO> getTradePostList(Map map);
 
 	/**
 	 * 거래게시판에서 글을 작성할 때 실행되는 메서드.
@@ -31,11 +31,40 @@ public interface TradePostMapper {
 	 */
 	public void addTradePost(TradePostVO tradePostVO);
 
+
 	/**
-	 * 거래게시판의 총 게시물 숫자를 반환해주는 메서드
-	 * 
+	 * 게시판종류와 카테고리에 맞게 게시글 총 수를 반환해주는 메서드.
+	 * @param map
 	 * @return int
 	 * @author Jung
 	 */
-	public int getTotalTradePostCount();
+	public int getTotalTradePostCount(Map map);
+
+	/**
+	 * 게시물번호로 해당 게시물의 상세내용을 반환해주는 메서드.
+	 * @param tradePostNo
+	 * @return TradePostVO
+	 * @author Jung
+	 */
+	public TradePostVO findTradePostByTradePostNo(int tradePostNo);
+	
+	/**
+	 * 게시물번호로 해당 게시물을 삭제하는 메서드.
+	 * @param tradePostNO
+	 * @author Jung
+	 */
+	public void deleteTradePost(int tradePostNo);
+
+	public void updateTradePost(TradePostVO tradePostVO);
+	
 }
+
+
+
+
+
+
+
+
+
+

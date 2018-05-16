@@ -20,4 +20,5 @@ public interface MemberMapper {
 	public void addChildren(Map<String, String> tempMap);
 	public void updateMember(MemberVO member);
 	public int findMemberByPasswordAndId(Map<String, String> temp_map);
+	public String findNowpointById(String id);
 }

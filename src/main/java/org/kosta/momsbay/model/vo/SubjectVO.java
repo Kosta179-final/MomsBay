@@ -6,13 +6,10 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class BayPostVO extends PostVO{
-	private int bayPostNo;
-	private int thread;
-	private int depth;
-	private int boardTypeNo;
-	private SubjectVO subjectVO;
+public class SubjectVO {
+	private int subjectNo;
+	private String subject;
 }

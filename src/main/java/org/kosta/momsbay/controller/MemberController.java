@@ -57,6 +57,7 @@ public class MemberController {
 			return "member/login_fail";
 		}
 		member.setPassword("");
+		member.setPoint(0);
 		member.setChildren_no(member.getList().size());
 		HttpSession session =requset.getSession();
 		session.setAttribute("member", member);

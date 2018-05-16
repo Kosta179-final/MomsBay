@@ -5,14 +5,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.TradePostMapper">
 	<insert id="addTradePost" parameterType="TradepostVO">
+		<selectKey keyProperty="tradePostNo" resultType="int" order="BEFORE">
+			select trade_post_SEQ.nextval from dual
+		</selectKey>
 		INSERT INTO trade_post(trade_post_no,title,content,regdate,
 		price,id,category_no,board_type_no)
-		VALUES (trade_post_SEQ.nextval,#{title},#{content},sysdate,#{price},
+		VALUES (trade_post_SEQ.currval,#{title},#{content},sysdate,#{price},
 		#{memberVO.id},#{categoryNo},#{boardTypeNo})
 	</insert>
 	
-	<select id="getTotalTradePostCount" resultType="int">
+	<select id="getTotalTradePostCount" resultType="int" parameterType="map">
 		SELECT count(*) FROM trade_post
+		WHERE board_type_no=#{board_type_no} AND category_no=#{category_no}
+		AND delete_status=0
 	</select>
 	
 	<resultMap type="tradePostVO" id="tradePostRM">
@@ -20,13 +25,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="id" property="memberVO.id"/>
 	</resultMap>
 	
-	<select id="getTradePostList" resultMap="tradePostRM" parameterType="pagingBean">
-		SELECT tp.trade_post_no, tp.title, tp.price, bm.name
+	<select id="getTradePostList" resultMap="tradePostRM" parameterType="map">
+		SELECT tp.trade_post_no, tp.title, tp.category_no, 
+		tp.board_type_no, tp.price, bm.name
 		FROM(
 		SELECT row_number() over(ORDER BY trade_post_no DESC) AS rnum,
-		id, trade_post_no, title, price FROM trade_post
+		id, trade_post_no, title, price, category_no, board_type_no 
+		FROM trade_post
+		WHERE board_type_no=#{board_type_no} AND 
+		category_no=#{category_no} AND delete_status=0
 		)tp, bay_member bm
-		WHERE tp.id=bm.id AND rnum BETWEEN #{startRowNumber}
-		AND #{endRowNumber} ORDER BY trade_post_no DESC
+		WHERE tp.id=bm.id AND 
+		rnum BETWEEN #{pagingBean.startRowNumber} AND 
+		#{pagingBean.endRowNumber} ORDER BY trade_post_no DESC
 	</select>
+	
+	<select id="findTradePostByTradePostNo" parameterType="int" resultMap="tradePostRM">
+		SELECT tp.trade_post_no, tp.category_no, tp.title, tp.content, tp.board_type_no,
+		tp.regdate,tp.pick_count, tp.price, bm.name, ts.status
+		FROM trade_post tp, bay_member bm, trade_status ts
+		WHERE tp.id=bm.id and tp.trade_status_no=ts.trade_status_no and tp.trade_post_no=#{value}
+	</select>
+	
+	<update id="deleteTradePost" parameterType="int">
+		UPDATE trade_post SET delete_status=1
+		WHERE trade_post_no=#{value}
+	</update>
+	
+	<update id="updateTradePost" parameterType="tradePostVO">
+		UPDATE trade_post
+		SET title = #{title}, content = #{content}, price = #{price}
+		WHERE trade_post_no = #{tradePostNo}
+	</update>
+	
 </mapper>
+
+
+
+
