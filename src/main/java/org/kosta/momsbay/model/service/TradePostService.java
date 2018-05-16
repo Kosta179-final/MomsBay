@@ -75,4 +75,15 @@ public class TradePostService {
 		tradePostMapper.deleteTradePost(tradePostNo);
 		return tradePostMapper.findTradePostByTradePostNo(tradePostNo);
 	}
+	
+	/**
+	 * 해당 게시물을 업데이트하는 메서드.
+	 * @param tradePostNo
+	 * @return TradePostVO
+	 * @author Jung
+	 */
+	public TradePostVO updateTradePost(TradePostVO tradePostVO) {
+		tradePostMapper.updateTradePost(tradePostVO);
+		return tradePostMapper.findTradePostByTradePostNo(tradePostVO.getTradePostNo());
+	}
 }

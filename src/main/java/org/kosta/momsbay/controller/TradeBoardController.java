@@ -72,7 +72,7 @@ public class TradeBoardController {
 	 * @param boardTypeNo
 	 * @param categoryNo
 	 * @param model
-	 * @return
+	 * @return add_trade_post.jsp
 	 */
 	@RequestMapping("/add_trade_post.do")
 	public String addTradePostView(String boardTypeNo, String categoryNo, Model model) {
@@ -87,8 +87,8 @@ public class TradeBoardController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/tradeWrite.do",method=RequestMethod.POST)	
-	public String tradeWrite(TradePostVO tradePostVO, Model model) {
+	@RequestMapping(value="/addTradePost.do",method=RequestMethod.POST)	
+	public String addTradePost(TradePostVO tradePostVO, Model model) {
 		model.addAttribute(tradePostService.addTradePost(tradePostVO));
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
@@ -106,7 +106,28 @@ public class TradeBoardController {
 				+"&categoryNo="+tradePostVO.getCategoryNo()+"";
 	}
 	
+	/**
+	 * 거래게시판의 삽니다 글수정 양식페이지로 이동되는 메서드.
+	 * @return update_trade_post.jsp
+	 * @author Jung
+	 */
+	@RequestMapping("/update_trade_post.do")
+	public String updateTradePostView(String tradePostNo, Model model) {
+		model.addAttribute("tradePostVO", 
+				tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+		return "service_trade.page_update_trade_post";
+	}
 	
+	/**
+	 * 글수정form에서 submit할때 실행되는 메서드.
+	 * @return 
+	 * @author Jung
+	 */
+	@RequestMapping(value="/updateTradePost.do",method=RequestMethod.POST)	
+	public String updateTradePost(TradePostVO tradePostVO, Model model) {
+		model.addAttribute(tradePostService.updateTradePost(tradePostVO));
+		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
+	}
 	
 	
 	/**
