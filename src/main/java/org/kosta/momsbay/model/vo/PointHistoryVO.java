@@ -12,4 +12,5 @@ public class PointHistoryVO {
 	private String regdate;
 	private int price;
 	private String type;
+	private String point;
 }

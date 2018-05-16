@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.momsbay.model.mapper.QnaPostMapper">
+	<select id="getQnaPostList" resultType="qnaPostVO" parameterType="pagingBean">
+		SELECT b.bay_post_no, b.title, b.regdate, b.id, m.name
+		FROM(
+		SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
+		bay_post_no, title, regdate, id
+		FROM bay_post
+		)b, bay_member m
+		WHERE b.id = m.id AND rnum BETWEEN #{startRowNumber}
+		AND #{endRowNumber}
+		ORDER BY bay_post_no DESC
+	</select>
+	<select id="getTotalPostCount" resultType="int">
+		SELECT count(*) FROM bay_post
+	</select>
+	<resultMap type="qnaPostVO" id="postRM">
+		<result property="memberVO.id" column="id"/>
+	</resultMap>
+	<select id="getQnaDetail" resultMap="postRM">
+		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no,s.subject_no
+		FROM bay_post b, subject s
+		WHERE b.bay_post_no = #{value} and s.subject_no=b.subject_no
+	</select>
+</mapper>

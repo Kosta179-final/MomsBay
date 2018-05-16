@@ -57,6 +57,8 @@ public class MemberController {
 			return "member/login_fail";
 		}
 		member.setPassword("");
+		member.setPoint(0);
+		member.setChildren_no(member.getList().size());
 		HttpSession session =requset.getSession();
 		session.setAttribute("member", member);
 		return "redirect:/home.do";
@@ -90,9 +92,9 @@ public class MemberController {
 	 */
 	@RequestMapping("idDuplicateCheck.do")
 	public @ResponseBody Map<String, Boolean> idDuplicateCheck(@RequestParam(required = true) String id,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) {
 		Map<String, Boolean> object = new HashMap<String, Boolean>();
-		boolean flag = memberService.findMemberById(id);
+		boolean flag = memberService.findMemberExsitById(id);
 		object.put("duplicate", flag);
 		return object;
 	}
@@ -107,7 +109,7 @@ public class MemberController {
 	 */
 	@RequestMapping("mailDuplicateCheck.do")
 	public @ResponseBody Map<String, Object> emailDuplicateCheck(@RequestParam(required = true) String email,
-			HttpServletResponse response) throws Exception {
+			HttpServletResponse response) {
 		Map<String, Object> object = new HashMap<String, Object>();
 		if (email.contains("@")) {
 			boolean flag = memberService.findMemberByEmail(email);
@@ -138,7 +140,6 @@ public class MemberController {
 		 * 아이가 하나도 없을때 처리하는 로직
 		 */
 		List<ChildrenVO> children = new ArrayList<ChildrenVO>();
-		member.setAddress(member.getAddress().concat(address2));
 		if(year!=null) {
 			String[] birthYear = year.split(",");
 			String[] birthMonth = month.split(",");
@@ -148,7 +149,6 @@ public class MemberController {
 				String birth = birthYear[i] + "." + birthMonth[i] + "." + birthDay[i];
 				children.add(new ChildrenVO(cGender[i], birth));
 			}
-
 		}
 		memberService.addMember(member, children);	
 		return "redirect:register_succ.do";

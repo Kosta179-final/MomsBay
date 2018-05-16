@@ -1,5 +1,7 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.mapper.MemberMapper;
@@ -13,13 +15,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MemberMapperTest {
 	@Autowired
 	MemberMapper mapper;
-	MemberVO member= new MemberVO();
 	
 	@Test
-	public void testLogin() {
+	public void findMemberExsitById() {
+		MemberVO member= new MemberVO();
 		member.setId("java");
 		member.setPassword("1234");
-		
+		assertTrue(mapper.findMemberExsitById(member.getId()));
 	}
 
 }

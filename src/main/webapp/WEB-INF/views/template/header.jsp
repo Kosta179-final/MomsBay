@@ -55,11 +55,12 @@
 							</c:when>
 							<c:otherwise>
 								<c:if test="${member.grade eq 'member'}">
-								<li><a href="${pageContext.request.contextPath}/myaccount/password_check.do"><i class="fa fa-user"></i> 내 계정</a></li>
+								<li><a href="${pageContext.request.contextPath}/myaccount/getPointHistoryById.do"><i class="fa fa-user"></i> 내 계정</a></li>
 								</c:if>
 								<c:if test="${member.grade  eq 'admin'}">
 								<li><a href="#"><i class="fa fa-user"></i> 관리자 페이지</a></li>
 								</c:if>
+								<li><a href="${pageContext.request.contextPath}/myaccount/findNowpointById.do"><i class="fa fa-usd"></i> 포인트 충전/환전</a></li>
 								<li><a href="#"><i class="fa fa-heart"></i> 찜목록</a></li>
 								<li><a href="#"><i class="fa fa-envelope"></i> 쪽지</a></li>
 								<li><a href="${pageContext.request.contextPath}/member/logout.do"><i class="fa fa-unlock"></i> 로그아웃</a></li>
@@ -94,12 +95,12 @@
 								class="fa fa-angle-down"></i></a>
 							<ul role="menu" class="sub-menu">
 								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=1">삽니다</a></li>
-								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=2">팝니다</a></li>
-								<li><a	href="${pageContext.request.contextPath}/trade/share_list.do?boardTypeNo=3">나눔</a></li>
+								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=2&categoryNo=1">팝니다</a></li>
+								<li><a	href="${pageContext.request.contextPath}/trade/list_share_post.do?boardTypeNo=3">나눔</a></li>
 								<li><a href="${pageContext.request.contextPath}/trade/exchange_list.do?boardTypeNo=4">교환</a></li>
 							</ul></li>
-						<li><a href="${pageContext.request.contextPath}/bay/bulletin_board_list.do?type=bulletin">자유게시판</a></li>
-						<li><a href="${pageContext.request.contextPath}/bay/qna_board_list.do?type=qna">Q &amp; A</a></li>
+						<li><a href="${pageContext.request.contextPath}/bay/list_bulletin_post.do?boardTypeNo=5">자유게시판</a></li>
+						<li><a href="${pageContext.request.contextPath}/bay/list_qna_post.do?boardTypeNo=6">Q &amp; A</a></li>
 					</ul>
 				</div>
 			</div>

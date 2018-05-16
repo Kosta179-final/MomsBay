@@ -39,7 +39,7 @@ public class MemberService {
 	 * @throws LoginException
 	 */
 	public MemberVO login(String id, String password) throws LoginException {
-		MemberVO memberVO=memberMapper.login(id);
+		MemberVO memberVO=memberMapper.findMemberById(id);
 		if(memberVO==null)
 			throw new LoginException("아이디가 존재하지 않습니다");
 		else if(password==null||password.equals(memberVO.getPassword())==false)
@@ -56,10 +56,9 @@ public class MemberService {
 	 * @param id
 	 * @return flag
 	 */
-	public boolean findMemberById(String id) {
+	public boolean findMemberExsitById(String id) {
 		// TODO Auto-generated method stub
-		String tempId = memberMapper.findMemberById(id);
-		if (tempId == null) {
+		if (memberMapper.findMemberExsitById(id)) {
 			return false;
 		} else
 			return true;

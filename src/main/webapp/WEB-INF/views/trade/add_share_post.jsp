@@ -51,7 +51,7 @@
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
 		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
-		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo }">
+		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
 		<input type="hidden" name="categoryNo" value="1">
 	<div class="btn-group">
 		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>

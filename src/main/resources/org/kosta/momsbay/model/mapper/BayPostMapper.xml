@@ -4,15 +4,23 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.BayPostMapper">
-	<select id="getBayPostList" resultType="bayPostVO" parameterType="pagingBean">
-		SELECT b.bay_post_no, b.title, b.regdate, b.id, m.name
+	<resultMap type="bayPostVO" id="bayPostRM">
+		<result property="subjectVO.subjectNo" column="subject_no"/>
+		<result property="subjectVO.subject" column="subject"/>
+		<result property="memberVO.id" column="id"/>
+		<result property="memberVO.name" column="name"/>
+	</resultMap>
+	<select id="getBayPostList" resultMap="bayPostRM" parameterType="pagingBean">
+		SELECT b.bay_post_no, b.title, b.regdate, b.id, m.name, s.subject,  b.subject_no
 		FROM(
-		SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
-		bay_post_no, title, regdate, id
-		FROM bay_post
-		)b, bay_member m
-		WHERE b.id = m.id AND rnum BETWEEN #{startRowNumber}
-		AND #{endRowNumber}
+			SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
+			bay_post_no, title, regdate, id, subject_no
+			FROM bay_post
+			)b, bay_member m,subject s
+		WHERE b.id = m.id 
+		AND rnum 
+		BETWEEN #{startRowNumber} AND #{endRowNumber}
+		AND b.subject_no = s.subject_no
 		ORDER BY bay_post_no DESC
 	</select>
 	
@@ -21,16 +29,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="addPost" parameterType="bayPostVO">
-		<selectKey keyProperty="boardTypeNo" resultType="int" order="BEFORE">
-			SELECT board_type_no FROM board_type WHERE type=#{type}
+		<selectKey keyProperty="bayPostNo" resultType="int" order="BEFORE">
+			SELECT bay_post_seq.nextval FROM dual
 		</selectKey>
+		
 			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
-			VALUES (bay_post_seq.nextval,#{title},#{content},sysdate,#{id},#{boardTypeNo},#{subjectNo})
+			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectNo})
 	</insert>
-	
-	<select id="bayDetail">
-		SELECT b.title,b.content,b.regdate,b.id,s.subject
+	<resultMap type="bayPostVO" id="postRM">
+		<result property="memberVO.id" column="id"/>
+	</resultMap>
+	<select id="getPostDetail" resultMap="postRM">
+		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no,s.subject_no
 		FROM bay_post b, subject s
-		WHERE bay_post_no = #{bay_post_no} and s.subject_no=b.subject_no
+		WHERE b.bay_post_no = #{value} and s.subject_no=b.subject_no
 	</select>
+	
+	<delete id="deleteBoard">
+		DELETE FROM bay_post WHERE bay_post_no = #{value}
+	</delete>
+	
+	<update id="updateBoard" parameterType="bayPostVO">
+		UPDATE bay_post SET title=#{title},content=#{content}
+		WHERE bay_post_no = #{bayPostNo}
+	</update>
 </mapper>
