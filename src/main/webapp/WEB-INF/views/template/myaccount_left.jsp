@@ -18,15 +18,23 @@
 			
 			<div class="panel panel-default">
 				<div class="panel-heading">
-					<h3 class="panel-title">
-						<a href="getPointHistoryById.do">
-							<span class="pull-right"></span> 
-							포인트내역
+					<h4 class="panel-title">
+						<a data-toggle="collapse" data-parent="#accordian" href="#b">
+							<span class="pull-right"><i class="fa fa-plus"></i></span> 
+							포인트
 						</a>
-					</h3>
+					</h4>
+				</div>
+				<div id="b" class="panel-collapse collapse">
+					<div class="panel-body">
+						<ul>
+							<li><a href="getPointHistoryById.do">포인트 내역</a></li>
+							<li><a href="findNowpointById.do">포인트 충전/환전</a></li>
+						</ul>
+					</div>
 				</div>
 			</div>
-
+			
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
@@ -45,6 +53,7 @@
 				</div>
 			</div>
 		</div>
+
 		<!--/category-products-->
 
 		<div class="shipping text-center">
