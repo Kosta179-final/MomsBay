@@ -17,4 +17,10 @@ public interface BayPostMapper {
 	public int getTotalPostCount();
 	
 	public void addPost(BayPostVO bayPostVO);
+	
+	public BayPostVO getPostDetail(int bayPostNo);
+	
+	public void deleteBoard(int bayPostNo);
+	
+	public void updateBoard(BayPostVO bayPostVO);
 }
