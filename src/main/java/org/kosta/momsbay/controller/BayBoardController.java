@@ -45,7 +45,6 @@ public class BayBoardController {
 	}
 	@RequestMapping("write.do")
 	public String write(BayPostVO bayPostVO) {
-		System.out.println(bayPostVO);
 		bayPostService.addPost(bayPostVO);
 		return "redirect:list_bulletin_post.do";
 	}
@@ -65,12 +64,12 @@ public class BayBoardController {
 	
 	@RequestMapping("deleteBoard.do")
 	public ModelAndView deleteBoard(int bayPostNo,String pageNo) {
-		return new ModelAndView("bay/detail_bay_post","lvo",bayPostService.getBayPostList(pageNo));
+		return new ModelAndView("bay/list_bulletin_post","lvo",bayPostService.getBayPostList(pageNo));
 	}
 	
-	/*@RequestMapping("updateBoard.do")
+	@RequestMapping("updateBoard.do")
 	public ModelAndView updateBoard(BayPostVO bayPostVO,int bayPostNo) {
 		bayPostService.updateBoard(bayPostVO);
-		return new ModelAndView("bay/update_bay_post","pvo",bayPostService.getPostDetail(bayPostNo));
-	}*/
+		return new ModelAndView("bay/list_bulletin_post","pvo",bayPostService.getPostDetail(bayPostNo));
+	}/**/
 }

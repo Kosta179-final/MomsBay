@@ -6,7 +6,7 @@
 	<div class="row">
 		<form action="write.do" method="post">
 			<div class="col-sm-2">
-				<select name="subjectNo">
+				<select name="subjectVO.subjectNo">
 					<option value="1">후기</option>
 					<option value="2">팁</option>
 					<option value="3">고민상담</option>
