@@ -17,9 +17,9 @@
 				<div id="a" class="panel-collapse collapse" style="height: auto;">
 					<div class="panel-body">
 						<ul>
-							<li><a href="#">유모차 </a></li>
-							<li><a href="#">카시트 </a></li>
-							<li><a href="#">아기띠 </a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=1">유모차 </a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=2">카시트 </a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=3">아기띠 </a></li>
 						</ul>
 					</div>
 				</div>
@@ -35,10 +35,10 @@
 				<div id="b" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul>
-							<li><a href="#">유아동 의류</a></li>
-							<li><a href="#">신생아 의류</a></li>
-							<li><a href="#">신발</a></li>
-							<li><a href="#">인형</a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=4">유아동 의류</a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=5">신생아 의류</a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=6">신발</a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=7">인형</a></li>
 						</ul>
 					</div>
 				</div>
@@ -55,13 +55,13 @@
 				<div id="c" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul>
-							<li><a href="#">물티슈</a></li>
-							<li><a href="#">욕조/탕 온도계/샴푸캡</a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=8">물티슈</a></li>
+							<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=9">욕조/탕 온도계/샴푸캡</a></li>
 						</ul>
 					</div>
 				</div>
 			</div>
-			<div class="panel panel-default">
+			 	<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordian" href="#d">

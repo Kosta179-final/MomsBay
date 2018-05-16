@@ -1,5 +1,7 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
@@ -21,7 +23,30 @@ public class TradePostServiceTest {
 	 */
 	@Test
 	public void getTradePostList() {
-		assertNotNull(tradePostService.getTradePostList(null));
-		System.out.println(tradePostService.getTradePostList(null).getList());
+		assertNotNull(tradePostService.getTradePostList("1","1","1"));
+	}
+	
+	/**
+	 * 번호에 해당하는 상세보기를 테스트
+	 * @author Jung
+	 */
+	@Test
+	public void findTradePostByTradePostNo() {
+		assertNotEquals(null, tradePostService.findTradePostByTradePostNo(2));
+	}
+	
+	
+	/**
+	 * 게시글을 삭제하는 메서드 테스트.
+	 * @author Jung
+	 */
+	@Test
+	public void deleteTradePost() {
+		assertEquals(null,tradePostService.findTradePostByTradePostNo(10));
 	}
 }
+
+
+
+
+

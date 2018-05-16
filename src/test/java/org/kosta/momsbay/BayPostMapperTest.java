@@ -12,7 +12,6 @@ import org.kosta.momsbay.model.mapper.QnaPostMapper;
 import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.kosta.momsbay.model.vo.PostVO;
-import org.kosta.momsbay.model.vo.QnaPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -35,11 +34,6 @@ public class BayPostMapperTest {
 		PagingBean pagingBean = new PagingBean(qnaPostMapper.getTotalPostCount());
 		pagingBean.setPostCountPerPage(1);
 		List<PostVO> list = qnaPostMapper.getQnaPostList(pagingBean);
-		for(int i=0;i<list.size();i++) {
-			QnaPostVO qp =  (QnaPostVO) list.get(i);
-			System.out.println(qp.getBayPostNo()+" "+qp.getTitle()+" "+qp.getName()+" "+qp.getRegdate());
-			
-		}
 	}
 	
 	@Test
@@ -71,19 +65,18 @@ public class BayPostMapperTest {
 	public void getPostDetail() {
 		BayPostVO dbBayPostVO=mapper.getPostDetail(1);
 		//assertEquals(bayPostVO, dbBayPostVO);
-		System.out.println(dbBayPostVO);
 	}
 
-	/*@Test
+	@Test
 	public void deleteBoard(int bayPostNo) {
 	
 	}
-*/
+/**/
 	@Test
 	public void updateBoard() {
 		BayPostVO bayPostVO=new BayPostVO();
 		bayPostVO.setBayPostNo(1);
-		bayPostVO.setSubjectNo(1);
+		bayPostVO.getSubjectVO().setSubjectNo(1);
 		bayPostVO.setTitle("test");
 		bayPostVO.setContent("test입니다.");
 		bayPostVO.setMemberVO(new MemberVO());
@@ -91,6 +84,5 @@ public class BayPostMapperTest {
 		bayPostVO.setBoardTypeNo(5);
 		mapper.updateBoard(bayPostVO);
 		BayPostVO dbBayPostVO=mapper.getPostDetail(bayPostVO.getBayPostNo());
-		System.out.println(dbBayPostVO.getTitle() +" "+ dbBayPostVO.getContent());
 	}
 }
