@@ -244,7 +244,7 @@ $(document).ready(function(){
                         <%} %>
                    </select>
                    <select required name="gender" required="required" style="width:70px;height:30px;">
-                    <option value="">성별<option>
+                    <option value="">성별</option>
                         <option value="female">여아</option>
                         <option value="male">남아</option>
                    </select>

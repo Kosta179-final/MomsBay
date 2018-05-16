@@ -21,16 +21,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<insert id="addPost" parameterType="bayPostVO">
-		<selectKey keyProperty="boardTypeNo" resultType="int" order="BEFORE">
-			SELECT board_type_no FROM board_type WHERE type=#{type}
+		<selectKey keyProperty="bayPostNo" resultType="int" order="BEFORE">
+			SELECT bay_post_seq.nextval FROM dual
 		</selectKey>
+		
 			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
-			VALUES (bay_post_seq.nextval,#{title},#{content},sysdate,#{id},#{boardTypeNo},#{subjectNo})
+			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectNo})
 	</insert>
-	
-	<select id="bayDetail">
-		SELECT b.title,b.content,b.regdate,b.id,s.subject
+	<resultMap type="bayPostVO" id="postRM">
+		<result property="memberVO.id" column="id"/>
+	</resultMap>
+	<select id="getPostDetail" resultMap="postRM">
+		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no,s.subject_no
 		FROM bay_post b, subject s
-		WHERE bay_post_no = #{bay_post_no} and s.subject_no=b.subject_no
+		WHERE b.bay_post_no = #{value} and s.subject_no=b.subject_no
 	</select>
+	
+	<delete id="deleteBoard">
+		DELETE FROM bay_post WHERE bay_post_no = #{value}
+	</delete>
+	
+	<update id="updateBoard" parameterType="bayPostVO">
+		UPDATE bay_post SET title=#{title},content=#{content}
+		WHERE bay_post_no = #{value}
+	</update>
 </mapper>
