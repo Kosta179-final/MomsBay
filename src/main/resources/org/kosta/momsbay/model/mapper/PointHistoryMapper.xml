@@ -5,9 +5,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.PointHistoryMapper">
 	<select id="getPointHistoryById" resultType="pointHistoryVO">
-		SELECT t.type, h.regdate, h.price, h.id
+		SELECT t.type, h.regdate, h.price, h.id, h.now_point as point
 		FROM POINT_TYPE t, POINT_HISTORY h
 		WHERE t.point_type_no=h.point_type_no
-		AND id=#{values}
+		AND id=#{values} 
+		ORDER BY h.regdate DESC
 	</select>
+	<insert id="addPointChargeHistory" parameterType="map">
+		INSERT INTO point_history
+		VALUES(point_history_SEQ.nextval, sysdate, #{point}, #{id}, 3, #{nowPoint})
+	</insert>
 </mapper>
