@@ -24,7 +24,9 @@ public class BayPostService {
 			pagingBean=new PagingBean(totalCount);
 		else
 			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
-		return new ListVO(bayPostMapper.getBayPostList(pagingBean),pagingBean);
+		ListVO lvo = new ListVO(bayPostMapper.getBayPostList(pagingBean),pagingBean);
+		System.out.println(lvo);
+		return lvo;
 	}
 	public void addPost(BayPostVO bayPostVO) {
 		bayPostMapper.addPost(bayPostVO);

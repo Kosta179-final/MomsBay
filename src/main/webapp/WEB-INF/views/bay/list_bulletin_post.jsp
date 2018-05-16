@@ -32,11 +32,11 @@
 								<td class="cart_description">
 									<c:choose>
 									<c:when test="${sessionScope.member!=null }">
-									<a href="detail_bay.do?bayPostNo=${pvo.bayPostNo }">${pvo.title}</a>
+									<a href="detail_bay.do?bayPostNo=${pvo.bayPostNo }">[${pvo.subjectVO.subject}] &nbsp; ${pvo.title}</a>
 									</c:when>
 									</c:choose>
 									</td>
-								<td class="cart_price">${pvo.name}</td>
+								<td class="cart_price">${pvo.memberVO.name}</td>
 				 				<td class="cart_quantity">${pvo.regdate }</td>
 							</tr>
 						</c:forEach>
@@ -53,14 +53,14 @@
 				<ul class="pagination">
 					<c:if test="${pb.previousPageGroup}">
 						<li><a
-							href="list_bulletin_post.do?pageNo=${pb.startPageOfPageGroup-1}&type=${requestScope.type}">&laquo;</a></li>
+							href="list_bulletin_post.do?pageNo=${pb.startPageOfPageGroup-1}&boardTypeNo=${requestScope.boardTypeNo}">&laquo;</a></li>
 					</c:if>
 					<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
 						end="${pb.endPageOfPageGroup}">
 						<c:choose>
 							<c:when test="${pb.nowPage!=i}">
 								<li><a
-									href="list_bulletin_post.do?pageNo=${i}&type=${requestScope.type}">${i}</a></li>
+									href="list_bulletin_post.do?pageNo=${i}&boardTypeNo=${requestScope.boardTypeNo}">${i}</a></li>
 							</c:when>
 							<c:otherwise>
 								<li class="active"><a href="#this">${i}</a></li>
@@ -70,7 +70,7 @@
 					</c:forEach>
 					<c:if test="${pb.nextPageGroup}">
 						<li><a
-							href="list_bulletin_post.do?pageNo=${pb.endPageOfPageGroup+1}&type=${requestScope.type}">&raquo;</a>
+							href="list_bulletin_post.do?pageNo=${pb.endPageOfPageGroup+1}&boardTypeNo=${requestScope.boardTypeNo}">&raquo;</a>
 						</li>
 					</c:if>
 				</ul>

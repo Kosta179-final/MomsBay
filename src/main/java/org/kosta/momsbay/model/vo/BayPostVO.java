@@ -14,6 +14,6 @@ public class BayPostVO extends PostVO{
 	private int thread;
 	private int depth;
 	private int subjectNo;
-	private String name;
 	private int boardTypeNo;
+	private SubjectVO subjectVO;
 }

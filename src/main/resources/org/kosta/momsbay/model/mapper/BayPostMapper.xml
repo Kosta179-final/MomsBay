@@ -4,15 +4,23 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.BayPostMapper">
-	<select id="getBayPostList" resultType="bayPostVO" parameterType="pagingBean">
-		SELECT b.bay_post_no, b.title, b.regdate, b.id, m.name
+	<resultMap type="bayPostVO" id="bayPostRM">
+		<result property="subjectVO.subjectNo" column="subject_no"/>
+		<result property="subjectVO.subject" column="subject"/>
+		<result property="memberVO.id" column="id"/>
+		<result property="memberVO.name" column="name"/>
+	</resultMap>
+	<select id="getBayPostList" resultMap="bayPostRM" parameterType="pagingBean">
+		SELECT b.bay_post_no, b.title, b.regdate, b.id, m.name, s.subject,  b.subject_no
 		FROM(
-		SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
-		bay_post_no, title, regdate, id
-		FROM bay_post
-		)b, bay_member m
-		WHERE b.id = m.id AND rnum BETWEEN #{startRowNumber}
-		AND #{endRowNumber}
+			SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
+			bay_post_no, title, regdate, id, subject_no
+			FROM bay_post
+			)b, bay_member m,subject s
+		WHERE b.id = m.id 
+		AND rnum 
+		BETWEEN #{startRowNumber} AND #{endRowNumber}
+		AND b.subject_no = s.subject_no
 		ORDER BY bay_post_no DESC
 	</select>
 	
@@ -43,6 +51,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateBoard" parameterType="bayPostVO">
 		UPDATE bay_post SET title=#{title},content=#{content}
-		WHERE bay_post_no = #{value}
+		WHERE bay_post_no = #{bayPostNo}
 	</update>
 </mapper>

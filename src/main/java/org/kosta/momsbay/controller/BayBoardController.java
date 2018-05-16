@@ -57,15 +57,15 @@ public class BayBoardController {
 		return "bay/list_bulletin_post" + ".tiles";
 	}
 	
-	@RequestMapping("detail_bay.do")
+	@RequestMapping("detail_bay_post.do")
 	public String getPostDetail(int bayPostNo,Model model) {
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
-		return "bay/detail_bay" + ".tiles";
+		return "bay/detail_bay_post" + ".tiles";
 	}
 	
 	@RequestMapping("deleteBoard.do")
 	public ModelAndView deleteBoard(int bayPostNo,String pageNo) {
-		return new ModelAndView("bay/detail_bay","lvo",bayPostService.getBayPostList(pageNo));
+		return new ModelAndView("bay/detail_bay_post","lvo",bayPostService.getBayPostList(pageNo));
 	}
 	
 	/*@RequestMapping("updateBoard.do")
