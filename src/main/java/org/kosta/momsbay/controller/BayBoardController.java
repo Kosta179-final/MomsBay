@@ -23,21 +23,39 @@ public class BayBoardController {
 	private BayPostService bayPostService;
 
 	@RequestMapping("{viewName}.do")
-	public String showTiles(@PathVariable String viewName, String type, Model model) {
-		model.addAttribute("type", type);
+	public String showTiles(@PathVariable String viewName, String boardTypeNo, Model model) {
+		model.addAttribute("boardTypeNo", boardTypeNo);
 		return "bay/" + viewName + ".tiles";
 	}
 
 	@RequestMapping("write.do")
 	public String write(BayPostVO bayPostVO) {
+		System.out.println(bayPostVO);
 		bayPostService.addPost(bayPostVO);
-		return "redirect:bulletin_board_list.do";
+		return "redirect:list_bulletin_board.do";
 	}
 
-	@RequestMapping("bulletin_board_list.do")
-	public String list(Model model, String pageNo, String type) {
+	@RequestMapping("list_bulletin_board.do")
+	public String list(Model model, String pageNo, String boardTypeNo) {
 		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo));
-		model.addAttribute("type", type);
-		return "bay/bulletin_board_list" + ".tiles";
+		model.addAttribute("boardTypeNo", boardTypeNo);
+		return "bay/list_bulletin_board" + ".tiles";
 	}
+	
+	@RequestMapping("detail_bay.do")
+	public String getPostDetail(int bayPostNo,Model model) {
+		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
+		return "bay/detail_bay" + ".tiles";
+	}
+	
+	/*@RequestMapping("deleteBoard.do")
+	public ModelAndView deleteBoard(int bayPostNo,String pageNo) {
+		return new ModelAndView("bay/detail_bay","lvo",bayPostService.getBayPostList(pageNo));
+	}
+	
+	@RequestMapping("updateBoard.do")
+	public ModelAndView updateBoard(BayPostVO bayPostVO,int bayPostNo) {
+		bayPostService.updateBoard(bayPostVO);
+		return new ModelAndView("bay/update_bay_post","pvo",bayPostService.getPostDetail(bayPostNo));
+	}*/
 }

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	function addPost(){
-		location.href="add_bulletin_post.do?type=${requestScope.type}";
+		location.href="add_bulletin_post.do?boardTypeNo=${requestScope.boardTypeNo}";
 	}
 </script>
 
@@ -29,7 +29,13 @@
 						<c:forEach var="pvo" items="${requestScope.lvo.list}">
 							<tr>
 								<td class="cart_product">${pvo.bayPostNo}</td>
-								<td class="cart_description">${pvo.title}</td>
+								<td class="cart_description">
+									<c:choose>
+									<c:when test="${sessionScope.member!=null }">
+									<a href="detail_bay.do?bayPostNo=${pvo.bayPostNo }">${pvo.title}</a>
+									</c:when>
+									</c:choose>
+									</td>
 								<td class="cart_price">${pvo.name}</td>
 				 				<td class="cart_quantity">${pvo.regdate }</td>
 							</tr>
