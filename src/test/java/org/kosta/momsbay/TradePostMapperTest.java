@@ -1,11 +1,17 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
+
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.TradePostMapper;
+import org.kosta.momsbay.model.vo.MemberVO;
 import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +28,7 @@ public class TradePostMapperTest {
 	 * 거래게시판의 글쓰기 테스트
 	 * @author Jung
 	 */
-	/*@Test
+	@Test
 	public void addTradePost() {
 		TradePostVO vo = new TradePostVO();
 		MemberVO mvo = new MemberVO();
@@ -36,14 +42,17 @@ public class TradePostMapperTest {
 		mapper.addTradePost(vo);
 	}
 	
-	*//**
+	/**
 	 * 총 게시물의 수를 반환해주는 테스트
 	 * @author Jung
-	 *//*
+	 */
 	@Test
 	public void getTotalTradePostCount() {
-		assertEquals(25, mapper.getTotalTradePostCount());
-	}*/
+		Map<String,Object> map = new HashMap();
+		map.put("board_type_no", 1);
+		map.put("category_no", 1);
+		assertEquals(33, mapper.getTotalTradePostCount(map));
+	}
 	
 	/**
 	 * 페이징 처리된 거래게시판의 목록을 보여주는 테스트
@@ -51,13 +60,37 @@ public class TradePostMapperTest {
 	 */
 	@Test
 	public void getTradePostList() {
-		PagingBean pagingBean = new PagingBean(mapper.getTotalTradePostCount());
+		Map<String,Object> map = new HashMap();
+		map.put("board_type_no", 1);
+		map.put("category_no", 1);
+		PagingBean pagingBean = new PagingBean(mapper.getTotalTradePostCount(map));
 		pagingBean.setPostCountPerPage(9);
-		List<PostVO> list = mapper.getTradePostList(pagingBean);
+		map.put("pagingBean", pagingBean);
+		List<PostVO> list = mapper.getTradePostList(map);
 		for(int i=0;i<list.size();i++) {
 			TradePostVO tp =  (TradePostVO) list.get(i);
 			System.out.println(tp.getTitle()+ " "+tp.getTradePostNo());
 			System.out.println(tp.getMemberVO().getName()+" "+tp.getPrice());
 		}
 	}
+	
+	/**
+	 * 번호에 해당하는 상세보기를 테스트
+	 * @author Jung
+	 */
+	@Test
+	public void findTradePostByTradePostNo() {
+		assertNotEquals(null, mapper.findTradePostByTradePostNo(2));
+	}
 }
+
+
+
+
+
+
+
+
+
+
+

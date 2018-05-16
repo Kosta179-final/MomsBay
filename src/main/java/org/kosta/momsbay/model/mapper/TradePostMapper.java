@@ -1,9 +1,9 @@
 package org.kosta.momsbay.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 
@@ -21,7 +21,7 @@ public interface TradePostMapper {
 	 * @return List<PostVO>
 	 * @author Jung
 	 */
-	public List<PostVO> getTradePostList(PagingBean pagingBean);
+	public List<PostVO> getTradePostList(Map map);
 
 	/**
 	 * 거래게시판에서 글을 작성할 때 실행되는 메서드.
@@ -37,5 +37,7 @@ public interface TradePostMapper {
 	 * @return int
 	 * @author Jung
 	 */
-	public int getTotalTradePostCount();
+	public int getTotalTradePostCount(Map map);
+
+	public TradePostVO findTradePostByTradePostNo(int tradePostNo);
 }
