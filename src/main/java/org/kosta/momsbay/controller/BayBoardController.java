@@ -57,7 +57,7 @@ public class BayBoardController {
 		return "bay/list_bulletin_post" + ".tiles";
 	}
 	
-	@RequestMapping("detail_bay_post.do")
+	@RequestMapping("detail_bay.do")
 	public String getPostDetail(int bayPostNo,Model model) {
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
 		return "bay/detail_bay_post" + ".tiles";
