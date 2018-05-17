@@ -31,8 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addPost" parameterType="bayPostVO">
 		<selectKey keyProperty="bayPostNo" resultType="int" order="BEFORE">
 			SELECT bay_post_seq.nextval FROM dual
-		</selectKey>
-		
+		</selectKey>		
 			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
 			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectNo})
 	</insert>
