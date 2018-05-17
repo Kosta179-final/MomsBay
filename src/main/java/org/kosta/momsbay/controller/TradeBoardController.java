@@ -43,10 +43,11 @@ public class TradeBoardController {
 		model.addAttribute("categoryNo", categoryNo);
 		if(boardTypeNo.equals("1") || boardTypeNo.equals("2")) {
 			model.addAttribute("listVO", tradePostService.getTradePostList(pageNo,boardTypeNo,categoryNo));
-		} else if(boardTypeNo.equals("3") || boardTypeNo.equals("4")) {
+			return "service_trade" + ".page_" + viewName;
+		}else {
 			model.addAttribute("svo", sharePostService.getSharePostList(pageNo,boardTypeNo,categoryNo));
+			return "service_trade" + ".page_" + viewName;
 		}
-		return "service_trade" + ".page_" + viewName;
 	}
 	
 	
@@ -201,6 +202,22 @@ public class TradeBoardController {
 	public String deleteSharePost(String noneTradePostNo) {
 		SharePostVO sharePostVO=sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
 		return "redirect:list_share_post.do?boardTypeNo="+sharePostVO.getBoardTypeNo()+"&categoryNo="+sharePostVO.getCategoryNo()+"";
+	}
+	
+	/**
+	 * 나눔 게시판 종류를 클릭했을때 실행되는 메서드
+	 * @param categoryNo
+	 * @param boardTypeNo
+	 * @param pageNo
+	 * @param model
+	 * @return list_share_post.jsp
+	 */
+	@RequestMapping("/list_share_post.do")
+	public String listNoneTradePostTiles(String pageNo, String boardTypeNo, String categoryNo, Model model) {
+		model.addAttribute("boardTypeNo", boardTypeNo);
+		model.addAttribute("categoryNo", categoryNo);
+		model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo));
+		return "service_trade.page_list_share_post";
 	}
 }
 

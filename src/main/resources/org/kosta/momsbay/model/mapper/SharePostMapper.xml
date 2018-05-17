@@ -18,8 +18,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	VALUES(none_trade_post_seq.currval,#{title},#{content},sysdate,#{memberVO.id},#{categoryNo},#{boardTypeNo})
 </insert>
 <!-- 나눔 게시글 갯수 -->
-<select id="getTotalSharePostCount" resultType="int">
-	SELECT count(*) FROM none_trade_post
+<select id="getTotalSharePostCount" resultType="int" parameterType="map">
+	SELECT count(*) 
+	FROM none_trade_post
+	WHERE board_type_no=#{board_type_no} AND category_no=#{category_no} AND delete_status=0
 </select>
 <!-- 나눔 게시글 리스트 -->
 <select id="getSharePostList" resultMap="sharePostRM" parameterType="map">

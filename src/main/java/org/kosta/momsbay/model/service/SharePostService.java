@@ -36,7 +36,6 @@ public class SharePostService {
 	 */
 	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo){
 		PagingBean pagingBean=null;
-		@SuppressWarnings({ "unchecked", "rawtypes" })
 		Map<String, Object> map=new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
 		map.put("category_no", Integer.parseInt(categoryNo));

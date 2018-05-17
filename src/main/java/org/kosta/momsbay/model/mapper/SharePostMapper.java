@@ -24,7 +24,7 @@ public interface SharePostMapper {
 	 * @return getTotalSharePostCount
 	 * @author rws
 	 */
-	public int getTotalSharePostCount(@SuppressWarnings("rawtypes") Map map);
+	public int getTotalSharePostCount(Map map);
 	
 	/**
 	 * 나눔 게시글 리스트
@@ -32,7 +32,7 @@ public interface SharePostMapper {
 	 * @return List<VO>
 	 * @author rws
 	 */
-	public List<PostVO> getSharePostList(@SuppressWarnings("rawtypes") Map map);
+	public List<PostVO> getSharePostList(Map map);
 	
 	/**
 	 * 나눔 게시글 상세보기

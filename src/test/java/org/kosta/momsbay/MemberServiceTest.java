@@ -2,6 +2,9 @@ package org.kosta.momsbay;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.exception.LoginException;
@@ -44,4 +47,5 @@ public class MemberServiceTest {
 			assertEquals(e.getMessage(), "아이디가 존재하지 않습니다");
 		}
 	}
+	
 }
