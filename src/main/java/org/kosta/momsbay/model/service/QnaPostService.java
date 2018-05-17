@@ -17,8 +17,9 @@ public class QnaPostService {
 	@Resource
 	private QnaPostMapper qnaPostMapper;
 	/**
-	 * @param pageNo
 	 * Q&A 글목록 & pagingbean처리 메서드
+	 * @param pageNo
+	 * @author sam
 	 */
 	public ListVO getQnaPostList(String pageNo) {
 		int totalCount=qnaPostMapper.getTotalPostCount();
@@ -30,10 +31,26 @@ public class QnaPostService {
 		return new ListVO(qnaPostMapper.getQnaPostList(pagingBean),pagingBean);
 	}
 	/**
-	 * @param bayPostNo
 	 * Q&A 글목록 상세보기 메서드
+	 * @param bayPostNo
+	 * @author sam
 	 */
 	public QnaPostVO getQnaDetail(int bayPostNo) {
 		return qnaPostMapper.getQnaDetail(bayPostNo);
+	}
+	/**
+	 * Q&A 게시판 글쓰기 메서드
+ 	 * @param bayPostVO
+ 	 * @author sam
+	 */
+	public void addQnaPost(QnaPostVO qnaPostVO) {
+		qnaPostMapper.addQnaPost(qnaPostVO);
+	}
+	/**
+	 * Q&A 게시판 글삭제 메서드
+	 * @param bayPostNo
+	 */
+	public void deleteQnaPost(int bayPostNo) {
+		qnaPostMapper.deleteQnaPost(bayPostNo);
 	}
 }

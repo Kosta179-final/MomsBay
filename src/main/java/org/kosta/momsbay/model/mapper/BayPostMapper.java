@@ -20,7 +20,7 @@ public interface BayPostMapper {
 	
 	public BayPostVO getPostDetail(int bayPostNo);
 	
-	public void deleteBoard(int bayPostNo);
+	public void deletePost(int bayPostNo);
 	
-	public void updateBoard(BayPostVO bayPostVO);
+	public void updatePost(BayPostVO bayPostVO);
 }
