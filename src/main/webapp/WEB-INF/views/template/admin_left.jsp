@@ -17,7 +17,7 @@
 				<div id="a" class="panel-collapse collapse" style="height: auto;">
 					<div class="panel-body">
 						<ul>
-							<li><a href="#">회원 등급 관리</a></li>
+							<li><a href="management_member.do">회원 등급 관리</a></li>
 							<li><a href="#">QNA 답변 대기글</a></li>
 							<li><a href="#">신고 내역</a></li>
 						</ul>

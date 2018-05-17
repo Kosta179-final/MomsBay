@@ -21,4 +21,9 @@ public interface MemberMapper {
 	public void updateMember(MemberVO member);
 	public int findMemberByPasswordAndId(Map<String, String> temp_map);
 	public String findNowpointById(String id);
+	public List<String> findMemberByIdUsingAjax(String id);
+	public List<String> getMemberList(int i);
+	public int findMemberGradeById(String id);
+	public void updateMemberToBlackList(String id);
+	public void updateBlackListToMember(String id);
 }
