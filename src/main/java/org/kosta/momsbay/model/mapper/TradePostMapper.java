@@ -55,8 +55,21 @@ public interface TradePostMapper {
 	 */
 	public void deleteTradePost(int tradePostNo);
 
+	/**
+	 * 게시물번호로 해당 게시물을 수정하는 메서드.
+	 * @param tradePostVO
+	 * @author Jung
+	 */
 	public void updateTradePost(TradePostVO tradePostVO);
 	
+	
+	/**
+	 * 아이디로 찜목록을 가져오는 메서드.
+	 * @param id
+	 * @return List<TradePostVO>
+	 * @author Jung
+	 */
+	public List<TradePostVO> findPickListById(String id);
 }
 
 

@@ -7,6 +7,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.service.TradePostService;
+import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -44,6 +45,16 @@ public class TradePostServiceTest {
 	public void deleteTradePost() {
 		assertEquals(null,tradePostService.findTradePostByTradePostNo(10));
 	}
+	
+	/**
+	 * 로그인한 사용자의 찜목록을 가져오는 메서드 테스트.
+	 * @author Jung
+	 */
+	@Test
+	public void findPickListById() {
+		assertNotEquals(null, tradePostService.findPickListById("java"));
+	}
+
 }
 
 

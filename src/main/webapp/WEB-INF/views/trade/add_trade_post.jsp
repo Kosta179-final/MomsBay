@@ -2,40 +2,11 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <form action="${pageContext.request.contextPath}/trade/addTradePost.do" method="post">
-<div class="product-details">
-	<!--product-details-->
-	<div class="col-sm-5">
-		<div class="view-product">
-			<img src="${pageContext.request.contextPath}/resources/upload/images/default.png"
-				alt="" />
-		</div>
-	</div>
-	<div class="col-sm-7">
-		<div class="product-information">
-			<!--/product-information-->
-			<div class="row">
-				<div class="col-sm-5">
-					<span>희망가격 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span><input type="number" name="price">원</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-5">
-					<span>평점 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span>(회원평점)</span>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 
 <div class="category-tab">
-	<!--category-tab-->
-	<div class="col-sm-12">
+	<div class="col-sm-12"  style="text-align: left;">
+		<span>희망가격 : </span>
+		<span><input type="number" name="price">원</span><br>
 		<textarea rows="1" name="title" placeholder="제목을 입력하세요"></textarea><br><br>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>

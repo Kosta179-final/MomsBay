@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.momsbay.model.mapper.MemberPickMapper">
+	<insert id="addMemberPick" parameterType="memberPickVO">
+		INSERT INTO member_pick(member_pick_no,id,trade_post_no)
+		VALUES(member_pick_seq.nextval,#{id},#{tradePostNo})
+	</insert>
+	
+	<delete id="deleteMemberPick" parameterType="memberPickVO">
+		DELETE FROM member_pick
+		WHERE id=#{id} AND trade_post_no=#{tradePostNo}
+	</delete>
+</mapper>

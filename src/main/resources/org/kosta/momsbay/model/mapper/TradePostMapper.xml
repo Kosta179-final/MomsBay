@@ -60,6 +60,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE trade_post_no = #{tradePostNo}
 	</update>
 	
+	<select id="findPickListById" resultMap="tradePostRM" parameterType="string">
+		SELECT tp.trade_post_no, tp.title, tp.content, 
+		mp.name, tp.regdate, tp.pick_count
+		FROM(
+		SELECT mp.trade_post_no, bm.name
+		FROM member_pick mp, bay_member bm
+		WHERE mp.id='java' AND mp.id=bm.id
+		)mp, trade_post tp
+		WHERE mp.trade_post_no = tp.trade_post_no
+	</select>
+	
+	
 </mapper>
 
 
