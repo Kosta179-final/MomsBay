@@ -35,4 +35,9 @@ public interface QnaPostMapper {
 	 *  @author sam
 	 */
 	public QnaPostVO getQnaDetail(int bayPostNo);
+	/**
+	 * Q&A 게시판 글 삭제 메서드
+	 * @param bayPostNo
+	 */
+	public void deleteQnaPost(int bayPostNo);
 }

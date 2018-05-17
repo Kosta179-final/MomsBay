@@ -46,4 +46,11 @@ public class QnaPostService {
 	public void addQnaPost(QnaPostVO qnaPostVO) {
 		qnaPostMapper.addQnaPost(qnaPostVO);
 	}
+	/**
+	 * Q&A 게시판 글삭제 메서드
+	 * @param bayPostNo
+	 */
+	public void deleteQnaPost(int bayPostNo) {
+		qnaPostMapper.deleteQnaPost(bayPostNo);
+	}
 }
