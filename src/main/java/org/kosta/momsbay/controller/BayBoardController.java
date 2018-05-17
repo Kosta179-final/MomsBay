@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.servlet.ModelAndView;
 
 /**
  * BayPost 처리하는 Controller. 관련 Service: QnaPostService, BayPostService,
@@ -50,7 +49,7 @@ public class BayBoardController {
 	@RequestMapping("write.do")
 	public String write(BayPostVO bayPostVO) {
 		bayPostService.addPost(bayPostVO);
-		return "redirect:list_bulletin_post.do";
+		return "redirect:list_bulletin_post.do?boardTypeNo="+bayPostVO.getBoardTypeNo();
 	}
 	 /**
 	 * @param bayPostNo
@@ -75,8 +74,9 @@ public class BayBoardController {
 	 * 일반게시판 글삭제 메서드
 	 */
 	@RequestMapping("deleteBoard.do")
-	public ModelAndView deleteBoard(int bayPostNo,String pageNo) {
-		return new ModelAndView("bay/list_bulletin_post","lvo",bayPostService.getBayPostList(pageNo));
+	public String deleteBoard(int bayPostNo) {
+		BayPostVO bayPostVO=bayPostService.deleteBoard(bayPostNo);
+		return "redirect:list_bulletin_post.do?boardTypeNo="+bayPostVO.getBoardTypeNo();
 	}
 	
 	/*@RequestMapping("updateBoard.do")
