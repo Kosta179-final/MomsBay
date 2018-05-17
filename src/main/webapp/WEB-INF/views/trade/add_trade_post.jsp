@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<form action="addPost" method="post">
+<form action="${pageContext.request.contextPath}/trade/addTradePost.do" method="post">
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
@@ -29,18 +29,6 @@
 					<span>(회원평점)</span>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-5">
-					<span>상품 카테고리 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span>(카테고리)</span>
-				</div>
-			</div>
-		</div>
-		<div class="btn-group">
-			<span><button type="button" class="btn btn-primary">거래하기</button></span>
-			<span><button type="button" class="btn btn-primary">거래취소</button></span>
 		</div>
 	</div>
 </div>
@@ -48,21 +36,13 @@
 <div class="category-tab">
 	<!--category-tab-->
 	<div class="col-sm-12">
-		<div class="tab-content">
-			<div class="tab-pane fade active in" id="reviews">
-				<ul>
-					<li><i class="fa fa-user"></i>(작성자)</li>
-					<li><i class="fa fa-clock-o"></i>(작성시간)</li>
-					<li><i class="fa fa-calendar-o"></i>(작성일)</li>
-				</ul>
-			</div>
-		</div>
-		<ul class="nav">
-			<li><input type="text" name="title" placeholder="제목을 입력하세요"></li>
-		</ul>
+		<textarea rows="1" name="title" placeholder="제목을 입력하세요"></textarea><br><br>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
 	<div class="btn-group">
+		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
+		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
+		<input type="hidden" name="categoryNo" value="${requestScope.categoryNo}">
 		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>
 	</div>
 </div>

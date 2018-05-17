@@ -991,17 +991,10 @@ h2.title {
 	color:#FE980F;
 }
 
-.category-tab {
-  overflow: hidden;
-}
-
-.category-tab ul {
-  background: #40403E;
-  border-bottom: 1px solid #FE980F;
-  list-style: none outside none;
-  margin: 0 0 30px;
-  padding: 0;
-  width: 100%;
+.category-tab nav{
+	text-align: left;
+	font-family: 'Roboto', sans-serif;
+	font-size: 20px;
 }
 
 .category-tab ul li a {
@@ -1260,7 +1253,7 @@ h2.title {
   height: 33px;
   outline: medium none;
   text-align: center;
-  width: 50px;
+  width: 280px;
 }
 
 .product-information span label {

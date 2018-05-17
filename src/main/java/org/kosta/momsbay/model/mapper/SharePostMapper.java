@@ -38,6 +38,15 @@ public interface SharePostMapper {
 	 * 나눔 게시글 상세보기
 	 * @param noneTradePostNo
 	 * @return SharePostVO
+	 * @author rws
 	 */
 	public SharePostVO findDetailSharePost(int noneTradePostNo);
+	
+	
+	/**
+	 * 나눔 게시글 수정
+	 * @param sharePostVO
+	 * @author rws
+	 */
+	public void updateSharePost(SharePostVO sharePostVO);
 }

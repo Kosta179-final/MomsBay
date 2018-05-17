@@ -3,14 +3,10 @@ package org.kosta.momsbay;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.PointService;
-import org.kosta.momsbay.model.vo.MemberVO;
 import org.kosta.momsbay.model.vo.PointHistoryVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;

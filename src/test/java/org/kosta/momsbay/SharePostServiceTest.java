@@ -52,4 +52,26 @@ public class SharePostServiceTest {
 		List<PostVO> list=sharePostMapper.getSharePostList(pagingBean);
 		assertNotNull(list);
 	}
+	
+	/**
+	 * 나눔 게시판 상세보기 테스트
+	 * @author rws
+	 */
+	@Test
+	public void findDetailSharePost() {
+		assertNotNull(sharePostMapper.findDetailSharePost(86));
+	}
+	
+	/**
+	 * 나눔 게시판 내용수정 테스트
+	 * @author rws
+	 */
+	@Test
+	public void updateSharePost() {
+		SharePostVO svo=new SharePostVO();
+		svo.setNoneTradePostNo(82);
+		svo.setTitle("변경하자");
+		svo.setContent("변경하자");
+		sharePostMapper.updateSharePost(svo);
+	}
 }
