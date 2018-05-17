@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		DELETE FROM bay_post WHERE bay_post_no = #{value}
 	</delete>
 	
-	<update id="updateBoard" parameterType="bayPostVO">
+	<update id="updatePost" parameterType="bayPostVO">
 		UPDATE bay_post SET title=#{title},content=#{content}
 		WHERE bay_post_no = #{bayPostNo}
 	</update>

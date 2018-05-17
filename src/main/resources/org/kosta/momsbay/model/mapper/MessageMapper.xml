@@ -4,5 +4,18 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.MessageMapper">
-
+	<insert id="addReceiveMessage" parameterType="messageVO">
+		<selectKey order="BEFORE" resultType="int" keyProperty="messageNo">
+			SELECT receive_message_seq.nextval FROM dual
+		</selectKey>
+		INSERT INTO receive_message(receive_message_no,title,content,regdate,send_id,receive_id)
+		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveId})
+	</insert>
+	<insert id="addSendMessage" parameterType="messageVO">
+		<selectKey order="BEFORE" resultType="int" keyProperty="messageNo">
+			SELECT send_message_seq.nextval FROM dual
+		</selectKey>
+		INSERT INTO send_message(send_message_no,title,content,regdate,send_id,receive_id)
+		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveId})
+	</insert>
 </mapper>
