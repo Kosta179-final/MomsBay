@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.service.BayPostService;
 import org.kosta.momsbay.model.service.QnaPostService;
 import org.kosta.momsbay.model.vo.BayPostVO;
+import org.kosta.momsbay.model.vo.QnaPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
