@@ -73,10 +73,10 @@ public class BayBoardController {
 	 * @param pageNo
 	 * 일반게시판 글삭제 메서드
 	 */
-	@RequestMapping("deleteBoard.do")
-	public String deleteBoard(int bayPostNo) {
-		BayPostVO bayPostVO=bayPostService.deleteBoard(bayPostNo);
-		return "redirect:list_bulletin_post.do?boardTypeNo="+bayPostVO.getBoardTypeNo();
+	@RequestMapping("deletePost.do")
+	public String deleteBoard(int bayPostNo, String boardTypeNo) {
+		bayPostService.deletePost(bayPostNo);
+		return "redirect:list_bulletin_post.do?boardTypeNo="+boardTypeNo;
 	}
 	
 	/*@RequestMapping("updateBoard.do")

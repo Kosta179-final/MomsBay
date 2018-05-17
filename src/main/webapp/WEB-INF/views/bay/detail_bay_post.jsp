@@ -15,7 +15,7 @@
     $(document).ready(function(){
     	$("#deleteBtn").click(function(){ 
     		if(confirm("게시물을 삭제하시겠습니까?"))
-    		location.href="${pageContext.request.contextPath}/deleteBoard.do?bayPostNo=${pvo.bayPostNo}";
+    		location.href="deletePost.do?bayPostNo=${pvo.bayPostNo}&boardTypeNo=${pvo.boardTypeNo}";
     	});
     	$("#updateBtn").click(function(){  
     		if(confirm("게시물을 수정하시겠습니까?"))
