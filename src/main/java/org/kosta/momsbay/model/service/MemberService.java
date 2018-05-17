@@ -58,10 +58,7 @@ public class MemberService {
 	 */
 	public boolean findMemberExsitById(String id) {
 		// TODO Auto-generated method stub
-		if (memberMapper.findMemberExsitById(id)) {
-			return false;
-		} else
-			return true;
+		return memberMapper.findMemberExsitById(id);
 	}
 
 	/**
@@ -96,7 +93,6 @@ public class MemberService {
 				tempMap.put("id", member.getId());
 				tempMap.put("gender", children.get(i).getGender());
 				tempMap.put("birth", children.get(i).getBirth());
-				System.out.println(tempMap);
 				childrenMapper.addChildren(tempMap);
 			}
 		}

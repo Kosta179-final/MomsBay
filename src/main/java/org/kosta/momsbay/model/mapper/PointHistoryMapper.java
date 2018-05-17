@@ -1,6 +1,7 @@
 package org.kosta.momsbay.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.kosta.momsbay.model.vo.PointHistoryVO;
@@ -11,5 +12,7 @@ import org.kosta.momsbay.model.vo.PointHistoryVO;
  */
 @Mapper
 public interface PointHistoryMapper {
-	List<PointHistoryVO> getPointHistoryById(String id);	
+	List<PointHistoryVO> getPointHistoryById(String id);
+	void addPointChargeHistory(Map<String, String> map);
+	void addPointExchangeHistory(Map<String, String> map);	
 }

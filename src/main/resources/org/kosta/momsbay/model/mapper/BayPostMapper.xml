@@ -31,12 +31,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<insert id="addPost" parameterType="bayPostVO">
 		<selectKey keyProperty="bayPostNo" resultType="int" order="BEFORE">
 			SELECT bay_post_seq.nextval FROM dual
-		</selectKey>		
+		</selectKey>
 			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
-			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectNo})
+			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectVO.subjectNo})
 	</insert>
 	<resultMap type="bayPostVO" id="postRM">
 		<result property="memberVO.id" column="id"/>
+		<result property="memberVO.name" column="name"/>
 	</resultMap>
 	<select id="getPostDetail" resultMap="postRM">
 		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no,s.subject_no
@@ -44,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE b.bay_post_no = #{value} and s.subject_no=b.subject_no
 	</select>
 	
-	<delete id="deleteBoard">
+	<delete id="deletePost">
 		DELETE FROM bay_post WHERE bay_post_no = #{value}
 	</delete>
 	

@@ -60,7 +60,6 @@
 								<c:if test="${member.grade  eq 'admin'}">
 								<li><a href="#"><i class="fa fa-user"></i> 관리자 페이지</a></li>
 								</c:if>
-								<li><a href="${pageContext.request.contextPath}/myaccount/findNowpointById.do"><i class="fa fa-usd"></i> 포인트 충전/환전</a></li>
 								<li><a href="#"><i class="fa fa-heart"></i> 찜목록</a></li>
 								<li><a href="#"><i class="fa fa-envelope"></i> 쪽지</a></li>
 								<li><a href="${pageContext.request.contextPath}/member/logout.do"><i class="fa fa-unlock"></i> 로그아웃</a></li>
@@ -73,43 +72,3 @@
 	</div>
 </div>
 <!--/header-middle-->
-
-<div class="header-bottom">
-	<!--header-bottom-->
-	<div class="container">
-		<div class="row">
-			<div class="col-sm-9">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse"
-						data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span> <span
-							class="icon-bar"></span> <span class="icon-bar"></span> <span
-							class="icon-bar"></span>
-					</button>
-				</div>
-				<div class="mainmenu pull-left">
-					<ul class="nav navbar-nav collapse navbar-collapse">
-						<li><a href="${pageContext.request.contextPath}/home.do"
-							class="active">Home</a></li>
-						<li class="dropdown"><a href="#this">중고나라<i
-								class="fa fa-angle-down"></i></a>
-							<ul role="menu" class="sub-menu">
-								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=1&categoryNo=1">삽니다</a></li>
-								<li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=2&categoryNo=1">팝니다</a></li>
-								<li><a	href="${pageContext.request.contextPath}/trade/list_share_post.do?boardTypeNo=3">나눔</a></li>
-								<li><a href="${pageContext.request.contextPath}/trade/exchange_list.do?boardTypeNo=4">교환</a></li>
-							</ul></li>
-						<li><a href="${pageContext.request.contextPath}/bay/list_bulletin_post.do?boardTypeNo=5">자유게시판</a></li>
-						<li><a href="${pageContext.request.contextPath}/bay/list_qna_post.do?boardTypeNo=6">Q &amp; A</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="col-sm-3">
-				<div class="search_box pull-right">
-					<input type="text" placeholder="Search" />
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
-<!--/header-bottom-->

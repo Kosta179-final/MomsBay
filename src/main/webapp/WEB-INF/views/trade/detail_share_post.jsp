@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
@@ -46,8 +45,16 @@
 		</div>
 	</div>
 </div>
-
 <div class="category-tab">	
 	<h1 align="left">DETAIL INFO</h1><hr>
-	<pre>${requestScope.pvo.content}</pre>
+	<%-- <pre>${requestScope.pvo.content}</pre> --%>
+	<pre style="text-align:left">${requestScope.pvo.content}</pre>
 </div>
+<div class="btn-group">
+	<p class="btn btn-primary">
+    	<span><a href="update_share_post.do?noneTradePostNo=${pvo.noneTradePostNo}">수정</a>&nbsp;</span>
+	</p>
+</div>
+
+
+

@@ -11,8 +11,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 <!-- 나눔 글쓰기 -->
 <insert id="addSharePost" parameterType="sharePostVO">
+	<selectKey keyProperty="noneTradePostNo" resultType="int" order="BEFORE">
+		SELECT none_trade_post_seq.nextval FROM dual
+	</selectKey>
 	INSERT INTO none_trade_post(none_trade_post_no, title, content, regdate, id, category_no, board_type_no) 
-	VALUES(none_trade_post_seq.nextval,#{title},#{content},sysdate,#{memberVO.id},#{categoryNo},#{boardTypeNo})
+	VALUES(none_trade_post_seq.currval,#{title},#{content},sysdate,#{memberVO.id},#{categoryNo},#{boardTypeNo})
 </insert>
 <!-- 나눔 게시글 갯수 -->
 <select id="getTotalSharePostCount" resultType="int">
@@ -32,4 +35,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM none_trade_post 
 	WHERE none_trade_post_no=#{value}
 </select>
+<!-- 나눔 게시글 수정 -->
+<update id="updateSharePost" parameterType="sharePostVO">
+	UPDATE none_trade_post 
+	SET title=#{title},content=#{content}  
+	WHERE none_trade_post_no=#{noneTradePostNo}
+</update>
 </mapper>

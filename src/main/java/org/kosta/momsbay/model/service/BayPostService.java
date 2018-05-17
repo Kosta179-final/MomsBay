@@ -31,12 +31,15 @@ public class BayPostService {
 	public void addPost(BayPostVO bayPostVO) {
 		bayPostMapper.addPost(bayPostVO);
 	}
+	
 	public BayPostVO getPostDetail(int bayPostNo) {
 		return bayPostMapper.getPostDetail(bayPostNo);
 	}
-	public void deleteBoard(int bayPostNo) {
-		bayPostMapper.deleteBoard(bayPostNo);
+	
+	public void deletePost(int bayPostNo) {
+		bayPostMapper.deletePost(bayPostNo);
 	}
+	
 	public void updateBoard(BayPostVO bayPostVO) {
 		bayPostMapper.updateBoard(bayPostVO);
 	}

@@ -50,7 +50,13 @@ public class BayBoardController {
 	@RequestMapping("write.do")
 	public String write(BayPostVO bayPostVO) {
 		bayPostService.addPost(bayPostVO);
-		return "redirect:list_bulletin_post.do";
+		return "redirect:list_bulletin_post.do?boardTypeNo="+bayPostVO.getBoardTypeNo();
+	}
+	@RequestMapping("list_bulletin_post.do")
+	public String list(Model model, String pageNo, String boardTypeNo) {
+		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo));
+		model.addAttribute("boardTypeNo", boardTypeNo);
+		return "bay/list_bulletin_post" + ".tiles";
 	}
 	/**
 	 * 일반게시판 글목록 상세보기 메서드
@@ -69,9 +75,10 @@ public class BayBoardController {
 	 * @param pageNo
 	 * @author barom
 	 */
-	@RequestMapping("deleteBoard.do")
-	public ModelAndView deleteBoard(int bayPostNo,String pageNo) {
-		return new ModelAndView("bay/detail_bay_post","lvo",bayPostService.getBayPostList(pageNo));
+	@RequestMapping("deletePost.do")
+	public String deleteBoard(int bayPostNo, String boardTypeNo) {
+		bayPostService.deletePost(bayPostNo);
+		return "redirect:list_bulletin_post.do?boardTypeNo="+boardTypeNo;
 	}
 	
 	/*@RequestMapping("updateBoard.do")
