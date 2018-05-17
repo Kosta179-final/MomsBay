@@ -53,4 +53,7 @@ public class QnaPostService {
 	public void deleteQnaPost(int bayPostNo) {
 		qnaPostMapper.deleteQnaPost(bayPostNo);
 	}
+	public void updateQnaPost(QnaPostVO qnaPostVO) {
+		qnaPostMapper.updateQnaPost(qnaPostVO);
+	}
 }
