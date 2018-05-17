@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
+	function updateSharePost() {
+		location.href="${pageContext.request.contextPath}/trade/update_share_post.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
+	}
+	function deleteSharePost() {
+		location.href="${pageContext.request.contextPath}/trade/deleteSharePost.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
+	}
+</script>
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
@@ -50,11 +58,15 @@
 	<%-- <pre>${requestScope.pvo.content}</pre> --%>
 	<pre style="text-align:left">${requestScope.pvo.content}</pre>
 </div>
-<div class="btn-group">
-	<p class="btn btn-primary">
-    	<span><a href="update_share_post.do?noneTradePostNo=${pvo.noneTradePostNo}">수정</a>&nbsp;</span>
-	</p>
-</div>
-
+<c:if test="${!empty member}">
+	<div class="row">
+		<div class="col-sm-11">
+			<div align="right">
+				<button name="button" class="btn btn-primary" onclick="updateSharePost()">글수정</button>
+				<button name="button" class="btn btn-primary" onclick="deleteSharePost()">글삭제</button>
+			</div>
+		</div>
+	</div>
+</c:if>
 
 

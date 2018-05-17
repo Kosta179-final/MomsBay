@@ -1,17 +1,15 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import java.util.List;
 
 import javax.annotation.Resource;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.SharePostMapper;
+import org.kosta.momsbay.model.service.SharePostService;
 import org.kosta.momsbay.model.vo.MemberVO;
-import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.SharePostVO;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -22,6 +20,8 @@ public class SharePostServiceTest {
 	
 	@Resource
 	SharePostMapper sharePostMapper;
+	@Resource
+	SharePostService sharePostService;
 	
 	/**
 	 * 나눔 게시판 글쓰기 테스트
@@ -47,10 +47,7 @@ public class SharePostServiceTest {
 	 */
 	@Test
 	public void getSharePostList() {
-		int totalCount=sharePostMapper.getTotalSharePostCount();
-		PagingBean pagingBean=new PagingBean(totalCount);
-		List<PostVO> list=sharePostMapper.getSharePostList(pagingBean);
-		assertNotNull(list);
+		assertNotNull(sharePostService.getSharePostList("1", "3", "1"));
 	}
 	
 	/**
@@ -73,5 +70,14 @@ public class SharePostServiceTest {
 		svo.setTitle("변경하자");
 		svo.setContent("변경하자");
 		sharePostMapper.updateSharePost(svo);
+	}
+	
+	/**
+	 * 나눔 게시판 글삭제 테스트
+	 * @author rws
+	 */
+	@Test
+	public void deleteSharePost() {
+		assertNotNull("성공",sharePostService.deleteSharePost(93));
 	}
 }
