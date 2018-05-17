@@ -109,6 +109,18 @@
 					<label>현재 보유 포인트: ${point }</label> <br> 
 					<label>환전 할 포인트:</label> 
 					<input type="number" name="exchangePoint" id="excPoint" placeholder="ex)10000" style="width: 100px;" required="required">				
+					<hr>
+					<label>환불받을 계좌 정보</label>					
+					<select  style="width: 100px;">
+					<option>신한</option>
+					<option>우리</option>
+					<option>국민</option>
+					<option>IBK</option>
+					<option>하나</option>
+					</select>
+					<label>계좌번호:</label>	<input type="number" placeholder="-는 빼고 입력해주세요." style="width: 200px;" required="required">
+					<br>
+					
 					<input type="button" id="exchangeBtn" class="btn btn-default" data-toggle="modal" data-target="#passwordModal" value="환전하기">
 				</div>
 				<br>
