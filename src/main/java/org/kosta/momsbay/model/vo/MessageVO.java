@@ -4,12 +4,18 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
+/**
+ * 
+ * @author kim
+ * Message 데이터를 담는 객체.
+ *
+ */
 @Data
 @EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReceiveMessageVO extends PostVO{
-	private String sendId;
+public class MessageVO extends PostVO{
+	private int messageNo;
+	private String receiveId;
 	private boolean status;
 }

@@ -52,7 +52,7 @@
 	</div>
 		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
-		<input type="hidden" name="categoryNo" value="1">
+		<input type="hidden" name="categoryNo" value="${requestScope.categoryNo}">
 	<div class="btn-group">
 		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>
 	</div>

@@ -44,7 +44,7 @@ public class TradeBoardController {
 		if(boardTypeNo.equals("1") || boardTypeNo.equals("2")) {
 			model.addAttribute("listVO", tradePostService.getTradePostList(pageNo,boardTypeNo,categoryNo));
 		} else if(boardTypeNo.equals("3") || boardTypeNo.equals("4")) {
-			model.addAttribute("svo", sharePostService.getSharePostList(pageNo));
+			model.addAttribute("svo", sharePostService.getSharePostList(pageNo,boardTypeNo,categoryNo));
 		}
 		return "service_trade" + ".page_" + viewName;
 	}
@@ -135,6 +135,7 @@ public class TradeBoardController {
 	 * @param tradePostNo
 	 * @param model
 	 * @return detail_trade_post.jsp
+	 * @author rws
 	 */
 	@RequestMapping("detail_trade_post.do")
 	public String detailTradePost(String tradePostNo,Model model) {
@@ -146,6 +147,7 @@ public class TradeBoardController {
 	/**
 	 * 나눔게시판 상세보기 메서드
 	 * @return service_trade.page_detail_share_post
+	 * @author rws
 	 */
 	@RequestMapping("/detail_share_post.do")
 	public String findDetailSharePost(String noneTradePostNo, Model model) {
@@ -156,7 +158,7 @@ public class TradeBoardController {
 	/**
 	 * 나눔 게시판 글쓰기
 	 * @param tradePostVO
-	 * @return 나눔 게시판 List
+	 * @return detail_share_post.jsp
 	 * @author rws
 	 */
 	@RequestMapping("shareWrite.do")
@@ -165,16 +167,40 @@ public class TradeBoardController {
 		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo();
 	}
 	
-	@RequestMapping("update_share_post.do")
+	/**
+	 * 나눔 게시판 게시글 수정 페이지로 이동하는 메서드
+	 * @param noneTradePostNo
+	 * @param model
+	 * @return update_share_post.jsp
+	 */
+	@RequestMapping("/update_share_post.do")
 	public String updateSharePostView(String noneTradePostNo, Model model) {
 		model.addAttribute("pvo", sharePostService.updateSharePostView(Integer.parseInt(noneTradePostNo)));
 		return "service_trade.page_update_share_post";
 	}
 	
-	@RequestMapping("/updateSharePost.do")
+	/**
+	 * 나눔 게시판 게시글 수정 submit 메서드
+	 * @param sharePostVO
+	 * @return 
+	 * @author rws
+	 */
+	@RequestMapping(value="/updateSharePost.do", method=RequestMethod.POST)
 	public String updateSharePost(SharePostVO sharePostVO) {
 		sharePostService.updateSharePost(sharePostVO);
 		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo();
+	}
+	
+	/**
+	 * 나눔 게시판 게시글 삭제 메서드
+	 * @param sharePostVO
+	 * @return
+	 * @author rws
+	 */
+	@RequestMapping("/deleteSharePost.do")
+	public String deleteSharePost(String noneTradePostNo) {
+		SharePostVO sharePostVO=sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
+		return "redirect:list_share_post.do?boardTypeNo="+sharePostVO.getBoardTypeNo()+"&categoryNo="+sharePostVO.getCategoryNo()+"";
 	}
 }
 
