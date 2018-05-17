@@ -3,13 +3,14 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <div class="container">
+	<div class="col-sm-8">
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab" href="#home">총 내역</a></li>
 		<li><a data-toggle="tab" href="#menu1">거래내역</a></li>
 		<li><a data-toggle="tab" href="#menu2">충전내역</a></li>
 		<li><a data-toggle="tab" href="#menu3">환전내역</a></li>
 	</ul>
-
+	</div>
 	<div class="tab-content row text-left col-sm-8">
 		<div id="home" class="tab-pane fade in active">
 			<br>

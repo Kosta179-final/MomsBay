@@ -46,4 +46,11 @@ public class MyAccountServiceTest {
 		pointHistory = historyService.getPointHistoryById(id);
 		System.out.println(pointHistory);
 	}
+	
+	@Test
+	public void exchangePoint(){
+		String id="java";
+		String exchangePoint="200";
+		historyService.addPointExchangeHistory(id, exchangePoint);
+	}
 }

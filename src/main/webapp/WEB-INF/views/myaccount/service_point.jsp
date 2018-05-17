@@ -14,6 +14,7 @@
 			}
 			alert("서비스 예정입니다.");
 		});
+		
 		$("#chargeBtn").click(function() {
 			var point = $("#point").val();
 			if (point < 1000) {
@@ -29,6 +30,25 @@
 				}
 			}
 		});
+		
+		$("#exchangeBtn").click(function() {
+			var point = $("#excPoint").val();
+			if(point==''){
+				alert("환전금액을 입력 해 주세요.");
+				return false;
+			}else if(point > ${point}) {
+				alert("환전 가능 금액보다 큽니다. \n다시 입력해주세요.");
+				return false;
+			} else {
+				return true;
+			}
+		});
+		
+		$("#exgBtn").click(function(){
+			var input = $("<input>").attr("type", "password").attr("name", "exchangePoint").val($('#excPoint').val());
+			 $('#exgForm').append($(input));
+			$("#exgForm").submit();
+		});
 	});
 </script>
 
@@ -38,16 +58,17 @@
 }
 </style>
 
-<form action="chargePoint.do" method="post" id="chargeForm">
-	<div class="container">
-		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#home">포인트 충전</a></li>
-			<li><a data-toggle="tab" href="#menu1">포인트 환전</a></li>
+
+<div class="container">
+	<div class="col-sm-8">
+		<ul class="nav nav-tabs ">
+			<li class="active"><a data-toggle="tab" href="#pointCharge">포인트 충전</a></li>
+			<li><a data-toggle="tab" href="#pointExchange">포인트 환전</a></li>
 		</ul>
-
+		</div>
 		<div class="tab-content row text-left col-sm-8">
-
-			<div id="home" class="tab-pane fade in active">
+			<div id="pointCharge" class="tab-pane fade in active">
+			<form action="chargePoint.do" method="post" class="exgForm">
 				<h3>포인트란?</h3>
 				<p>맘스베이에서 서비스하는 제품의 컨텐츠를 이용하기 위해 회원이 구매하는 인터넷 상의 결제수단입니다.</p>
 				<div class="btn-group" style="width: 100%; padding-bottom: 10px">
@@ -72,6 +93,29 @@
 					<label>충전 포인트:</label> <input type="text" name="point" id="point" placeholder="ex)100000" style="width: 100px;" required="required">
 					<button type="button" id="chargeBtn" class="btn btn-default" data-toggle="modal" data-target="#myModal">충전하기</button>
 				</div>
+			</form>
+			</div>
+			
+			<div id="pointExchange" class="tab-pane fade">
+			<!-- <form class="exgForm" action="exchangePoint.do"> -->
+				<h3>포인트 환전 방법</h3>
+				<p>1.현재 보유한 포인트를 확인합니다.</p>
+				<p>2.환전할 포인트 액수를 입력합니다.</p>
+				<p>3.환전 받을 계좌번호와 은행을 입력합니다.</p>
+				<p>4.비밀번호를 입력하면 환전신청이 완료됩니다.</p>
+				<p>5.환전은 3-4일 후 해당 계좌에서 확인하실 수 있습니다.</p>
+				<hr>
+				<div class="btn-group" style="width: 100%; padding-bottom: 10px">
+					<label>현재 보유 포인트: ${point }</label> <br> 
+					<label>환전 할 포인트:</label> 
+					<input type="number" name="exchangePoint" id="excPoint" placeholder="ex)10000" style="width: 100px;" required="required">				
+					<input type="button" id="exchangeBtn" class="btn btn-default" data-toggle="modal" data-target="#passwordModal" value="환전하기">
+				</div>
+				<br>
+				<br> <br>
+				<div id="terms" class="collapse">				
+				</div>
+			<!-- </form> -->
 			</div>
 		</div>
 		<!--  modal -->
@@ -87,7 +131,7 @@
 					</div>
 
 					<div class="modal-body">
-						<p>휴대폰 번호</p>
+						<p>휴대폰 번호</p>				
 						<input type="text" class="form-control" placeholder="ex)010-1234-5678" style="width: 30%; margin: 0 auto; padding-bottom: 10px;" required="required"> 
 						<input type="button" onclick="document.getElementById('chargeForm').submit();" class="btn btn-info form-control" style="width: 30%; margin: 0 auto;" data-dismiss="modal" value="확인">
 					</div>
@@ -97,5 +141,30 @@
 				</div>
 			</div>
 		</div>
+		
+						<!-- Modal content-->
+		<div class="modal fade" id="passwordModal" role="dialog">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">환전 페이지</h4>
+					</div>
+
+					<div class="modal-body">
+						<p>비밀번호를 입력해 주세요.</p>
+						<div>
+						<form id="exgForm" action="exchangePoint.do">
+						<input type="password" min="0" name="password" id="password" class="form-control" placeholder="password" style="width: 30%; margin: 0 auto;" required="required"> 
+						<input type="button" class="btn btn-info form-control" id="exgBtn"style="width: 30%; margin: 0 auto;" data-dismiss="modal" value="확인">
+						</form>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+					</div>
+				</div>
+			</div>
+		</div>
 </div>
-</form>
+
