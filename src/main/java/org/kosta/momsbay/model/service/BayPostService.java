@@ -40,7 +40,7 @@ public class BayPostService {
 		bayPostMapper.deletePost(bayPostNo);
 	}
 	
-	public void updateBoard(BayPostVO bayPostVO) {
-		bayPostMapper.updateBoard(bayPostVO);
+	public void updatePost(BayPostVO bayPostVO) {
+		bayPostMapper.updatePost(bayPostVO);
 	}
 }

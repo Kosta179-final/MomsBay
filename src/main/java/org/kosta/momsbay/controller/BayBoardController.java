@@ -74,16 +74,23 @@ public class BayBoardController {
 	 * 일반게시판 글삭제 메서드
 	 */
 	@RequestMapping("deletePost.do")
-	public String deleteBoard(int bayPostNo, String boardTypeNo) {
+	public String deletePost(int bayPostNo, int boardTypeNo) {
 		bayPostService.deletePost(bayPostNo);
 		return "redirect:list_bulletin_post.do?boardTypeNo="+boardTypeNo;
 	}
 	
-	/*@RequestMapping("updateBoard.do")
-	public ModelAndView updateBoard(BayPostVO bayPostVO,int bayPostNo) {
-		bayPostService.updateBoard(bayPostVO);
-		return new ModelAndView("bay/list_bulletin_post","pvo",bayPostService.getPostDetail(bayPostNo));
-	}*/
+	@RequestMapping("updatePostView.do")
+	public String updatePostView(int boardTypeNo,int bayPostNo,Model model) {
+		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
+		return "bay/update_bay_post"+".tiles";
+	}
+	
+	@RequestMapping("updatePost.do")
+	public String updatePost(BayPostVO bayPostVO) {
+		bayPostService.updatePost(bayPostVO);
+		//System.out.println(bayPostVO);
+		return "redirect:detail_bay.do?bayPostNo="+bayPostVO.getBayPostNo();
+	}
 	/**
 	 * @param bayPostNo
 	 * @param model
