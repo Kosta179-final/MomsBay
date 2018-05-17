@@ -9,7 +9,7 @@
     	});
     	$("#updateBtn").click(function(){  
     		if(confirm("게시물을 수정하시겠습니까?"))
-    		location.href="${pageContext.request.contextPath}/updateQnaPost.do?bayPostNo=${qvo.bayPostNo}";
+    		location.href="updateQnaPostView.do?bayPostNo=${qvo.bayPostNo}&boardTypeNo=${qvo.boardTypeNo}";
     	});
     });	
 </script>

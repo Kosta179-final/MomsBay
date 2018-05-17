@@ -2,8 +2,6 @@ package org.kosta.momsbay;
 
 import static org.junit.Assert.assertNotNull;
 
-import java.util.List;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kosta.momsbay.model.common.PagingBean;
@@ -11,7 +9,6 @@ import org.kosta.momsbay.model.mapper.BayPostMapper;
 import org.kosta.momsbay.model.mapper.QnaPostMapper;
 import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.MemberVO;
-import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -76,18 +73,14 @@ public class BayPostMapperTest {
 	public void deleteBoard(int bayPostNo) {
 	}
 */
-	/*@Test
-	public void updateBoard() {
-		BayPostVO bayPostVO=new BayPostVO();
-		bayPostVO.setBayPostNo(1);
-		bayPostVO.setSubjectNo(1);
-		bayPostVO.setTitle("test");
-		bayPostVO.setContent("test입니다.");
-		bayPostVO.setMemberVO(new MemberVO());
-		bayPostVO.getMemberVO().setId("java");
-		bayPostVO.setBoardTypeNo(5);
-		mapper.updateBoard(bayPostVO);
-		BayPostVO dbBayPostVO=mapper.getPostDetail(bayPostVO.getBayPostNo());
-		System.out.println(dbBayPostVO.getTitle() +" "+ dbBayPostVO.getContent());
-	}*/
+	@Test
+	public void updateQnaPost() {
+		
+		QnaPostVO qnaPostVO=qnaPostMapper.getQnaDetail(6);
+		qnaPostVO.setTitle("test..");
+		qnaPostVO.setContent("test입니다..");
+		qnaPostMapper.updateQnaPost(qnaPostVO);
+		//System.out.println(qnaPostVO.getTitle() +" "+ qnaPostVO.getContent());
+		//assertEquals(qnaPostMapper.getQnaDetail(6), qnaPostMapper.updateQnaPost(qnaPostVO));
+	}
 }
