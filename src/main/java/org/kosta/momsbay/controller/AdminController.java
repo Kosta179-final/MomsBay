@@ -30,6 +30,12 @@ public class AdminController {
 		return "service_admin" + ".page_" + viewName;
 	}
 	
+	/**
+	 * 회원 리스트를 조회하는 메소드.
+	 * @param request
+	 * @return url
+	 * @author Hwang
+	 */
 	@RequestMapping("getPeopleList.do")
 	public String getPeopleList(HttpServletRequest request) {
 		request.setAttribute("memberList", memberService.getMemberList(1));
@@ -37,6 +43,12 @@ public class AdminController {
 		return "service_admin" + ".page_management_member";
 	}
 	
+	/**
+	 * 멤버등급 변경하는 메소드.
+	 * @param id
+	 * @return 회원변경 타입
+	 * @author Hwang
+	 */
 	@RequestMapping("updateMemberStatus.do")
 	public @ResponseBody Map<String, String> updateMemberStatus(@RequestParam(required = true) String id) {
 		Map<String, String> map = new HashMap<String, String>();
