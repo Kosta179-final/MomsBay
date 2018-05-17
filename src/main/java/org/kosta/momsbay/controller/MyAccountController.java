@@ -87,11 +87,9 @@ public class MyAccountController {
 	}
 
 	/**
-	 * 포인트 충전.
-	 * 포인트 충전과 내역남기기는 동시에 이루어진다.
-	 * 고로 트랜젝셔널 처리.
-	 * 실패 시 실패 메시지를 던진다.
-	 * 성공 시 성공 메시지를 던진다.
+	 * 포인트 충전. 포인트 충전과 내역남기기는 동시에 이루어진다. 고로 트랜젝셔널 처리. 실패 시 실패 메시지를 던진다. 성공 시 성공 메시지를
+	 * 던진다.
+	 * 
 	 * @param request
 	 * @param point
 	 * @return url과 메시지
@@ -101,22 +99,23 @@ public class MyAccountController {
 	@RequestMapping("chargePoint.do")
 	public String chargePoint(HttpServletRequest request, String point) {
 		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("member");		
-		String msg="";
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		String msg = "";
 		try {
-			String id = member.getId();			
+			String id = member.getId();
 			pointService.updateChargePoint(id, point);
 			historyService.addPointChargeHistory(id, point);
-			msg="success!";
-		}catch(Exception e){
-			msg="fail try again";
-		}finally {
-			return "redirect:charge_point_status.do?message="+msg;		
+			msg = "success!";
+		} catch (Exception e) {
+			msg = "fail try again";
+		} finally {
+			return "redirect:charge_point_status.do?message=" + msg;
 		}
 	}
-	
+
 	/**
 	 * 포인트 조회.
+	 * 
 	 * @param request
 	 * @return url
 	 */
@@ -125,8 +124,35 @@ public class MyAccountController {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		String id = member.getId();
-		String point =pointService.findNowpointById(id);
+		String point = pointService.findNowpointById(id);
 		session.setAttribute("point", point);
 		return "service_myaccount" + ".page_" + "service_point";
+	}
+
+	@Transactional
+	@RequestMapping("exchangePoint.do")
+	public String exchangePoint(HttpServletRequest request, String password, String exchangePoint) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		String id = member.getId();
+		String msg = "";
+		/*
+		 * 비밀번호 체크 후 ->환전 후->내역남기기
+		 */
+		if (memberService.findMemberByPasswordAndId(id, password)) {
+			try {
+				pointService.updateExchangePoint(id, exchangePoint);
+				historyService.addPointExchangeHistory(id, exchangePoint);
+				msg= "Exchange Success!";
+			} catch (Exception e) {
+				msg = "Exchange Error! Try Again";
+			}
+		} else {
+			/* 비밀번호가 틀렸으니 쫒아낸다. */
+			msg = "password error! Try Again";
+		}
+		String point = pointService.findNowpointById(id);
+		session.setAttribute("point", point);
+		return "redirect:charge_point_status.do?message=" + msg;
 	}
 }

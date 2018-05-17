@@ -1,7 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<script>
+	function addQnaPost(){
+		location.href="add_qna_post.do?boardTypeNo=${requestScope.boardTypeNo}";
+	}
+</script>
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -40,7 +44,7 @@
 			</div>
 			<div class="col-sm-11 off-set-1">
 					<div align="right">
-						<button name="button" class="btn btn-primary" onclick="addPost()">글쓰기</button><br>
+						<button name="button" class="btn btn-primary" onclick="addQnaPost()">글쓰기</button><br>
 					</div>
 			</div>
 			<%-- 페이징빈 부분 --%>

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	function addSharePost(){
-		location.href="add_share_post.do?boardTypeNo=${requestScope.boardTypeNo}";
+		location.href="add_share_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}";
 	}
 </script>
 <div class="features_items">

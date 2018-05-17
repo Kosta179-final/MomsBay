@@ -46,4 +46,13 @@ public class HistoryService {
 		pointHistoryMapper.addPointChargeHistory(map);
 	}
 
+	public void addPointExchangeHistory(String id, String exchangePoint) {
+		Map<String, String> map = new HashMap<String, String>();
+		String nPoint = memberMapper.findNowpointById(id);
+		map.put("id", id);
+		map.put("point", exchangePoint);
+		map.put("nowPoint", nPoint);
+		pointHistoryMapper.addPointExchangeHistory(map);
+	}
+
 }

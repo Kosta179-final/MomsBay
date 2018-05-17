@@ -36,8 +36,8 @@ public class BayPostService {
 		return bayPostMapper.getPostDetail(bayPostNo);
 	}
 	
-	public void deleteBoard(int bayPostNo) {
-		bayPostMapper.deleteBoard(bayPostNo);
+	public void deletePost(int bayPostNo) {
+		bayPostMapper.deletePost(bayPostNo);
 	}
 	
 	public void updateBoard(BayPostVO bayPostVO) {

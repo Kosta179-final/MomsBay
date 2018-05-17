@@ -54,6 +54,8 @@ public interface TradePostMapper {
 	 * @author Jung
 	 */
 	public void deleteTradePost(int tradePostNo);
+
+	public void updateTradePost(TradePostVO tradePostVO);
 	
 }
 

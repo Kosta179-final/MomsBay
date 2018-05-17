@@ -52,7 +52,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE trade_post_no=#{value}
 	</update>
 	
-	
+	<update id="updateTradePost" parameterType="tradePostVO">
+		UPDATE trade_post
+		SET title = #{title}, content = #{content}, price = #{price}
+		WHERE trade_post_no = #{tradePostNo}
+	</update>
 	
 </mapper>
 

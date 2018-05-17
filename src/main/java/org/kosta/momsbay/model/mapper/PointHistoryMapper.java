@@ -13,5 +13,6 @@ import org.kosta.momsbay.model.vo.PointHistoryVO;
 @Mapper
 public interface PointHistoryMapper {
 	List<PointHistoryVO> getPointHistoryById(String id);
-	void addPointChargeHistory(Map<String, String> map);	
+	void addPointChargeHistory(Map<String, String> map);
+	void addPointExchangeHistory(Map<String, String> map);	
 }
