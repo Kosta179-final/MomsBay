@@ -10,5 +10,6 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PointMapper {
 	void updateChargePoint(String id, String point);
-	void updateChargePoint(Map<String, String> map);	
+	void updateChargePoint(Map<String, String> map);
+	void updateExchangePoint(Map<String, String> map);	
 }

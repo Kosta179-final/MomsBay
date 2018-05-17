@@ -1,5 +1,6 @@
 package org.kosta.momsbay.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,10 +59,7 @@ public class MemberService {
 	 */
 	public boolean findMemberExsitById(String id) {
 		// TODO Auto-generated method stub
-		if (memberMapper.findMemberExsitById(id)) {
-			return false;
-		} else
-			return true;
+		return memberMapper.findMemberExsitById(id);
 	}
 
 	/**
@@ -100,11 +98,23 @@ public class MemberService {
 			}
 		}
 	}
-
+	
+	/**
+	 * 회원정보 수정 메소드.
+	 * @param member
+	 * @author hwang
+	 */
 	public void updateMember(MemberVO member) {
 		memberMapper.updateMember(member);
 	}
 
+	/**
+	 * 포인트 환전시 비밀번호 일치하는지 확인하는 메소드.
+	 * @param id
+	 * @param password
+	 * @return flag
+	 * @author hwang
+	 */
 	public boolean findMemberByPasswordAndId(String id, String password) {
 		Map<String, String> temp_map = new HashMap<String, String>();
 		temp_map.put("id", id);
@@ -116,4 +126,35 @@ public class MemberService {
 			return true;
 		}
 	}
+
+	/**
+	 * 회원 리스트를 등급별로 출력하는 메소드.
+	 * @param i
+	 * @return 회원 리스트.
+	 * @author hwang
+	 */
+	public List<String> getMemberList(int i) {
+		List<String> list = new ArrayList<String>();
+		list=memberMapper.getMemberList(i);
+		return list;
+	}
+
+	/**
+	 * 회원 등급 업데이트하는 메서드.
+	 * @param id
+	 * @return 업데이트 현황.
+	 */
+	public String updateMemberStatus(String id) {
+		int grade_no = memberMapper.findMemberGradeById(id);
+		if(grade_no==1) {
+			memberMapper.updateMemberToBlackList(id);
+			return "toBlackList";
+		}else if(grade_no==3){
+			memberMapper.updateBlackListToMember(id);
+			return "toMemberList";
+		}else {
+			return "admin";
+		}
+	}
+
 }

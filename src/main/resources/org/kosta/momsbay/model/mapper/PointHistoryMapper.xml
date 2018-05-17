@@ -11,8 +11,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND id=#{values} 
 		ORDER BY h.regdate DESC
 	</select>
+	
 	<insert id="addPointChargeHistory" parameterType="map">
 		INSERT INTO point_history
 		VALUES(point_history_SEQ.nextval, sysdate, #{point}, #{id}, 3, #{nowPoint})
+	</insert>
+	
+	<insert id="addPointExchangeHistory" parameterType="map">
+		INSERT INTO point_history
+		VALUES(point_history_SEQ.nextval, sysdate, #{point}, #{id}, 4, #{nowPoint})
 	</insert>
 </mapper>

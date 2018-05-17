@@ -1,17 +1,13 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
-
-import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.BayPostMapper;
 import org.kosta.momsbay.model.mapper.QnaPostMapper;
 import org.kosta.momsbay.model.vo.BayPostVO;
-import org.kosta.momsbay.model.vo.MemberVO;
-import org.kosta.momsbay.model.vo.PostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,7 +25,7 @@ public class BayPostMapperTest {
 	 * 페이징 처리된 Q&A 게시판의 목록을 보여주는 테스트
 	 * @author sam
 	 */
-	@Test
+	/*@Test
 	public void getQnaPostList() {
 		PagingBean pagingBean = new PagingBean(qnaPostMapper.getTotalPostCount());
 		pagingBean.setPostCountPerPage(1);
@@ -42,7 +38,7 @@ public class BayPostMapperTest {
 		PagingBean pagingBean=null;
 		pagingBean=new PagingBean(totalCount);
 		assertNotNull(mapper.getBayPostList(pagingBean));
-	}
+	}*/
 	
 	/*@Test
 	public void getTotalPostCount() {
@@ -64,25 +60,22 @@ public class BayPostMapperTest {
 	@Test
 	public void getPostDetail() {
 		BayPostVO dbBayPostVO=mapper.getPostDetail(1);
-		//assertEquals(bayPostVO, dbBayPostVO);
+		assertNotNull(dbBayPostVO);
 	}
-
+	/*
 	@Test
 	public void deleteBoard(int bayPostNo) {
 	
-	}
+	}*/
 /**/
 	@Test
-	public void updateBoard() {
-		BayPostVO bayPostVO=new BayPostVO();
-		bayPostVO.setBayPostNo(1);
-		bayPostVO.getSubjectVO().setSubjectNo(1);
-		bayPostVO.setTitle("test");
-		bayPostVO.setContent("test입니다.");
-		bayPostVO.setMemberVO(new MemberVO());
-		bayPostVO.getMemberVO().setId("java");
-		bayPostVO.setBoardTypeNo(5);
-		mapper.updateBoard(bayPostVO);
+	public void updatePost() {
+		BayPostVO bayPostVO=mapper.getPostDetail(1);
+		bayPostVO.setTitle("test1");
+		bayPostVO.setContent("test입니다...");
+		mapper.updatePost(bayPostVO);
 		BayPostVO dbBayPostVO=mapper.getPostDetail(bayPostVO.getBayPostNo());
+		assertEquals(bayPostVO.getTitle(), dbBayPostVO.getTitle());
+		assertEquals(bayPostVO.getContent(), dbBayPostVO.getContent());
 	}
 }

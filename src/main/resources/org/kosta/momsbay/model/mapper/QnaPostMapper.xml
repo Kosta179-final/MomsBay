@@ -26,4 +26,19 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM bay_post b, subject s
 		WHERE b.bay_post_no = #{value} and s.subject_no=b.subject_no
 	</select>
+	<insert id="addQnaPost" parameterType="qnaPostVO">
+		<selectKey keyProperty="bayPostNo" resultType="int" order="BEFORE">
+			SELECT bay_post_seq.nextval FROM dual
+		</selectKey>
+			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
+			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectNo})
+	</insert>
+	<delete id="deleteQnaPost">
+		DELETE FROM bay_post WHERE bay_post_no = #{value}
+	</delete>
+	<update id="updateQnaPost" parameterType="qnaPostVO">
+		UPDATE bay_post
+		SET title = #{title}, content = #{content}
+		WHERE bay_post_no = #{bayPostNo}
+	</update>
 </mapper>

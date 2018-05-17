@@ -40,4 +40,11 @@ public class PointService {
 	public String findNowpointById(String id) {
 		return memberMapper.findNowpointById(id);
 	}
+
+	public void updateExchangePoint(String id, String exchangePoint) {
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id",id);
+		map.put("point", exchangePoint);
+		pointMapper.updateExchangePoint(map);
+	}
 }

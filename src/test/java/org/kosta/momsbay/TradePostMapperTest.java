@@ -106,13 +106,3 @@ public class TradePostMapperTest {
 	
 }
 
-
-
-
-
-
-
-
-
-
-

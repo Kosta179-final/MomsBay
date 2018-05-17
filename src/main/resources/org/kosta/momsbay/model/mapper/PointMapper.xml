@@ -10,5 +10,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id=#{id}
 	</update>
 	
-	<select id=""></select>
+	<update id="updateExchangePoint" parameterType="map">
+		UPDATE BAY_MEMBER 
+		SET point =point-#{point} 
+		WHERE id=#{id}
+	</update>
 </mapper>

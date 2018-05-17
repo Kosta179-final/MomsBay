@@ -45,17 +45,18 @@
 		<div class="row main">
 			<div class="col-sm-2"></div>
 			<div class="col-sm-8">
-				<form method="post" id="updateForm" action="updateQnaPost.do">
-					<input type="hidden" name="bayPostNo" value="${qvo.bayPostNo}">
+				<form method="post" id="updateForm"
+					action="updatePost.do">
+					<input type="hidden" name="bayPostNo" value="${pvo.bayPostNo}">
 					<table class="table">
 						<tr>
 							<td>제목 &nbsp;&nbsp; <input type="text" name="title"
-								value="${qvo.title}" required="required">
+								value="${pvo.title}" required="required">
 							</td>
 						</tr>
 						<tr>
 							<td><textarea cols="90" rows="15" name="content"
-									required="required">${qvo.content}</textarea></td>
+									required="required">${pvo.content }</textarea></td>
 						</tr>
 					</table>
 					<div class="btnArea">
