@@ -58,10 +58,7 @@ public class MemberService {
 	 */
 	public boolean findMemberExsitById(String id) {
 		// TODO Auto-generated method stub
-		if (memberMapper.findMemberExsitById(id)) {
-			return false;
-		} else
-			return true;
+		return memberMapper.findMemberExsitById(id);
 	}
 
 	/**
