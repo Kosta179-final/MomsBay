@@ -45,9 +45,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	<delete id="deleteQnaPost">
 		DELETE FROM bay_post WHERE bay_post_no = #{value}
 	</delete>
+<<<<<<< HEAD
 	
 	<update id="updateQnaPost" parameterType="qnaPostVO">
 		UPDATE bay_post SET title=#{title},content=#{content}
+=======
+	<update id="updateQnaPost" parameterType="qnaPostVO">
+		UPDATE bay_post
+		SET title = #{title}, content = #{content}
+>>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 		WHERE bay_post_no = #{bayPostNo}
 	</update>
 </mapper>

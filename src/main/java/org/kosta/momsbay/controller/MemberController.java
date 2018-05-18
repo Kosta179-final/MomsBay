@@ -56,6 +56,12 @@ public class MemberController {
 			requset.setAttribute("message", error.getMessage());
 			return "member/login_fail";
 		}
+		
+		if(member.getGrade().equals("blacklist")) {
+			requset.setAttribute("message","차단된 회원입니다. 관리자에게 문의하세요.");
+			return "member/login_fail";
+		}
+		
 		member.setPassword("");
 		member.setPoint(0);
 		member.setChildren_no(member.getList().size());
@@ -91,8 +97,7 @@ public class MemberController {
 	 * @throws Exception
 	 */
 	@RequestMapping("idDuplicateCheck.do")
-	public @ResponseBody Map<String, Boolean> idDuplicateCheck(@RequestParam(required = true) String id,
-			HttpServletResponse response) {
+	public @ResponseBody Map<String, Boolean> idDuplicateCheck(@RequestParam(required = true) String id) {
 		Map<String, Boolean> object = new HashMap<String, Boolean>();
 		boolean flag = memberService.findMemberExsitById(id);
 		object.put("duplicate", flag);
@@ -108,8 +113,7 @@ public class MemberController {
 	 * @throws Exception
 	 */
 	@RequestMapping("mailDuplicateCheck.do")
-	public @ResponseBody Map<String, Object> emailDuplicateCheck(@RequestParam(required = true) String email,
-			HttpServletResponse response) {
+	public @ResponseBody Map<String, Object> emailDuplicateCheck(@RequestParam(required = true) String email) {
 		Map<String, Object> object = new HashMap<String, Object>();
 		if (email.contains("@")) {
 			boolean flag = memberService.findMemberByEmail(email);

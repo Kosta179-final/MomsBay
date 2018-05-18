@@ -30,8 +30,18 @@
 						<li><a class = "btn btn-primary" href="${pageContext.request.contextPath}/trade/detail_trade_post.do?tradePostNo=${tpVO.tradePostNo}">
 							<i class="fa fa-plus-square"></i>상세보기
 						</a></li>
-						<li><a href="#" class="btn btn-primary"><i
-							class="fa fa-heart"></i>찜하기</a></li>
+						<c:if test="${requestScope.boardTypeNo eq '2'}">
+							<c:choose>
+							<c:when test="${empty member}">
+								<li><a href="javascript:;" class="btn btn-primary"><i
+								class="fa fa-heart"></i>찜하기</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a href="${pageContext.request.contextPath}/myaccount/addMemberPick.do?tradePostNo=${tpVO.tradePostNo}" class="btn btn-primary"><i
+								class="fa fa-heart"></i>찜하기</a></li>
+							</c:otherwise>
+							</c:choose>
+						</c:if>	
 					</ul>
 				</div>
 			</div>
@@ -66,7 +76,7 @@
 								href="list_trade_post.do?pageNo=${i}&boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}">${i}</a></li>
 						</c:when>
 						<c:otherwise>
-							<li class="active"><a href="#this">${i}</a></li>
+							<li class="active"><a href="javascript:;">${i}</a></li>
 						</c:otherwise>
 					</c:choose>
 					&nbsp;

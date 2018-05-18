@@ -62,4 +62,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM bay_member
 		WHERE id=#{values}
 	</select>
+	
+	<select id="findMemberIdByPart" resultType="string">
+		SELECT id
+		FROM bay_member
+		WHERE id like #{values}
+	</select>
+	
+	<select id="getMemberList" resultType="string">
+		SELECT id
+		FROM bay_member
+		WHERE member_grade_no=#{values}
+	</select>
+
+	<select id="findMemberGradeById" resultType="int">
+		SELECT member_grade_no
+		FROM bay_member
+		WHERE id=#{values} 
+	</select>
+	
+	<update id="updateMemberToBlackList">
+		UPDATE bay_member 
+		SET member_grade_no = 3 
+		WHERE id= #{values}
+	</update>
+
+	<update id="updateBlackListToMember">
+		UPDATE bay_member 
+		SET member_grade_no = 1 
+		WHERE id= #{values}
+	</update>
 </mapper>

@@ -43,10 +43,11 @@ public class TradeBoardController {
 		model.addAttribute("categoryNo", categoryNo);
 		if(boardTypeNo.equals("1") || boardTypeNo.equals("2")) {
 			model.addAttribute("listVO", tradePostService.getTradePostList(pageNo,boardTypeNo,categoryNo));
-		} else if(boardTypeNo.equals("3") || boardTypeNo.equals("4")) {
+			return "service_trade" + ".page_" + viewName;
+		}else {
 			model.addAttribute("svo", sharePostService.getSharePostList(pageNo,boardTypeNo,categoryNo));
+			return "service_trade" + ".page_" + viewName;
 		}
-		return "service_trade" + ".page_" + viewName;
 	}
 	
 	
@@ -89,6 +90,8 @@ public class TradeBoardController {
 	 */
 	@RequestMapping(value="/addTradePost.do",method=RequestMethod.POST)	
 	public String addTradePost(TradePostVO tradePostVO, Model model) {
+		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
 		model.addAttribute(tradePostService.addTradePost(tradePostVO));
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
@@ -113,8 +116,11 @@ public class TradeBoardController {
 	 */
 	@RequestMapping("/update_trade_post.do")
 	public String updateTradePostView(String tradePostNo, Model model) {
-		model.addAttribute("tradePostVO", 
-				tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo
+				(Integer.parseInt(tradePostNo));
+		model.addAttribute("tradePostVO", tradePostVO);
+		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
 		return "service_trade.page_update_trade_post";
 	}
 	
@@ -135,23 +141,31 @@ public class TradeBoardController {
 	 * @param tradePostNo
 	 * @param model
 	 * @return detail_trade_post.jsp
-	 * @author rws
+	 * @author Jung
 	 */
 	@RequestMapping("detail_trade_post.do")
 	public String detailTradePost(String tradePostNo,Model model) {
-		model.addAttribute("tradePostVO", tradePostService.findTradePostByTradePostNo
-				(Integer.parseInt(tradePostNo)));
+		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo
+				(Integer.parseInt(tradePostNo));
+		model.addAttribute("tradePostVO", tradePostVO);
+		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
 		return "service_trade.page_detail_trade_post";
 	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	/**
 	 * 나눔게시판 상세보기 메서드
 	 * @return service_trade.page_detail_share_post
 	 * @author rws
 	 */
-	@RequestMapping("/detail_share_post.do")
+	@RequestMapping("detail_share_post.do")
 	public String findDetailSharePost(String noneTradePostNo, Model model) {
-		model.addAttribute("pvo", sharePostService.findDetailSharePost(Integer.parseInt(noneTradePostNo)));
+		SharePostVO sharePostVO=sharePostService.findDetailSharePost(Integer.parseInt(noneTradePostNo));
+		model.addAttribute("pvo", sharePostVO);
+		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
 		return "service_trade.page_detail_share_post";
 	}
 	
@@ -161,10 +175,12 @@ public class TradeBoardController {
 	 * @return detail_share_post.jsp
 	 * @author rws
 	 */
-	@RequestMapping("shareWrite.do")
-	public String shareWrite(SharePostVO sharePostVO) {
+	@RequestMapping(value="shareWrite.do",method=RequestMethod.POST)
+	public String shareWrite(SharePostVO sharePostVO, Model model) {
+		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
 		sharePostService.addSharePost(sharePostVO);
-		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo();
+		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo()+"";
 	}
 	
 	/**
@@ -172,10 +188,14 @@ public class TradeBoardController {
 	 * @param noneTradePostNo
 	 * @param model
 	 * @return update_share_post.jsp
+	 * @author rws
 	 */
 	@RequestMapping("/update_share_post.do")
 	public String updateSharePostView(String noneTradePostNo, Model model) {
-		model.addAttribute("pvo", sharePostService.updateSharePostView(Integer.parseInt(noneTradePostNo)));
+		SharePostVO sharePostVO=sharePostService.updateSharePostView(Integer.parseInt(noneTradePostNo));
+		model.addAttribute("pvo", sharePostVO);
+		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
 		return "service_trade.page_update_share_post";
 	}
 	
@@ -201,6 +221,23 @@ public class TradeBoardController {
 	public String deleteSharePost(String noneTradePostNo) {
 		SharePostVO sharePostVO=sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
 		return "redirect:list_share_post.do?boardTypeNo="+sharePostVO.getBoardTypeNo()+"&categoryNo="+sharePostVO.getCategoryNo()+"";
+	}
+	
+	/**
+	 * 나눔 게시판 종류를 클릭했을때 실행되는 메서드
+	 * @param categoryNo
+	 * @param boardTypeNo
+	 * @param pageNo
+	 * @param model
+	 * @return list_share_post.jsp
+	 * @author rws
+	 */
+	@RequestMapping("/list_share_post.do")
+	public String listNoneTradePostTiles(String pageNo, String boardTypeNo, String categoryNo, Model model) {
+		model.addAttribute("boardTypeNo", boardTypeNo);
+		model.addAttribute("categoryNo", categoryNo);
+		model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo));
+		return "service_trade.page_list_share_post";
 	}
 }
 
