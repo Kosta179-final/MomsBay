@@ -13,4 +13,5 @@ public class SharePostVO extends PostVO{
 	private int noneTradePostNo;
 	private int categoryNo;
 	private int boardTypeNo;
+	private int tradeStatusNo;
 }
