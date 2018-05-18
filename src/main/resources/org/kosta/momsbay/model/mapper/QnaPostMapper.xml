@@ -29,31 +29,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberVO.id" column="id"/>
 	</resultMap>
 	<select id="getQnaDetail" resultMap="postRM">
-		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no,s.subject_no
-		FROM bay_post b, subject s
-		WHERE b.bay_post_no = #{value} AND s.subject_no=b.subject_no
+		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no
+		FROM bay_post b
+		WHERE b.bay_post_no = #{value}
 	</select>
 	
 	<insert id="addQnaPost" parameterType="qnaPostVO">
 		<selectKey keyProperty="bayPostNo" resultType="int" order="BEFORE">
 			SELECT bay_post_seq.nextval FROM dual
 		</selectKey>
-			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
-			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectNo})
+			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no)
+			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo})
 	</insert>
 	
 	<delete id="deleteQnaPost">
 		DELETE FROM bay_post WHERE bay_post_no = #{value}
 	</delete>
-<<<<<<< HEAD
 	
-	<update id="updateQnaPost" parameterType="qnaPostVO">
-		UPDATE bay_post SET title=#{title},content=#{content}
-=======
 	<update id="updateQnaPost" parameterType="qnaPostVO">
 		UPDATE bay_post
 		SET title = #{title}, content = #{content}
->>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 		WHERE bay_post_no = #{bayPostNo}
 	</update>
 </mapper>

@@ -138,29 +138,17 @@ public class BayBoardController {
 		qnaPostService.deleteQnaPost(bayPostNo);
 		return "redirect:list_qna_post.do?boardTypeNo="+boardTypeNo;
 	}
-<<<<<<< HEAD
-	
-	@RequestMapping("updateQnaPostView.do")
-	   public String updateQnaPostView(int boardTypeNo,int bayPostNo,Model model) {
-	      model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
-	      return "bay/update_qna_post"+".tiles";
-	   }
 	
 	   @RequestMapping("updateQnaPost.do")
 	   public String updateQnaPost(QnaPostVO qnaPostVO) {
 	      qnaPostService.updateQnaPost(qnaPostVO);
 	      return "redirect:detail_qna_post.do?bayPostNo="+qnaPostVO.getBayPostNo();
 	   }
-=======
-	@RequestMapping("updateQnaPost.do")
-	public String updateQnaPost(QnaPostVO qnaPostVO ) {
-		qnaPostService.updateQnaPost(qnaPostVO);
-		return "redirect:detail_qna_post.do?bayPostNo="+qnaPostVO.getBayPostNo();
-	}
+	   
 	@RequestMapping("updateQnaPostView.do")
 	public String updateQnaPostView(QnaPostVO qnaPostVO,Model model,int bayPostNo) {
 		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
 		return "bay/update_qna_post" + ".tiles";
 	}
->>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
+
 }

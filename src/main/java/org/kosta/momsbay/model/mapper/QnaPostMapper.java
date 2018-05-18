@@ -40,17 +40,10 @@ public interface QnaPostMapper {
 	 * @param bayPostNo
 	 */
 	public void deleteQnaPost(int bayPostNo);
-<<<<<<< HEAD
-	
-	/**
-	   * Q&A 게시판 글 수정 메서드
-	   * @param qnaPostVO
-	   */
-=======
+
 	/**
 	 * Q&A 게시판 글 수정 메서드
 	 * @param qnaPostVO
 	 */
->>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 	public void updateQnaPost(QnaPostVO qnaPostVO);
 }

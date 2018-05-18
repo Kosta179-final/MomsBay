@@ -63,13 +63,8 @@ public class QnaPostService {
 	public void deleteQnaPost(int bayPostNo) {
 		qnaPostMapper.deleteQnaPost(bayPostNo);
 	}
-<<<<<<< HEAD
 	
 	public void updateQnaPost(QnaPostVO qnaPostVO) {
 		 qnaPostMapper.updateQnaPost(qnaPostVO);
-=======
-	public void updateQnaPost(QnaPostVO qnaPostVO) {
-		qnaPostMapper.updateQnaPost(qnaPostVO);
->>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 	}
 }
