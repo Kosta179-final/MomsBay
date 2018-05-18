@@ -8,6 +8,14 @@
 	function deleteSharePost() {
 		location.href="${pageContext.request.contextPath}/trade/deleteSharePost.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
 	}
+	function updateSharePostByStatus() {
+		confirm("거래를 완료 하셨습니까?")
+		location.href="${pageContext.request.contextPath}/trade/updateSharePostByStatus.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
+	}
+	function updateShareAndExchangeTrade() {
+		confirm("거래를 요청 하시겠습니까?")
+		location.href=""
+	}
 </script>
 <div class="product-details">
 	<!--product-details-->
@@ -17,6 +25,12 @@
 				alt="" />
 		</div>
 	</div>
+	<c:if test="${requestScope.pvo.tradeStatusNo==7}">
+		<div style="position: absolute;">
+			<div style="position: relative; top: 45px; left: 30px;"><img src="${pageContext.request.contextPath}/resources/images/product-details/soldout7.png" style="width: 300px; height: 290px;"></img>
+			</div>
+		</div>
+	</c:if>
 	<div class="col-sm-7">
 		<div class="product-information">
 			<!--/product-information-->
@@ -52,6 +66,27 @@
 					<span>${requestScope.pvo.regdate}</span>
 				</div>
 			</div>
+			<c:if test="${!empty member}">
+				<div class="row">
+					<c:if test="${sessionScope.member.id==requestScope.pvo.memberVO.id}">
+						<c:choose>
+							<c:when test="${requestScope.pvo.tradeStatusNo==1}">
+								<div class="col-sm-12">
+									<button name="button" class="btn btn-primary" onclick="updateSharePostByStatus()">나눔/교환 완료하기</button>
+								</div>
+							</c:when>
+						</c:choose>
+					</c:if>
+				</div>
+			</c:if>
+			<c:if test="${requestScope.pvo.tradeStatusNo==7}">
+				<div style="background-color: Tomato;">거래완료</div>
+			</c:if>
+			<c:if test="${sessionScope.member.id!=requestScope.pvo.memberVO.id}">
+				<c:if test="${requestScope.pvo.tradeStatusNo==1}">
+					<button name="button" class="btn btn-primary" onclick="updateShareAndExchangeTrade()">거래 신청</button>
+				</c:if>
+			</c:if>
 		</div>
 	</div>
 </div>

@@ -239,6 +239,18 @@ public class TradeBoardController {
 		model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo));
 		return "service_trade.page_list_share_post";
 	}
+	
+	/**
+	 * 나눔 게시판 상세페이지 내에서 거래상태 변경 메서드
+	 * @param noneTradePostNo
+	 * @return detail_share_post.jsp
+	 * @author rws
+	 */
+	@RequestMapping("/updateSharePostByStatus.do")
+	public String updateSharePostByStatus(String noneTradePostNo) {
+		SharePostVO sharePostVO=sharePostService.updateSharePostByStatus(Integer.parseInt(noneTradePostNo));
+		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo();
+	}
 }
 
 

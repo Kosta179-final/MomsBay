@@ -6,12 +6,7 @@
 	<div class="row">
 		<form action="qna_write.do" method="post">
 		<div class="col-sm-2">
-				<select name="subjectNo">
-					<option value="1">후기</option>
-					<option value="2">팁</option>
-					<option value="3">고민상담</option>
-				</select>	
-			</div>
+			</div> 
 			<div class="col-sm-8">
 				<textarea cols="90" rows="1" name="title" required="required"
 						placeholder="제목을 입력하세요"></textarea>

@@ -13,8 +13,5 @@ public class QnaPostVO extends PostVO{
 	private int bayPostNo;
 	private int thread;
 	private int depth;
-	private String type;
-	private int subjectNo;
-	private String name;
 	private int boardTypeNo;
 }

@@ -56,4 +56,11 @@ public interface SharePostMapper {
 	 * @author rws
 	 */
 	public void deleteSharePost(int noneTradePostNo);
+	
+	/**
+	 * 나눔 게시글 거래상태 변경
+	 * @param noneTradePostNo
+	 * @author rws
+	 */
+	public void updateSharePostByStatus(int noneTradePostNo);
 }
