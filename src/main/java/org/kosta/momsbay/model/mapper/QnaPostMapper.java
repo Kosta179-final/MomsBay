@@ -40,4 +40,9 @@ public interface QnaPostMapper {
 	 * @param bayPostNo
 	 */
 	public void deleteQnaPost(int bayPostNo);
+	/**
+	 * Q&A 게시판 글 수정 메서드
+	 * @param qnaPostVO
+	 */
+	public void updateQnaPost(QnaPostVO qnaPostVO);
 }

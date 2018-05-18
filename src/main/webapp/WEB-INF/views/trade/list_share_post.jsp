@@ -40,7 +40,9 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<div align="right">
+			<c:if test="${!empty member}">
 				<button name="button" class="btn btn-primary" onclick="addSharePost()">글쓰기</button><br>
+			</c:if>
 			</div>
 		</div>
 	</div>

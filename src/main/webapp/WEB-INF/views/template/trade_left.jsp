@@ -13,7 +13,6 @@
       location.href=lc
    }
 </script>
-
    <div class="left-sidebar">
       <h2>카테고리</h2>
       <div class="panel-group category-products" id="accordian">

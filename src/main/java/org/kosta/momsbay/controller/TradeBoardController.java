@@ -90,6 +90,8 @@ public class TradeBoardController {
 	 */
 	@RequestMapping(value="/addTradePost.do",method=RequestMethod.POST)	
 	public String addTradePost(TradePostVO tradePostVO, Model model) {
+		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
 		model.addAttribute(tradePostService.addTradePost(tradePostVO));
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
@@ -114,8 +116,11 @@ public class TradeBoardController {
 	 */
 	@RequestMapping("/update_trade_post.do")
 	public String updateTradePostView(String tradePostNo, Model model) {
-		model.addAttribute("tradePostVO", 
-				tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo
+				(Integer.parseInt(tradePostNo));
+		model.addAttribute("tradePostVO", tradePostVO);
+		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
 		return "service_trade.page_update_trade_post";
 	}
 	
@@ -140,8 +145,11 @@ public class TradeBoardController {
 	 */
 	@RequestMapping("detail_trade_post.do")
 	public String detailTradePost(String tradePostNo,Model model) {
-		model.addAttribute("tradePostVO", tradePostService.findTradePostByTradePostNo
-				(Integer.parseInt(tradePostNo)));
+		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo
+				(Integer.parseInt(tradePostNo));
+		model.addAttribute("tradePostVO", tradePostVO);
+		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
 		return "service_trade.page_detail_trade_post";
 	}
 	

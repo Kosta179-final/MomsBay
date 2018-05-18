@@ -93,15 +93,16 @@ public class TradePostMapperTest {
 		mapper.deleteTradePost(10);
 		//assertEquals(null, mapper.findTradePostByTradePostNo(10));
 	}
+	
+	
+	/**
+	 * 로그인한 사용자의 찜목록을 가져오는 메서드 테스트.
+	 * @author Jung
+	 */
+	@Test
+	public void findPickListById() {
+		assertNotEquals(null, mapper.findPickListById("java"));
+	}
+	
 }
-
-
-
-
-
-
-
-
-
-
 
