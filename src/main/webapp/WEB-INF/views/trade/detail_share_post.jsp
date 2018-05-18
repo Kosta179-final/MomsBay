@@ -15,25 +15,22 @@
 		<div class="view-product">
 			<img src="${pageContext.request.contextPath}/resources/upload/images/default.png"
 				alt="" />
-				<ul>
-					<li><i class="fa fa-clock-o"></i>등록일시 ${requestScope.pvo.regdate}</li>
-				</ul>
 		</div>
 	</div>
 	<div class="col-sm-7">
 		<div class="product-information">
 			<!--/product-information-->
 			<div class="row" align="left">
-				<div class="col-sm-5">
-					<span style="font-size: 30px">제목   : </span>
-				</div>
-				<div class="col-sm-7">
+				<div class="col-sm-12">
 					<span style="font-size: 30px">${requestScope.pvo.title}</span>
 				</div><hr>
 			</div>
+			<div class="row">
+				<div class=col-sm-12><br><br><hr></div>
+			</div>
 			<div class="row" align="left">
 				<div class="col-sm-5">
-					<span>평점   : </span>
+					<span>평점&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
 				</div>
 				<div class="col-sm-7">
 					<span>* * * * *</span>
@@ -41,10 +38,18 @@
 			</div>
 			<div class="row" align="left">
 				<div class="col-sm-5">
-					<span>상품 카테고리   : </span>
+					<span>상품 카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
 				</div>
 				<div class="col-sm-7">
 					<span>${requestScope.pvo.categoryNo}</span>
+				</div>
+			</div>
+			<div class="row" align="left">
+				<div class="col-sm-5">
+					<span>등록일시&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
+				</div>
+				<div class="col-sm-7">
+					<span>${requestScope.pvo.regdate}</span>
 				</div>
 			</div>
 		</div>
