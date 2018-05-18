@@ -63,7 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE id=#{values}
 	</select>
 	
-	<select id="findMemberByIdUsingAjax" resultType="string">
+	<select id="findMemberIdByPart" resultType="string">
 		SELECT id
 		FROM bay_member
 		WHERE id like #{values}

@@ -157,4 +157,12 @@ public class MemberService {
 		}
 	}
 
+	public List<String> findMemberIdByPart(String id) {
+		String temp_id=id+"%";
+		return memberMapper.findMemberIdByPart(temp_id);
+	}
+
+	public MemberVO findMemberById(String id) {
+		return memberMapper.findMemberById(id);
+	}
 }
