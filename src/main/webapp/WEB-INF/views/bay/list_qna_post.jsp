@@ -35,7 +35,7 @@
 									</c:when>
 									</c:choose>
 									</td>
-								<td class="cart_price">${qvo.name}</td>
+								<td class="cart_price">${qvo.memberVO.name}</td>
 				 				<td class="cart_quantity">${qvo.regdate}</td>
 							</tr>
 						</c:forEach>

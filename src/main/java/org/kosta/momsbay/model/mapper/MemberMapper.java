@@ -26,4 +26,5 @@ public interface MemberMapper {
 	public int findMemberGradeById(String id);
 	public void updateMemberToBlackList(String id);
 	public void updateBlackListToMember(String id);
+	public List<String> findMemberIdByPart(String id);
 }
