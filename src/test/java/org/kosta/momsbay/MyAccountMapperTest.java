@@ -1,7 +1,12 @@
 package org.kosta.momsbay;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kosta.momsbay.model.common.PagingBean;
+import org.kosta.momsbay.model.common.PointListVO;
 import org.kosta.momsbay.model.mapper.MemberMapper;
 import org.kosta.momsbay.model.mapper.PointHistoryMapper;
 import org.kosta.momsbay.model.vo.MemberVO;
@@ -30,9 +35,26 @@ public class MyAccountMapperTest {
 		
 	}
 	
+	@SuppressWarnings("unused")
 	@Test
-	public void getPointHistory() {
+	public void getPointHistoryById() {
 		String id="java";
-		System.out.println(hMapper.getPointHistoryById(id));
+		String pageNo=null;
+		PagingBean pagingBean=null;
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		
+		int totalCount=hMapper.getTotalPointHistoryById(id);
+		
+		if(pageNo==null) {
+			pagingBean=new PagingBean(totalCount);
+			pagingBean.setPostCountPerPage(10);
+		}
+		else {
+			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
+			pagingBean.setPostCountPerPage(10);
+		}
+		map.put("pagingBean", pagingBean);
+		System.out.println(hMapper.getPointHistoryById(map));
 	}
 }

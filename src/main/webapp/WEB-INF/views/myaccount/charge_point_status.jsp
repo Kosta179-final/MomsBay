@@ -3,5 +3,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 alert("${member.id}님 ${param.message}");
-location.href="getPointHistoryById.do";
+location.href="getPointHistoryById.do?id=${member.id}";
 </script>

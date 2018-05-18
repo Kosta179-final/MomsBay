@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.momsbay.model.common.PointListVO;
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.MemberPickService;
 import org.kosta.momsbay.model.service.MemberService;
@@ -88,12 +89,10 @@ public class MyAccountController {
 	 * @author Hwang
 	 */
 	@RequestMapping("getPointHistoryById.do")
-	public String getPointHistoryById(HttpServletRequest request) {
+	public String getPointHistoryById(HttpServletRequest request, String pageNo) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		List<PointHistoryVO> pointHistory = new ArrayList<PointHistoryVO>();
-		pointHistory = historyService.getPointHistoryById(member.getId());
-		request.setAttribute("pointHistory", pointHistory);
+		request.setAttribute("pointHistory", historyService.getPointHistoryById(member.getId(), pageNo));
 		return "service_myaccount" + ".page_" + "show_point_history";
 	}
 
