@@ -1,7 +1,11 @@
 package org.kosta.momsbay.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
+import org.apache.ibatis.type.IntegerTypeHandler;
 import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.BayPostMapper;
@@ -17,15 +21,21 @@ public class BayPostService {
 	@Resource
 	private BayPostMapper bayPostMapper;	
 	
-	public ListVO getBayPostList(String pageNo) {
+	public ListVO getBayPostList(String pageNo, int boardTypeNo) {
 		int totalCount=bayPostMapper.getTotalPostCount();
+		Map<String,Object> map = new HashMap();
+		map.put("boardTypeNo", boardTypeNo);
 		PagingBean pagingBean=null;
-		if(pageNo==null)
+		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);
-		else
+			pagingBean.setPostCountPerPage(9);
+		}
+		else {
 			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
-		ListVO lvo = new ListVO(bayPostMapper.getBayPostList(pagingBean),pagingBean);
-		return lvo;
+			pagingBean.setPostCountPerPage(9);
+		}
+		map.put("pagingBean", pagingBean);
+		return new ListVO(bayPostMapper.getBayPostList(map),pagingBean);
 	}
 	
 	public void addPost(BayPostVO bayPostVO) {

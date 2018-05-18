@@ -1,5 +1,8 @@
 package org.kosta.momsbay.model.service;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.common.ListVO;
@@ -21,14 +24,21 @@ public class QnaPostService {
 	 * @param pageNo
 	 * @author sam
 	 */
-	public ListVO getQnaPostList(String pageNo) {
+	public ListVO getQnaPostList(String pageNo, int boardTypeNo) {
 		int totalCount=qnaPostMapper.getTotalPostCount();
+		Map<String,Object> map = new HashMap();
+		map.put("boardTypeNo", boardTypeNo);
 		PagingBean pagingBean=null;
-		if(pageNo==null)
+		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);
-		else
+			pagingBean.setPostCountPerPage(9);
+		}
+		else {
 			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
-		return new ListVO(qnaPostMapper.getQnaPostList(pagingBean),pagingBean);
+			pagingBean.setPostCountPerPage(9);
+		}
+		map.put("pagingBean", pagingBean);
+		return new ListVO(qnaPostMapper.getQnaPostList(map),pagingBean);
 	}
 	/**
 	 * Q&A 글목록 상세보기 메서드
@@ -52,5 +62,9 @@ public class QnaPostService {
 	 */
 	public void deleteQnaPost(int bayPostNo) {
 		qnaPostMapper.deleteQnaPost(bayPostNo);
+	}
+	
+	public void updateQnaPost(QnaPostVO qnaPostVO) {
+		 qnaPostMapper.updateQnaPost(qnaPostVO);
 	}
 }

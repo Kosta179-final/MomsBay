@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.service.BayPostService;
 import org.kosta.momsbay.model.service.QnaPostService;
 import org.kosta.momsbay.model.vo.BayPostVO;
+import org.kosta.momsbay.model.vo.QnaPostVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,9 +37,9 @@ public class BayBoardController {
 	public String showTiles(@PathVariable String viewName, String boardTypeNo, Model model, String pageNo) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		if(boardTypeNo.equals("5")) {
-			model.addAttribute("lvo", bayPostService.getBayPostList(pageNo));
+			model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,Integer.parseInt(boardTypeNo)));
 		}else if(boardTypeNo.equals("6")){
-			model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo));
+			model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo,Integer.parseInt(boardTypeNo)));
 		}
 		return "bay/" + viewName+ ".tiles";
 	}
@@ -59,10 +60,18 @@ public class BayBoardController {
 	 */
 	@RequestMapping("list_bulletin_post.do")
 	public String list(Model model, String pageNo, String boardTypeNo) {
-		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo));
+		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,Integer.parseInt(boardTypeNo)));
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		return "bay/list_bulletin_post" + ".tiles";
 	}
+	
+	@RequestMapping("list_qna_post.do")
+	public String qnaList(Model model, String pageNo, String boardTypeNo) {
+		model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo,Integer.parseInt(boardTypeNo)));
+		model.addAttribute("boardTypeNo", boardTypeNo);
+		return "bay/list_qna_post" + ".tiles";
+	}
+	
 	/**
 	 * 일반게시판 글목록 상세보기 메서드
 	 * @param bayPostNo
@@ -95,7 +104,6 @@ public class BayBoardController {
 	@RequestMapping("updatePost.do")
 	public String updatePost(BayPostVO bayPostVO) {
 		bayPostService.updatePost(bayPostVO);
-		//System.out.println(bayPostVO);
 		return "redirect:detail_bay.do?bayPostNo="+bayPostVO.getBayPostNo();
 	}
 	/**
@@ -130,4 +138,16 @@ public class BayBoardController {
 		qnaPostService.deleteQnaPost(bayPostNo);
 		return "redirect:list_qna_post.do?boardTypeNo="+boardTypeNo;
 	}
+	
+	@RequestMapping("updateQnaPostView.do")
+	   public String updateQnaPostView(int boardTypeNo,int bayPostNo,Model model) {
+	      model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
+	      return "bay/update_qna_post"+".tiles";
+	   }
+	
+	   @RequestMapping("updateQnaPost.do")
+	   public String updateQnaPost(QnaPostVO qnaPostVO) {
+	      qnaPostService.updateQnaPost(qnaPostVO);
+	      return "redirect:detail_qna_post.do?bayPostNo="+qnaPostVO.getBayPostNo();
+	   }
 }
