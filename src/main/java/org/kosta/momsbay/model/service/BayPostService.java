@@ -38,6 +38,23 @@ public class BayPostService {
 		return new ListVO(bayPostMapper.getBayPostList(map),pagingBean);
 	}
 	
+	public ListVO getAnnounceList(String pageNo, int boardTypeNo) {
+		int totalCount=bayPostMapper.getTotalPostCount();
+		Map<String,Object> map = new HashMap();
+		map.put("boardTypeNo", boardTypeNo);
+		PagingBean pagingBean=null;
+		if(pageNo==null) {
+			pagingBean=new PagingBean(totalCount);
+			pagingBean.setPostCountPerPage(9);
+		}
+		else {
+			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
+			pagingBean.setPostCountPerPage(9);
+		}
+		map.put("pagingBean", pagingBean);
+		return new ListVO(bayPostMapper.getAnnounceList(map),pagingBean);
+	}
+	
 	public void addPost(BayPostVO bayPostVO) {
 		bayPostMapper.addPost(bayPostVO);
 	}
