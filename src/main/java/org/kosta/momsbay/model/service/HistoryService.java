@@ -71,4 +71,23 @@ public class HistoryService {
 		pointHistoryMapper.addPointExchangeHistory(map);
 	}
 
+	public PointListVO getPointHistoryByIdAndDate(String id, String pageNo, String startDate, String endDate) {
+		PagingBean pagingBean=null;
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);
+		int totalCount=pointHistoryMapper.getTotalPointHistoryByIdAndDate(map);
+		if(pageNo==null) {
+			pagingBean=new PagingBean(totalCount);
+			pagingBean.setPostCountPerPage(10);
+		}
+		else {
+			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
+			pagingBean.setPostCountPerPage(10);
+		}
+		map.put("pagingBean", pagingBean);
+		return new PointListVO(pointHistoryMapper.getPointHistoryByIdAndDate(map),pagingBean);
+	}
+
 }
