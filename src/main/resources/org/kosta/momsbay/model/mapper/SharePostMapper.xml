@@ -9,7 +9,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="name" property="memberVO.name"/>
 		<result column="id" property="memberVO.id"/>
 	</resultMap>
-<!-- 나눔 글쓰기 -->
+<!-- 나눔(교환) 글쓰기 -->
 <insert id="addSharePost" parameterType="sharePostVO">
 	<selectKey keyProperty="noneTradePostNo" resultType="int" order="BEFORE">
 		SELECT none_trade_post_seq.nextval FROM dual
@@ -17,11 +17,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	INSERT INTO none_trade_post(none_trade_post_no, title, content, regdate, id, category_no, board_type_no) 
 	VALUES(none_trade_post_seq.currval,#{title},#{content},sysdate,#{memberVO.id},#{categoryNo},#{boardTypeNo})
 </insert>
-<!-- 나눔 게시글 갯수 -->
-<select id="getTotalSharePostCount" resultType="int">
-	SELECT count(*) FROM none_trade_post
+<!-- 나눔(교환) 게시글 갯수 -->
+<select id="getTotalSharePostCount" resultType="int" parameterType="map">
+	SELECT count(*) 
+	FROM none_trade_post
+	WHERE board_type_no=#{board_type_no} AND category_no=#{category_no} AND delete_status=0
 </select>
-<!-- 나눔 게시글 리스트 -->
+<!-- 나눔(교환) 게시글 리스트 -->
 <select id="getSharePostList" resultMap="sharePostRM" parameterType="map">
 	SELECT none_trade_post_no, title, content, regdate, id, category_no, board_type_no 
 	FROM (SELECT n.none_trade_post_no, n.title, n.content, to_char(n.regdate,'yyyy-mm-dd')as regdate, b.id, n.category_no, n.board_type_no, row_number() over(ORDER BY n.none_trade_post_no DESC) AS rnum 
@@ -29,22 +31,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	WHERE n.id=b.id AND delete_status=0 AND board_type_no=#{board_type_no} AND category_no=#{category_no}) 
 	WHERE rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
 </select>
-<!-- 나눔 게시글 상세보기 -->
+<!-- 나눔(교환) 게시글 상세보기 -->
 <select id="findDetailSharePost" parameterType="int" resultMap="sharePostRM">
-	SELECT none_trade_post_no, title, content, regdate, id, category_no, board_type_no
+	SELECT none_trade_post_no, title, content, regdate, id, category_no, board_type_no, trade_status_no 
 	FROM none_trade_post 
 	WHERE none_trade_post_no=#{value}
 </select>
-<!-- 나눔 게시글 수정 -->
+<!-- 나눔(교환) 게시글 수정 -->
 <update id="updateSharePost" parameterType="sharePostVO">
 	UPDATE none_trade_post 
 	SET title=#{title},content=#{content}  
 	WHERE none_trade_post_no=#{noneTradePostNo}
 </update>
-<!-- 나눔 게시글 삭제(업데이트 여부로 게시글 숨김) -->
+<!-- 나눔(교환) 게시글 삭제(업데이트 여부로 게시글 숨김) -->
 <update id="deleteSharePost" parameterType="int">
 	UPDATE none_trade_post 
 	SET delete_status=1 
+	WHERE none_trade_post_no=#{noneTradePostNo}
+</update>
+<!-- 나눔(교환) 게시글 거래완료시 상태변경 업데이트 -->
+<update id="updateSharePostByStatus" parameterType="int">
+	UPDATE none_trade_post 
+	SET trade_status_no=7 
 	WHERE none_trade_post_no=#{noneTradePostNo}
 </update>
 </mapper>

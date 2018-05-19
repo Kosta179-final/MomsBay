@@ -80,4 +80,13 @@ public class SharePostServiceTest {
 	public void deleteSharePost() {
 		assertNotNull("성공",sharePostService.deleteSharePost(93));
 	}
+	
+	/**
+	 * 나눔 게시판 거래상태 변경 테스트
+	 * @author rws
+	 */
+	@Test
+	public void updateSharePostByStatus() {
+		assertNotNull(null, sharePostService.updateSharePostByStatus(120));
+	}
 }

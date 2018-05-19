@@ -36,7 +36,6 @@ public class SharePostService {
 	 */
 	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo){
 		PagingBean pagingBean=null;
-		@SuppressWarnings({ "unchecked", "rawtypes" })
 		Map<String, Object> map=new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
 		map.put("category_no", Integer.parseInt(categoryNo));
@@ -83,12 +82,23 @@ public class SharePostService {
 	
 	/**
 	 * 나눔게시글 삭제
-	 * @param sharePostVO
+	 * @param noneTradePostNo
+	 * @return noneTradePostNo
 	 * @author rws
 	 */
 	public SharePostVO deleteSharePost(int noneTradePostNo) {
 		sharePostMapper.deleteSharePost(noneTradePostNo);
 		return sharePostMapper.findDetailSharePost(noneTradePostNo);
-		
+	}
+	
+	/**
+	 * 나눔게시글 거래상태 변경
+	 * @param noneTradePostNo
+	 * @return noneTradePostNo
+	 * @author rws
+	 */
+	public SharePostVO updateSharePostByStatus(int noneTradePostNo) {
+		sharePostMapper.updateSharePostByStatus(noneTradePostNo);
+		return sharePostMapper.findDetailSharePost(noneTradePostNo);
 	}
 }

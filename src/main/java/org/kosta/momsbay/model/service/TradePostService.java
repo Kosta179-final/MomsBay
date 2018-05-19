@@ -1,6 +1,7 @@
 package org.kosta.momsbay.model.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -85,5 +86,16 @@ public class TradePostService {
 	public TradePostVO updateTradePost(TradePostVO tradePostVO) {
 		tradePostMapper.updateTradePost(tradePostVO);
 		return tradePostMapper.findTradePostByTradePostNo(tradePostVO.getTradePostNo());
+	}
+
+	
+	/**
+	 * 아이디로 찜목록을 가져오는 메서드.
+	 * @param id
+	 * @return List<TradePostVO>
+	 * @author Jung
+	 */
+	public List<TradePostVO> findPickListById(String id) {
+		return tradePostMapper.findPickListById(id);
 	}
 }

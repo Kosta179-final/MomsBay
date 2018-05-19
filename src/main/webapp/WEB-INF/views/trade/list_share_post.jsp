@@ -40,7 +40,9 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<div align="right">
+			<c:if test="${!empty member}">
 				<button name="button" class="btn btn-primary" onclick="addSharePost()">글쓰기</button><br>
+			</c:if>
 			</div>
 		</div>
 	</div>
@@ -51,12 +53,12 @@
 		<c:set var="pb" value="${requestScope.svo.pagingBean}"></c:set>
 			<ul class="pagination">
 				<c:if test="${pb.previousPageGroup}">
-					<li><a href="list_share_post.do?pageNo=${pb.startPageOfPageGroup-1}&boardTypeNo=${requestScope.boardTypeNo}">&laquo;</a></li>
+					<li><a href="list_share_post.do?pageNo=${pb.startPageOfPageGroup-1}&boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}">&laquo;</a></li>
 				</c:if>
 				<c:forEach var="i" begin="${pb.startPageOfPageGroup}" end="${pb.endPageOfPageGroup}">
 					<c:choose>
 						<c:when test="${pb.nowPage!=i}">
-							<li><a href="list_share_post.do?pageNo=${i}&boardTypeNo=${requestScope.boardTypeNo}">${i}</a></li>
+							<li><a href="list_share_post.do?pageNo=${i}&boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}">${i}</a></li>
 						</c:when>
 						<c:otherwise>
 							<li class="active"><a href="#this">${i}</a></li>
@@ -65,7 +67,7 @@
 						&nbsp;
 				</c:forEach>
 				<c:if test="${pb.nextPageGroup}">
-					<li><a href="list_share_post.do?pageNo=${pb.endPageOfPageGroup+1}&boardTypeNo=${requestScope.boardTypeNo}">&raquo;</a></li>
+					<li><a href="list_share_post.do?pageNo=${pb.endPageOfPageGroup+1}&boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}">&raquo;</a></li>
 				</c:if>
 			</ul>
 		</div>

@@ -4,12 +4,17 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.PointHistoryMapper">
-	<select id="getPointHistoryById" resultType="pointHistoryVO">
+	<select id="getPointHistoryById" resultType="pointHistoryVO" parameterType="map">
 		SELECT t.type, h.regdate, h.price, h.id, h.now_point as point
-		FROM POINT_TYPE t, POINT_HISTORY h
+		FROM (
+			SELECT row_number() over(ORDER BY regdate DESC) AS rnum,
+			regdate, price, id, now_point, point_type_no
+			FROM POINT_HISTORY
+			WHERE id=#{id}
+			)h, POINT_TYPE t
 		WHERE t.point_type_no=h.point_type_no
-		AND id=#{values} 
-		ORDER BY h.regdate DESC
+		AND rnum BETWEEN #{pagingBean.startRowNumber} AND 
+		#{pagingBean.endRowNumber}
 	</select>
 	
 	<insert id="addPointChargeHistory" parameterType="map">
@@ -21,4 +26,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		INSERT INTO point_history
 		VALUES(point_history_SEQ.nextval, sysdate, #{point}, #{id}, 4, #{nowPoint})
 	</insert>
+	
+	<select id="getTotalPointHistoryById" resultType="int" >
+		SELECT count(*)
+		FROM POINT_HISTORY
+		WHERE  id=#{values} 
+	</select>
+	
+	<select id="">
+	
+	</select>
 </mapper>

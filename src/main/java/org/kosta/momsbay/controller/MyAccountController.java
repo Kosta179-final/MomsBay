@@ -6,11 +6,16 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.momsbay.model.common.PointListVO;
 import org.kosta.momsbay.model.service.HistoryService;
+import org.kosta.momsbay.model.service.MemberPickService;
 import org.kosta.momsbay.model.service.MemberService;
 import org.kosta.momsbay.model.service.PointService;
+import org.kosta.momsbay.model.service.TradePostService;
+import org.kosta.momsbay.model.vo.MemberPickVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.kosta.momsbay.model.vo.PointHistoryVO;
+import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +37,10 @@ public class MyAccountController {
 	HistoryService historyService;
 	@Autowired
 	PointService pointService;
+	@Autowired
+	TradePostService tradePostService;
+	@Autowired
+	MemberPickService memberPickService;
 
 	@RequestMapping("/{viewName}.do")
 	public String showTiles(@PathVariable String viewName) {
@@ -44,6 +53,7 @@ public class MyAccountController {
 	 * @param member
 	 * @param request
 	 * @return url
+	 * @author Hwang
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "updateMember.do")
 	public String update(MemberVO member, HttpServletRequest request) {
@@ -59,6 +69,7 @@ public class MyAccountController {
 	 * @param id
 	 * @param password
 	 * @return url
+	 * @author Hwang
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "findMemberByPasswordAndId.do")
 	public String findMemberByPasswordAndId(String id, String password) {
@@ -75,14 +86,13 @@ public class MyAccountController {
 	 * 
 	 * @param request
 	 * @return url
+	 * @author Hwang
 	 */
 	@RequestMapping("getPointHistoryById.do")
-	public String getPointHistoryById(HttpServletRequest request) {
+	public String getPointHistoryById(HttpServletRequest request, String pageNo) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		List<PointHistoryVO> pointHistory = new ArrayList<PointHistoryVO>();
-		pointHistory = historyService.getPointHistoryById(member.getId());
-		request.setAttribute("pointHistory", pointHistory);
+		request.setAttribute("pointHistory", historyService.getPointHistoryById(member.getId(), pageNo));
 		return "service_myaccount" + ".page_" + "show_point_history";
 	}
 
@@ -93,6 +103,7 @@ public class MyAccountController {
 	 * @param request
 	 * @param point
 	 * @return url과 메시지
+	 * @author Hwang
 	 */
 	@Transactional
 	@SuppressWarnings("finally")
@@ -118,6 +129,7 @@ public class MyAccountController {
 	 * 
 	 * @param request
 	 * @return url
+	 * @author Hwang
 	 */
 	@RequestMapping("findNowpointById.do")
 	public String findNowpointById(HttpServletRequest request) {
@@ -128,7 +140,56 @@ public class MyAccountController {
 		session.setAttribute("point", point);
 		return "service_myaccount" + ".page_" + "service_point";
 	}
-
+	
+	/**
+	 * 찜 내역 조회.
+	 * 
+	 * @param request
+	 * @return url
+	 * @author Jung
+	 */
+	@RequestMapping("getPickListById.do")
+	public String getPickListById(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		List<TradePostVO> list = tradePostService.findPickListById(member.getId());
+		request.setAttribute("list", list);
+		return "service_myaccount" + ".page_" + "list_pick";
+	}
+	
+	/**
+	 * 찜 삭제
+	 * @param request
+	 * @param memberPickVO
+	 * @return url
+	 * @author Jung
+	 */
+	@RequestMapping("deleteMemberPick.do")
+	public String deleteMemberPick(HttpServletRequest request,MemberPickVO memberPickVO) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		memberPickVO.setId(member.getId());
+		memberPickService.deleteMemberPick(memberPickVO);
+		return "redirect:getPickListById.do";
+	}
+	
+	
+	/**
+	 * 찜 추가
+	 * @param request
+	 * @param memberPickVO
+	 * @return url
+	 * @author Jung
+	 */
+	@RequestMapping("addMemberPick.do")
+	public String addMemberPick(HttpServletRequest request,MemberPickVO memberPickVO) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		memberPickVO.setId(member.getId());
+		memberPickService.addMemberPick(memberPickVO);
+		return "redirect:getPickListById.do";
+	}
+	
 	@Transactional
 	@RequestMapping("exchangePoint.do")
 	public String exchangePoint(HttpServletRequest request, String password, String exchangePoint) {

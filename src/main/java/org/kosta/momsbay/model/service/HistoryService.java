@@ -4,6 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.kosta.momsbay.model.common.ListVO;
+import org.kosta.momsbay.model.common.PagingBean;
+import org.kosta.momsbay.model.common.PointListVO;
 import org.kosta.momsbay.model.mapper.MemberMapper;
 import org.kosta.momsbay.model.mapper.PointHistoryMapper;
 import org.kosta.momsbay.model.vo.PointHistoryVO;
@@ -26,9 +29,22 @@ public class HistoryService {
 	 * @param id
 	 * @return 포인트 내역 리스트
 	 */
-	public List<PointHistoryVO> getPointHistoryById(String id) {
-		List<PointHistoryVO> pointHistory=pointHistoryMapper.getPointHistoryById(id);
-		return pointHistory;
+	public PointListVO getPointHistoryById(String id, String pageNo) {
+		/*List<PointHistoryVO> pointHistory=pointHistoryMapper.getPointHistoryById(id);*/
+		PagingBean pagingBean=null;
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("id", id);
+		int totalCount=pointHistoryMapper.getTotalPointHistoryById(id);
+		if(pageNo==null) {
+			pagingBean=new PagingBean(totalCount);
+			pagingBean.setPostCountPerPage(10);
+		}
+		else {
+			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
+			pagingBean.setPostCountPerPage(10);
+		}
+		map.put("pagingBean", pagingBean);
+		return new PointListVO(pointHistoryMapper.getPointHistoryById(map),pagingBean);
 	}
 	
 	/**

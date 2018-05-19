@@ -68,7 +68,7 @@
 		</div>
 		<div class="tab-content row text-left col-sm-8">
 			<div id="pointCharge" class="tab-pane fade in active">
-			<form action="chargePoint.do" method="post" class="exgForm">
+			<form action="chargePoint.do" method="post" class="exgForm" id="chargeForm">
 				<h3>포인트란?</h3>
 				<p>맘스베이에서 서비스하는 제품의 컨텐츠를 이용하기 위해 회원이 구매하는 인터넷 상의 결제수단입니다.</p>
 				<div class="btn-group" style="width: 100%; padding-bottom: 10px">
@@ -89,9 +89,9 @@
 					<p>미성년자, 법인 휴대폰은 이용할 수 없습니다</p>
 					<p>충전은 1000원 단위로 선택 가능합니다.</p>
 					<hr>
-					<label>현재 보유 포인트: ${point }</label> <br> 
-					<label>충전 포인트:</label> <input type="text" name="point" id="point" placeholder="ex)100000" style="width: 100px;" required="required">
-					<button type="button" id="chargeBtn" class="btn btn-default" data-toggle="modal" data-target="#myModal">충전하기</button>
+					<label>현재 보유 포인트: ${point }</label> <br> 					
+						<label>충전 포인트:</label> <input type="text" name="point" id="point" placeholder="ex)100000" style="width: 100px;" required="required">
+						<button type="button" id="chargeBtn" class="btn btn-default" data-toggle="modal" data-target="#myModal">충전하기</button>					
 				</div>
 			</form>
 			</div>

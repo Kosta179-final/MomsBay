@@ -1,9 +1,9 @@
 package org.kosta.momsbay.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.PostVO;
 /**
@@ -12,7 +12,7 @@ import org.kosta.momsbay.model.vo.PostVO;
  */
 @Mapper
 public interface BayPostMapper {
-	public List<PostVO> getBayPostList(PagingBean pagingBean);
+	public List<PostVO> getBayPostList(Map map);
 	
 	public int getTotalPostCount();
 	
@@ -22,5 +22,5 @@ public interface BayPostMapper {
 	
 	public void deletePost(int bayPostNo);
 	
-	public void updateBoard(BayPostVO bayPostVO);
+	public void updatePost(BayPostVO bayPostVO);
 }

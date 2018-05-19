@@ -18,6 +18,17 @@
 			
 			<div class="panel panel-default">
 				<div class="panel-heading">
+					<h3 class="panel-title">
+						<a href="getPickListById.do">
+							<span class="pull-right"></span>
+							찜목록
+						</a>
+					</h3>
+				</div>
+			</div>
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
 					<h4 class="panel-title">
 						<a data-toggle="collapse" data-parent="#accordian" href="#b">
 							<span class="pull-right"><i class="fa fa-plus"></i></span> 

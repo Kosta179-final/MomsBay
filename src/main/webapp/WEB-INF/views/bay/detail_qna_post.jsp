@@ -1,7 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-<body>
+<script type="text/javascript">
+    $(document).ready(function(){
+    	$("#deleteBtn").click(function(){ 
+    		if(confirm("게시물을 삭제하시겠습니까?"))
+    		location.href="deleteQnaPost.do?bayPostNo=${qvo.bayPostNo}&boardTypeNo=${qvo.boardTypeNo}";
+    	});
+    	$("#updateBtn").click(function(){  
+    		if(confirm("게시물을 수정하시겠습니까?"))
+    		location.href="updateQnaPostView.do?bayPostNo=${qvo.bayPostNo}&boardTypeNo=${qvo.boardTypeNo}";
+    	});
+    });	
+</script>
 <!-- container-fluid: 화면 너비와 상관없이 항상 100% -->
 <div class="container-fluid">
   <div class="row header">

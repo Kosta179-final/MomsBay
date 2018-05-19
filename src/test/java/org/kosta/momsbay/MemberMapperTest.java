@@ -23,5 +23,11 @@ public class MemberMapperTest {
 		member.setPassword("1234");
 		assertTrue(mapper.findMemberExsitById(member.getId()));
 	}
-
+	
+	@Test
+	public void findMemberIdByPart() {
+		String id="pik";
+		String temp_id=id+"%";
+		System.out.println(mapper.findMemberIdByPart(temp_id));
+	}
 }

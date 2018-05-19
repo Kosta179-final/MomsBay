@@ -1,9 +1,9 @@
 package org.kosta.momsbay.model.mapper;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
 /**
@@ -17,7 +17,7 @@ public interface QnaPostMapper {
 	 * @param pagingBean
 	 * @author sam
 	 */
-	public List<PostVO> getQnaPostList(PagingBean pagingBean);
+	public List<PostVO> getQnaPostList(Map map);
 	/**
 	 * Q&A 게시판 총게시물수 메서드
 	 * @author sam
@@ -35,4 +35,15 @@ public interface QnaPostMapper {
 	 *  @author sam
 	 */
 	public QnaPostVO getQnaDetail(int bayPostNo);
+	/**
+	 * Q&A 게시판 글 삭제 메서드
+	 * @param bayPostNo
+	 */
+	public void deleteQnaPost(int bayPostNo);
+
+	/**
+	 * Q&A 게시판 글 수정 메서드
+	 * @param qnaPostVO
+	 */
+	public void updateQnaPost(QnaPostVO qnaPostVO);
 }

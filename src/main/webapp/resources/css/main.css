@@ -2386,7 +2386,7 @@ h2.title {
   background:#FBFBEF;
   border: 0 none;
   border-radius: 0;
-  margin-top: 16px;
+  /* margin-top: 16px; */
 }
 
 .blank-arrow {
