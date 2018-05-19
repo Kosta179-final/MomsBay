@@ -1,5 +1,7 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertNotNull;
+
 import javax.annotation.Resource;
 
 import org.junit.Test;
@@ -30,7 +32,18 @@ public class MessageServiceTest {
 		messageVO.setContent("testing");
 		messageVO.setMemberVO(new MemberVO());
 		messageVO.getMemberVO().setId("sys");
-		messageVO.setReceiveId("java");
+		messageVO.setReceiveMemberVO(new MemberVO());
+		messageVO.getReceiveMemberVO().setId("java");
 		messageService.addMessage(messageVO);
+	}
+	/**
+	 * Service안에서 총 Message갯수를 출력한 뒤 List를 받아옴
+	 */
+	@Test
+	public void getReceiveMessageList() {
+		String receiveId="sys";
+		String pageNo="1";
+		assertNotNull(messageService.getReceiveMessageList(receiveId,null));
+		assertNotNull(messageService.getReceiveMessageList(receiveId,pageNo));
 	}
 }
