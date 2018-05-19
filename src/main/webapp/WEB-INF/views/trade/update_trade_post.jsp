@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="/momsbay/resources/ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+window.onload=function()
+{
+	CKEDITOR.replace('content');
+}
+</script>
 <form action="updateTradePost.do" method="post">
 <div class="product-details">
 	<!--product-details-->
