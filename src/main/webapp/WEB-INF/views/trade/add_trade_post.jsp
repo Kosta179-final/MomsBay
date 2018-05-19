@@ -2,7 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <form action="${pageContext.request.contextPath}/trade/addTradePost.do" method="post">
-
+<script src="/momsbay/resources/ckeditor/ckeditor.js"></script>
+ <script>
+window.onload=function()
+{
+	CKEDITOR.replace('content');
+}
+</script>
 <div class="category-tab">
 	<div class="col-sm-12"  style="text-align: left;">
 		<span>희망가격 : </span>

@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
- 
+<script src="/momsbay/resources/ckeditor/ckeditor.js"></script>
+ <script>
+window.onload=function()
+{
+	CKEDITOR.replace('content');
+}
+</script>
 <div class="container">
 	<div class="row">
 		<form action="write.do" method="post">
@@ -18,7 +24,7 @@
 			</div>
 			<br><br>
 			<textarea cols="90" rows="15" name="content" required="required"
-						placeholder="내용을 입력하세요"></textarea>
+						placeholder="내용을 입력하세요" id="editor1"></textarea>
 			<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 			<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
 			<input type="submit" class="btn btn-primary" value="작성">
