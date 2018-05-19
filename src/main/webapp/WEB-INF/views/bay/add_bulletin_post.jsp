@@ -8,9 +8,16 @@
 		<form action="write.do" method="post">
 			<div class="col-sm-2">
 				<select name="subjectVO.subjectNo">
-					<option value="1">후기</option>
-					<option value="2">팁</option>
-					<option value="3">고민상담</option>
+					<c:choose>
+						<c:when test="${sessionScope.member.id ne 'sys'}">
+							<option value="1">후기</option>
+							<option value="2">팁</option>
+							<option value="3">고민상담</option>
+						</c:when>
+						<c:otherwise>
+							<option value="4">공지사항</option>
+						</c:otherwise>
+					</c:choose>
 				</select>	
 			</div>
 			<div class="col-sm-8">

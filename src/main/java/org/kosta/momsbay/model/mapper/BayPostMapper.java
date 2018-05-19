@@ -23,4 +23,6 @@ public interface BayPostMapper {
 	public void deletePost(int bayPostNo);
 	
 	public void updatePost(BayPostVO bayPostVO);
+	
+	public List<PostVO> getAnnounceList(Map map);
 }

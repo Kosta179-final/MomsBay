@@ -61,6 +61,7 @@ public class BayBoardController {
 	@RequestMapping("list_bulletin_post.do")
 	public String list(Model model, String pageNo, String boardTypeNo) {
 		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,Integer.parseInt(boardTypeNo)));
+		model.addAttribute("alvo", bayPostService.getAnnounceList(pageNo,Integer.parseInt(boardTypeNo)));
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		return "bay/list_bulletin_post" + ".tiles";
 	}
