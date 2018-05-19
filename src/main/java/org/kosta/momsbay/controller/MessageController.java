@@ -53,7 +53,7 @@ public class MessageController {
 	@RequestMapping("/add_message.do")
 	public String addMessage(MessageVO messageVO) {
 		messageService.addMessage(messageVO);
-		return "redirect:getReceiveMessageList.do";
+		return "redirect:getReceiveMessageList.do?receiveId="+messageVO.getMemberVO().getId();
 	}
 	/**	
 	 * 검색 조건에 따라 받은 메세지목록을 보여준다.
