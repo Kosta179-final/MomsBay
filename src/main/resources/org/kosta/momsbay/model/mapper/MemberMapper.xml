@@ -92,4 +92,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SET member_grade_no = 1 
 		WHERE id= #{values}
 	</update>
+	
+	<select id="getMemberChildStatistics" resultType="string">
+		SELECT count(*)
+		FROM children
+		WHERE gender= #{values}
+	</select>
+	
+	<select id="getMemberCountByGrade" resultType="int">
+	SELECT count(*)
+	FROM bay_member b, member_grade g
+	WHERE b.member_grade_no=g.member_grade_no
+	AND g.grade=#{values}
+	</select>
+	
 </mapper>
