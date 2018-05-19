@@ -12,7 +12,10 @@ import org.kosta.momsbay.model.vo.PointHistoryVO;
  */
 @Mapper
 public interface PointHistoryMapper {
-	List<PointHistoryVO> getPointHistoryById(String id);
 	void addPointChargeHistory(Map<String, String> map);
-	void addPointExchangeHistory(Map<String, String> map);	
+	void addPointExchangeHistory(Map<String, String> map);
+	int getTotalPointHistoryById(String id);
+	List<PointHistoryVO> getPointHistoryById(Map<String, Object> map);
+	int getTotalPointHistoryByIdAndDate(Map<String, Object> map);
+	List<PointHistoryVO> getPointHistoryByIdAndDate(Map<String, Object> map);	
 }

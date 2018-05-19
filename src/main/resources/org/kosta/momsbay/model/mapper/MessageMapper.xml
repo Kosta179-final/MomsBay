@@ -9,13 +9,31 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT receive_message_seq.nextval FROM dual
 		</selectKey>
 		INSERT INTO receive_message(receive_message_no,title,content,regdate,send_id,receive_id)
-		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveId})
+		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id})
 	</insert>
 	<insert id="addSendMessage" parameterType="messageVO">
 		<selectKey order="BEFORE" resultType="int" keyProperty="messageNo">
 			SELECT send_message_seq.nextval FROM dual
 		</selectKey>
 		INSERT INTO send_message(send_message_no,title,content,regdate,send_id,receive_id)
-		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveId})
+		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id})
 	</insert>
+	
+	<resultMap type="messageVO" id="messageRM">
+		<result column="receive_id" property="receiveMemberVO.id"/>
+		<result column="send_id" property="memberVO.id"/>
+	</resultMap>
+	<select id="getReceiveMessageList" parameterType="map" resultMap="messageRM">
+		SELECT rnum,receive_message_no as message_no,send_id,receive_id,title,regdate,status 
+		FROM 
+			(SELECT row_number() over(order by receive_message_no desc) as rnum,receive_message_no,receive_id,send_id,title,regdate,status 
+			FROM receive_message WHERE receive_id=#{receiveId})
+		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+	</select>
+	
+	<select id="getTotalMessageCount" resultType="int">
+		SELECT count(*)
+		FROM receive_message
+		WHERE receive_id=#{value}
+	</select>
 </mapper>

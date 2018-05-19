@@ -1,10 +1,15 @@
 package org.kosta.momsbay;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kosta.momsbay.model.common.PagingBean;
+import org.kosta.momsbay.model.common.PointListVO;
+import org.kosta.momsbay.model.mapper.PointHistoryMapper;
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.PointService;
 import org.kosta.momsbay.model.vo.PointHistoryVO;
@@ -19,6 +24,7 @@ public class MyAccountServiceTest {
 	HistoryService historyService;
 	@Autowired
 	PointService pointService;
+	@Autowired
 
 	@Test
 	public void chargePoint() {
@@ -33,14 +39,6 @@ public class MyAccountServiceTest {
 		} finally {
 			System.out.println(msg);
 		}		
-	}
-	
-	@Test
-	public void getPointHistoryById() {
-		String id="java";
-		List<PointHistoryVO> pointHistory = new ArrayList<PointHistoryVO>();
-		pointHistory = historyService.getPointHistoryById(id);
-		System.out.println(pointHistory);
 	}
 	
 	@Test

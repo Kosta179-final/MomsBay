@@ -82,12 +82,23 @@ public class SharePostService {
 	
 	/**
 	 * 나눔게시글 삭제
-	 * @param sharePostVO
+	 * @param noneTradePostNo
+	 * @return noneTradePostNo
 	 * @author rws
 	 */
 	public SharePostVO deleteSharePost(int noneTradePostNo) {
 		sharePostMapper.deleteSharePost(noneTradePostNo);
 		return sharePostMapper.findDetailSharePost(noneTradePostNo);
-		
+	}
+	
+	/**
+	 * 나눔게시글 거래상태 변경
+	 * @param noneTradePostNo
+	 * @return noneTradePostNo
+	 * @author rws
+	 */
+	public SharePostVO updateSharePostByStatus(int noneTradePostNo) {
+		sharePostMapper.updateSharePostByStatus(noneTradePostNo);
+		return sharePostMapper.findDetailSharePost(noneTradePostNo);
 	}
 }

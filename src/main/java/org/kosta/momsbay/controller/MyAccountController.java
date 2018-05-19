@@ -1,6 +1,5 @@
 package org.kosta.momsbay.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,7 +12,6 @@ import org.kosta.momsbay.model.service.PointService;
 import org.kosta.momsbay.model.service.TradePostService;
 import org.kosta.momsbay.model.vo.MemberPickVO;
 import org.kosta.momsbay.model.vo.MemberVO;
-import org.kosta.momsbay.model.vo.PointHistoryVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -88,12 +86,18 @@ public class MyAccountController {
 	 * @author Hwang
 	 */
 	@RequestMapping("getPointHistoryById.do")
-	public String getPointHistoryById(HttpServletRequest request) {
+	public String getPointHistoryById(HttpServletRequest request, String pageNo) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		List<PointHistoryVO> pointHistory = new ArrayList<PointHistoryVO>();
-		pointHistory = historyService.getPointHistoryById(member.getId());
-		request.setAttribute("pointHistory", pointHistory);
+		request.setAttribute("pointHistory", historyService.getPointHistoryById(member.getId(), pageNo));
+		return "service_myaccount" + ".page_" + "show_point_history";
+	}
+	
+	@RequestMapping("getPointHistoryByIdAndDate.do")
+	public String getPointHistoryById(HttpServletRequest request, String pageNo, String startDate, String endDate) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		request.setAttribute("pointHistory", historyService.getPointHistoryByIdAndDate(member.getId(), pageNo, startDate, endDate));
 		return "service_myaccount" + ".page_" + "show_point_history";
 	}
 
