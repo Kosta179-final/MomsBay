@@ -14,7 +14,7 @@
 		            </div>
 		            <div class="form-group col-md-6">
 		            	<span>받는 사람</span>
-		                <input type="text" name="receiveId" class="form-control" required="required" value="${requestScope.receiveId }">
+		                <input type="text" name="receiveMemberVO.id" class="form-control" required="required" value="${requestScope.receiveId }">
 		            </div>
 		            <div class="form-group col-md-12">
 		                <input type="text" name="title" class="form-control" required="required" placeholder="제목">
