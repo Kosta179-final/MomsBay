@@ -43,7 +43,7 @@
 		<ul class="pagination">
 			<li>
 				<c:if test="${pb.previousPageGroup}">
-					<a href="list_bulletin_post.do?pageNo=${pb.startPageOfPageGroup-1}&boardTypeNo=${requestScope.boardTypeNo}">&laquo;</a>
+					<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}&pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a>
 				</c:if>
 			</li>
 			<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
@@ -51,7 +51,7 @@
 				<c:choose>
 					<c:when test="${pb.nowPage!=i}">
 						<li>
-						<a href="list_bulletin_post.do?pageNo=${i}&boardTypeNo=${requestScope.boardTypeNo}">${i}</a>
+						<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}&pageNo=${i}">${i}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -61,7 +61,7 @@
 			</c:forEach>
 			<li>
 				<c:if test="${pb.nextPageGroup}">
-				<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}&pageNo=${pb.endPageOfPageGroup+1}&boardTypeNo=${requestScope.boardTypeNo}">&raquo;</a>
+				<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}&pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a>
 				</c:if>
 			</li>
 		</ul>
