@@ -104,7 +104,7 @@ $(function(){
 	<!--header-bottom-->
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-8">
+			<div class="col-sm-7">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
 						data-target=".navbar-collapse">
@@ -133,7 +133,7 @@ $(function(){
 			<!-- 카테고리별 검색 -->
 			<form id="conditionSearchFrom">
 			<input type="hidden" name="categoryNo" value="1">
-			<div class="col-sm-4">
+			<div class="col-sm-5">
 				<div class="search_box pull-right">
 					<select name="boardTypeNo" id="boardTypeNo" style="width: 140px; height: 36.33px;">
 						<option value="">- 카테고리 선택 -</option>
@@ -142,8 +142,8 @@ $(function(){
 						<option value="3">나눔</option>
 						<option value="4">교환</option>
 					</select>
-					<input type="text" placeholder="Search" name="searchWord" />
-					<button type="button" id="btn_search">조회</button>
+					<input type="text" placeholder="제목 및 내용에 포함된 단어" name="searchWord" />
+					<button class="btn searchform fa fa-search" type="button" id="btn_search"></button>
 				</div>
 			</div>
 			</form>
