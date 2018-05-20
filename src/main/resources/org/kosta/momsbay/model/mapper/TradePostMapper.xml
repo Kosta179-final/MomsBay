@@ -18,6 +18,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT count(*) FROM trade_post
 		WHERE board_type_no=#{board_type_no} AND category_no=#{category_no}
 		AND delete_status=0
+		<if test="searchWord != null">
+		AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+		</if>
 	</select>
 	
 	<resultMap type="tradePostVO" id="tradePostRM">
@@ -27,18 +30,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 	
 	<select id="getTradePostList" resultMap="tradePostRM" parameterType="map">
-		SELECT tp.trade_post_no, tp.title, tp.category_no, 
-		tp.board_type_no, tp.price, bm.name
-		FROM(
-		SELECT row_number() over(ORDER BY trade_post_no DESC) AS rnum,
-		id, trade_post_no, title, price, category_no, board_type_no 
-		FROM trade_post
-		WHERE board_type_no=#{board_type_no} AND 
-		category_no=#{category_no} AND delete_status=0
-		)tp, bay_member bm
-		WHERE tp.id=bm.id AND 
-		rnum BETWEEN #{pagingBean.startRowNumber} AND 
-		#{pagingBean.endRowNumber} ORDER BY trade_post_no DESC
+		/* getTradePostList - 삽니다 팝니다 리스트 */
+		SELECT tp.trade_post_no
+				 , tp.title
+				 , tp.category_no
+				 , tp.board_type_no
+				 , tp.price
+				 , bm.name
+		  FROM (
+						SELECT row_number() over(ORDER BY trade_post_no DESC) AS rnum
+								 , id
+								 , trade_post_no
+								 , title
+								 , price
+								 , category_no
+								 , board_type_no 
+						  FROM trade_post
+						WHERE board_type_no=#{board_type_no} 
+							AND category_no=#{category_no} 
+							AND delete_status=0
+							<if test="searchWord != null">
+							AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+							</if>
+					)tp
+				  , bay_member bm
+		 WHERE tp.id=bm.id 
+		 	 AND rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber} 
+		 ORDER BY trade_post_no DESC
 	</select>
 	
 	<select id="findTradePostByTradePostNo" parameterType="int" resultMap="tradePostRM">

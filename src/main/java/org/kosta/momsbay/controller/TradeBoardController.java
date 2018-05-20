@@ -38,14 +38,15 @@ public class TradeBoardController {
 	 * @return 
 	 */
 	@RequestMapping("/{viewName}.do")
-	public String showTiles(@PathVariable String viewName, String categoryNo,String boardTypeNo,String pageNo, Model model) {
+	public String showTiles(@PathVariable String viewName, String categoryNo,String boardTypeNo, String searchWord,String pageNo, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
+		model.addAttribute("searchWord", searchWord);
 		if(boardTypeNo.equals("1") || boardTypeNo.equals("2")) {
-			model.addAttribute("listVO", tradePostService.getTradePostList(pageNo,boardTypeNo,categoryNo));
+			model.addAttribute("listVO", tradePostService.getTradePostList(pageNo,boardTypeNo, categoryNo, searchWord));
 			return "service_trade" + ".page_" + viewName;
 		}else {
-			model.addAttribute("svo", sharePostService.getSharePostList(pageNo,boardTypeNo,categoryNo));
+			model.addAttribute("svo", sharePostService.getSharePostList(pageNo,boardTypeNo,categoryNo,searchWord));
 			return "service_trade" + ".page_" + viewName;
 		}
 	}
@@ -60,10 +61,11 @@ public class TradeBoardController {
 	 * @return list_trade_post.jsp
 	 */
 	@RequestMapping("/list_trade_post.do")
-	public String listTradePostTiles(String categoryNo,String boardTypeNo,String pageNo, Model model) {
+	public String listTradePostTiles(String categoryNo,String boardTypeNo,String searchWord,String pageNo, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
-		model.addAttribute("listVO", tradePostService.getTradePostList(pageNo,boardTypeNo,categoryNo));
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("listVO", tradePostService.getTradePostList(pageNo,boardTypeNo, searchWord,categoryNo));
 		return "service_trade.page_list_trade_post";
 	}
 	
@@ -233,10 +235,11 @@ public class TradeBoardController {
 	 * @author rws
 	 */
 	@RequestMapping("/list_share_post.do")
-	public String listNoneTradePostTiles(String pageNo, String boardTypeNo, String categoryNo, Model model) {
+	public String listNoneTradePostTiles(String pageNo, String boardTypeNo, String categoryNo, String searchWord, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
-		model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo));
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo, searchWord));
 		return "service_trade.page_list_share_post";
 	}
 	
