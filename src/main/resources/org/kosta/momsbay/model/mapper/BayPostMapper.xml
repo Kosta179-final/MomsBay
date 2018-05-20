@@ -11,13 +11,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result property="memberVO.name" column="name"/>
 	</resultMap>
 	
+	<select id="getAnnounceList" resultMap="bayPostRM" parameterType="map">
+		SELECT b.bay_post_no, b.title, b.regdate, b.id, b.board_type_no, m.name, s.subject, b.subject_no
+		FROM(
+			SELECT row_number() over(ORDER BY bay_post_no DESC) AS rnum,
+			bay_post_no, title, regdate, id, subject_no,board_type_no
+			FROM bay_post
+			WHERE board_type_no=#{boardTypeNo} AND subject_no=4
+			)b, bay_member m,subject s
+		WHERE b.id = m.id 
+		AND rnum 
+		BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+		AND b.subject_no = s.subject_no
+		ORDER BY bay_post_no DESC
+	</select>
+	
 	<select id="getBayPostList" resultMap="bayPostRM" parameterType="map">
 		SELECT b.bay_post_no, b.title, b.regdate, b.id, b.board_type_no, m.name, s.subject, b.subject_no
 		FROM(
 			SELECT row_number() over(ORDER BY bay_post_no DESC) AS rnum,
 			bay_post_no, title, regdate, id, subject_no,board_type_no
 			FROM bay_post
-			WHERE board_type_no=#{boardTypeNo}
+			<![CDATA[
+			WHERE board_type_no=#{boardTypeNo} AND subject_no<4
+			]]>
 			)b, bay_member m,subject s
 		WHERE b.id = m.id 
 		AND rnum 

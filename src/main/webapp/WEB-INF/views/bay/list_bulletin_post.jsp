@@ -26,6 +26,24 @@
 						</tr>
 					</thead>
 					<tbody>
+					<c:forEach var="pv" items="${requestScope.alvo.list }">
+								<tr>
+								<td class="cart_product">${pv.bayPostNo}</td>
+								<td class="cart_description">
+									<c:choose>
+									<c:when test="${sessionScope.member!=null }">
+									<a href="detail_bay.do?bayPostNo=${pv.bayPostNo }">[${pv.subjectVO.subject}] &nbsp; ${pv.title}</a>
+									</c:when>
+									<c:otherwise>
+										[${pv.subjectVO.subject}] &nbsp; ${pv.title}
+									</c:otherwise>
+									</c:choose>
+									</td>
+								<td class="cart_price">${pv.memberVO.name}</td>
+				 				<td class="cart_quantity">${pv.regdate }</td>
+							</tr>
+							
+							</c:forEach>
 						<c:forEach var="pvo" items="${requestScope.lvo.list}">
 							<tr>
 								<td class="cart_product">${pvo.bayPostNo}</td>
@@ -34,6 +52,9 @@
 									<c:when test="${sessionScope.member!=null }">
 									<a href="detail_bay.do?bayPostNo=${pvo.bayPostNo }">[${pvo.subjectVO.subject}] &nbsp; ${pvo.title}</a>
 									</c:when>
+									<c:otherwise>
+										[${pvo.subjectVO.subject}] &nbsp; ${pvo.title}
+									</c:otherwise>
 									</c:choose>
 									</td>
 								<td class="cart_price">${pvo.memberVO.name}</td>

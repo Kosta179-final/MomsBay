@@ -3,9 +3,44 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 function showPointHistory(){
-	var flag= dates.compare($("#startDate").val(), $("#endDate").val());
-	alert(flag);
+	/* 엔드데이트가 스타트데이트보다 작으면 전송못하게 하는 js */
+	 if($("#startDate").val()==''){
+		 alert("시작 날짜를 입력해주세요");
+	 }else{ 
+		submitForm();
+	  }		  
 }
+
+function submitForm(){
+	 var flag=$("#endDate").val()>=$("#startDate").val();
+	 if(flag){
+		 $("#datePickForm").submit();  
+	 }else{
+		 alert("마지막 날짜는 시작 날짜보다 커야 합니다.");
+		 return false;
+	 }
+}
+$(document).ready(function(){
+	document.getElementById('endDate').valueAsDate = new Date();
+	document.getElementById('startDate').valueAsDate = null;
+	/* 날짜기본값= 오늘날짜 */
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //1월은 0임으로 +1
+	var yyyy = today.getFullYear();
+	 if(dd<10){
+	        dd='0'+dd
+	    } 
+	    if(mm<10){
+	        mm='0'+mm
+	    } 
+
+	today = yyyy+'-'+mm+'-'+dd;
+	document.getElementById('endDate').setAttribute("max", today);
+	document.getElementById('startDate').setAttribute("max", today);
+	/* 최대 선택가능 날짜 오늘까지로 설정 */
+	
+});
 </script>
 <div class="container">
 	<div class="col-sm-8">
@@ -20,9 +55,11 @@ function showPointHistory(){
 		<div id="home" class="tab-pane fade in active">
 			<br>
 			<label>거래 날짜로 조회</label><br>
-			<input type="date" name="startDate" id="startDate">~
-			<input type="date" name="endDate"  id="endDate">
-			<input type="button" value="조회" onclick="showPointHistory()">
+			<form action="getPointHistoryByIdAndDate.do" method="get" id="datePickForm">
+			<input type="date" name="startDate" id="startDate" min="2018-05-10" max="new date()" required="required">~
+			<input type="date" name="endDate"  id="endDate" min="2018-05-10" max=" new date()" required="required">
+			<input  type="button" onclick="return showPointHistory()" value="조회">
+			</form>
 			<table class="table">
 				<thead>
 					<tr>

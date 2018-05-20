@@ -165,4 +165,21 @@ public class MemberService {
 	public MemberVO findMemberById(String id) {
 		return memberMapper.findMemberById(id);
 	}
+
+	public StringBuilder getMemberChildStatistics() {
+		StringBuilder children= new StringBuilder();
+		children.append("['여아',");
+		children.append(memberMapper.getMemberChildStatistics("female")+"],");
+		children.append("['남아',");
+		children.append(memberMapper.getMemberChildStatistics("male")+"]");
+		return children;
+	}
+
+	public Map<String, Integer> getMemberGradeStatistics() {
+		Map<String, Integer> list = new HashMap<>();
+		list.put("member", memberMapper.getMemberCountByGrade("member"));
+		list.put("blacklist", memberMapper.getMemberCountByGrade("blacklist"));
+		list.put("admin", memberMapper.getMemberCountByGrade("admin"));
+		return list;
+	}
 }

@@ -8,7 +8,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						<a href="#a">
+						<a href="add_message_form.do">
 							쪽지쓰기
 						</a>
 					</h3>
@@ -18,7 +18,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						<a href="#b">
+						<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}">
 							받은 쪽지함
 						</a>
 					</h3>

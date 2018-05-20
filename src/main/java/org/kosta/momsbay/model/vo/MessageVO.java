@@ -16,6 +16,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class MessageVO extends PostVO{
 	private int messageNo;
-	private String receiveId;
+	private MemberVO receiveMemberVO;
 	private boolean status;
 }

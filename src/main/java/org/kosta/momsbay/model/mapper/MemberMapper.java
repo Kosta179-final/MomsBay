@@ -27,4 +27,6 @@ public interface MemberMapper {
 	public void updateMemberToBlackList(String id);
 	public void updateBlackListToMember(String id);
 	public List<String> findMemberIdByPart(String id);
+	public String getMemberChildStatistics(String gender);
+	public int getMemberCountByGrade(String grade);
 }

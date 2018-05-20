@@ -1,5 +1,7 @@
 package org.kosta.momsbay.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.request;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +9,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.tiles.autotag.core.runtime.annotation.Parameter;
 import org.kosta.momsbay.model.service.MemberService;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +65,12 @@ public class AdminController {
 		return map;
 	}
 
+	/**
+	 * 아이디로 검색 시 자동완성으로 리스트 제공.
+	 * @param term
+	 * @return ajax로 검색결과 리스트 반환.
+	 * @author Hwang
+	 */
 	@RequestMapping("searchMemberById.do")
 	public @ResponseBody List<String> searchMemberById(@RequestParam(required = true) String term) {
 		List<String> memberList = new ArrayList<String>();
@@ -69,6 +78,12 @@ public class AdminController {
 		return memberList;
 	}
 
+	/**
+	 * 아이디 검색 시 해당 회원 상세정보 제공.
+	 * @param id
+	 * @return 회원정보.
+	 * @author Hwang
+	 */
 	@RequestMapping("findMemberById.do")
 	public @ResponseBody MemberVO findMemberById(@RequestParam(required = true) String id) {
 		MemberVO searchMember = new MemberVO();
@@ -76,6 +91,12 @@ public class AdminController {
 		return searchMember;
 	}
 
+	/**
+	 * 검색된 회원의 회원등급을 바꿔주는 메소드. 
+	 * @param id
+	 * @return 회원등급 수정 결과 메시지.
+	 * @author Hwang
+	 */
 	@RequestMapping(method = RequestMethod.POST, value = "updateMemberStatusOnSubmit.do")
 	public String updateMemberStatusOnSubmit(String id) {
 		String msg="change grade succ";
@@ -85,5 +106,25 @@ public class AdminController {
 			msg="change grade fail";
 		}
 		return "redirect:update_status_alert.do?message="+msg;
+	}
+	
+	/**
+	 * 구글 차트를 활용해 통계자료를 json으로 반환한다.
+	 * @return list
+	 */
+	@RequestMapping("getStatistics.do")
+	public String getStatistics(HttpServletRequest request){
+		/*
+		 * 제이슨 형식으로 보내긴 해야되는데 
+		 * 중괄호가 자꾸 껴서 스트링 빌더로 알아서 조합해서
+		 * 파스함.
+		 */
+		request.setAttribute("statistics_ofChildren", memberService.getMemberChildStatistics());
+		/*
+		 * 회원 등급 별 통계
+		 * 나중에는 글 많이 쓴 사람 5명정도 뽑아서 통계내도 될듯
+		 */
+		request.setAttribute("statistics_ofGrade", memberService.getMemberGradeStatistics());
+		return "service_admin" + ".page_show_statistics";
 	}
 }

@@ -36,7 +36,7 @@
 				<div id="b" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul>
-							<li><a href="show_statistics.do">회원 통계</a></li>
+							<li><a href="getStatistics.do">회원 통계</a></li>
 							<li><a href="#">거래 통계</a></li>
 							<li><a href="#">포인트 통계</a></li>
 						</ul>

@@ -33,7 +33,23 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE  id=#{values} 
 	</select>
 	
-	<select id="">
+	<select id="getTotalPointHistoryByIdAndDate" parameterType="map" resultType="int" >
+		SELECT count(*)
+		FROM POINT_HISTORY
+		WHERE  id=#{id}
+		AND  regdate between #{startDate} AND #{endDate}
+	</select>
 	
+	<select id="getPointHistoryByIdAndDate" resultType="pointHistoryVO" parameterType="map">
+		SELECT t.type, h.regdate, h.price, h.id, h.now_point as point
+		FROM (
+			SELECT row_number() over(ORDER BY regdate DESC) AS rnum,
+			regdate, price, id, now_point, point_type_no
+			FROM POINT_HISTORY
+			WHERE id=#{id} AND  regdate between #{startDate} AND #{endDate}
+			)h, POINT_TYPE t
+		WHERE t.point_type_no=h.point_type_no
+		AND rnum BETWEEN #{pagingBean.startRowNumber} AND 
+		#{pagingBean.endRowNumber}
 	</select>
 </mapper>
