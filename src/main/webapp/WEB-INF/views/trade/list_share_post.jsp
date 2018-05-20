@@ -19,7 +19,7 @@
 				<div class="single-products">
 					<div class="productinfo text-center">
 						<img src="${pageContext.request.contextPath}/resources/upload/images/stroller.jpg" alt=""/>
-						<h2>${pvo.title}</h2>
+						<h2 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${pvo.title}</h2>
 						<p>등록일 : ${pvo.regdate}</p>
 						<p>작성자 : ${pvo.memberVO.id}</p>
 					</div>
