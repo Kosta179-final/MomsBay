@@ -1,6 +1,5 @@
 package org.kosta.momsbay;
 
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import javax.annotation.Resource;
@@ -47,7 +46,7 @@ public class SharePostServiceTest {
 	 */
 	@Test
 	public void getSharePostList() {
-		assertNotNull(sharePostService.getSharePostList("1", "3", "1"));
+		assertNotNull(sharePostService.getSharePostList("1", "3", "1",null));
 	}
 	
 	/**

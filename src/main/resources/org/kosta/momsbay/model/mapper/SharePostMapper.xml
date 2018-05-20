@@ -22,14 +22,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SELECT count(*) 
 	FROM none_trade_post
 	WHERE board_type_no=#{board_type_no} AND category_no=#{category_no} AND delete_status=0
+	<if test="searchWord != null">
+	AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+	</if>
 </select>
 <!-- 나눔(교환) 게시글 리스트 -->
 <select id="getSharePostList" resultMap="sharePostRM" parameterType="map">
-	SELECT none_trade_post_no, title, content, regdate, id, category_no, board_type_no 
-	FROM (SELECT n.none_trade_post_no, n.title, n.content, to_char(n.regdate,'yyyy-mm-dd')as regdate, b.id, n.category_no, n.board_type_no, row_number() over(ORDER BY n.none_trade_post_no DESC) AS rnum 
-	FROM none_trade_post n, bay_member b 
-	WHERE n.id=b.id AND delete_status=0 AND board_type_no=#{board_type_no} AND category_no=#{category_no}) 
-	WHERE rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
+	/* getSharePostList -  나눔, 교환 리스트 */
+	SELECT none_trade_post_no
+		     , title
+		     , content
+		     , regdate
+		     , id
+		     , category_no
+		     , board_type_no 
+	  FROM ( 
+	  			 SELECT n.none_trade_post_no
+	  			 		  , n.title
+	  			 		  , n.content
+	  			 		  , to_char(n.regdate,'yyyy-mm-dd')as regdate
+	  			 		  , b.id
+	  			 		  , n.category_no
+	  			 		  , n.board_type_no
+	  			 		  , row_number() over(ORDER BY n.none_trade_post_no DESC) AS rnum 
+				   FROM none_trade_post n
+				          , bay_member b 
+				 WHERE n.id=b.id 
+				     AND delete_status=0 
+				     AND board_type_no=#{board_type_no} 
+				     AND category_no=#{category_no}
+				     <if test="searchWord != null">
+				     AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+				     </if>
+			    ) 
+	 WHERE rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
 </select>
 <!-- 나눔(교환) 게시글 상세보기 -->
 <select id="findDetailSharePost" parameterType="int" resultMap="sharePostRM">

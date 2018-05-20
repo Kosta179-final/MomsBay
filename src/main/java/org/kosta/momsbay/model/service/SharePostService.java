@@ -34,11 +34,12 @@ public class SharePostService {
 	 * @return 나눔 게시판 List
 	 * @author rws
 	 */
-	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo){
+	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo, String searchWord){
 		PagingBean pagingBean=null;
 		Map<String, Object> map=new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
 		map.put("category_no", Integer.parseInt(categoryNo));
+		map.put("searchWord", searchWord);
 		int totalCount=sharePostMapper.getTotalSharePostCount(map);
 		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);
