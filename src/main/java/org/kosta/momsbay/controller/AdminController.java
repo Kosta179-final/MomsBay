@@ -125,6 +125,10 @@ public class AdminController {
 		 * 나중에는 글 많이 쓴 사람 5명정도 뽑아서 통계내도 될듯
 		 */
 		request.setAttribute("statistics_ofGrade", memberService.getMemberGradeStatistics());
+		/*
+		 * 회원 자녀 나이대별 통계
+		 */
+		request.setAttribute("statistics_ofChildrenAge", memberService.getChildrenAgeStatistics());
 		return "service_admin" + ".page_show_statistics";
 	}
 }
