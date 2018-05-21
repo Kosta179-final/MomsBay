@@ -1,7 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%-- 검색기능 jquery --%>
+<script type="text/javascript">
+$(function(){
+	var frm = $('#conditionSearchFrom'); //폼
+	var searchBtn = $('#btn_search'); //search 버튼 
+	searchBtn.on('click', function(){
+		var boardTypeNo = $("#boardTypeNo").val();
+		
+		if(boardTypeNo == '1' || boardTypeNo == '2'){
+			frm.attr("action","${pageContext.request.contextPath}/trade/list_trade_post.do");
+		}else if(boardTypeNo == '5'){
+			frm.attr("action","${pageContext.request.contextPath}/bay/list_bulletin_post.do");
+		}else if(boardTypeNo == '6'){
+			frm.attr("action","${pageContext.request.contextPath}/bay/list_qna_post.do");
+		}else{
+			frm.attr("action","${pageContext.request.contextPath}/trade/list_share_post.do");
+		}
+		if(boardTypeNo == ''){
+			alert("카테고리 선택  후 조회하시기 바랍니다.");
+			return;
+		}
+		
+		frm.attr("method", "post").submit();
+		
+	});
+	
+});
+</script>
+<%-- //검색기능 jquery --%>
+
 <div class="header_top">
 	<!--header_top-->
 	<div class="container">
@@ -78,7 +107,7 @@
 	<!--header-bottom-->
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-9">
+			<div class="col-sm-7">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse"
 						data-target=".navbar-collapse">
@@ -104,11 +133,25 @@
 					</ul>
 				</div>
 			</div>
-			<div class="col-sm-3">
+			<!-- 카테고리별 검색 -->
+			<form id="conditionSearchFrom">
+			<div class="col-sm-5">
 				<div class="search_box pull-right">
-					<input type="text" placeholder="Search" />
+					<select name="boardTypeNo" id="boardTypeNo" style="width: 140px; height: 36.33px;">
+						<option value="">- 카테고리 선택 -</option>
+						<option value="1">삽니다</option>
+						<option value="2">팝니다</option>
+						<option value="3">나눔</option>
+						<option value="4">교환</option>
+						<option value="5">자유게시판</option>
+						<option value="6">Q&amp;A게시판</option>
+					</select>
+					<input type="text" placeholder="제목 및 내용에 포함된 단어" name="searchWord" />
+					<button class="btn searchform fa fa-search" type="button" id="btn_search"></button>
 				</div>
 			</div>
+			</form>
+			<!-- //카테고리별 검색 -->
 		</div>
 	</div>
 </div>

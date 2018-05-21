@@ -1,5 +1,6 @@
 package org.kosta.momsbay.model.service;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
+import org.kosta.momsbay.model.mapper.PhotoUploadMapper;
 import org.kosta.momsbay.model.mapper.SharePostMapper;
 import org.kosta.momsbay.model.vo.SharePostVO;
 import org.springframework.stereotype.Service;
@@ -21,6 +23,9 @@ public class SharePostService {
 	 
 	@Resource
 	private SharePostMapper sharePostMapper;
+	@Resource
+	private PhotoUploadMapper photoUploadMapper;
+	
 	/**
 	 * 나눔 게시판 글쓰기
 	 * @param sharePostVO
@@ -34,11 +39,12 @@ public class SharePostService {
 	 * @return 나눔 게시판 List
 	 * @author rws
 	 */
-	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo){
+	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo, String searchWord){
 		PagingBean pagingBean=null;
 		Map<String, Object> map=new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
-		map.put("category_no", Integer.parseInt(categoryNo));
+		map.put("category_no", categoryNo.equals("")? null : Integer.parseInt(categoryNo));
+		map.put("searchWord", searchWord);
 		int totalCount=sharePostMapper.getTotalSharePostCount(map);
 		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);
@@ -100,5 +106,28 @@ public class SharePostService {
 	public SharePostVO updateSharePostByStatus(int noneTradePostNo) {
 		sharePostMapper.updateSharePostByStatus(noneTradePostNo);
 		return sharePostMapper.findDetailSharePost(noneTradePostNo);
+	}
+	/**
+	 * 파일 업로드 하는 메소드.
+	 * @param uploadPath
+	 * @param noneTradePostNo
+	 * @param id
+	 * @author hwangma
+	 */
+	public void addSharePostPhoto(String uploadPath, int noneTradePostNo) {
+		Map<String, Object> map= new HashMap<>();
+		map.put("path",uploadPath);
+		map.put("postNo", noneTradePostNo);
+		photoUploadMapper.insertPostPhoto(map);
+	}
+	/**
+	 * 업로드된 메인이미지의 주소를 찾아오는 메소드.
+	 * @param noneTradePostNo
+	 * @return 사진위치 주소
+	 * @author hwangma
+	 */
+	public String findSharePostImgByPostNo(int noneTradePostNo) {
+		String imgAddress=photoUploadMapper.findSharePostImgByPostNo(noneTradePostNo);
+		return imgAddress;
 	}
 }

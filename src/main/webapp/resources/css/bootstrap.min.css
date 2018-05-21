@@ -2205,6 +2205,30 @@ textarea.input-lg {
 	border-color: #46b8da
 }
 
+.btn-info2 {
+    color: #ffffff;
+    background-color: #4d4944;
+    border-color: #000000;
+}
+
+.btn-info3 {
+    color: #000000;
+    background-color: #f6f6f6;
+    border-color: #c1c1c1;
+}
+
+.btn-info4 {
+    color: #000000;
+    background-color: #fffefaba;
+    border-color: #c1c1c1;
+}
+
+.btn-info5 {
+    color: #ffffff;
+    background-color: #fe980f;
+    border-color: #fe980f;
+}
+
 .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info.active,
 	.open .dropdown-toggle.btn-info {
 	color: #fff;

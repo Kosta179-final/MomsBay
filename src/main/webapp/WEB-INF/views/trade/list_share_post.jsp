@@ -11,22 +11,27 @@
 	<!--features_items-->
 	<h2 class="title text-center">게시글 목록</h2>
 	
-	
+
 	<c:forEach items="${requestScope.svo.list}" var="pvo">
 		<%-- 나눔 게시글 목록 --%>
 		<div class="col-sm-4">
 			<div class="product-image-wrapper">
 				<div class="single-products">
 					<div class="productinfo text-center">
-						<img src="${pageContext.request.contextPath}/resources/upload/images/stroller.jpg" alt=""/>
-						<h2>${pvo.title}</h2>
-						<p>등록일 : ${pvo.regdate}</p>
-						<p>작성자 : ${pvo.memberVO.id}</p>
+						<c:if test="${pvo.imgAddress eq 'noPhoto'}">
+							<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
+						</c:if>
+						<c:if test="${pvo.imgAddress ne 'noPhoto'}">
+							<img src="${pageContext.request.contextPath}/resources/upload/postImg/${pvo.imgAddress }" >
+						</c:if>
+						<h2 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${pvo.title}</h2>
+						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록일 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.regdate}</p>
+						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.memberVO.id}</p>
 					</div>
 				</div>
 				<div class="choose">
 					<ul class="nav nav-pills nav-justified">
-						<li><a class="btn btn-primary" href="detail_share_post.do?noneTradePostNo=${pvo.noneTradePostNo}">
+						<li><a class="btn btn-info4" href="detail_share_post.do?noneTradePostNo=${pvo.noneTradePostNo}">
 							<i class="fa fa-plus-square"></i>상세보기</a>
 						</li>
 					</ul>
@@ -41,7 +46,7 @@
 		<div class="col-sm-11">
 			<div align="right">
 			<c:if test="${!empty member}">
-				<button name="button" class="btn btn-primary" onclick="addSharePost()">글쓰기</button><br>
+				<button name="button" class="btn btn-info5" onclick="addSharePost()">글쓰기</button><br>
 			</c:if>
 			</div>
 		</div>

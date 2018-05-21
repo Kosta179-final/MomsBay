@@ -23,7 +23,7 @@ public class TradePostServiceTest {
 	 */
 	@Test
 	public void getTradePostList() {
-		assertNotNull(tradePostService.getTradePostList("1","1","1"));
+		assertNotNull(tradePostService.getTradePostList("1","1",null,"1"));
 	}
 	
 	/**

@@ -28,11 +28,12 @@ public class TradePostService {
 	 * @return ListVO
 	 * @author Jung
 	 */
-	public ListVO getTradePostList(String pageNo,String boardTypeNo,String categoryNo) {
+	public ListVO getTradePostList(String pageNo,String boardTypeNo, String searchWord,String categoryNo) {
 		PagingBean pagingBean=null;
 		Map<String,Object> map = new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
-		map.put("category_no", Integer.parseInt(categoryNo));
+		map.put("category_no", categoryNo.equals("")? null : Integer.parseInt(categoryNo));
+		map.put("searchWord", searchWord);
 		int totalCount=tradePostMapper.getTotalTradePostCount(map);
 		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);

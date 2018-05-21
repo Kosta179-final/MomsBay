@@ -29,7 +29,9 @@
 			}
 		});
 		$("#resetBtn").click(function() {
-			$("#write_form")[0].reset();
+			if(confirm("수정을 취소하시겠습니까?")){
+				location.href="detail_bay.do?bayPostNo="+${pvo.bayPostNo};
+			}
 		});
 	});
 </script>
@@ -62,7 +64,7 @@
 					</table>
 					<div class="btnArea">
 						<button type="submit" class="btn">수정</button>
-						<button type="reset" class="btn">취소</button>
+						<button type="reset" class="btn" id="resetBtn">취소</button>
 					</div>					
 				</form>
 			</div>

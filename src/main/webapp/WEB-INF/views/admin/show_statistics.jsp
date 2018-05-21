@@ -53,8 +53,35 @@
 				.getElementById('donutchart'));
 		chart.draw(data, options);
 	}
-	/* 여기까지 파이차트 */
 	
+	/* 여기까지 파이차트 */
+	/* 여기서 부터 컬럼차트(바) */
+	
+	google.charts.load('current', {'packages':['bar']});
+     google.charts.setOnLoadCallback(drawChildrenChart);
+	function drawChildrenChart() {
+		 var data = new google.visualization.DataTable();
+		 data.addColumn('string', '나이');
+         data.addColumn('number', '여아');
+         data.addColumn('number', '남아');
+         
+		<c:forEach var="st" items="${statistics_ofChildrenAge}">
+			data.addRows([
+				["${st.age}",${st.femaleCount}*13,${st.maleCount}*13]
+				]);
+		</c:forEach>
+
+        var options = {
+          chart: {
+            title: 'Moms Bay Member Children Status',
+            subtitle: 'Our usual customer ~2018.05'
+          }
+        };
+
+        var chChart = new google.charts.Bar(document.getElementById('children'));
+
+        chChart.draw(data, google.charts.Bar.convertOptions(options));
+      }
 </script>
 <div class="container">
 	<div class="col-sm-8">
@@ -67,7 +94,15 @@
 	</div>
 	<div class="col-sm-8">
 		<ul class="nav nav-tabs">
-			<li class="active"><a data-toggle="tab" href="#donutchart">회원 등급별 통계</a></li>
+			<li class="active"><a data-toggle="tab" href="#children">회원 자녀 나이별 통계</a></li>
+		</ul>
+		<div class="tab-content col-sm-8">
+			<div id="children" class="tab-pane fade in active" style="width: 850px; height: 500px; padding-bottom: 20px; padding-top: 10px;"></div>
+		</div>
+	</div>
+	<div class="col-sm-8">
+		<ul class="nav nav-tabs">
+			<li class="active"><a data-toggle="tab" href="#piechart">회원 등급별 통계</a></li>
 		</ul>
 		<div class="tab-content col-sm-8">
 			<div id="piechart" class="tab-pane fade in active" style="width: 900px; height: 500px;"></div>
