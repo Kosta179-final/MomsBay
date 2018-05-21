@@ -15,8 +15,10 @@ $(function(){
 			frm.attr("action","${pageContext.request.contextPath}/bay/list_bulletin_post.do");
 		}else if(boardTypeNo == '6'){
 			frm.attr("action","${pageContext.request.contextPath}/bay/list_qna_post.do");
-		}else{
+		}else if(boardTypeNo == '3' || boardTypeNo == '4'){
 			frm.attr("action","${pageContext.request.contextPath}/trade/list_share_post.do");
+		}else{
+			return;
 		}
 		if(boardTypeNo == ''){
 			alert("카테고리 선택  후 조회하시기 바랍니다.");
