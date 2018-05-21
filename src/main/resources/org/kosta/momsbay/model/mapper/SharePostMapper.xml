@@ -21,7 +21,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <select id="getTotalSharePostCount" resultType="int" parameterType="map">
 	SELECT count(*) 
 	FROM none_trade_post
-	WHERE board_type_no=#{board_type_no} AND category_no=#{category_no} AND delete_status=0
+	WHERE board_type_no=#{board_type_no} 
+	<if test="category_no != null">
+	AND category_no=#{category_no} 
+	</if>
+	AND delete_status=0
 	<if test="searchWord != null">
 	AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 	</if>
@@ -50,7 +54,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 WHERE n.id=b.id 
 				     AND delete_status=0 
 				     AND board_type_no=#{board_type_no} 
+				     <if test="category_no != null">
 				     AND category_no=#{category_no}
+				     </if>
 				     <if test="searchWord != null">
 				     AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 				     </if>
