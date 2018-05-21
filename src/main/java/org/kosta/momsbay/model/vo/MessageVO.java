@@ -18,4 +18,7 @@ public class MessageVO extends PostVO{
 	private int messageNo;
 	private MemberVO receiveMemberVO;
 	private boolean status;
+	private int sendMessageNo;
+	private boolean receiveFlag;
+	private String receiveDate;
 }

@@ -2,7 +2,6 @@ package org.kosta.momsbay.controller;
 
 import javax.annotation.Resource;
 
-import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.service.MessageService;
 import org.kosta.momsbay.model.vo.MessageVO;
 import org.springframework.stereotype.Controller;
@@ -67,5 +66,30 @@ public class MessageController {
 	public String getReceiveMessageList(String receiveId,String pageNo,Model model) {
 		model.addAttribute("lvo",messageService.getReceiveMessageList(receiveId, pageNo));
 		return "message/list_receive_message.m_tiles";
+	}
+	/**
+	 * 검색 조건에 따라 보낸 메세지목록을 보여준다.
+	 * @param sendId
+	 * @param pageNo
+	 * @param model
+	 * @return message/list_send_message.m_tiles
+	 */
+	@RequestMapping("/getSendMessageList.do")
+	public String getSendMessageList(String sendId,String pageNo,Model model) {
+		model.addAttribute("lvo",messageService.getSendMessageList(sendId, pageNo));
+		return "message/list_send_message.m_tiles";
+	}
+	
+	/**
+	 * 검색조건에 따라 전체 메세지 목록을 보여준다.
+	 * @param id
+	 * @param pageNo
+	 * @param model
+	 * @return message/list_total_message.m_tiles
+	 */
+	@RequestMapping("getTotalMessageList.do")
+	public String getTotalMessageList(String id,String pageNo,Model model) {
+		model.addAttribute("lvo", messageService.getTotalMessageList(id, pageNo));
+		return "message/list_total_message.m_tiles";
 	}
 }

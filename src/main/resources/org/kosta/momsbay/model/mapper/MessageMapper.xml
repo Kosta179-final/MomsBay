@@ -8,15 +8,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<selectKey order="BEFORE" resultType="int" keyProperty="messageNo">
 			SELECT receive_message_seq.nextval FROM dual
 		</selectKey>
-		INSERT INTO receive_message(receive_message_no,title,content,regdate,send_id,receive_id)
-		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id})
+		INSERT INTO receive_message(receive_message_no,title,content,regdate,send_id,receive_id,send_message_no)
+		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id},#{sendMessageNo})
 	</insert>
 	<insert id="addSendMessage" parameterType="messageVO">
-		<selectKey order="BEFORE" resultType="int" keyProperty="messageNo">
+		<selectKey order="BEFORE" resultType="int" keyProperty="sendMessageNo">
 			SELECT send_message_seq.nextval FROM dual
 		</selectKey>
 		INSERT INTO send_message(send_message_no,title,content,regdate,send_id,receive_id)
-		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id})
+		VALUES(#{sendMessageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id})
 	</insert>
 	
 	<resultMap type="messageVO" id="messageRM">
@@ -31,9 +31,40 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
 	</select>
 	
-	<select id="getTotalMessageCount" resultType="int">
+	<select id="getTotalReceiveMessageCount" resultType="int">
 		SELECT count(*)
 		FROM receive_message
 		WHERE receive_id=#{value}
+	</select>
+	
+	<select id="getTotalSendMessageCount" resultType="int">
+		SELECT count(*)
+		FROM send_message
+		WHERE send_id=#{value}
+	</select>
+	
+	<select id="getSendMessageList" parameterType="map" resultMap="messageRM">
+		SELECT rnum,send_message_no as message_no,send_id,receive_id,title,regdate,receive_flag,receive_date 
+		FROM 
+			(SELECT row_number() over(order by send_message_no desc) as rnum,send_message_no,receive_id,send_id,title,regdate,receive_flag,receive_date 
+			FROM send_message WHERE send_id=#{sendId})
+		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+	</select>
+	
+	<select id="getTotalMessageList" parameterType="map" resultMap="messageRM">
+		SELECT rnum,message_no,receive_id,send_id,regdate,title
+		FROM
+			(SELECT row_number() over(ORDER BY regdate DESC) AS rnum,message_no,receive_id,send_id,title,regdate 
+			FROM 
+				(SELECT receive_message_no as message_no,send_id,receive_id,title,regdate 
+				 FROM receive_message
+				 WHERE receive_id=#{id}
+				 UNION ALL
+				 SELECT send_message_no as message_no,send_id,receive_id,title,regdate 
+				 FROM SEND_MESSAGE
+				 WHERE send_id=#{id}
+				)
+			)
+		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
 	</select>
 </mapper>
