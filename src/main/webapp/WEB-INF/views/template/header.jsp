@@ -14,7 +14,7 @@ $(function(){
 		}else if(boardTypeNo == '5'){
 			frm.attr("action","${pageContext.request.contextPath}/bay/list_bulletin_post.do");
 		}else if(boardTypeNo == '6'){
-			frm.attr("action","${pageContext.request.contextPath}/trade/list_qna_post.do");
+			frm.attr("action","${pageContext.request.contextPath}/bay/list_qna_post.do");
 		}else{
 			frm.attr("action","${pageContext.request.contextPath}/trade/list_share_post.do");
 		}
@@ -135,7 +135,6 @@ $(function(){
 			</div>
 			<!-- 카테고리별 검색 -->
 			<form id="conditionSearchFrom">
-			<input type="hidden" name="categoryNo" value="1">
 			<div class="col-sm-5">
 				<div class="search_box pull-right">
 					<select name="boardTypeNo" id="boardTypeNo" style="width: 140px; height: 36.33px;">

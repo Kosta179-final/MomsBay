@@ -18,7 +18,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			bay_post_no, title, regdate, id, subject_no,board_type_no
 			FROM bay_post
 			WHERE board_type_no=#{boardTypeNo} 
-			AND subject_no=4
+			AND subject_no=6
 			<if test="searchWord != null">
 			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 			</if>

@@ -22,7 +22,7 @@ public interface QnaPostMapper {
 	 * Q&A 게시판 총게시물수 메서드
 	 * @author sam
 	 */
-	public int getTotalPostCount();
+	public int getTotalPostCount(Map map);
 	/**
 	 * Q&A 글쓰기 메서드
 	 * @param qnaPostVO
@@ -46,4 +46,5 @@ public interface QnaPostMapper {
 	 * @param qnaPostVO
 	 */
 	public void updateQnaPost(QnaPostVO qnaPostVO);
+	public List<PostVO> getAnnounceQnaList(Map map);
 }
