@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
+import org.kosta.momsbay.model.mapper.PhotoUploadMapper;
 import org.kosta.momsbay.model.mapper.TradePostMapper;
 import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class TradePostService {
 	@Resource
 	private TradePostMapper tradePostMapper;
+	@Resource
+	private PhotoUploadMapper photoUploadMapper;
 	
 	/**
 	 * 거래게시판의 목록을 출력해주는 메서드.
@@ -98,5 +101,30 @@ public class TradePostService {
 	 */
 	public List<TradePostVO> findPickListById(String id) {
 		return tradePostMapper.findPickListById(id);
+	}
+
+	/**
+	 * 거래게시판 글쓰기에서 이미지추가하는 메서드
+	 * @param path
+	 * @param tradePostNo
+	 * @author hwang
+	 */
+	public void addTradePostPhoto(String path, int tradePostNo) {
+		Map<String, Object> map= new HashMap<>();
+		map.put("path",path);
+		map.put("postNo", tradePostNo);
+		photoUploadMapper.insertTradePostPhoto(map);
+	}
+
+	public String findTradePostImgByPostNo(int tradePostNo) {
+		String imgAddress=photoUploadMapper.findTradePostImgByPostNo(tradePostNo);
+		return imgAddress;
+	}
+
+	public void updateTradePostPhoto(String savedName, int tradePostNo) {
+		Map<String, Object> map= new HashMap<>();
+		map.put("savedName",savedName);
+		map.put("postNo", tradePostNo);
+		photoUploadMapper.updateTradePostPhoto(map);
 	}
 }

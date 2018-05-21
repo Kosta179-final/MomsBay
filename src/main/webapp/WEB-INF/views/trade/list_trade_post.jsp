@@ -18,9 +18,12 @@
 			<div class="product-image-wrapper">
 				<div class="single-products">
 					<div class="productinfo text-center">
-						<img
-							src="${pageContext.request.contextPath}/resources/upload/images/stroller.jpg"
-							alt=""/>
+						<c:if test="${tpVO.imgAddress eq 'noPhoto'}">
+							<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
+						</c:if>
+						<c:if test="${tpVO.imgAddress ne 'noPhoto'}">
+							<img src="${pageContext.request.contextPath}/resources/upload/postImg/${tpVO.imgAddress }" >
+						</c:if>
 						<h2>${tpVO.price}원</h2>
 						<p>${tpVO.title}</p>
 					</div>

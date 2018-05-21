@@ -2,19 +2,39 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://cdn.ckeditor.com/4.9.2/standard-all/ckeditor.js"></script>
-<script type="text/javascript">
-window.onload=function()
-{
-	CKEDITOR.replace('content');
+<script>
+function getThumbnailPrivew(html, $target) {
+    if (html.files && html.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $target.css('display', '');
+            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+            $("#oldPhoto").css('display', 'none');
+        }
+        reader.readAsDataURL(html.files[0]);
+    }
 }
 </script>
-<form action="updateTradePost.do" method="post">
+<form action="updateTradePost.do" enctype="multipart/form-data" method="post">
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
 		<div class="view-product">
-			<img src="${pageContext.request.contextPath}/resources/upload/images/stroller.jpg"
-				alt="" />
+			<c:choose>
+				<c:when test="${ imgAddress eq 'noPhoto'}">
+					<div id="main_image" style="width:100%;max-width:100%;border:1px solid #000;display:none;"></div>
+				</c:when>
+				<c:otherwise>
+					<div id="main_image" style="width:100%;max-width:100%;border:1px solid #000;display:none;"></div>
+					<img id="oldPhoto" src="${pageContext.request.contextPath}/resources/upload/postImg/${imgAddress }" style="display:block;">
+				</c:otherwise>
+				</c:choose>
+				<br>
+				<input type="file" name="file"onchange="getThumbnailPrivew(this,$('#main_image'))" />
+				<ul>
+					<li><i class="fa fa-clock-o"></i>등록일시 ${requestScope.tradePostVO.regdate}</li>
+				</ul>
 		</div>
 	</div>
 	<div class="col-sm-7">

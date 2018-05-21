@@ -25,7 +25,7 @@ function getThumbnailPrivew(html, $target) {
 		<p style="text-align: left; color: #BDBDBD;">&nbsp;&nbsp;올바른 언어를 사용하여 글작성하시기 바라겠습니다.</p><hr>
 		
 		<div class="view-product">		
-				<div id="main_image" style="width:100%;max-width:100%;border:1px solid #000;display:none;"></div>
+				<div id="main_image" style="width:50%;max-width:50%;border:1px solid #000;display:none;"></div>
 				<br>
 				<input type="file" name="file"onchange="getThumbnailPrivew(this,$('#main_image'))" />
 		</div>

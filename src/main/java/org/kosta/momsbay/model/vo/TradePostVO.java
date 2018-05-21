@@ -1,5 +1,7 @@
 package org.kosta.momsbay.model.vo;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -20,4 +22,6 @@ public class TradePostVO extends PostVO{
 	private boolean deleteStatus;
 	private int wishPrice;
 	private String suggestContent;
+	private MultipartFile file; 
+	private String imgAddress;
 }

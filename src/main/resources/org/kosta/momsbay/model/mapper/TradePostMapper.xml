@@ -40,22 +40,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 , tp.board_type_no
 				 , tp.price
 				 , bm.name
+				 , tp.imgAddress
 		  FROM (
-						SELECT row_number() over(ORDER BY trade_post_no DESC) AS rnum
-								 , id
-								 , trade_post_no
-								 , title
-								 , price
-								 , category_no
-								 , board_type_no 
-						  FROM trade_post
-						WHERE board_type_no=#{board_type_no} 
+						SELECT row_number() over(ORDER BY t.trade_post_no DESC) AS rnum
+								 , t.id
+								 , t.trade_post_no
+								 , t.title
+								 , t.price
+								 , t.category_no
+								 , t.board_type_no
+								 , p.photo_path AS imgAddress 
+						  FROM trade_post t, photo p
+						WHERE t.board_type_no=#{board_type_no} 
+							 AND t.trade_post_no= p.trade_post_no
 							<if test="category_no != null">
-							AND category_no=#{category_no} 
+							AND t.category_no=#{category_no} 
 							</if>
-							AND delete_status=0
+							AND t.delete_status=0
 							<if test="searchWord != null">
-							AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+							AND (t.title LIKE '%' || #{t.searchWord} || '%' OR t.content LIKE '%' || #{t.searchWord} || '%')
 							</if>
 					)tp
 				  , bay_member bm

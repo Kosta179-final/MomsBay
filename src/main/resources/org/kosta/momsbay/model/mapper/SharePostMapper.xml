@@ -49,7 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  			 		  , b.id
 	  			 		  , n.category_no
 	  			 		  , n.board_type_no
-	  			 		  , p.photo_path as imgAddress
+	  			 		  , p.photo_path AS imgAddress
 	  			 		  , row_number() over(ORDER BY n.none_trade_post_no DESC) AS rnum 
 				   FROM none_trade_post n
 				          , bay_member b, ntp_photo p

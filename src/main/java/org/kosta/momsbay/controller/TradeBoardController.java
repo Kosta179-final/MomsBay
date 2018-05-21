@@ -105,12 +105,32 @@ public class TradeBoardController {
 	 * @param model
 	 * @return
 	 */
+	@Transactional
 	@RequestMapping(value = "/addTradePost.do", method = RequestMethod.POST)
-	public String addTradePost(TradePostVO tradePostVO, Model model) {
-		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
-		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
-		model.addAttribute(tradePostService.addTradePost(tradePostVO));
-		return "redirect:detail_trade_post.do?tradePostNo=" + tradePostVO.getTradePostNo() + "";
+	public String addTradePost(TradePostVO tradePostVO, Model model, HttpSession session) {
+		/*model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());*/
+		tradePostService.addTradePost(tradePostVO);
+	
+		MultipartFile multifile = tradePostVO.getFile();
+		if (multifile.getOriginalFilename().length()<1) {
+			/* 사진업로드를 하지 않은경우 게시물만 올라간다.*/
+			tradePostService.addTradePostPhoto("noPhoto", tradePostVO.getTradePostNo());
+			return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo();
+		} else {
+			String savedName = "";
+			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
+			try {
+				UUID uid = UUID.randomUUID();
+				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
+				File target = new File(uploadPath, savedName);
+				FileCopyUtils.copy(multifile.getBytes(), target);
+				tradePostService.addTradePostPhoto(savedName, tradePostVO.getTradePostNo());
+			} catch (IOException e) {
+				return "redirect:upload_fail.do";
+			}
+		}
+		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo();
 	}
 
 	/**
@@ -138,6 +158,8 @@ public class TradeBoardController {
 		model.addAttribute("tradePostVO", tradePostVO);
 		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
+		/* 업로드 한 이미지 불러오기 */
+		model.addAttribute("imgAddress", tradePostService.findTradePostImgByPostNo(tradePostVO.getTradePostNo()));
 		return "service_trade.page_update_trade_post";
 	}
 
@@ -148,8 +170,36 @@ public class TradeBoardController {
 	 * @author Jung
 	 */
 	@RequestMapping(value = "/updateTradePost.do", method = RequestMethod.POST)
-	public String updateTradePost(TradePostVO tradePostVO, Model model) {
+	public String updateTradePost(TradePostVO tradePostVO, Model model, HttpSession session) {
 		model.addAttribute(tradePostService.updateTradePost(tradePostVO));
+		
+		/*
+		 * 상황1. 기존 사진이 없는데 계속 업로드를 안한다 ->아무것도 실행하지 않는다.
+		 * 상황2. 사진이 있건 없던 다른사진으로 재업로드 ->update
+		 * 상황3. 기존 사진을 없앤다 ->update no photo (이건 버전2에서 할께여.. 시간이1도없음)
+		 */
+		MultipartFile multifile = tradePostVO.getFile();
+		if (multifile.getOriginalFilename().length()<1) {
+			/*
+			 * 상황1
+			 */
+			return "redirect:detail_trade_post.do?tradePostNo=" + tradePostVO.getTradePostNo() + "";
+		} else {
+			/*
+			 * 상황2
+			 */
+			String savedName = "";
+			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
+			try {
+				UUID uid = UUID.randomUUID();
+				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
+				File target = new File(uploadPath, savedName);
+				FileCopyUtils.copy(multifile.getBytes(), target);
+				tradePostService.updateTradePostPhoto(savedName, tradePostVO.getTradePostNo());
+			} catch (IOException e) {
+				return "redirect:upload_fail.do";
+			}
+		}
 		return "redirect:detail_trade_post.do?tradePostNo=" + tradePostVO.getTradePostNo() + "";
 	}
 
@@ -167,6 +217,8 @@ public class TradeBoardController {
 		model.addAttribute("tradePostVO", tradePostVO);
 		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
+		/* 업로드 한 이미지 불러오기 */
+		model.addAttribute("imgAddress", tradePostService.findTradePostImgByPostNo(tradePostVO.getTradePostNo()));
 		return "service_trade.page_detail_trade_post";
 	}
 

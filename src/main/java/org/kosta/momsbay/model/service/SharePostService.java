@@ -128,7 +128,7 @@ public class SharePostService {
 		Map<String, Object> map= new HashMap<>();
 		map.put("path",uploadPath);
 		map.put("postNo", noneTradePostNo);
-		photoUploadMapper.insertPostPhoto(map);
+		photoUploadMapper.insertSharePostPhoto(map);
 	}
 	/**
 	 * 업로드된 메인이미지의 주소를 찾아오는 메소드.
