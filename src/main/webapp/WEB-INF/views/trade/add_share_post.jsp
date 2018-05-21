@@ -20,40 +20,17 @@ function getThumbnailPrivew(html, $target) {
 <form action="shareWrite.do" method="post" enctype="multipart/form-data" autocomplete="off">
 <div class="product-details">
 	<!--product-details-->
-	<div class="col-sm-5">
+	<div class="col-sm-12">
+	<h1 align="left" style="color:#424242;">유아용품 나눔/교환 글쓰기</h1>
+		<p style="text-align: left; color: #BDBDBD;">&nbsp;&nbsp;올바른 언어를 사용하여 글작성하시기 바라겠습니다.</p><hr>
+		
 		<div class="view-product">		
 				<div id="main_image" style="width:100%;max-width:100%;border:1px solid #000;display:none;"></div>
 				<br>
 				<input type="file" name="file"onchange="getThumbnailPrivew(this,$('#main_image'))" />
 		</div>
 	</div>
-	<div class="col-sm-7">
-		<div class="product-information">
-			<!--/product-information-->
-			<div class="row">
-				<div class="col-sm-12">
-					<br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-5">
-					<span>평점 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span>(회원평점)</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-5">
-					<span>상품 카테고리 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span>(카테고리)</span>
-				</div>
-			</div>
-		</div>
-	</div>
-</div><hr><br>
+</div>
 <div class="category-tab">
 	<!--category-tab-->
 	<div class="col-sm-12">
@@ -63,17 +40,18 @@ function getThumbnailPrivew(html, $target) {
 			</div>
 		</div>
 		<ul class="nav">
-			<li><input type="text" name="title" placeholder="제목을 입력하세요"></li>
+			<li><input type="text" name="title" style="width: 833px;" placeholder="제목을 입력하세요"></li>
 		</ul>
-		<br>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
 		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
 		<input type="hidden" name="categoryNo" value="${requestScope.categoryNo}">
+	<div class="col-sm-12"><br></div>
 	<div class="btn-group">
-		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>
+		<span><input type="submit" class="btn btn-info2" value="작성"></span>
 	</div>
+	<div class="col-sm-12"><br><br></div>
 </div>
 <!-- 에디터 스크립트 소스
 			약간 이상한건 스크립트 소스가 위에가있으면

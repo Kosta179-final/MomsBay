@@ -21,10 +21,11 @@ public class BayPostService {
 	@Resource
 	private BayPostMapper bayPostMapper;	
 	
-	public ListVO getBayPostList(String pageNo, int boardTypeNo) {
-		int totalCount=bayPostMapper.getTotalPostCount();
+	public ListVO getBayPostList(String pageNo, String boardTypeNo, String searchWord) {
 		Map<String,Object> map = new HashMap();
-		map.put("boardTypeNo", boardTypeNo);
+		map.put("boardTypeNo", Integer.parseInt(boardTypeNo));
+		map.put("searchWord", searchWord);
+		int totalCount=bayPostMapper.getTotalPostCount(map);
 		PagingBean pagingBean=null;
 		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);
@@ -38,10 +39,11 @@ public class BayPostService {
 		return new ListVO(bayPostMapper.getBayPostList(map),pagingBean);
 	}
 	
-	public ListVO getAnnounceList(String pageNo, int boardTypeNo) {
-		int totalCount=bayPostMapper.getTotalPostCount();
+	public ListVO getAnnounceList(String pageNo, String boardTypeNo, String searchWord) {
 		Map<String,Object> map = new HashMap();
 		map.put("boardTypeNo", boardTypeNo);
+		map.put("searchWord", searchWord);
+		int totalCount=bayPostMapper.getTotalPostCount(map);
 		PagingBean pagingBean=null;
 		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);

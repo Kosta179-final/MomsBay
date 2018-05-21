@@ -34,10 +34,11 @@ public class BayBoardController {
 	 * 일반게시판 &  Q&A게시판 클릭시 해당경로 지정 메서드
 	 */
 	@RequestMapping("{viewName}.do")
-	public String showTiles(@PathVariable String viewName, String boardTypeNo, Model model, String pageNo) {
+	public String showTiles(@PathVariable String viewName, String boardTypeNo, Model model, String pageNo, String searchWord) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
+		model.addAttribute("searchWord", searchWord);
 		if(boardTypeNo.equals("5")) {
-			model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,Integer.parseInt(boardTypeNo)));
+			model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,boardTypeNo,searchWord));
 		}else if(boardTypeNo.equals("6")){
 			model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo,Integer.parseInt(boardTypeNo)));
 		}
@@ -59,10 +60,11 @@ public class BayBoardController {
 	 * 일반게시판 글목록 상세보기 메서드
 	 */
 	@RequestMapping("list_bulletin_post.do")
-	public String list(Model model, String pageNo, String boardTypeNo) {
-		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,Integer.parseInt(boardTypeNo)));
-		model.addAttribute("alvo", bayPostService.getAnnounceList(pageNo,Integer.parseInt(boardTypeNo)));
+	public String list(Model model, String pageNo, String boardTypeNo, String searchWord) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,boardTypeNo,searchWord));
+		model.addAttribute("alvo", bayPostService.getAnnounceList(pageNo,boardTypeNo,searchWord));
 		return "bay/list_bulletin_post" + ".tiles";
 	}
 	

@@ -43,7 +43,7 @@ public class SharePostService {
 		PagingBean pagingBean=null;
 		Map<String, Object> map=new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
-		map.put("category_no", Integer.parseInt(categoryNo));
+		map.put("category_no", categoryNo.equals("")? null : Integer.parseInt(categoryNo));
 		map.put("searchWord", searchWord);
 		int totalCount=sharePostMapper.getTotalSharePostCount(map);
 		if(pageNo==null) {

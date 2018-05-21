@@ -2,10 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://cdn.ckeditor.com/4.9.2/standard-all/ckeditor.js"></script>
-	
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#resetBtn").click(function() {
+		if(confirm("글쓰기를 취소하시겠습니까?")){
+			location.href="list_bulletin_post.do?boardTypeNo=5";
+		}
+	});
+});
+</script>
 <div class="container">
 	<div class="row">
-		<form action="write.do" method="post">
+		<form action="write.do" method="post" id="write_form">
 			<div class="col-sm-2">
 				<select name="subjectVO.subjectNo">
 					<c:choose>
@@ -97,7 +105,7 @@
 			<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 			<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
 			<input type="submit" class="btn btn-primary" value="작성">
-			<input type="reset" class="btn btn-primary" value="취소">
+			<input type="reset" class="btn btn-primary" id="resetBtn" value="취소">
 		</form>
 	</div>
 </div>
