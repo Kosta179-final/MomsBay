@@ -25,18 +25,38 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="qvo" items="${requestScope.lvo.list}">
+						<c:forEach var="qvo" items="${requestScope.qlvo.list}">
 							<tr>
 								<td class="cart_product">${qvo.bayPostNo}</td>
 								<td class="cart_description">
 								<c:choose>
 									<c:when test="${sessionScope.member!=null }">
-									<a href="detail_qna_post.do?bayPostNo=${qvo.bayPostNo}">${qvo.title}</a>
+									<a href="detail_qna_post.do?bayPostNo=${qvo.bayPostNo}">[${qvo.subjectVO.subject}] &nbsp;${qvo.title}</a>
 									</c:when>
+									<c:otherwise>
+										[${qvo.subjectVO.subject}] &nbsp; ${qvo.title}
+									</c:otherwise>
 									</c:choose>
 									</td>
 								<td class="cart_price">${qvo.memberVO.name}</td>
 				 				<td class="cart_quantity">${qvo.regdate}</td>
+							</tr>
+						</c:forEach>
+						<c:forEach var="qv" items="${requestScope.lvo.list}">
+							<tr>
+								<td class="cart_product">${qv.bayPostNo}</td>
+								<td class="cart_description">
+									<c:choose>
+									<c:when test="${sessionScope.member!=null }">
+									<a href="detail_qna_post.do?bayPostNo=${qv.bayPostNo }">[${qv.subjectVO.subject}] &nbsp; ${qv.title}</a>
+									</c:when>
+									<c:otherwise>
+										[${qv.subjectVO.subject}] &nbsp; ${qv.title}
+									</c:otherwise>
+									</c:choose>
+									</td>
+								<td class="cart_price">${qv.memberVO.name}</td>
+				 				<td class="cart_quantity">${qv.regdate }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -44,7 +64,9 @@
 			</div>
 			<div class="col-sm-11 off-set-1">
 					<div align="right">
+					<c:if test="${sessionScope.member!=null }">
 						<button name="button" class="btn btn-primary" onclick="addQnaPost()">글쓰기</button><br>
+					</c:if>
 					</div>
 			</div>
 			<%-- 페이징빈 부분 --%>

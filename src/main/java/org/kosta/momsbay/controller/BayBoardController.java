@@ -40,7 +40,7 @@ public class BayBoardController {
 		if(boardTypeNo.equals("5")) {
 			model.addAttribute("lvo", bayPostService.getBayPostList(pageNo,boardTypeNo,searchWord));
 		}else if(boardTypeNo.equals("6")){
-			model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo,Integer.parseInt(boardTypeNo)));
+			model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo,boardTypeNo,searchWord));
 		}
 		return "bay/" + viewName+ ".tiles";
 	}
@@ -69,9 +69,11 @@ public class BayBoardController {
 	}
 	
 	@RequestMapping("list_qna_post.do")
-	public String qnaList(Model model, String pageNo, String boardTypeNo) {
-		model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo,Integer.parseInt(boardTypeNo)));
+	public String qnaList(Model model, String pageNo, String boardTypeNo, String searchWord) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
+		model.addAttribute("searchWord", searchWord);
+		model.addAttribute("lvo", qnaPostService.getQnaPostList(pageNo,boardTypeNo,searchWord));
+		model.addAttribute("qlvo", qnaPostService.getAnnounceQnaList(pageNo,boardTypeNo,searchWord));
 		return "bay/list_qna_post" + ".tiles";
 	}
 	

@@ -66,7 +66,9 @@
 			</div>
 			<div class="col-sm-11 off-set-1">
 					<div align="right">
+					<c:if test="${sessionScope.member!=null }">
 						<button name="button" class="btn btn-primary" onclick="addPost()">글쓰기</button><br>
+					</c:if>
 					</div>
 			</div>
 			<div class="pagingInfo">

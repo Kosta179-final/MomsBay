@@ -5,41 +5,71 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.QnaPostMapper">
 	<resultMap type="qnaPostVO" id="qnaPostRM">
+		<result property="subjectVO.subjectNo" column="subject_no"/>
+		<result property="subjectVO.subject" column="subject"/>
 		<result property="memberVO.id" column="id"/>
 		<result property="memberVO.name" column="name"/>
 	</resultMap>
-	<select id="getQnaPostList" resultMap="qnaPostRM" parameterType="map">
-		SELECT b.bay_post_no, b.title, b.regdate, b.id, b.board_type_no, m.name
+	<select id="getAnnounceQnaList" resultMap="qnaPostRM" parameterType="map">
+		SELECT b.bay_post_no, b.title, b.regdate, b.id, b.board_type_no, m.name, s.subject, b.subject_no
 		FROM(
-		SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
-		bay_post_no, title, regdate, id, board_type_no
-		FROM bay_post
-		WHERE board_type_no=#{boardTypeNo}
-		)b, bay_member m
-		WHERE b.id = m.id AND rnum BETWEEN #{pagingBean.startRowNumber}
-		AND #{pagingBean.endRowNumber}
+			SELECT row_number() over(ORDER BY bay_post_no DESC) AS rnum,
+			bay_post_no, title, regdate, id, subject_no,board_type_no
+			FROM bay_post
+			WHERE board_type_no=#{boardTypeNo} 
+			AND subject_no=6
+			<if test="searchWord != null">
+			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+			</if>
+			)b, bay_member m,subject s
+		WHERE b.id = m.id 
+		AND rnum 
+		BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+		AND b.subject_no = s.subject_no
 		ORDER BY bay_post_no DESC
 	</select>
+	<select id="getQnaPostList" resultMap="qnaPostRM" parameterType="map">
+		SELECT b.bay_post_no, b.title, b.regdate, b.id, b.board_type_no, m.name, s.subject, b.subject_no
+		FROM(
+			SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
+			bay_post_no, title, regdate, id,subject_no, board_type_no
+			FROM bay_post
+			WHERE board_type_no=#{boardTypeNo} AND subject_no!=6
+			<if test="searchWord != null">
+			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+	    	</if>
+			)b, bay_member m ,subject s
+			WHERE b.id = m.id 
+			AND rnum 
+			BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+			AND b.subject_no = s.subject_no
+			ORDER BY bay_post_no DESC
+	</select>
 	
-	<select id="getTotalPostCount" resultType="int">
+	<select id="getTotalPostCount" resultType="int" parameterType="map">
 		SELECT count(*) FROM bay_post
+		WHERE board_type_no=#{boardTypeNo}
+		<if test="searchWord != null">
+		AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+		</if>
 	</select>
 	
 	<resultMap type="qnaPostVO" id="postRM">
 		<result property="memberVO.id" column="id"/>
+		<result property="memberVO.name" column="name"/>
 	</resultMap>
 	<select id="getQnaDetail" resultMap="postRM">
-		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no
-		FROM bay_post b
-		WHERE b.bay_post_no = #{value}
+		SELECT b.title,b.content,b.regdate,b.id,b.board_type_no,b.bay_post_no,s.subject_no
+		FROM bay_post b , subject s
+		WHERE b.bay_post_no = #{value} and s.subject_no=b.subject_no
 	</select>
 	
 	<insert id="addQnaPost" parameterType="qnaPostVO">
 		<selectKey keyProperty="bayPostNo" resultType="int" order="BEFORE">
 			SELECT bay_post_seq.nextval FROM dual
 		</selectKey>
-			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no)
-			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo})
+			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
+			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectVO.subjectNo})
 	</insert>
 	
 	<delete id="deleteQnaPost">

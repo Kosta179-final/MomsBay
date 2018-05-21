@@ -24,10 +24,11 @@ public class QnaPostService {
 	 * @param pageNo
 	 * @author sam
 	 */
-	public ListVO getQnaPostList(String pageNo, int boardTypeNo) {
-		int totalCount=qnaPostMapper.getTotalPostCount();
+	public ListVO getQnaPostList(String pageNo, String boardTypeNo , String searchWord) {
 		Map<String,Object> map = new HashMap();
-		map.put("boardTypeNo", boardTypeNo);
+		map.put("boardTypeNo", Integer.parseInt(boardTypeNo));
+		map.put("searchWord", searchWord);
+		int totalCount=qnaPostMapper.getTotalPostCount(map);
 		PagingBean pagingBean=null;
 		if(pageNo==null) {
 			pagingBean=new PagingBean(totalCount);
@@ -39,6 +40,23 @@ public class QnaPostService {
 		}
 		map.put("pagingBean", pagingBean);
 		return new ListVO(qnaPostMapper.getQnaPostList(map),pagingBean);
+	}
+	public ListVO getAnnounceQnaList(String pageNo, String boardTypeNo,String searchWord) {
+		Map<String,Object> map = new HashMap();
+		map.put("boardTypeNo", boardTypeNo);
+		map.put("searchWord", searchWord);
+		int totalCount=qnaPostMapper.getTotalPostCount(map);
+		PagingBean pagingBean=null;
+		if(pageNo==null) {
+			pagingBean=new PagingBean(totalCount);
+			pagingBean.setPostCountPerPage(9);
+		}
+		else {
+			pagingBean=new PagingBean(totalCount,Integer.parseInt(pageNo));
+			pagingBean.setPostCountPerPage(9);
+		}
+		map.put("pagingBean", pagingBean);
+		return new ListVO(qnaPostMapper.getAnnounceQnaList(map),pagingBean);
 	}
 	/**
 	 * Q&A 글목록 상세보기 메서드
