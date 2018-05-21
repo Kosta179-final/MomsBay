@@ -52,9 +52,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  			 		  , p.photo_path as imgAddress
 	  			 		  , row_number() over(ORDER BY n.none_trade_post_no DESC) AS rnum 
 				   FROM none_trade_post n
-				          , bay_member b
-				          ,ntp_photo p 
+				          , bay_member b, ntp_photo p
 				 WHERE n.id=b.id 
+				 	 AND p.none_trade_post_no= n.none_trade_post_no
 				     AND delete_status=0 
 				     AND board_type_no=#{board_type_no} 
 				     <if test="category_no != null">
@@ -63,8 +63,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				     <if test="searchWord != null">
 				     AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 				     </if>
-				     AND n.none_trade_post_no=p.none_trade_post_no
-			    ) 
+			    )
 	 WHERE rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
 </select>
 <!-- 나눔(교환) 게시글 상세보기 -->

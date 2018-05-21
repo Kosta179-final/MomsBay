@@ -11,17 +11,17 @@
 	<!--features_items-->
 	<h2 class="title text-center">게시글 목록</h2>
 	
-	
+
 	<c:forEach items="${requestScope.svo.list}" var="pvo">
 		<%-- 나눔 게시글 목록 --%>
 		<div class="col-sm-4">
 			<div class="product-image-wrapper">
 				<div class="single-products">
 					<div class="productinfo text-center">
-						<c:if test="${empty pvo.imgAddress}">
+						<c:if test="${pvo.imgAddress eq 'noPhoto'}">
 							<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
 						</c:if>
-						<c:if test="${!empty pvo.imgAddress}">
+						<c:if test="${pvo.imgAddress ne 'noPhoto'}">
 							<img src="${pageContext.request.contextPath}/resources/upload/postImg/${pvo.imgAddress }" >
 						</c:if>
 						<h2 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${pvo.title}</h2>

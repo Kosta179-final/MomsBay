@@ -30,7 +30,7 @@
 	<div class="col-sm-5">
 		<div class="view-product">
 			<c:choose>
-				<c:when test="${empty imgAddress}">
+				<c:when test="${ imgAddress eq 'noPhoto'}">
 					<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
 				</c:when>
 				<c:otherwise>
