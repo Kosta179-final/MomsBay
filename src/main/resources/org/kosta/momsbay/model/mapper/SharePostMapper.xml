@@ -36,6 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		     , id
 		     , category_no
 		     , board_type_no 
+		     , imgAddress
 	  FROM ( 
 	  			 SELECT n.none_trade_post_no
 	  			 		  , n.title
@@ -44,9 +45,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  			 		  , b.id
 	  			 		  , n.category_no
 	  			 		  , n.board_type_no
+	  			 		  , p.photo_path as imgAddress
 	  			 		  , row_number() over(ORDER BY n.none_trade_post_no DESC) AS rnum 
 				   FROM none_trade_post n
-				          , bay_member b 
+				          , bay_member b
+				          ,ntp_photo p 
 				 WHERE n.id=b.id 
 				     AND delete_status=0 
 				     AND board_type_no=#{board_type_no} 
@@ -54,6 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				     <if test="searchWord != null">
 				     AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 				     </if>
+				     AND n.none_trade_post_no=p.none_trade_post_no
 			    ) 
 	 WHERE rnum between #{pagingBean.startRowNumber} and #{pagingBean.endRowNumber}
 </select>

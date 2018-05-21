@@ -1,17 +1,30 @@
 package org.kosta.momsbay.controller;
 
-import javax.annotation.Resource;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.UUID;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
+import javax.swing.plaf.multi.MultiFileChooserUI;
+
+import org.apache.log4j.Logger;
+import org.apache.log4j.spi.LoggerFactory;
 import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.SharePostService;
 import org.kosta.momsbay.model.service.TradePostService;
 import org.kosta.momsbay.model.vo.SharePostVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * TradePost 처리하는 Controller.
@@ -168,6 +181,10 @@ public class TradeBoardController {
 		model.addAttribute("pvo", sharePostVO);
 		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
+		/*
+		 * 업로드 한 이미지 불러오기
+		 */
+		model.addAttribute("imgAddress",sharePostService.findSharePostImgByPostNo(sharePostVO.getNoneTradePostNo()));
 		return "service_trade.page_detail_share_post";
 	}
 	
@@ -177,11 +194,28 @@ public class TradeBoardController {
 	 * @return detail_share_post.jsp
 	 * @author rws
 	 */
+	
+	@Transactional
 	@RequestMapping(value="shareWrite.do",method=RequestMethod.POST)
-	public String shareWrite(SharePostVO sharePostVO, Model model) {
+	public String shareWrite(@ModelAttribute("sharePostVO") SharePostVO sharePostVO, Model model, HttpSession session) {
 		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
 		sharePostService.addSharePost(sharePostVO);
+		/*
+		 * 여기서 부터 파일 업로드 코드
+		 */		
+		MultipartFile multifile = sharePostVO.getFile();
+		String savedName="";
+		String uploadPath= session.getServletContext().getRealPath("/resources/upload/postImg");
+		try {
+			UUID uid = UUID.randomUUID();
+			savedName = uid.toString().substring(0,5) + "_" + multifile.getOriginalFilename();
+			File target = new File(uploadPath, savedName);
+			FileCopyUtils.copy(multifile.getBytes(), target);
+			sharePostService.addSharePostPhoto(savedName, sharePostVO.getNoneTradePostNo());
+		} catch (IOException e) {
+			return "redirect:upload_fail.do";
+		}		
 		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo()+"";
 	}
 	
@@ -254,6 +288,7 @@ public class TradeBoardController {
 		SharePostVO sharePostVO=sharePostService.updateSharePostByStatus(Integer.parseInt(noneTradePostNo));
 		return "redirect:detail_share_post.do?noneTradePostNo="+sharePostVO.getNoneTradePostNo();
 	}
+	
 }
 
 

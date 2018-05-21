@@ -2,13 +2,29 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://cdn.ckeditor.com/4.9.2/standard-all/ckeditor.js"></script>
-<form action="shareWrite.do" method="post">
+
+<script>
+function getThumbnailPrivew(html, $target) {
+    if (html.files && html.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $target.css('display', '');
+            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+        }
+        reader.readAsDataURL(html.files[0]);
+    }
+}
+</script>
+
+<form action="shareWrite.do" method="post" enctype="multipart/form-data" autocomplete="off">
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
-		<div class="view-product">
-			<img src="${pageContext.request.contextPath}/resources/upload/images/default.png"
-				alt="" />
+		<div class="view-product">		
+				<div id="main_image" style="width:100%;max-width:100%;border:1px solid #000;display:none;"></div>
+				<br>
+				<input type="file" name="file"onchange="getThumbnailPrivew(this,$('#main_image'))" />
 		</div>
 	</div>
 	<div class="col-sm-7">
@@ -49,6 +65,7 @@
 		<ul class="nav">
 			<li><input type="text" name="title" placeholder="제목을 입력하세요"></li>
 		</ul>
+		<br>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
 		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
