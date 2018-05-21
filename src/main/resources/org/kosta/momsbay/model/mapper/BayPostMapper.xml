@@ -17,7 +17,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT row_number() over(ORDER BY bay_post_no DESC) AS rnum,
 			bay_post_no, title, regdate, id, subject_no,board_type_no
 			FROM bay_post
-			WHERE board_type_no=#{boardTypeNo} AND subject_no=4
+			WHERE board_type_no=#{boardTypeNo} 
+			AND subject_no=4
+			<if test="searchWord != null">
+			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+			</if>
 			)b, bay_member m,subject s
 		WHERE b.id = m.id 
 		AND rnum 
@@ -32,9 +36,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT row_number() over(ORDER BY bay_post_no DESC) AS rnum,
 			bay_post_no, title, regdate, id, subject_no,board_type_no
 			FROM bay_post
-			<![CDATA[
-			WHERE board_type_no=#{boardTypeNo} AND subject_no<4
-			]]>
+			WHERE board_type_no=#{boardTypeNo} AND subject_no!=4
+			<if test="searchWord != null">
+			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+			</if>
 			)b, bay_member m,subject s
 		WHERE b.id = m.id 
 		AND rnum 
@@ -43,8 +48,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		ORDER BY bay_post_no DESC
 	</select>
 	
-	<select id="getTotalPostCount" resultType="int">
+	<select id="getTotalPostCount" resultType="int" parameterType="map">
 		SELECT count(*) FROM bay_post
+		WHERE board_type_no=#{boardTypeNo}
+		<if test="searchWord != null">
+		AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
+		</if>
 	</select>
 	
 	<insert id="addPost" parameterType="bayPostVO">

@@ -6,12 +6,15 @@
 $(function(){
 	var frm = $('#conditionSearchFrom'); //폼
 	var searchBtn = $('#btn_search'); //search 버튼 
-	
 	searchBtn.on('click', function(){
 		var boardTypeNo = $("#boardTypeNo").val();
 		
 		if(boardTypeNo == '1' || boardTypeNo == '2'){
 			frm.attr("action","${pageContext.request.contextPath}/trade/list_trade_post.do");
+		}else if(boardTypeNo == '5'){
+			frm.attr("action","${pageContext.request.contextPath}/bay/list_bulletin_post.do");
+		}else if(boardTypeNo == '6'){
+			frm.attr("action","${pageContext.request.contextPath}/trade/list_qna_post.do");
 		}else{
 			frm.attr("action","${pageContext.request.contextPath}/trade/list_share_post.do");
 		}
@@ -141,6 +144,8 @@ $(function(){
 						<option value="2">팝니다</option>
 						<option value="3">나눔</option>
 						<option value="4">교환</option>
+						<option value="5">자유게시판</option>
+						<option value="6">Q&amp;A게시판</option>
 					</select>
 					<input type="text" placeholder="제목 및 내용에 포함된 단어" name="searchWord" />
 					<button class="btn searchform fa fa-search" type="button" id="btn_search"></button>

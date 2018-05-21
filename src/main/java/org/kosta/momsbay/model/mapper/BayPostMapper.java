@@ -14,7 +14,7 @@ import org.kosta.momsbay.model.vo.PostVO;
 public interface BayPostMapper {
 	public List<PostVO> getBayPostList(Map map);
 	
-	public int getTotalPostCount();
+	public int getTotalPostCount(Map map);
 	
 	public void addPost(BayPostVO bayPostVO);
 	
