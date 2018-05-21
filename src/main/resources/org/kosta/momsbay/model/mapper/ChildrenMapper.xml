@@ -8,4 +8,18 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	INSERT INTO children 
 	values(children_SEQ.nextval,#{gender},to_date(#{birth},'YYYY.MM.DD'),#{id})
  	</insert>
+ 	
+ 	<select id="getChildrenAgeStatistics" resultType="childrenStatisticsVO">
+ 	SELECT h.maleCount, f.femaleCount
+	FROM  (
+			SELECT count(*) AS maleCount from children
+			WHERE gender='male' 
+			AND TRUNC(MONTHS_BETWEEN(sysdate, TO_CHAR(birth,'yyyymmdd'))/12) 
+			BETWEEN #{values} AND #{values}+1)h,
+		 (	SELECT count(*) AS femaleCount 
+			FROM children
+			WHERE gender='female' 
+			AND TRUNC(MONTHS_BETWEEN(sysdate, TO_CHAR(birth,'yyyymmdd'))/12) 
+			BETWEEN #{values} AND #{values}+1)f
+ 	</select>
 </mapper>

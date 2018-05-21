@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.exception.LoginException;
 import org.kosta.momsbay.model.mapper.ChildrenMapper;
 import org.kosta.momsbay.model.mapper.MemberMapper;
+import org.kosta.momsbay.model.vo.ChildrenStatisticsVO;
 import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
@@ -164,5 +165,40 @@ public class MemberService {
 
 	public MemberVO findMemberById(String id) {
 		return memberMapper.findMemberById(id);
+	}
+
+	public StringBuilder getMemberChildStatistics() {
+		StringBuilder children= new StringBuilder();
+		children.append("['여아',");
+		children.append(memberMapper.getMemberChildStatistics("female")+"],");
+		children.append("['남아',");
+		children.append(memberMapper.getMemberChildStatistics("male")+"]");
+		return children;
+	}
+
+	public Map<String, Integer> getMemberGradeStatistics() {
+		Map<String, Integer> list = new HashMap<>();
+		list.put("member", memberMapper.getMemberCountByGrade("member"));
+		list.put("blacklist", memberMapper.getMemberCountByGrade("blacklist"));
+		list.put("admin", memberMapper.getMemberCountByGrade("admin"));
+		return list;
+	}
+
+	public List<ChildrenStatisticsVO> getChildrenAgeStatistics() {
+		List<ChildrenStatisticsVO> list = new ArrayList<>();
+		ChildrenStatisticsVO ch= new ChildrenStatisticsVO();
+		Map<String, Object> map = new HashMap<>();
+		map.put("gender", "male");
+		ch=childrenMapper.getChildrenAgeStatistics(0);
+		ch.setAge("2세 미만");
+		list.add(ch);
+		
+		for(int i=1;i<10;i++) {
+			ChildrenStatisticsVO temp_ch= new ChildrenStatisticsVO();
+			temp_ch=childrenMapper.getChildrenAgeStatistics(i);
+			temp_ch.setAge(i+1+"세");
+			list.add(temp_ch);
+		}
+		return list;
 	}
 }
