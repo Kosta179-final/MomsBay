@@ -16,7 +16,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="getTotalTradePostCount" resultType="int" parameterType="map">
 		SELECT count(*) FROM trade_post
-		WHERE board_type_no=#{board_type_no} AND category_no=#{category_no}
+		WHERE board_type_no=#{board_type_no} 
+		<if test="category_no != null">
+		AND category_no=#{category_no}
+		</if>
 		AND delete_status=0
 		<if test="searchWord != null">
 		AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
@@ -47,7 +50,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								 , board_type_no 
 						  FROM trade_post
 						WHERE board_type_no=#{board_type_no} 
+							<if test="category_no != null">
 							AND category_no=#{category_no} 
+							</if>
 							AND delete_status=0
 							<if test="searchWord != null">
 							AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')

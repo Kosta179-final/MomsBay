@@ -135,7 +135,7 @@ $(function(){
 			</div>
 			<!-- 카테고리별 검색 -->
 			<form id="conditionSearchFrom">
-			<input type="hidden" name="categoryNo" value="1">
+			<input type="hidden" name="categoryNo" value="${categoryNo}">
 			<div class="col-sm-5">
 				<div class="search_box pull-right">
 					<select name="boardTypeNo" id="boardTypeNo" style="width: 140px; height: 36.33px;">
