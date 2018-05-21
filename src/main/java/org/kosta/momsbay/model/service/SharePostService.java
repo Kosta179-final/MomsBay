@@ -12,6 +12,7 @@ import org.kosta.momsbay.model.mapper.PhotoUploadMapper;
 import org.kosta.momsbay.model.mapper.SharePostMapper;
 import org.kosta.momsbay.model.vo.SharePostVO;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 교환게시판 관련 비즈니스로직 서비스.
@@ -43,7 +44,7 @@ public class SharePostService {
 		PagingBean pagingBean=null;
 		Map<String, Object> map=new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
-		map.put("category_no", categoryNo.equals("")? null : Integer.parseInt(categoryNo));
+		map.put("category_no", categoryNo==null ? null : Integer.parseInt(categoryNo));
 		map.put("searchWord", searchWord);
 		int totalCount=sharePostMapper.getTotalSharePostCount(map);
 		if(pageNo==null) {
@@ -84,6 +85,15 @@ public class SharePostService {
 	 */
 	public void updateSharePost(SharePostVO sharePostVO) {
 		sharePostMapper.updateSharePost(sharePostVO);
+		/*
+		
+		 * 사진 추가, 수정의 경우 실행
+		 
+		MultipartFile multifile = sharePostVO.getFile();
+		if (multifile.getOriginalFilename().length() > 1) {
+		
+		}
+		photoUploadMapper.updateSharePostPhoto();*/
 	}
 	
 	/**
@@ -129,5 +139,17 @@ public class SharePostService {
 	public String findSharePostImgByPostNo(int noneTradePostNo) {
 		String imgAddress=photoUploadMapper.findSharePostImgByPostNo(noneTradePostNo);
 		return imgAddress;
+	}
+	/**
+	 * 글 수정시 이미지 업데이트.
+	 * @param savedName
+	 * @param noneTradePostNo
+	 * @author hwangma
+	 */
+	public void updateSharePostPhoto(String savedName, int postNo) {
+		Map<String, Object> map= new HashMap<>();
+		map.put("savedName",savedName);
+		map.put("postNo", postNo);
+		photoUploadMapper.updateSharePostPhoto(map);
 	}
 }

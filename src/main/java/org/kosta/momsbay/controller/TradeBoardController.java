@@ -6,10 +6,6 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.multi.MultiFileChooserUI;
-
-import org.apache.log4j.Logger;
-import org.apache.log4j.spi.LoggerFactory;
 import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.SharePostService;
 import org.kosta.momsbay.model.service.TradePostService;
@@ -249,6 +245,7 @@ public class TradeBoardController {
 		model.addAttribute("pvo", sharePostVO);
 		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
+		model.addAttribute("imgAddress", sharePostService.findSharePostImgByPostNo(sharePostVO.getNoneTradePostNo()));
 		return "service_trade.page_update_share_post";
 	}
 
@@ -260,8 +257,35 @@ public class TradeBoardController {
 	 * @author rws
 	 */
 	@RequestMapping(value = "/updateSharePost.do", method = RequestMethod.POST)
-	public String updateSharePost(SharePostVO sharePostVO) {
+	public String updateSharePost(SharePostVO sharePostVO, HttpSession session) {
 		sharePostService.updateSharePost(sharePostVO);
+		/*
+		 * 상황1. 기존 사진이 없는데 계속 업로드를 안한다 ->아무것도 실행하지 않는다.
+		 * 상황2. 사진이 있건 없던 다른사진으로 재업로드 ->update
+		 * 상황3. 기존 사진을 없앤다 ->update no photo (이건 버전2에서 할께여.. 시간이1도없음)
+		 */
+		MultipartFile multifile = sharePostVO.getFile();
+		if (multifile.getOriginalFilename().length()<1) {
+			/*
+			 * 상황1
+			 */
+			return "redirect:detail_share_post.do?noneTradePostNo=" + sharePostVO.getNoneTradePostNo();
+		} else {
+			/*
+			 * 상황2
+			 */
+			String savedName = "";
+			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
+			try {
+				UUID uid = UUID.randomUUID();
+				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
+				File target = new File(uploadPath, savedName);
+				FileCopyUtils.copy(multifile.getBytes(), target);
+				sharePostService.updateSharePostPhoto(savedName, sharePostVO.getNoneTradePostNo());
+			} catch (IOException e) {
+				return "redirect:upload_fail.do";
+			}
+		}
 		return "redirect:detail_share_post.do?noneTradePostNo=" + sharePostVO.getNoneTradePostNo();
 	}
 

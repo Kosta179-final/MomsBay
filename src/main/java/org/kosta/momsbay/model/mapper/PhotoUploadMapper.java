@@ -13,5 +13,7 @@ public interface PhotoUploadMapper {
 	void insertPostPhoto(Map<String, Object> map);
 
 	String findSharePostImgByPostNo(int noneTradePostNo);
+
+	void updateSharePostPhoto(Map<String, Object> map);
 	
 }

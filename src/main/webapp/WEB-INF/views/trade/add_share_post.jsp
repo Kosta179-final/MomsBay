@@ -49,7 +49,7 @@ function getThumbnailPrivew(html, $target) {
 		<input type="hidden" name="categoryNo" value="${requestScope.categoryNo}">
 	<div class="col-sm-12"><br></div>
 	<div class="btn-group">
-		<span><input type="submit" class="btn btn-info2" value="작성"></span>
+		<span><input type="submit" class="btn btn-info2" value="작성" required="required"></span>
 	</div>
 	<div class="col-sm-12"><br><br></div>
 </div>

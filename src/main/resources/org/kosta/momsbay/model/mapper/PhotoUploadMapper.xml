@@ -14,4 +14,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	FROM NTP_PHOTO
 	WHERE NONE_TRADE_POST_NO =#{values}
  	</select>
+ 	
+ 	<update id="updateSharePostPhoto">
+ 	UPDATE NTP_PHOTO 
+ 	SET photo_path =#{savedName}
+ 	WHERE NONE_TRADE_POST_NO =#{postNo}
+ 	</update>
 </mapper>
