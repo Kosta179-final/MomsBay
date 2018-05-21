@@ -4,40 +4,11 @@
 <script src="https://cdn.ckeditor.com/4.9.2/standard-all/ckeditor.js"></script>
 <form action="shareWrite.do" method="post">
 <div class="product-details">
-	<!--product-details-->
-	<div class="col-sm-5">
-		<div class="view-product">
-			<img src="${pageContext.request.contextPath}/resources/upload/images/default.png"
-				alt="" />
-		</div>
+	<div class="col-sm-12">
+		<h1 align="left" style="color:#424242;">유아용품 나눔/교환 글쓰기</h1>
+		<p style="text-align: left; color: #BDBDBD;">&nbsp;&nbsp;올바른 언어를 사용하여 글작성하시기 바라겠습니다.</p><hr>
 	</div>
-	<div class="col-sm-7">
-		<div class="product-information">
-			<!--/product-information-->
-			<div class="row">
-				<div class="col-sm-12">
-					<br>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-5">
-					<span>평점 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span>(회원평점)</span>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-5">
-					<span>상품 카테고리 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span>(카테고리)</span>
-				</div>
-			</div>
-		</div>
-	</div>
-</div><hr><br>
+</div>
 <div class="category-tab">
 	<!--category-tab-->
 	<div class="col-sm-12">
@@ -47,16 +18,18 @@
 			</div>
 		</div>
 		<ul class="nav">
-			<li><input type="text" name="title" placeholder="제목을 입력하세요"></li>
+			<li><input type="text" name="title" style="width: 833px;" placeholder="제목을 입력하세요"></li>
 		</ul>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
 		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
 		<input type="hidden" name="categoryNo" value="${requestScope.categoryNo}">
+	<div class="col-sm-12"><br></div>
 	<div class="btn-group">
-		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>
+		<span><input type="submit" class="btn btn-info2" value="작성"></span>
 	</div>
+	<div class="col-sm-12"><br><br></div>
 </div>
 <!-- 에디터 스크립트 소스
 			약간 이상한건 스크립트 소스가 위에가있으면
