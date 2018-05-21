@@ -29,8 +29,14 @@
 	<!--product-details-->
 	<div class="col-sm-5">
 		<div class="view-product">
-			<img src="${pageContext.request.contextPath}/resources/upload/images/default.png"
-				alt="" />
+			<c:choose>
+				<c:when test="${empty imgAddress}">
+					<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
+				</c:when>
+				<c:otherwise>
+					<img src="${pageContext.request.contextPath}/resources/upload/postImg/${imgAddress }" >
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	<c:if test="${requestScope.pvo.tradeStatusNo==7}">

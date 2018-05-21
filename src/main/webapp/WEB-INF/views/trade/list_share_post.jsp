@@ -18,7 +18,12 @@
 			<div class="product-image-wrapper">
 				<div class="single-products">
 					<div class="productinfo text-center">
-						<img src="${pageContext.request.contextPath}/resources/upload/images/stroller.jpg" alt=""/>
+						<c:if test="${empty pvo.imgAddress}">
+							<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
+						</c:if>
+						<c:if test="${!empty pvo.imgAddress}">
+							<img src="${pageContext.request.contextPath}/resources/upload/postImg/${pvo.imgAddress }" >
+						</c:if>
 						<h2 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${pvo.title}</h2>
 						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록일 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.regdate}</p>
 						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.memberVO.id}</p>
