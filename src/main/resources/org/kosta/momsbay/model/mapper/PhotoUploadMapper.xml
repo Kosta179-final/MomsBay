@@ -4,7 +4,7 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.PhotoUploadMapper">
- 	<insert id="insertPostPhoto" parameterType="map">
+ 	<insert id="insertSharePostPhoto" parameterType="map">
 	INSERT INTO ntp_PHOTO 
 	VALUES(photo_SEQ.nextval, #{path}, #{postNo})
  	</insert>
@@ -20,4 +20,22 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
  	SET photo_path =#{savedName}
  	WHERE NONE_TRADE_POST_NO =#{postNo}
  	</update>
+ 	
+ 	<insert id="insertTradePostPhoto" parameterType="map">
+ 	INSERT INTO PHOTO 
+	VALUES(photo_SEQ.nextval, #{path}, #{postNo})
+ 	</insert>
+ 	
+ 	<select id="findTradePostImgByPostNo" resultType="string">
+ 	SELECT photo_path 
+	FROM PHOTO
+	WHERE TRADE_POST_NO =#{values}
+ 	</select>
+ 	
+  <update id="updateTradePostPhoto">
+ 	UPDATE PHOTO 
+ 	SET photo_path =#{savedName}
+ 	WHERE TRADE_POST_NO =#{postNo}
+ 	</update>
+ 	
 </mapper>

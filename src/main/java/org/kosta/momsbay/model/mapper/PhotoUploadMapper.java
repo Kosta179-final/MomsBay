@@ -10,10 +10,16 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper
 public interface PhotoUploadMapper {
 
-	void insertPostPhoto(Map<String, Object> map);
+	void insertSharePostPhoto(Map<String, Object> map);
 
 	String findSharePostImgByPostNo(int noneTradePostNo);
 
 	void updateSharePostPhoto(Map<String, Object> map);
+
+	void insertTradePostPhoto(Map<String, Object> map);
+	
+	String findTradePostImgByPostNo(int TradePostNo);
+
+	void updateTradePostPhoto(Map<String, Object> map);
 	
 }

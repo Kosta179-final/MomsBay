@@ -14,8 +14,14 @@
 	<!--product-details-->
 	<div class="col-sm-5">
 		<div class="view-product">
-			<img src="${pageContext.request.contextPath}/resources/upload/images/stroller.jpg"
-				alt="" />
+			<c:choose>
+				<c:when test="${ imgAddress eq 'noPhoto'}">
+					<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
+				</c:when>
+				<c:otherwise>
+					<img src="${pageContext.request.contextPath}/resources/upload/postImg/${imgAddress }" >
+				</c:otherwise>
+			</c:choose>
 		</div>
 	</div>
 	<div class="col-sm-7">

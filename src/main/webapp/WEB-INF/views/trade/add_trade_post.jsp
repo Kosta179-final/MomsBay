@@ -2,12 +2,35 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script src="https://cdn.ckeditor.com/4.9.2/standard-all/ckeditor.js"></script>
+<script>
+function getThumbnailPrivew(html, $target) {
+    if (html.files && html.files[0]) {
+        var reader = new FileReader();
+        reader.onload = function (e) {
+            $target.css('display', '');
+            //$target.css('background-image', 'url(\"' + e.target.result + '\")'); // 배경으로 지정시
+            $target.html('<img src="' + e.target.result + '" border="0" alt="" />');
+        }
+        reader.readAsDataURL(html.files[0]);
+    }
+}
+</script>
 
-<form action="${pageContext.request.contextPath}/trade/addTradePost.do" method="post">
+<form action="${pageContext.request.contextPath}/trade/addTradePost.do" enctype="multipart/form-data"  method="post">
 <div class="category-tab">
 	<div class="col-sm-12"  style="text-align: left;">
+		<h1 align="left" style="color:#424242;">유아용품 판매&구매 글쓰기</h1>
+		<p style="text-align: left; color: #BDBDBD;">&nbsp;&nbsp;올바른 언어를 사용하여 글작성하시기 바라겠습니다.</p><hr>
+		
+		<div class="view-product">		
+				<div id="main_image" style="width:50%; max-width:50%;border:1px solid #000;display:none;"></div>
+				<br>
+				<input type="file" name="file"onchange="getThumbnailPrivew(this,$('#main_image'))" />
+		</div>
+		<br>
 		<span>희망가격 : </span>
 		<span><input type="number" name="price">원</span><br>
+		<br>
 		<textarea rows="1" name="title" placeholder="제목을 입력하세요"></textarea><br><br>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
