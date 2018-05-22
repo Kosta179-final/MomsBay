@@ -14,7 +14,7 @@
 		});
 		
 		$('#delete_btn').click(function(){
-			location.href='delete_message.do?messageNo=${param.messageNo }';
+			location.href='delete_message.do?messageNo=${param.messageNo }&messageType=${param.messageType }';
 		});
 	});
 	
@@ -47,7 +47,7 @@
    				<div>
    				    <button id="reply_btn" type="button" class="btn btn-default">답장</button>
    				    <button id="list_btn" type="button" class="btn btn-default">목록</button>
-   				    <button id="delete_btn" type="button" class="btn btn-default">삭제</button>
+ 				    <button id="delete_btn" type="button" class="btn btn-default">삭제</button>
 	    		</div>
    			</div>
    		</div>

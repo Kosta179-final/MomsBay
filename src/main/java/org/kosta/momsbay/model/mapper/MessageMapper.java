@@ -23,4 +23,5 @@ public interface MessageMapper {
 	public MessageVO detailMessage(Map map);
 	public void updateReceiveFlag(int sendMessageNo);
 	public void updateStatus(int messageNo);
+	public void deleteMessage(Map<String, Object> map);
 }
