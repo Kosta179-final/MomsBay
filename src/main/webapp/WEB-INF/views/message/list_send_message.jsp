@@ -22,7 +22,7 @@
 					<tr>
 						<td class="cart_price">${pvo.messageNo}</td>
 						<td class="cart_price">${pvo.receiveMemberVO.id}</td>
-						<td class="cart_description">${pvo.title}</td>
+						<td class="cart_description"><a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=send">${pvo.title}</a></td>
 		 				<td class="cart_quantity">${pvo.regdate}</td>
 		 				<td class="cart_price">
 							<c:choose>

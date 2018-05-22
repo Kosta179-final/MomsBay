@@ -31,7 +31,7 @@
 							</c:otherwise>
 							</c:choose>
 						</td>
-						<td class="cart_description">${pvo.title}</td>
+						<td class="cart_description"><a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=receive">${pvo.title}</a></td>
 						<td class="cart_price">${pvo.memberVO.id}</td>
 		 				<td class="cart_quantity">${pvo.regdate}</td>
 					</tr>

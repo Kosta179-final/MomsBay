@@ -92,4 +92,16 @@ public class MessageController {
 		model.addAttribute("lvo", messageService.getTotalMessageList(id, pageNo));
 		return "message/list_total_message.m_tiles";
 	}
+	/**
+	 * 같이 넘어온 messageType에 따라 메세지 내용을 type에 맞는 table에서 가져와 보여준다.
+	 * @param messageNo
+	 * @param messageType
+	 * @param model
+	 * @return message/detail_message.m_tiles
+	 */
+	@RequestMapping("detail_message.do")
+	public String detailMessage(int messageNo,String messageType,Model model) {
+		model.addAttribute("messageVO",messageService.detailMessage(messageNo,messageType));
+		return "message/detail_message.m_tiles";
+	}
 }
