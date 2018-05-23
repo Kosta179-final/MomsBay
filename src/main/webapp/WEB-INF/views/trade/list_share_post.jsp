@@ -24,7 +24,13 @@
 						<c:if test="${pvo.imgAddress ne 'noPhoto'}">
 							<img src="${pageContext.request.contextPath}/resources/upload/postImg/${pvo.imgAddress }" >
 						</c:if>
-						<h2 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${pvo.title}</h2>
+						<c:if test="${pvo.tradeStatusNo==3}">
+							<div style="position: absolute;">
+								<div style="position: relative; top: -205px; left: 20px;"><img src="${pageContext.request.contextPath}/resources/images/product-details/soldout11.png" style="width: 225px; height: 205px;"></img>
+								</div>
+							</div>
+						</c:if>
+						<h4 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${pvo.title}</h4><hr>
 						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록일 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.regdate}</p>
 						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.memberVO.id}</p>
 					</div>
@@ -32,7 +38,7 @@
 				<div class="choose">
 					<ul class="nav nav-pills nav-justified">
 						<li><a class="btn btn-info4" href="detail_share_post.do?noneTradePostNo=${pvo.noneTradePostNo}">
-							<i class="fa fa-plus-square"></i>상세보기</a>
+							<i></i>상세보기</a>
 						</li>
 					</ul>
 				</div>

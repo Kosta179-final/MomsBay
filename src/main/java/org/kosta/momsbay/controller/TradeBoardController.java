@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,7 +54,7 @@ public class TradeBoardController {
 	 * @param model
 	 * @return
 	 */
-	/*@RequestMapping("/{viewName}.do")
+	@RequestMapping("/{viewName}.do")
 	public String showTiles(@PathVariable String viewName, String categoryNo, String boardTypeNo, String searchWord,
 			String pageNo, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
@@ -67,7 +68,7 @@ public class TradeBoardController {
 			model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo, searchWord));
 			return "service_trade" + ".page_" + viewName;
 		}
-	}*/
+	}
 
 	/**
 	 * 게시판 종류를 클릭했을때 실행되는 메서드.
