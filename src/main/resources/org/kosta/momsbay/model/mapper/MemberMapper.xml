@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		AND password=#{password}
 	</select>
 
-	<select id="findNowpointById" resultType="string">
+	<select id="findNowpointById" resultType="int">
 		SELECT POINT
 		FROM bay_member
 		WHERE id=#{values}

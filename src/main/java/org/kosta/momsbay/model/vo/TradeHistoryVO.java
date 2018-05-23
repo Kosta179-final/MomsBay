@@ -8,6 +8,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TradeHistoryVO {
+	private int tradeHistoryNo;
+	private String regdate;
 	private String id;
-	private int tradePostNo;
+	private String status;
+	private MemberVO memberVO;
+	private TradePostVO tradePostVO;
 }

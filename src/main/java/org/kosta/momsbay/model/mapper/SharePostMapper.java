@@ -24,6 +24,7 @@ public interface SharePostMapper {
 	 * @return getTotalSharePostCount
 	 * @author rws
 	 */
+	@SuppressWarnings("rawtypes")
 	public int getTotalSharePostCount(Map map);
 	
 	/**
@@ -32,6 +33,7 @@ public interface SharePostMapper {
 	 * @return List<VO>
 	 * @author rws
 	 */
+	@SuppressWarnings("rawtypes")
 	public List<PostVO> getSharePostList(Map map);
 	
 	/**
@@ -63,4 +65,12 @@ public interface SharePostMapper {
 	 * @author rws
 	 */
 	public void updateSharePostByStatus(int noneTradePostNo);
+	
+	/**
+	 * 나눔 게시판 카테고리명 불러오기
+	 * @param categoryNo
+	 * @return categoryNo
+	 * @author rws
+	 */
+	public String findCategory(int categoryNo);
 }

@@ -16,6 +16,7 @@ import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -93,6 +94,15 @@ public class MyAccountController {
 		return "service_myaccount" + ".page_" + "show_point_history";
 	}
 	
+	/**
+	 * 포인트 내역을 날짜 별로 조회.
+	 * @param request
+	 * @param pageNo
+	 * @param startDate
+	 * @param endDate
+	 * @return show_point_history.jsp
+	 * @author Hwang
+	 */
 	@RequestMapping("getPointHistoryByIdAndDate.do")
 	public String getPointHistoryById(HttpServletRequest request, String pageNo, String startDate, String endDate) {
 		HttpSession session = request.getSession();
@@ -119,8 +129,8 @@ public class MyAccountController {
 		String msg = "";
 		try {
 			String id = member.getId();
-			pointService.updateChargePoint(id, point);
-			historyService.addPointChargeHistory(id, point);
+			pointService.updateChargePoint(id, Integer.parseInt(point));
+			historyService.addPointChargeHistory(id, Integer.parseInt(point));
 			msg = "success!";
 		} catch (Exception e) {
 			msg = "fail try again";
@@ -141,7 +151,7 @@ public class MyAccountController {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		String id = member.getId();
-		String point = pointService.findNowpointById(id);
+		int point = pointService.findNowpointById(id);
 		session.setAttribute("point", point);
 		return "service_myaccount" + ".page_" + "service_point";
 	}
@@ -153,7 +163,7 @@ public class MyAccountController {
 	 * @return url
 	 * @author Jung
 	 */
-	@RequestMapping("getPickListById.do")
+	@RequestMapping("findPickListById.do")
 	public String getPickListById(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
@@ -175,7 +185,7 @@ public class MyAccountController {
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		memberPickVO.setId(member.getId());
 		memberPickService.deleteMemberPick(memberPickVO);
-		return "redirect:getPickListById.do";
+		return "redirect:findPickListById.do";
 	}
 	
 	
@@ -192,9 +202,32 @@ public class MyAccountController {
 		MemberVO member = (MemberVO) session.getAttribute("member");
 		memberPickVO.setId(member.getId());
 		memberPickService.addMemberPick(memberPickVO);
-		return "redirect:getPickListById.do";
+		return "redirect:findPickListById.do";
 	}
 	
+	/**
+	 * 거래 내역 조회.
+	 * 
+	 * @param request
+	 * @return url
+	 * @author Jung
+	 */
+	@RequestMapping("findTradeHistoryListById.do")
+	public String findTradeHistoryListById(HttpServletRequest request,Model model,String boardTypeNo) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		model.addAttribute("tradeHistoryVO", historyService.findTradeHistoryListById(member.getId(),boardTypeNo));
+		return "service_myaccount" + ".page_" + "list_trade_history";
+	}
+	
+	/**
+	 * 포인트 환전.
+	 * @param request
+	 * @param password
+	 * @param exchangePoint
+	 * @return 
+	 * @author Hwang
+	 */
 	@Transactional
 	@RequestMapping("exchangePoint.do")
 	public String exchangePoint(HttpServletRequest request, String password, String exchangePoint) {
@@ -207,8 +240,8 @@ public class MyAccountController {
 		 */
 		if (memberService.findMemberByPasswordAndId(id, password)) {
 			try {
-				pointService.updateExchangePoint(id, exchangePoint);
-				historyService.addPointExchangeHistory(id, exchangePoint);
+				pointService.updateExchangePoint(id,  exchangePoint);
+				historyService.addPointExchangeHistory(id, Integer.parseInt(exchangePoint));
 				msg= "Exchange Success!";
 			} catch (Exception e) {
 				msg = "Exchange Error! Try Again";
@@ -217,8 +250,10 @@ public class MyAccountController {
 			/* 비밀번호가 틀렸으니 쫒아낸다. */
 			msg = "password error! Try Again";
 		}
-		String point = pointService.findNowpointById(id);
+		int point = pointService.findNowpointById(id);
 		session.setAttribute("point", point);
 		return "redirect:charge_point_status.do?message=" + msg;
 	}
+	
+	
 }

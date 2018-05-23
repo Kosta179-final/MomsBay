@@ -25,8 +25,8 @@ public class PointService {
 	 * @param id
 	 * @param point
 	 */
-	public void updateChargePoint(String id, String point) {
-		Map<String, String> map = new HashMap<String, String>();
+	public void updateChargePoint(String id, int point) {
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id",id);
 		map.put("point", point);
 		pointMapper.updateChargePoint(map);
@@ -37,7 +37,7 @@ public class PointService {
 	 * @param id
 	 * @return 현재 포인트값
 	 */
-	public String findNowpointById(String id) {
+	public int findNowpointById(String id) {
 		return memberMapper.findNowpointById(id);
 	}
 

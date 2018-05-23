@@ -88,7 +88,7 @@ $(function(){
 								<c:if test="${member.grade eq 'member'}">
 									<li><a href="${pageContext.request.contextPath}/myaccount/getPointHistoryById.do"><i class="fa fa-user"></i> 내 계정</a></li>
 									<li><a href="${pageContext.request.contextPath}/myaccount/findNowpointById.do"><i class="fa fa-usd"></i> 포인트 충전/환전</a></li>
-									<li><a href="${pageContext.request.contextPath}/myaccount/getPickListById.do"><i class="fa fa-heart"></i> 찜목록</a></li>
+									<li><a href="${pageContext.request.contextPath}/myaccount/findPickListById.do"><i class="fa fa-heart"></i> 찜목록</a></li>
 								</c:if>
 								<c:if test="${member.grade  eq 'admin'}">
 									<li><a href="${pageContext.request.contextPath}/admin/getPeopleList.do"><i class="fa fa-user"></i> 관리자 페이지</a></li>

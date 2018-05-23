@@ -21,6 +21,7 @@ public interface TradePostMapper {
 	 * @return List<PostVO>
 	 * @author Jung
 	 */
+	@SuppressWarnings("rawtypes")
 	public List<PostVO> getTradePostList(Map map);
 
 	/**
@@ -38,6 +39,7 @@ public interface TradePostMapper {
 	 * @return int
 	 * @author Jung
 	 */
+	@SuppressWarnings("rawtypes")
 	public int getTotalTradePostCount(Map map);
 
 	/**
@@ -70,10 +72,31 @@ public interface TradePostMapper {
 	 * @author Jung
 	 */
 	public List<TradePostVO> findPickListById(String id);
+	
+	/**
+	 * 거래 신청 시 게시물의 거래자에 id를 업데이트 하고 거래상태를 변경하는 메서드.
+	 * @param id
+	 * @author Jung
+	 */
+	public void updateTradeId(TradePostVO tradePostVO);
+	
+	/**
+	 * 거래 취소 시 게시물의 거래자에 id를 NULL로 업데이트 하는 메서드.
+	 * @param id
+	 * @author Jung
+	 */
+	public void deleteTradeId(int tradePostNo);
+	
+	
+	
+	/**
+	 * 게시물의 가격을 조회하는 메서드
+	 * @param tradePostNo
+	 * @return price
+	 * @author Jung
+	 */
+	public int findPirceByTradePostNo(int tradePostNo);
 }
-
-
-
 
 
 
