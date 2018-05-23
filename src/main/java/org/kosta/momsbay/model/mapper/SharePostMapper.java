@@ -24,6 +24,7 @@ public interface SharePostMapper {
 	 * @return getTotalSharePostCount
 	 * @author rws
 	 */
+	@SuppressWarnings("rawtypes")
 	public int getTotalSharePostCount(Map map);
 	
 	/**
@@ -32,6 +33,7 @@ public interface SharePostMapper {
 	 * @return List<VO>
 	 * @author rws
 	 */
+	@SuppressWarnings("rawtypes")
 	public List<PostVO> getSharePostList(Map map);
 	
 	/**

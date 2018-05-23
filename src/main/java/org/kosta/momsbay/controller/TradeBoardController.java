@@ -6,7 +6,9 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
+
 import org.kosta.momsbay.model.service.CommentService;
+import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.SharePostService;
 import org.kosta.momsbay.model.service.TradePostService;
 import org.kosta.momsbay.model.vo.SharePostVO;
@@ -16,7 +18,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -37,6 +38,8 @@ public class TradeBoardController {
 	private TradePostService tradePostService;
 	@Resource
 	private SharePostService sharePostService;
+	@Resource
+	private HistoryService historyService;
 
 	/**
 	 * 중고거래 게시판 클릭시 실행되는 메서드.
@@ -48,7 +51,7 @@ public class TradeBoardController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/{viewName}.do")
+	/*@RequestMapping("/{viewName}.do")
 	public String showTiles(@PathVariable String viewName, String categoryNo, String boardTypeNo, String searchWord,
 			String pageNo, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
@@ -62,7 +65,7 @@ public class TradeBoardController {
 			model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo, searchWord));
 			return "service_trade" + ".page_" + viewName;
 		}
-	}
+	}*/
 
 	/**
 	 * 게시판 종류를 클릭했을때 실행되는 메서드.
@@ -139,7 +142,7 @@ public class TradeBoardController {
 	 * @param tradePostNo
 	 * @return
 	 */
-	@RequestMapping("/deleteTradePost.do")
+	@RequestMapping(value = "/deleteTradePost.do", method = RequestMethod.POST)
 	public String deleteTradePost(String tradePostNo) {
 		TradePostVO tradePostVO = tradePostService.deleteTradePost(Integer.parseInt(tradePostNo));
 		return "redirect:list_trade_post.do?boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
@@ -152,7 +155,7 @@ public class TradeBoardController {
 	 * @return update_trade_post.jsp
 	 * @author Jung
 	 */
-	@RequestMapping("/update_trade_post.do")
+	@RequestMapping(value = "/updateTradePostView.do", method = RequestMethod.POST)
 	public String updateTradePostView(String tradePostNo, Model model) {
 		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo));
 		model.addAttribute("tradePostVO", tradePostVO);
@@ -217,6 +220,9 @@ public class TradeBoardController {
 		model.addAttribute("tradePostVO", tradePostVO);
 		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
+		if(tradePostVO.getTradeId()!=null) {
+			model.addAttribute("historyStatus",historyService.findTradeStatusByIdAndTradePostNo(tradePostVO));
+		}
 		/* 업로드 한 이미지 불러오기 */
 		model.addAttribute("imgAddress", tradePostService.findTradePostImgByPostNo(tradePostVO.getTradePostNo()));
 		return "service_trade.page_detail_trade_post";
@@ -386,6 +392,19 @@ public class TradeBoardController {
 	public String updateSharePostByStatus(String noneTradePostNo) {
 		SharePostVO sharePostVO = sharePostService.updateSharePostByStatus(Integer.parseInt(noneTradePostNo));
 		return "redirect:detail_share_post.do?noneTradePostNo=" + sharePostVO.getNoneTradePostNo();
+	}
+	
+	/**
+	 * 거래 신청시 거래 신청 페이지로 이동하는 메서드.
+	 * @param tradePostNo
+	 * @param model
+	 * @return apply_trade_view.jsp
+	 * @author Jung
+	 */
+	@RequestMapping("applyTradeView.do")
+	public String applyTradeView(String tradePostNo, Model model) {
+		model.addAttribute("tradePostVO",tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+		return "service_trade.page_apply_trade_view";
 	}
 
 }
