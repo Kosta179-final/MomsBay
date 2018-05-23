@@ -1,6 +1,5 @@
 package org.kosta.momsbay.model.service;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +11,6 @@ import org.kosta.momsbay.model.mapper.PhotoUploadMapper;
 import org.kosta.momsbay.model.mapper.SharePostMapper;
 import org.kosta.momsbay.model.vo.SharePostVO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 교환게시판 관련 비즈니스로직 서비스.
