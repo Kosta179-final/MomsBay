@@ -49,9 +49,9 @@
 			</c:choose>
 		</div>
 	</div>
-	<c:if test="${requestScope.pvo.tradeStatusNo==7}">
+	<c:if test="${requestScope.pvo.tradeStatusNo==3}">
 		<div style="position: absolute;">
-			<div style="position: relative; top: 45px; left: 30px;"><img src="${pageContext.request.contextPath}/resources/images/product-details/soldout7.png" style="width: 300px; height: 290px;"></img>
+			<div style="position: relative; top: 45px; left: -7px;"><img src="${pageContext.request.contextPath}/resources/images/product-details/soldout11.png" style="width: 375px; height: 290px;"></img>
 			</div>
 		</div>
 	</c:if>
@@ -109,7 +109,7 @@
 					</c:if>
 				</div>
 			</c:if>
-			<c:if test="${requestScope.pvo.tradeStatusNo==7}">
+			<c:if test="${requestScope.pvo.tradeStatusNo==3}">
 				<div></div>
 			</c:if>
 			<c:if test="${sessionScope.member.id!=requestScope.pvo.memberVO.id}">
