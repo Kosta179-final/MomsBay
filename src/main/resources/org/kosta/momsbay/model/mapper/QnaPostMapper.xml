@@ -24,7 +24,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)b, bay_member m,subject s
 		WHERE b.id = m.id 
 		AND rnum 
-		BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+		BETWEEN #{pagingBean.startRowNumber} AND 3
 		AND b.subject_no = s.subject_no
 		ORDER BY bay_post_no DESC
 	</select>
@@ -78,7 +78,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateQnaPost" parameterType="qnaPostVO">
 		UPDATE bay_post
-		SET title = #{title}, content = #{content}
+		SET title = #{title}, content = #{content} ,subject_no=#{subjectVO.subjectNo}
 		WHERE bay_post_no = #{bayPostNo}
 	</update>
 </mapper>
