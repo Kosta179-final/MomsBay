@@ -348,7 +348,7 @@ public class TradeBoardController {
 	 * @return
 	 * @author rws
 	 */
-	@RequestMapping("/deleteSharePost.do")
+	@RequestMapping(value="/deleteSharePost.do",method=RequestMethod.POST)
 	public String deleteSharePost(String noneTradePostNo) {
 		SharePostVO sharePostVO = sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
 		return "redirect:list_share_post.do?boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
