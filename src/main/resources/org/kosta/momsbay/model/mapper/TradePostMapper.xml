@@ -58,7 +58,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 							</if>
 							AND t.delete_status=0
 							<if test="searchWord != null">
-							AND (t.title LIKE '%' || #{t.searchWord} || '%' OR t.content LIKE '%' || #{t.searchWord} || '%')
+							AND (t.title LIKE '%' || #{searchWord} || '%' OR t.content LIKE '%' || #{searchWord} || '%')
 							</if>
 					)tp
 				  , bay_member bm
@@ -69,7 +69,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="findTradePostByTradePostNo" parameterType="int" resultMap="tradePostRM">
 		SELECT tp.trade_post_no, tp.category_no, tp.title, tp.content, tp.board_type_no,
-		tp.regdate,tp.pick_count, tp.price, tp.id, bm.name, ts.status, mg.grade
+		tp.regdate,tp.pick_count, tp.price, tp.id, bm.name, ts.status, mg.grade, tp.trade_id
 		FROM trade_post tp, bay_member bm, trade_status ts, member_grade mg
 		WHERE tp.id=bm.id AND tp.trade_status_no=ts.trade_status_no 
 		AND tp.trade_post_no=#{value} AND bm.member_grade_no=mg.member_grade_no
@@ -92,9 +92,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		FROM(
 		SELECT mp.trade_post_no, bm.name
 		FROM member_pick mp, bay_member bm
-		WHERE mp.id='java' AND mp.id=bm.id
+		WHERE mp.id=#{value} AND mp.id=bm.id
 		)mp, trade_post tp
 		WHERE mp.trade_post_no = tp.trade_post_no
+	</select>
+	
+	<update id="updateTradeId" parameterType="tradePostVO">
+		UPDATE trade_post SET trade_id=#{tradeId}, trade_status_no=trade_status_no+1
+		WHERE trade_post_no=#{tradePostNo}
+	</update>
+	
+	<update id="deleteTradeId" parameterType="tradePostVO">
+		UPDATE trade_post SET trade_id=NULL, trade_status_no=1
+		WHERE trade_post_no=#{tradePostNo}
+	</update>
+	
+	<select id="findPirceByTradePostNo" parameterType="int" resultType="int">
+		SELECT price
+		FROM trade_post
+		WHERE trade_post_no=#{value}
 	</select>
 	
 	

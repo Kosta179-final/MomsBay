@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.momsbay.model.exception.LoginException;
@@ -63,7 +62,6 @@ public class MemberController {
 		}
 		
 		member.setPassword("");
-		member.setPoint(0);
 		member.setChildren_no(member.getList().size());
 		HttpSession session =requset.getSession();
 		session.setAttribute("member", member);

@@ -17,6 +17,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		#{pagingBean.endRowNumber}
 	</select>
 	
+	<insert id="addPointSellHistory" parameterType="map">
+		INSERT INTO point_history
+		VALUES(point_history_SEQ.nextval, sysdate, #{point}, #{id}, 1, #{nowPoint})
+	</insert>
+	
+	<insert id="addPointBuyHistory" parameterType="map">
+		INSERT INTO point_history
+		VALUES(point_history_SEQ.nextval, sysdate, #{point}, #{id}, 2, #{nowPoint})
+	</insert>
+	
 	<insert id="addPointChargeHistory" parameterType="map">
 		INSERT INTO point_history
 		VALUES(point_history_SEQ.nextval, sysdate, #{point}, #{id}, 3, #{nowPoint})
