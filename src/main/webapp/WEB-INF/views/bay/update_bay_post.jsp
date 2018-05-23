@@ -39,7 +39,7 @@
 							<option value="3">고민상담</option>
 						</c:when>
 						<c:otherwise>
-							<option value="6">공지사항</option>
+							<option value="7">공지사항</option>
 						</c:otherwise>
 					</c:choose>
 				</select>	

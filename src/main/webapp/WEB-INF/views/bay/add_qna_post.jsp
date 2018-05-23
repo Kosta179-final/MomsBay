@@ -20,9 +20,10 @@ $(document).ready(function() {
 						<c:when test="${sessionScope.member.id ne 'sys'}">
 							<option value="4">육아</option>
 							<option value="5">상품</option>
+							<option value="6">기타</option>
 						</c:when>
 						<c:otherwise>
-							<option value="6">공지사항</option>
+							<option value="7">공지사항</option>
 						</c:otherwise>
 					</c:choose>
 				</select>	

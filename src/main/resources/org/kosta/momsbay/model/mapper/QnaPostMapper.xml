@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			bay_post_no, title, regdate, id, subject_no,board_type_no
 			FROM bay_post
 			WHERE board_type_no=#{boardTypeNo} 
-			AND subject_no=6
+			AND subject_no=7
 			<if test="searchWord != null">
 			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 			</if>
@@ -34,7 +34,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT row_number() over(ORDER BY bay_post_no DESC) as rnum,
 			bay_post_no, title, regdate, id,subject_no, board_type_no
 			FROM bay_post
-			WHERE board_type_no=#{boardTypeNo} AND subject_no!=6
+			WHERE board_type_no=#{boardTypeNo} AND subject_no!=7
 			<if test="searchWord != null">
 			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 	    	</if>
@@ -71,11 +71,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			INSERT INTO bay_post(bay_post_no,title,content,regdate,id,board_type_no,subject_no)
 			VALUES (#{bayPostNo},#{title},#{content},sysdate,#{memberVO.id},#{boardTypeNo},#{subjectVO.subjectNo})
 	</insert>
-	
 	<delete id="deleteQnaPost">
 		DELETE FROM bay_post WHERE bay_post_no = #{value}
 	</delete>
-	
 	<update id="updateQnaPost" parameterType="qnaPostVO">
 		UPDATE bay_post
 		SET title = #{title}, content = #{content} ,subject_no=#{subjectVO.subjectNo}
