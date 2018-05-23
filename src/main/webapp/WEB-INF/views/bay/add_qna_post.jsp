@@ -18,7 +18,6 @@ $(document).ready(function() {
 		<select name="subjectVO.subjectNo">
 					<c:choose>
 						<c:when test="${sessionScope.member.id ne 'sys'}">
-							<option value="">- 카테고리 선택 -</option>
 							<option value="4">육아</option>
 							<option value="5">상품</option>
 						</c:when>

@@ -139,8 +139,8 @@ public class BayBoardController {
 	 * @author sam
 	 */
 	@RequestMapping("deleteQnaPost.do")
-	public String deleteQnaPost(int bayPostNo, String boardTypeNo) {
-		qnaPostService.deleteQnaPost(bayPostNo);
+	public String deleteQnaPost(String bayPostNo, String boardTypeNo) {
+		qnaPostService.deleteQnaPost(Integer.parseInt(bayPostNo));
 		return "redirect:list_qna_post.do?boardTypeNo="+boardTypeNo;
 	}
 	
@@ -151,7 +151,7 @@ public class BayBoardController {
 	   }
 	   
 	@RequestMapping("updateQnaPostView.do")
-	public String updateQnaPostView(QnaPostVO qnaPostVO,Model model,int bayPostNo) {
+	public String updateQnaPostView(Model model,int bayPostNo) {
 		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
 		return "bay/update_qna_post" + ".tiles";
 	}
