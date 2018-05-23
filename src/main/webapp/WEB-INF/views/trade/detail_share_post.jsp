@@ -76,11 +76,14 @@
 				</div>
 			</div> --%>
 			<div class="row" align="left">
-				<div class="col-sm-5">
-					<span>상품 카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
+				<div class="col-sm-12">
+					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${pvo.memberVO.id}</span>
+					<button class="fa fa-envelope"></button>
 				</div>
-				<div class="col-sm-7">
-					<span>${requestScope.pvo.categoryNo}</span>
+			</div>
+			<div class="row" align="left">
+				<div class="col-sm-12">
+					<span>상품 카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${category}</span>
 				</div>
 			</div>
 			<div class="row" align="left">

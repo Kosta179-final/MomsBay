@@ -150,4 +150,15 @@ public class SharePostService {
 		map.put("postNo", postNo);
 		photoUploadMapper.updateSharePostPhoto(map);
 	}
+	
+	/**
+	 * 나눔 게시판 카테고리명 불러오기
+	 * @param categoryNo
+	 * @return category
+	 * @author rws
+	 */
+	public String findCategory(int categoryNo) {
+		String category=sharePostMapper.findCategory(categoryNo);
+		return category;
+	}
 }

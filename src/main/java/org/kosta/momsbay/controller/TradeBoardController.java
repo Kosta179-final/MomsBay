@@ -240,6 +240,10 @@ public class TradeBoardController {
 		 * 업로드 한 이미지 불러오기
 		 */
 		model.addAttribute("imgAddress", sharePostService.findSharePostImgByPostNo(sharePostVO.getNoneTradePostNo()));
+		/*
+		 * 카테고리명 불러오기
+		 */
+		model.addAttribute("category", sharePostService.findCategory(sharePostVO.getCategoryNo()));
 		return "service_trade.page_detail_share_post";
 	}
 
