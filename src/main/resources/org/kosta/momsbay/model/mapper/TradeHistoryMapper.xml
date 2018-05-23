@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.momsbay.model.mapper.TradeHistoryMapper">
+	
+	<resultMap type="tradeHistoryVO" id="tradeHistoryRM">
+		<result column="trade_id" property="tradePostVO.tradeId"/>
+		<result column="title" property="tradePostVO.title"/>
+		<result column="trade_type" property="tradePostVO.tradeType"/>
+		<result column="price" property="tradePostVO.price"/>
+	</resultMap>
+
+	<select id="findTradeHistoryListById" parameterType="map" resultMap="tradeHistoryRM">
+		SELECT th.regdate, th.id, tp.trade_id, tp.title, ts.status, tp.price, th.trade_type
+		FROM trade_history th, trade_post tp, trade_status ts
+		WHERE th.id=#{id} AND ts.trade_status_no=th.trade_status_no AND 
+		th.trade_post_no=tp.trade_post_no AND tp.board_type_no=board_type_no
+	</select>
+	
+	<insert id="addTradeHistory" parameterType="tradePostVO">
+		INSERT INTO trade_history(trade_history_no,id,trade_post_no,trade_status_no,regdate,trade_type)
+		VALUES (trade_history_seq.nextval,#{tradeId},#{tradePostNo},2,sysdate,#{tradeType})
+	</insert>
+	
+	<delete id="deleteTradeHistory" parameterType="tradePostVO">
+		DELETE FROM trade_history
+		WHERE trade_post_no = #{tradePostNo}
+	</delete>
+	
+	<update id="updateCompleteTradeHistory" parameterType="tradePostVO">
+		update trade_history set trade_status_no=3
+		where trade_post_no=#{tradePostNo}
+	</update>
+	
+	<update id="updateDeliveryTradeHistory" parameterType="tradePostVO">
+		update trade_history set trade_status_no=4
+		where trade_post_no=#{tradePostNo} AND id=#{memberVO.id}
+	</update>
+	
+	<select id="findTradeStatusByIdAndTradePostNo" parameterType="tradePostVO" resultType="string">
+		SELECT ts.status
+		FROM trade_status ts, trade_history th
+		WHERE ts.trade_status_no=th.trade_status_no AND th.trade_post_no = #{tradePostNo} 
+		AND th.id = #{memberVO.id}
+	</select>
+	
+</mapper>

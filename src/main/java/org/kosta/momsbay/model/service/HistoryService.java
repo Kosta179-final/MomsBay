@@ -4,12 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.common.PointListVO;
 import org.kosta.momsbay.model.mapper.MemberMapper;
 import org.kosta.momsbay.model.mapper.PointHistoryMapper;
-import org.kosta.momsbay.model.vo.PointHistoryVO;
+import org.kosta.momsbay.model.mapper.TradeHistoryMapper;
+import org.kosta.momsbay.model.vo.TradeHistoryVO;
+import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
@@ -23,6 +24,8 @@ public class HistoryService {
 	PointHistoryMapper pointHistoryMapper;
 	@Autowired
 	MemberMapper memberMapper;
+	@Autowired
+	TradeHistoryMapper tradeHistoryMapper;
 	
 	/**
 	 * id로 조회한 포인트 내역 반환.
@@ -53,24 +56,92 @@ public class HistoryService {
 	 * @param id
 	 * @param point
 	 */
-	public void addPointChargeHistory(String id, String point) {
-		Map<String, String> map = new HashMap<String, String>();
-		String nPoint = memberMapper.findNowpointById(id);
+	public void addPointChargeHistory(String id, int chargePoint) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int nPoint = memberMapper.findNowpointById(id);
 		map.put("id", id);
-		map.put("point", point);
+		map.put("point", chargePoint);
 		map.put("nowPoint", nPoint);
 		pointHistoryMapper.addPointChargeHistory(map);
 	}
 
-	public void addPointExchangeHistory(String id, String exchangePoint) {
-		Map<String, String> map = new HashMap<String, String>();
-		String nPoint = memberMapper.findNowpointById(id);
+	public void addPointExchangeHistory(String id, int exchangePoint) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int nPoint = memberMapper.findNowpointById(id);
 		map.put("id", id);
 		map.put("point", exchangePoint);
 		map.put("nowPoint", nPoint);
 		pointHistoryMapper.addPointExchangeHistory(map);
 	}
+	
+	public void addPointSellHistory(String id, int sellPoint) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int nPoint = memberMapper.findNowpointById(id);
+		map.put("id", id);
+		map.put("point", sellPoint);
+		map.put("nowPoint", nPoint);
+		pointHistoryMapper.addPointSellHistory(map);
+	}
+	
+	public void addPointBuyHistory(String id, int buyPoint) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		int nPoint = memberMapper.findNowpointById(id);
+		map.put("id", id);
+		map.put("point", buyPoint);
+		map.put("nowPoint", nPoint);
+		pointHistoryMapper.addPointBuyHistory(map);
+	}
+	
+	/**
+	 * id로 조회한 거래 내역 반환.
+	 * @param id
+	 * @return 거래 내역 리스트
+	 * @author Jung
+	 */
+	public List<TradeHistoryVO> findTradeHistoryListById(String id,String boardTypeNo){
+		Map<String, String> map = new HashMap<String, String>();
+		map.put("id", id);
+		map.put("board_type_no", boardTypeNo);
+		return tradeHistoryMapper.findTradeHistoryListById(map);
+	}
+	
+	/**
+	 * 거래 신청시 거래내역에 등록하는 메서드.
+	 * @param tradeHistoryVO
+	 * @author Jung
+	 */
+	public void addTradeHistory(TradePostVO tradePostVO) {
+		tradeHistoryMapper.addTradeHistory(tradePostVO);
+	}
+	
+	/**
+	 * 거래 취소시 거래내역에 삭제하는 메서드.
+	 * @param tradeHistoryVO
+	 * @author Jung
+	 */
+	public void deleteTradeHistory(TradePostVO tradePostVO) {
+		tradeHistoryMapper.deleteTradeHistory(tradePostVO);
+	}
+	
+	/**
+	 * 거래 완료시 거래내역의 거래상태를 거래완료로 수정하는 메서드.
+	 * @param tradePostVO
+	 * @author Jung
+	 */
+	public void updateCompleteTradeHistory(TradePostVO tradePostVO) {
+		tradeHistoryMapper.updateCompleteTradeHistory(tradePostVO);
+	}
 
+	/**
+	 * 판매자가 물품 배송시 거래내역의 거래상태를 물품배송으로 수정하는 메서드.
+	 * @param tradePostVO
+	 * @author Jung
+	 */
+	public void updateDeliveryTradeHistory(TradePostVO tradePostVO) {
+		tradeHistoryMapper.updateDeliveryTradeHistory(tradePostVO);
+	}
+	
+	
 	public PointListVO getPointHistoryByIdAndDate(String id, String pageNo, String startDate, String endDate) {
 		PagingBean pagingBean=null;
 		Map<String,Object> map = new HashMap<String,Object>();
@@ -90,4 +161,9 @@ public class HistoryService {
 		return new PointListVO(pointHistoryMapper.getPointHistoryByIdAndDate(map),pagingBean);
 	}
 
+	
+	public String findTradeStatusByIdAndTradePostNo(TradePostVO tradePostVO) {
+		return tradeHistoryMapper.findTradeStatusByIdAndTradePostNo(tradePostVO);
+	}
+	
 }
