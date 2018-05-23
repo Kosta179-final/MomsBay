@@ -3,8 +3,7 @@ package org.kosta.momsbay;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -131,5 +130,20 @@ public class MessageMapperTest {
 	public void updateStatus() {
 		addMessage();
 		messageMapper.updateStatus(receiveMessageVO.getMessageNo());
+	}
+	
+	@Test
+	public void deleteMessage() {
+		addMessage();
+		Map<String,Object> map=new HashMap<>();
+		map.put("messageNo", sendMessageVO.getSendMessageNo());
+		map.put("messageType", "send");
+		messageMapper.deleteMessage(map);
+		assertNull(messageMapper.detailMessage(map));
+		
+		map.put("messageNo", receiveMessageVO.getMessageNo());
+		map.put("messageType", "receive");
+		messageMapper.deleteMessage(map);
+		assertNull(messageMapper.detailMessage(map));
 	}
 }

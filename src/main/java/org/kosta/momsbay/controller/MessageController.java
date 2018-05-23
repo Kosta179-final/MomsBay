@@ -1,9 +1,12 @@
 package org.kosta.momsbay.controller;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.kosta.momsbay.model.service.MessageService;
 import org.kosta.momsbay.model.vo.MessageVO;
+import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -103,5 +106,26 @@ public class MessageController {
 	public String detailMessage(int messageNo,String messageType,Model model) {
 		model.addAttribute("messageVO",messageService.detailMessage(messageNo,messageType));
 		return "message/detail_message.m_tiles";
+	}
+	
+	/**
+	 * 같이 넘어온 메세지 타입에 따라 table에서 해당 메세지 번호를 삭제한다.
+	 * @param messageNo
+	 * @param messageType
+	 * @param request
+	 * @return url 메세지 타입에 따라 목록으로 돌아간다.
+	 */
+	@RequestMapping("delete_message.do")
+	public String deleteMessage(int messageNo,String messageType,HttpServletRequest request) {
+		HttpSession session=request.getSession(false);
+		MemberVO memberVO=(MemberVO)session.getAttribute("member");
+		messageService.deleteMessage(messageNo, messageType);
+		String url=null;
+		if(messageType.equals("receive")) {
+			url="redirect:getReceiveMessageList.do?receiveId="+memberVO.getId();
+		} else {
+			url="redirect:getSendMessageList.do?sendId="+memberVO.getId();
+		}
+		return url;
 	}
 }

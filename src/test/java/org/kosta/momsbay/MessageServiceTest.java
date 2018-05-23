@@ -3,6 +3,10 @@ package org.kosta.momsbay;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -99,5 +103,14 @@ public class MessageServiceTest {
 		assertEquals(messageVO.getTitle(), dbMessageVO.getTitle());
 		assertEquals(messageVO.getMemberVO().getId(), dbMessageVO.getMemberVO().getId());
 		assertEquals(true, dbMessageVO.isReceiveFlag());
+	}
+	
+	@Test
+	public void deleteMessage() {
+		addMessage();
+		messageService.deleteMessage(messageVO.getSendMessageNo(), "send");
+		assertNull(messageService.detailMessage(messageVO.getSendMessageNo(), "send"));
+		messageService.deleteMessage(messageVO.getMessageNo(), "receive");
+		assertNull(messageService.detailMessage(messageVO.getMessageNo(), "receive"));
 	}
 }

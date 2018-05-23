@@ -102,11 +102,23 @@ public class MessageService {
 		map.put("messageNo", messageNo);
 		map.put("messageType", messageType);
 		MessageVO messageVO=messageMapper.detailMessage(map);
-		if(messageType.equals("receive") && messageVO.isStatus()==false) {
+		if(messageVO!=null && messageType.equals("receive") && messageVO.isStatus()==false) {
 			messageMapper.updateStatus(messageNo);
 			messageVO.setStatus(true);
 			messageMapper.updateReceiveFlag(messageVO.getSendMessageNo());
 		}
 		return messageVO;
+	}
+	
+	/**
+	 * message를 type에 따라 삭제한다.
+	 * @param messageNo
+	 * @param messageType
+	 */
+	public void deleteMessage(int messageNo, String messageType) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("messageNo", messageNo);
+		map.put("messageType", messageType);
+		messageMapper.deleteMessage(map);
 	}
 }
