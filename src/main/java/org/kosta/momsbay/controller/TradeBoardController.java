@@ -37,7 +37,9 @@ public class TradeBoardController {
 	private TradePostService tradePostService;
 	@Resource
 	private SharePostService sharePostService;
-
+	@Resource(name="uploadPathVar")
+	private String uploadPath;
+	
 	/**
 	 * 중고거래 게시판 클릭시 실행되는 메서드.
 	 * 
@@ -119,7 +121,6 @@ public class TradeBoardController {
 			return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo();
 		} else {
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
@@ -189,7 +190,6 @@ public class TradeBoardController {
 			 * 상황2
 			 */
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
@@ -269,7 +269,6 @@ public class TradeBoardController {
 			return "redirect:detail_share_post.do?noneTradePostNo=" + sharePostVO.getNoneTradePostNo() + "";
 		} else {
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
@@ -327,7 +326,6 @@ public class TradeBoardController {
 			 * 상황2
 			 */
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
