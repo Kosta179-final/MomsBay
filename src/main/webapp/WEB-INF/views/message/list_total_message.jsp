@@ -23,7 +23,16 @@
 						<td class="cart_price">${pvo.messageNo}</td>
 						<td class="cart_price">${pvo.receiveMemberVO.id}</td>
 						<td class="cart_price">${pvo.memberVO.id}</td>
-						<td class="cart_description">${pvo.title}</td>
+						<td class="cart_description">
+							<c:choose>
+							<c:when test="${pvo.memberVO.id eq sessionScope.member.id}">
+								<a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=send">${pvo.title}</a>
+							</c:when>
+							<c:otherwise>
+								<a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=receive">${pvo.title}</a>
+							</c:otherwise>
+							</c:choose>
+						</td>
 		 				<td class="cart_quantity">${pvo.regdate}</td>
 					</tr>
 				</c:forEach>

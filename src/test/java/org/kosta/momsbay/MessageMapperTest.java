@@ -1,7 +1,9 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
 import java.util.List;
@@ -30,13 +32,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MessageMapperTest {
 	@Resource
 	MessageMapper messageMapper;
+	MessageVO sendMessageVO;
+	MessageVO receiveMessageVO;
 	
 	/**
 	 * 메세지 수신을 저장하기 위해서는 FK를 저장하기 위해 발신을  먼저 추가 하고 추가한다.
 	 */
 	@Test
-	public void addReceiveMessage() {
-		MessageVO sendMessageVO=new MessageVO();
+	public void addMessage() {
+		sendMessageVO=new MessageVO();
 		sendMessageVO.setTitle("test");
 		sendMessageVO.setContent("testing");
 		sendMessageVO.setMemberVO(new MemberVO());
@@ -45,7 +49,7 @@ public class MessageMapperTest {
 		sendMessageVO.getReceiveMemberVO().setId("java");
 		messageMapper.addSendMessage(sendMessageVO);
 
-		MessageVO receiveMessageVO=new MessageVO();
+		receiveMessageVO=new MessageVO();
 		receiveMessageVO.setTitle("test");
 		receiveMessageVO.setContent("testing");	
 		receiveMessageVO.setMemberVO(new MemberVO());
@@ -55,21 +59,6 @@ public class MessageMapperTest {
 		receiveMessageVO.setSendMessageNo(sendMessageVO.getSendMessageNo());
 		messageMapper.addReceiveMessage(receiveMessageVO);
 		
-	}
-	
-	/**
-	 * 발신메세지를 저장하는 테스트 코드
-	 */
-	@Test
-	public void addSendMessage() {
-		MessageVO sendMessageVO=new MessageVO();
-		sendMessageVO.setTitle("test");
-		sendMessageVO.setContent("testing");
-		sendMessageVO.setMemberVO(new MemberVO());
-		sendMessageVO.getMemberVO().setId("sys");
-		sendMessageVO.setReceiveMemberVO(new MemberVO());
-		sendMessageVO.getReceiveMemberVO().setId("java");
-		messageMapper.addSendMessage(sendMessageVO);
 	}
 	
 	/**
@@ -114,5 +103,47 @@ public class MessageMapperTest {
 		map.put("pagingBean", pagingBean);
 		List<PostVO> list=messageMapper.getTotalMessageList(map);
 		assertFalse(list.isEmpty());
+	}
+	/**
+	 * 메세지 정보를 가져오기 위해 먼저 메세지를 추가하고 정보를 조회한다.
+	 * messageType에 가져오려고 하는 메세지 타입을 넣어 dynamic sql을 실행한다.
+	 */
+	@Test
+	public void detailMessage() {
+		addMessage();
+		Map<String,Object> map=new HashMap<>();
+		map.put("messageNo", sendMessageVO.getSendMessageNo());
+		map.put("messageType", "send");
+		MessageVO dbMessageVO=messageMapper.detailMessage(map);
+		assertEquals(sendMessageVO.getTitle(), dbMessageVO.getTitle());
+		assertEquals(sendMessageVO.getMemberVO().getId(), dbMessageVO.getMemberVO().getId());
+	}
+	
+	@Test
+	public void updateReceiveFlag() {
+		addMessage();
+		messageMapper.updateReceiveFlag(receiveMessageVO.getSendMessageNo());
+		
+	}
+	
+	@Test 
+	public void updateStatus() {
+		addMessage();
+		messageMapper.updateStatus(receiveMessageVO.getMessageNo());
+	}
+	
+	@Test
+	public void deleteMessage() {
+		addMessage();
+		Map<String,Object> map=new HashMap<>();
+		map.put("messageNo", sendMessageVO.getSendMessageNo());
+		map.put("messageType", "send");
+		messageMapper.deleteMessage(map);
+		assertNull(messageMapper.detailMessage(map));
+		
+		map.put("messageNo", receiveMessageVO.getMessageNo());
+		map.put("messageType", "receive");
+		messageMapper.deleteMessage(map);
+		assertNull(messageMapper.detailMessage(map));
 	}
 }

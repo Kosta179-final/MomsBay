@@ -90,4 +90,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	SET trade_status_no=7 
 	WHERE none_trade_post_no=#{noneTradePostNo}
 </update>
+<!-- 카테고리명 불러오기 -->
+<select id="findCategory" resultType="string">
+	SELECT category 
+	FROM category 
+	WHERE category_no=#{values}
+</select>
 </mapper>

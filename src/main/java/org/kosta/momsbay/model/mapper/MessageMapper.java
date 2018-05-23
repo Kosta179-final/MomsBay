@@ -20,4 +20,8 @@ public interface MessageMapper {
 	public List<PostVO> getSendMessageList(Map map);
 	public int getTotalSendMessageCount(String sendId);
 	public List<PostVO> getTotalMessageList(Map map);
+	public MessageVO detailMessage(Map map);
+	public void updateReceiveFlag(int sendMessageNo);
+	public void updateStatus(int messageNo);
+	public void deleteMessage(Map<String, Object> map);
 }

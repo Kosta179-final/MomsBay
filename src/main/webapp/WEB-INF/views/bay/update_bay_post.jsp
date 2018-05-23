@@ -1,16 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>board</title>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="${pageContext.request.contextPath}/resources/css/board.css">
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script
@@ -35,45 +26,39 @@
 		});
 	});
 </script>
-</head>
-<body>
-	<!-- container-fluid: 화면 너비와 상관없이 항상 100% -->
-	<div class="container-fluid">
-		<div class="row header">
-			<div class="col-sm-2"></div>
-			<div class="col-sm-8" align="right">
+<div class="container">
+	<div class="row header">
+		<form action="updatePost.do" method="post" id="updateForm">
+			<input type="hidden" name="bayPostNo" value="${pvo.bayPostNo}">
+			<div class="col-sm-2">
+				<select name="subjectVO.subjectNo">
+					<c:choose>
+						<c:when test="${sessionScope.member.id ne 'sys'}">
+							<option value="1">후기</option>
+							<option value="2">팁</option>
+							<option value="3">고민상담</option>
+						</c:when>
+						<c:otherwise>
+							<option value="6">공지사항</option>
+						</c:otherwise>
+					</c:choose>
+				</select>	
 			</div>
-			<div class="col-sm-2"></div>
-		</div>
-		<div class="row main">
-			<div class="col-sm-2"></div>
 			<div class="col-sm-8">
-				<form method="post" id="updateForm"
-					action="updatePost.do">
-					<input type="hidden" name="bayPostNo" value="${pvo.bayPostNo}">
-					<table class="table">
-						<tr>
-							<td>제목 &nbsp;&nbsp; <input type="text" name="title"
-								value="${pvo.title}" required="required">
-							</td>
-						</tr>
-						<tr>
-							<td><textarea cols="90" rows="15" name="content"
-									required="required">${pvo.content }</textarea></td>
-						</tr>
-					</table>
-					<div class="btnArea">
+				<textarea cols="90" rows="1" name="title" required="required">${pvo.title}</textarea>
+			</div>
+			<br><br>
+			<textarea cols="90" rows="15" name="content" required="required"
+						 id="content">${pvo.content }</textarea>
+						<div class="btnArea">
 						<button type="submit" class="btn">수정</button>
 						<button type="reset" class="btn" id="resetBtn">취소</button>
-					</div>					
-				</form>
-			</div>
-			<div class="col-sm-2"></div>
-		</div>
-	</div>
+							</div>
+								</form>
+								</div>
+								</div>
+	
 	<!-- 에디터 스크립트 소스
-			약간 이상한건 스크립트 소스가 위에가있으면
-			에러가 남. 그래서 위치가 이래요.
 	 -->
 	<script>
 		// Don't forget to add CSS for your custom styles.
@@ -138,8 +123,6 @@
 			]
 		} );
 	</script>
-</body>
-</html>
 
 
 

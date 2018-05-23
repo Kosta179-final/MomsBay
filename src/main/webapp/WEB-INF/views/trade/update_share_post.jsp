@@ -32,9 +32,6 @@ function getThumbnailPrivew(html, $target) {
 				</c:choose>
 				<br>
 				<input type="file" name="file"onchange="getThumbnailPrivew(this,$('#main_image'))" />
-				<ul>
-					<li><i class="fa fa-clock-o"></i>등록일시 ${requestScope.pvo.regdate}</li>
-				</ul>
 		</div>
 	</div>
 	<div class="col-sm-7">
@@ -49,24 +46,23 @@ function getThumbnailPrivew(html, $target) {
 				</div><hr>
 			</div>
 			<div class="row" align="left">
-				<div class="col-sm-2">
-					<span>평점   : </span>
+				<div class="col-sm-5">
+					<span>상품 카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
 				</div>
-				<div class="col-sm-10">
-					<span>* * * * *</span>
-				</div>
-			</div>
-			<div class="row" align="left">
-				<div class="col-sm-4">
-					<span>상품 카테고리   : </span>
-				</div>
-				<div class="col-sm-8">
+				<div class="col-sm-7">
 					<span>${requestScope.pvo.categoryNo}</span>
 				</div>
 			</div>
-		</div>
-		<div class="btn-group">
-			<span><button type="button" class="btn btn-primary">찜하기</button></span>
+			<div class="row" align="left">
+				<div class="col-sm-3">
+					<span>등록일시&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
+				</div>
+				<div class="col-sm-7">
+					<span>${requestScope.pvo.regdate}</span>
+				</div>
+				<div class="col-sm-12"><br></div>
+				<div class="col-sm-12"><br></div>
+			</div>
 		</div>
 	</div>
 </div>
@@ -74,10 +70,12 @@ function getThumbnailPrivew(html, $target) {
 	<h1 align="left">DETAIL INFO</h1><hr>
 </div>
 	<textarea rows="10" name="content">${requestScope.pvo.content }</textarea>
-		<input type="hidden" name="noneTradePostNo" value="${requestScope.pvo.noneTradePostNo}">
-			<div class="btn-group">
-				<span><input type="submit" class="btn btn-primary" value="글수정"></span>
-			</div>
+		<input type="hidden" name="noneTradePostNo" value="${requestScope.pvo.noneTradePostNo}"><br>
+			<div class="row">
+				<div class="btn-group">
+					<span><input type="submit" class="btn btn-info2" value="글수정"></span>
+				</div>
+			</div><br>
 </form>
 <!-- 에디터 스크립트 소스
 			약간 이상한건 스크립트 소스가 위에가있으면

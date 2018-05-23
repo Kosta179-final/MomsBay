@@ -40,7 +40,9 @@ public class TradeBoardController {
 	private SharePostService sharePostService;
 	@Resource
 	private HistoryService historyService;
-
+	@Resource(name="uploadPathVar")
+	private String uploadPath;
+	
 	/**
 	 * 중고거래 게시판 클릭시 실행되는 메서드.
 	 * 
@@ -122,7 +124,6 @@ public class TradeBoardController {
 			return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo();
 		} else {
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
@@ -192,7 +193,6 @@ public class TradeBoardController {
 			 * 상황2
 			 */
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
@@ -246,6 +246,10 @@ public class TradeBoardController {
 		 * 업로드 한 이미지 불러오기
 		 */
 		model.addAttribute("imgAddress", sharePostService.findSharePostImgByPostNo(sharePostVO.getNoneTradePostNo()));
+		/*
+		 * 카테고리명 불러오기
+		 */
+		model.addAttribute("category", sharePostService.findCategory(sharePostVO.getCategoryNo()));
 		return "service_trade.page_detail_share_post";
 	}
 
@@ -275,7 +279,6 @@ public class TradeBoardController {
 			return "redirect:detail_share_post.do?noneTradePostNo=" + sharePostVO.getNoneTradePostNo() + "";
 		} else {
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
@@ -333,7 +336,6 @@ public class TradeBoardController {
 			 * 상황2
 			 */
 			String savedName = "";
-			String uploadPath = session.getServletContext().getRealPath("/resources/upload/postImg");
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
@@ -354,7 +356,7 @@ public class TradeBoardController {
 	 * @return
 	 * @author rws
 	 */
-	@RequestMapping("/deleteSharePost.do")
+	@RequestMapping(value="/deleteSharePost.do",method=RequestMethod.POST)
 	public String deleteSharePost(String noneTradePostNo) {
 		SharePostVO sharePostVO = sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
 		return "redirect:list_share_post.do?boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="

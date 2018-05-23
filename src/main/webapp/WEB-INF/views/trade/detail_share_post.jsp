@@ -2,13 +2,23 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
+	/* 글 삭제  */
+	$(document).ready(function() {
+		$("#deleteBtn").click(function() {
+			if(confirm("삭제하시겠습니까??")){
+				$("#deleteForm").submit();
+			}
+		});
+	});
+	/* 글 수정 */
 	function updateSharePost() {
-		location.href="${pageContext.request.contextPath}/trade/update_share_post.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
+		if(confirm("글수정 페이지로 이동 하시겠습니까?")==true){
+			location.href="${pageContext.request.contextPath}/trade/update_share_post.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
+		}else{
+			return;			
+		}
 	}
-	function deleteSharePost() {
-		location.href="${pageContext.request.contextPath}/trade/deleteSharePost.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
-	}
-	
+	/* 거래 완료 하기 */
 	function updateSharePostByStatus() {
 		if(confirm("거래를 완료 하셨습니까?")==true){
 			location.href="${pageContext.request.contextPath}/trade/updateSharePostByStatus.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
@@ -16,7 +26,7 @@
 			return;
 		}
 	}
-	
+	/* 거래 요청 하기 */
 	function updateShareAndExchangeTrade() {
 		if(confirm("거래를 요청 하시겠습니까?")==true){
 			location.href=""
@@ -66,11 +76,14 @@
 				</div>
 			</div> --%>
 			<div class="row" align="left">
-				<div class="col-sm-5">
-					<span>상품 카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
+				<div class="col-sm-12">
+					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${pvo.memberVO.id}</span>
+					<button class="fa fa-envelope"></button>
 				</div>
-				<div class="col-sm-7">
-					<span>${requestScope.pvo.categoryNo}</span>
+			</div>
+			<div class="row" align="left">
+				<div class="col-sm-12">
+					<span>상품 카테고리&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${category}</span>
 				</div>
 			</div>
 			<div class="row" align="left">
@@ -121,8 +134,20 @@
 		<div class="col-sm-11">
 			<c:if test="${sessionScope.member.id==requestScope.pvo.memberVO.id || sessionScope.member.grade=='admin'}">
 			<div align="center">
-				<button name="button" class="btn btn-info2" onclick="updateSharePost()">글수정</button>
-				<button name="button" class="btn btn-info3" onclick="deleteSharePost()">글삭제</button>
+				<div class="row">
+					<div class="col-sm-11" align="right">
+						<button name="button" class="btn btn-info2" onclick="updateSharePost()">글수정</button>
+					</div>
+					<div class="col-sm-1">
+						
+						<form name="deleteForm" id="deleteForm" method="post" action="deleteSharePost.do">
+							<button type="button" name="button" class="btn btn-info3" id="deleteBtn">글삭제</button>
+							<input type="hidden" name="noneTradePostNo" value="${requestScope.pvo.noneTradePostNo}">
+							<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
+						</form>
+						
+					</div>
+				</div>
 			</div>
 			</c:if>
 		</div>

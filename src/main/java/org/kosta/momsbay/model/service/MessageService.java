@@ -70,6 +70,12 @@ public class MessageService {
 		List<PostVO> list=messageMapper.getSendMessageList(map);
 		return new ListVO(list,pagingBean);
 	}
+	/**
+	 * 전체 메세지 목록을 가져온다.
+	 * @param id
+	 * @param pageNo
+	 * @return ListVO
+	 */
 	public ListVO getTotalMessageList(String id, String pageNo) {
 		PagingBean pagingBean=null;
 		int totalCount=messageMapper.getTotalSendMessageCount(id)+messageMapper.getTotalReceiveMessageCount(id);
@@ -83,5 +89,36 @@ public class MessageService {
 		map.put("pagingBean", pagingBean);
 		List<PostVO> list=messageMapper.getTotalMessageList(map);
 		return new ListVO(list,pagingBean);
+	}
+	/**
+	 * 메세지 상세데이터를 가져온다.
+	 * @param messageNo
+	 * @param messageType
+	 * @return MessageVO
+	 */
+	@Transactional
+	public MessageVO detailMessage(int messageNo, String messageType) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("messageNo", messageNo);
+		map.put("messageType", messageType);
+		MessageVO messageVO=messageMapper.detailMessage(map);
+		if(messageVO!=null && messageType.equals("receive") && messageVO.isStatus()==false) {
+			messageMapper.updateStatus(messageNo);
+			messageVO.setStatus(true);
+			messageMapper.updateReceiveFlag(messageVO.getSendMessageNo());
+		}
+		return messageVO;
+	}
+	
+	/**
+	 * message를 type에 따라 삭제한다.
+	 * @param messageNo
+	 * @param messageType
+	 */
+	public void deleteMessage(int messageNo, String messageType) {
+		Map<String,Object> map=new HashMap<>();
+		map.put("messageNo", messageNo);
+		map.put("messageType", messageType);
+		messageMapper.deleteMessage(map);
 	}
 }

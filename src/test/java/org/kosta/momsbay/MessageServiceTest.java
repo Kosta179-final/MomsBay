@@ -1,7 +1,12 @@
 package org.kosta.momsbay;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -23,13 +28,13 @@ import org.springframework.test.context.junit4.SpringRunner;
 public class MessageServiceTest {
 	@Resource
 	MessageService messageService;
+	MessageVO messageVO=new MessageVO();
 	
 	/**
 	 * addMessage메서드에 Transaction처리가 잘되는지 테스트 한다.
 	 */
 	@Test
 	public void addMessage() {
-		MessageVO messageVO=new MessageVO();
 		messageVO.setTitle("test");
 		messageVO.setContent("testing");
 		messageVO.setMemberVO(new MemberVO());
@@ -83,5 +88,29 @@ public class MessageServiceTest {
 		listVO=messageService.getTotalMessageList(id,pageNo);
 		assertFalse(listVO.getList().isEmpty());
 		assertNotNull(listVO.getPagingBean());
+	}
+	
+	@Test
+	public void detailMessage() {
+		addMessage();
+		MessageVO dbMessageVO=null;
+		dbMessageVO=messageService.detailMessage(messageVO.getMessageNo(), "receive");
+		assertEquals(messageVO.getTitle(), dbMessageVO.getTitle());
+		assertEquals(messageVO.getMemberVO().getId(), dbMessageVO.getMemberVO().getId());
+		assertEquals(true, dbMessageVO.isStatus());
+
+		dbMessageVO=messageService.detailMessage(messageVO.getSendMessageNo(), "send");
+		assertEquals(messageVO.getTitle(), dbMessageVO.getTitle());
+		assertEquals(messageVO.getMemberVO().getId(), dbMessageVO.getMemberVO().getId());
+		assertEquals(true, dbMessageVO.isReceiveFlag());
+	}
+	
+	@Test
+	public void deleteMessage() {
+		addMessage();
+		messageService.deleteMessage(messageVO.getSendMessageNo(), "send");
+		assertNull(messageService.detailMessage(messageVO.getSendMessageNo(), "send"));
+		messageService.deleteMessage(messageVO.getMessageNo(), "receive");
+		assertNull(messageService.detailMessage(messageVO.getMessageNo(), "receive"));
 	}
 }

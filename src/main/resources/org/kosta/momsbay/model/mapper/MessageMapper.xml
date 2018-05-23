@@ -67,4 +67,49 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			)
 		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
 	</select>
+	
+	<select id="detailMessage" parameterType="map" resultMap="messageRM">
+		SELECT send_id,receive_id,regdate,title,content
+		<choose>
+		<when test='messageType.equals("receive")'>
+			,status,send_message_no
+			FROM
+			receive_message
+			WHERE receive_message_no=#{messageNo}
+		</when>
+		<otherwise>
+			,receive_flag,receive_date
+			FROM
+			send_message
+			WHERE send_message_no=#{messageNo}
+		</otherwise>
+		</choose> 
+	</select>
+	
+	<update id="updateReceiveFlag">
+		UPDATE send_message 
+		SET receive_flag=1,receive_date=sysdate 
+		WHERE send_message_no=#{value}
+	</update>
+	
+	<update id="updateStatus">
+		UPDATE receive_message 
+		SET status=1 
+		WHERE receive_message_no=#{value}
+	</update>
+	
+	<delete id="deleteMessage" parameterType="map">
+		DELETE FROM
+		<choose>
+		<when test="messageType.equals('receive')">
+			receive_message
+			WHERE receive_message_no=#{messageNo}
+		</when>
+		<otherwise>
+			send_message
+			WHERE send_message_no=#{messageNo}
+		
+		</otherwise>
+		</choose>
+	</delete>
 </mapper>
