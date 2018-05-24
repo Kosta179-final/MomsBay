@@ -23,7 +23,6 @@
 $(document).ready(function(){
 	sessionId='${sessionScope.member.id}';
 	getNewMessage();
-	init();
 });
 
 </script>

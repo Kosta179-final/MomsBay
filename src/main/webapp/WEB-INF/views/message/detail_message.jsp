@@ -16,7 +16,14 @@
 		$('#delete_btn').click(function(){
 			location.href='delete_message.do?messageNo=${param.messageNo }&messageType=${param.messageType }';
 		});
+		
+		setTimeout(function() { //페이지가 로드 될때 웹소켓이 연결되기 전에 읽음 메세지를 보내는것을 막기 위해 1초 딜레이
+			messageRead(); //메세지 읽음을 웹소켓으로 전송
+		}, 1000);
+		
 	});
+	
+	
 	
 </script>
 <div class="container">
@@ -45,7 +52,9 @@
 		            </div>       
 		        <br>
    				<div>
-   				    <button id="reply_btn" type="button" class="btn btn-default">답장</button>
+   					<c:if test="${param.messageType=='receive'}">
+	   				    <button id="reply_btn" type="button" class="btn btn-default">답장</button>
+   					</c:if>
    				    <button id="list_btn" type="button" class="btn btn-default">목록</button>
  				    <button id="delete_btn" type="button" class="btn btn-default">삭제</button>
 	    		</div>
