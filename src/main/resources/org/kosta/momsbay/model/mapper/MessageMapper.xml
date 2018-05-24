@@ -27,27 +27,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT rnum,receive_message_no as message_no,send_id,receive_id,title,regdate,status 
 		FROM 
 			(SELECT row_number() over(order by receive_message_no desc) as rnum,receive_message_no,receive_id,send_id,title,regdate,status 
-			FROM receive_message WHERE receive_id=#{receiveId})
-		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+			FROM receive_message 
+			WHERE receive_id=#{id}
+			<if test="requestStatus!=null">
+				AND status=#{requestStatus}			
+			</if>
+			)
+		<if test="pagingBean!=null">
+			WHERE
+			rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+		</if>
 	</select>
 	
-	<select id="getTotalReceiveMessageCount" resultType="int">
+	<select id="getTotalReceiveMessageCount" parameterType="map" resultType="int">
 		SELECT count(*)
 		FROM receive_message
-		WHERE receive_id=#{value}
+		WHERE receive_id=#{id}
+		<if test="requestStatus!=null">
+			AND status=#{requestStatus}
+		</if>
 	</select>
 	
-	<select id="getTotalSendMessageCount" resultType="int">
+	<select id="getTotalSendMessageCount" parameterType="map" resultType="int">
 		SELECT count(*)
 		FROM send_message
-		WHERE send_id=#{value}
+		WHERE send_id=#{id}
+		<if test="requestStatus!=null">
+			AND status=#{requestStatus}
+		</if>
 	</select>
 	
 	<select id="getSendMessageList" parameterType="map" resultMap="messageRM">
 		SELECT rnum,send_message_no as message_no,send_id,receive_id,title,regdate,receive_flag,receive_date 
 		FROM 
 			(SELECT row_number() over(order by send_message_no desc) as rnum,send_message_no,receive_id,send_id,title,regdate,receive_flag,receive_date 
-			FROM send_message WHERE send_id=#{sendId})
+			FROM send_message WHERE send_id=#{id})
 		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
 	</select>
 	

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -67,7 +68,11 @@ public class MessageMapperTest {
 	@Test
 	public void getTotalReceiveMessageCount() {
 		String receiveId="java";
-		assertNotNull(messageMapper.getTotalReceiveMessageCount(receiveId));
+		String status="0";
+		Map<String,Object> map=new HashMap<>();
+		map.put("id", receiveId);
+		map.put("status", status);
+		assertNotNull(messageMapper.getTotalReceiveMessageCount(map));
 	}
 	/**
 	 * 받은메세지를 가져온다.
@@ -75,20 +80,35 @@ public class MessageMapperTest {
 	@Test
 	public void getReceiveMessageList() {
 		String receiveId="java";
-		PagingBean pagingBean=new PagingBean(messageMapper.getTotalReceiveMessageCount(receiveId));
-		Map map=new HashMap<String,Object>();
-		map.put("receiveId", receiveId);
+		String status="0";
+		Map<String,Object> map=new HashMap<>();
+		map.put("id", receiveId);
+		map.put("requestStatus", status);
+		PagingBean pagingBean=new PagingBean(messageMapper.getTotalReceiveMessageCount(map));
 		map.put("pagingBean", pagingBean);
 		List<PostVO> list=messageMapper.getReceiveMessageList(map);
 		assertFalse(list.isEmpty());
+		
+		Map<String,Object> map2=new HashMap<>();
+		map2.put("id", receiveId);
+		map2.put("requestStatus",status);
+		List<PostVO> list2=messageMapper.getReceiveMessageList(map2);
+		assertFalse(list2.isEmpty());
+		
+		Map<String,Object> map3=new HashMap<>();
+		map3.put("id", receiveId);
+		map3.put("requestStatus",status);
+		map3.put("pagingBean", pagingBean);
+		List<PostVO> list3=messageMapper.getReceiveMessageList(map3);
+		assertFalse(list3.isEmpty());
 	}
 	
 	@Test
 	public void getSendMessageList() {
 		String sendId="sys";
-		PagingBean pagingBean=new PagingBean(messageMapper.getTotalSendMessageCount(sendId));
 		Map map=new HashMap<String,Object>();
-		map.put("sendId", sendId);
+		map.put("id", sendId);
+		PagingBean pagingBean=new PagingBean(messageMapper.getTotalSendMessageCount(map));
 		map.put("pagingBean", pagingBean);
 		List<PostVO> list=messageMapper.getSendMessageList(map);
 		assertFalse(list.isEmpty());
@@ -97,9 +117,10 @@ public class MessageMapperTest {
 	@Test
 	public void getTotalMessageList() {
 		String id="sys";
-		PagingBean pagingBean=new PagingBean(messageMapper.getTotalReceiveMessageCount(id)+messageMapper.getTotalSendMessageCount(id));
+		String requestStatus="0";
 		Map map=new HashMap<String,Object>();
 		map.put("id", id);
+		PagingBean pagingBean=new PagingBean(messageMapper.getTotalReceiveMessageCount(map)+messageMapper.getTotalSendMessageCount(map));
 		map.put("pagingBean", pagingBean);
 		List<PostVO> list=messageMapper.getTotalMessageList(map);
 		assertFalse(list.isEmpty());
@@ -146,4 +167,5 @@ public class MessageMapperTest {
 		messageMapper.deleteMessage(map);
 		assertNull(messageMapper.detailMessage(map));
 	}
+	
 }

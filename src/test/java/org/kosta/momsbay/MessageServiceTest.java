@@ -50,12 +50,20 @@ public class MessageServiceTest {
 	public void getReceiveMessageList() {
 		String receiveId="java";
 		String pageNo="1";
+		String status="0";
 		ListVO listVO=null;
-		listVO=messageService.getReceiveMessageList(receiveId,null);
+		listVO=messageService.getReceiveMessageList(receiveId,null,null);
 		assertFalse(listVO.getList().isEmpty());
 		assertNotNull(listVO.getPagingBean());
 		
-		listVO=messageService.getReceiveMessageList(receiveId,pageNo);
+		listVO=messageService.getReceiveMessageList(receiveId,pageNo,null);
+		assertFalse(listVO.getList().isEmpty());
+		assertNotNull(listVO.getPagingBean());
+
+		listVO=messageService.getReceiveMessageList(receiveId,null,status);
+		assertFalse(listVO.getList().isEmpty());
+
+		listVO=messageService.getReceiveMessageList(receiveId,pageNo,status);
 		assertFalse(listVO.getList().isEmpty());
 		assertNotNull(listVO.getPagingBean());
 	}
