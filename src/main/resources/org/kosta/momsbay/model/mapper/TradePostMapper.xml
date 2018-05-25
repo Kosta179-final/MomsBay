@@ -70,7 +70,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="findTradePostByTradePostNo" parameterType="int" resultMap="tradePostRM">
-		SELECT tp.trade_post_no, tp.category_no, tp.title, tp.content, tp.board_type_no,
+		SELECT tp.trade_post_no, tp.category_no, tp.title, tp.content, tp.suggest_content, tp.board_type_no,
 		tp.regdate,tp.pick_count, tp.price, tp.id, bm.name, ts.status, mg.grade, tp.trade_id
 		FROM trade_post tp, bay_member bm, trade_status ts, member_grade mg
 		WHERE tp.id=bm.id AND tp.trade_status_no=ts.trade_status_no 
@@ -88,24 +88,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE trade_post_no = #{tradePostNo}
 	</update>
 	
-	<select id="findPickListById" resultMap="tradePostRM" parameterType="string">
-		SELECT tp.trade_post_no, tp.title, tp.content, 
-		mp.name, tp.regdate, tp.pick_count
-		FROM(
-		SELECT mp.trade_post_no, bm.name
-		FROM member_pick mp, bay_member bm
-		WHERE mp.id=#{value} AND mp.id=bm.id
-		)mp, trade_post tp
-		WHERE mp.trade_post_no = tp.trade_post_no
-	</select>
-	
 	<update id="updateTradeId" parameterType="tradePostVO">
 		UPDATE trade_post SET trade_id=#{tradeId}, trade_status_no=trade_status_no+1
 		WHERE trade_post_no=#{tradePostNo}
 	</update>
 	
 	<update id="deleteTradeId" parameterType="tradePostVO">
-		UPDATE trade_post SET trade_id=NULL, trade_status_no=1
+		UPDATE trade_post SET trade_id=NULL, trade_status_no=1, suggest_content=NULL
 		WHERE trade_post_no=#{tradePostNo}
 	</update>
 	
@@ -115,7 +104,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE trade_post_no=#{value}
 	</select>
 	
-	
+	<update id="updateTradeIdAndSuggestContent" parameterType="tradePostVO">
+		UPDATE trade_post SET trade_id=#{tradeId}, trade_status_no=trade_status_no+1, 
+		suggest_content=#{suggestContent}
+		WHERE trade_post_no=#{tradePostNo}
+	</update>	
 </mapper>
 
 

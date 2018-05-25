@@ -93,17 +93,6 @@ public class TradePostService {
 		return tradePostMapper.findTradePostByTradePostNo(tradePostVO.getTradePostNo());
 	}
 
-	
-	/**
-	 * 아이디로 찜목록을 가져오는 메서드.
-	 * @param id
-	 * @return List<TradePostVO>
-	 * @author Jung
-	 */
-	public List<TradePostVO> findPickListById(String id) {
-		return tradePostMapper.findPickListById(id);
-	}
-
 	/**
 	 * 거래게시판 글쓰기에서 이미지추가하는 메서드
 	 * @param path
@@ -168,5 +157,14 @@ public class TradePostService {
 	 */
 	public int findPirceByTradePostNo(int tradePostNo) {
 		return tradePostMapper.findPirceByTradePostNo(tradePostNo);
+	}
+	
+	/**
+	 * 삽니다 게시판 판매 신청시 tradeId와 suggestContent를 업데이트.
+	 * @param tradePostVO
+	 * @author Jung
+	 */
+	public void updateTradeIdAndSuggestContent(TradePostVO tradePostVO) {
+		tradePostMapper.updateTradeIdAndSuggestContent(tradePostVO);
 	}
 }

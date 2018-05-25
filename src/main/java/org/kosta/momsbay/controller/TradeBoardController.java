@@ -41,8 +41,8 @@ public class TradeBoardController {
 	private SharePostService sharePostService;
 	@Resource
 	private HistoryService historyService;
-	@Resource(name="uploadPathVar")
-	private String uploadPath;
+	/*@Resource(name="uploadPathVar")*/
+	private String uploadPath = "C:/java-kosta/framework-workspace2/resources/upload/postImg/";
 	
 	/**
 	 * 중고거래 게시판 클릭시 실행되는 메서드.
@@ -54,7 +54,7 @@ public class TradeBoardController {
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping("/{viewName}.do")
+	@RequestMapping("{viewName}.do")
 	public String showTiles(@PathVariable String viewName, String categoryNo, String boardTypeNo, String searchWord,
 			String pageNo, Model model) {
 		model.addAttribute("boardTypeNo", boardTypeNo);
@@ -398,16 +398,39 @@ public class TradeBoardController {
 	}
 	
 	/**
-	 * 거래 신청시 거래 신청 페이지로 이동하는 메서드.
+	 * 구매 신청시 거래 신청 페이지로 이동하는 메서드.
 	 * @param tradePostNo
 	 * @param model
 	 * @return apply_trade_view.jsp
 	 * @author Jung
 	 */
-	@RequestMapping("applyTradeView.do")
+	@RequestMapping("/applyBuyView.do")
 	public String applyTradeView(String tradePostNo, Model model) {
 		model.addAttribute("tradePostVO",tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
-		return "service_trade.page_apply_trade_view";
+		return "service_trade.page_apply_buy_view";
 	}
-
+	
+	/**
+	 * 판매 신청시 거래 신청 페이지로 이동하는 메서드.
+	 * @param tradePostNo
+	 * @param model
+	 * @return apply_trade_view.jsp
+	 * @author Jung
+	 */
+	@RequestMapping("/applySellView.do")
+	public String applySellView(String tradePostNo, Model model) {
+		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo));
+		model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
+		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
+		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
+		return "service_trade.page_apply_sell_view";
+	}
+	
 }
+
+
+
+
+
+
+

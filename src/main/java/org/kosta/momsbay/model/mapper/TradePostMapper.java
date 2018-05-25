@@ -32,7 +32,6 @@ public interface TradePostMapper {
 	 */
 	public void addTradePost(TradePostVO tradePostVO);
 
-
 	/**
 	 * 게시판종류와 카테고리에 맞게 게시글 총 수를 반환해주는 메서드.
 	 * @param map
@@ -64,15 +63,6 @@ public interface TradePostMapper {
 	 */
 	public void updateTradePost(TradePostVO tradePostVO);
 	
-	
-	/**
-	 * 아이디로 찜목록을 가져오는 메서드.
-	 * @param id
-	 * @return List<TradePostVO>
-	 * @author Jung
-	 */
-	public List<TradePostVO> findPickListById(String id);
-	
 	/**
 	 * 거래 신청 시 게시물의 거래자에 id를 업데이트 하고 거래상태를 변경하는 메서드.
 	 * @param id
@@ -87,8 +77,6 @@ public interface TradePostMapper {
 	 */
 	public void deleteTradeId(int tradePostNo);
 	
-	
-	
 	/**
 	 * 게시물의 가격을 조회하는 메서드
 	 * @param tradePostNo
@@ -96,6 +84,13 @@ public interface TradePostMapper {
 	 * @author Jung
 	 */
 	public int findPirceByTradePostNo(int tradePostNo);
+	
+	/**
+	 * 삽니다 게시판 판매 신청시 tradeId와 suggestContent를 업데이트.
+	 * @param tradePostVO
+	 * @author Jung
+	 */
+	public void updateTradeIdAndSuggestContent(TradePostVO tradePostVO);
 }
 
 
