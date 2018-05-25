@@ -136,15 +136,24 @@ public class MessageController {
 	 * @return url 메세지 타입에 따라 목록으로 돌아간다.
 	 */
 	@RequestMapping("delete_message.do")
-	public String deleteMessage(int messageNo,String messageType,HttpServletRequest request) {
+	public String deleteMessage(int messageNo,String messageType,String beforePageUrl,HttpServletRequest request) {
 		HttpSession session=request.getSession(false);
 		MemberVO memberVO=(MemberVO)session.getAttribute("member");
 		messageService.deleteMessage(messageNo, messageType);
 		String url=null;
-		if(messageType.equals("receive")) {
-			url="redirect:getReceiveMessageList.do?receiveId="+memberVO.getId();
-		} else {
-			url="redirect:getSendMessageList.do?sendId="+memberVO.getId();
+		System.out.println(beforePageUrl);
+		int flag=beforePageUrl.indexOf("MessageList");
+		System.out.println(flag);
+		if(flag>0){
+			url="redirect:"+beforePageUrl;
+			System.out.println(url);
+		} else{
+			String redirectUrl=beforePageUrl.substring(0, beforePageUrl.indexOf("?"));
+			if(messageType.equals("receive")){
+				url=redirectUrl+"?receiveId="+memberVO.getId();	
+			} else{
+				url=redirectUrl+"?sendId="+memberVO.getId();
+			}
 		}
 		return url;
 	}
