@@ -21,7 +21,8 @@
 
 <script>
 $(document).ready(function(){
-	getNewMessage('${sessionScope.member.id}');
+	sessionId='${sessionScope.member.id}';	
+	getNewMessage();
 });
 
 </script>

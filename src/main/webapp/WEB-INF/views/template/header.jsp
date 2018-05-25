@@ -18,13 +18,12 @@
 <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
 <script src="${pageContext.request.contextPath}/resources/js/websocket.js"></script>
 
-<%-- 검색기능 jquery --%>
 <script type="text/javascript">
-
 $(document).ready(function(){
-	getNewMessage('${sessionScope.member.id}');
+	sessionId='${sessionScope.member.id}';
+	getNewMessage();
 	
-	<%-- //검색기능 jquery --%>
+	<%-- 검색기능 jquery --%>
 	var frm = $('#conditionSearchFrom'); //폼
 	var searchBtn = $('#btn_search'); //search 버튼 
 	searchBtn.on('click', function(){
