@@ -62,15 +62,15 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="col-sm-11 off-set-1">
-					<div align="right">
+			
+			<div class="row">
+					<div class="pull-right">
 					<c:if test="${sessionScope.member!=null }">
 						<button name="button" class="btn btn-primary" onclick="addQnaPost()">글쓰기</button><br>
 					</c:if>
 					</div>
 			</div>
 			<%-- 페이징빈 부분 --%>
-				<div class="pagingInfo">
 				<c:set var="pb" value="${requestScope.lvo.pagingBean}"></c:set>
 				<ul class="pagination">
 					<c:if test="${pb.previousPageGroup}">
@@ -81,22 +81,21 @@
 						end="${pb.endPageOfPageGroup}">
 						<c:choose>
 							<c:when test="${pb.nowPage!=i}">
-								<li><a
-									href="list_qna_post.do?pageNo=${i}&boardTypeNo=${requestScope.boardTypeNo}">${i}</a></li>
+								<li>
+								<a href="list_qna_post.do?pageNo=${i}&boardTypeNo=${requestScope.boardTypeNo}">${i}</a>
+								</li>
 							</c:when>
 							<c:otherwise>
 								<li class="active"><a href="#this">${i}</a></li>
 							</c:otherwise>
 						</c:choose>
-						&nbsp;
 					</c:forEach>
+					<li>
 					<c:if test="${pb.nextPageGroup}">
-						<li><a
-							href="list_qna_post.do?pageNo=${pb.endPageOfPageGroup+1}&boardTypeNo=${requestScope.boardTypeNo}">&raquo;</a>
-						</li>
+						<a href="list_qna_post.do?pageNo=${pb.endPageOfPageGroup+1}&boardTypeNo=${requestScope.boardTypeNo}">&raquo;</a>
 					</c:if>
+					</li>
 				</ul>
 			</div>
-		</div>
 			<%-- 페이징빈 부분 --%>
 </section> <!--/#cart_items-->
