@@ -1,5 +1,3 @@
-var sessionId;
-
 var webSocket = new WebSocket('ws://localhost:8888/momsbay/websocket');
 
 webSocket.onerror = function(event) {
@@ -69,9 +67,9 @@ function messageRead() {
 }
 
 // 상단 메뉴바 쪽지에 받은 메세지 표시하기 위한 ajax
-function getNewMessage(){
+function getNewMessage(sessionId){
 	$.ajax({
-		url:'getReceiveMessageListAPI.do',
+		url:'/momsbay/message/getReceiveMessageListAPI.do',
 		type:'post',
 		data:{receiveId:sessionId,status:'0'},
 		success:function(data){

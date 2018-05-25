@@ -1,9 +1,30 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
+<link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/prettyPhoto.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/price-range.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
+<link href="${pageContext.request.contextPath}/resources/css/responsive.css" rel="stylesheet">
+
+<script src="${pageContext.request.contextPath}/resources/js/jquery.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.scrollUp.min.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/price-range.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/jquery.prettyPhoto.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+<script src="${pageContext.request.contextPath}/resources/js/websocket.js"></script>
+
 <%-- 검색기능 jquery --%>
 <script type="text/javascript">
-$(function(){
+
+$(document).ready(function(){
+	getNewMessage('${sessionScope.member.id}');
+	
+	<%-- //검색기능 jquery --%>
 	var frm = $('#conditionSearchFrom'); //폼
 	var searchBtn = $('#btn_search'); //search 버튼 
 	searchBtn.on('click', function(){
@@ -26,12 +47,9 @@ $(function(){
 		}
 		
 		frm.attr("method", "post").submit();
-		
 	});
-	
 });
 </script>
-<%-- //검색기능 jquery --%>
 
 <div class="header_top">
 	<!--header_top-->
@@ -93,7 +111,17 @@ $(function(){
 								<c:if test="${member.grade  eq 'admin'}">
 									<li><a href="${pageContext.request.contextPath}/admin/getPeopleList.do"><i class="fa fa-user"></i> 관리자 페이지</a></li>
 								</c:if>
-								<li><a href="#"><i class="fa fa-envelope"></i> 쪽지</a></li>
+								<li class="dropdown">
+									<a href="#this" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> 쪽지 <span id="message-badge" class="badge"></span></a> 
+									    <div class="dropdown-menu">
+									        <div id="message-header" class="dropdown-header"></div>
+										    <div class="divider"></div>
+									        <div id="message-body">
+									        </div>
+									        <div class="divider"></div>
+									        <div class="dropdown-menu-footer"><a href="/momsbay/message/getReceiveMessageList.do?receiveId=${sessionScope.member.id }"><span>받은 메세지함에서 보기<span></a></div>
+									    </div>
+								</li>
 								<li><a href="${pageContext.request.contextPath}/member/logout.do"><i class="fa fa-unlock"></i> 로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
