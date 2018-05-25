@@ -39,9 +39,7 @@ function getThumbnailPrivew(html, $target) {
 				<div></div>
 			</div>
 		</div>
-		<ul class="nav">
-			<li><input type="text" name="title" style="width: 833px;" placeholder="제목을 입력하세요"></li>
-		</ul>
+		<textarea rows="1" name="title" placeholder="제목을 입력하세요"></textarea><br><br>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
 		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">

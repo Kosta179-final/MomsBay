@@ -6,14 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/font-awesome.min.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/prettyPhoto.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/price-range.css" rel="stylesheet">
-    <link href="${pageContext.request.contextPath}/resources/css/animate.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/main.css" rel="stylesheet">
-	<link href="${pageContext.request.contextPath}/resources/css/responsive.css" rel="stylesheet">
-
+    
 	<title>
 		<tiles:insertAttribute name="title" ignore="true"/>
 	</title>
@@ -23,13 +16,7 @@
 	<meta name="description" content="">
 	<meta name="author" content="">
 	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/bootstrap.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/jquery.scrollUp.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/js/price-range.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/jquery.prettyPhoto.js"></script>
-    <script src="${pageContext.request.contextPath}/resources/js/main.js"></script>
+	
 </head>
 
 <body>

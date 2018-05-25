@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * BayPost 처리하는 Controller. 관련 Service: QnaPostService, BayPostService,
@@ -49,7 +50,7 @@ public class BayBoardController {
 	 * @param bayPostVO
 	 * @author barom
 	 */
-	@RequestMapping("write.do")
+	@RequestMapping(value="write.do", method=RequestMethod.POST)
 	public String write(BayPostVO bayPostVO) {
 		bayPostService.addPost(bayPostVO);
 		return "redirect:list_bulletin_post.do?boardTypeNo="+bayPostVO.getBoardTypeNo();
@@ -94,9 +95,9 @@ public class BayBoardController {
 	 * @param pageNo	
 	 * @author barom
 	 */
-	@RequestMapping("deletePost.do")
-	public String deletePost(int bayPostNo, int boardTypeNo) {
-		bayPostService.deletePost(bayPostNo);
+	@RequestMapping(value="deletePost.do", method=RequestMethod.POST)
+	public String deletePost(String bayPostNo, int boardTypeNo) {
+		bayPostService.deletePost(Integer.parseInt(bayPostNo));
 		return "redirect:list_bulletin_post.do?boardTypeNo="+boardTypeNo;
 	}
 	
@@ -106,7 +107,7 @@ public class BayBoardController {
 		return "bay/update_bay_post"+".tiles";
 	}
 	
-	@RequestMapping("updatePost.do")
+	@RequestMapping(value="updatePost.do", method = RequestMethod.POST)
 	public String updatePost(BayPostVO bayPostVO) {
 		bayPostService.updatePost(bayPostVO);
 		return "redirect:detail_bay.do?bayPostNo="+bayPostVO.getBayPostNo();

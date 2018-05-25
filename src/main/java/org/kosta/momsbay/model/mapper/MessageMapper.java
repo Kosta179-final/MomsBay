@@ -16,9 +16,9 @@ public interface MessageMapper {
 	public void addReceiveMessage(MessageVO messageVO);
 	public void addSendMessage(MessageVO messageVO);
 	public List<PostVO> getReceiveMessageList(Map map);
-	public int getTotalReceiveMessageCount(String receiveId);
+	public int getTotalReceiveMessageCount(Map map);
 	public List<PostVO> getSendMessageList(Map map);
-	public int getTotalSendMessageCount(String sendId);
+	public int getTotalSendMessageCount(Map map);
 	public List<PostVO> getTotalMessageList(Map map);
 	public MessageVO detailMessage(Map map);
 	public void updateReceiveFlag(int sendMessageNo);

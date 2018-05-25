@@ -3,10 +3,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
 	function addPost(){
-		location.href="add_bulletin_post.do?boardTypeNo=${requestScope.boardTypeNo}";
+		location.href="${pageContext.request.contextPath}/bay/add_bulletin_post.do?boardTypeNo=${requestScope.boardTypeNo}";
 	}
 </script>
-
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">

@@ -1,16 +1,21 @@
 package org.kosta.momsbay.controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.service.MessageService;
-import org.kosta.momsbay.model.vo.MessageVO;
 import org.kosta.momsbay.model.vo.MemberVO;
+import org.kosta.momsbay.model.vo.MessageVO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 쪽지 관련 작업처리 Controller.
@@ -66,9 +71,24 @@ public class MessageController {
 	 * 
 	 */
 	@RequestMapping("/getReceiveMessageList.do")
-	public String getReceiveMessageList(String receiveId,String pageNo,Model model) {
-		model.addAttribute("lvo",messageService.getReceiveMessageList(receiveId, pageNo));
+	public String getReceiveMessageList(String receiveId,String pageNo,String status,Model model) {
+		model.addAttribute("lvo",messageService.getReceiveMessageList(receiveId, pageNo,null));
 		return "message/list_receive_message.m_tiles";
+	}
+	/**
+	 * 보낸 메세지 목록을 Ajax로 응답한다.
+	 * @param receiveId
+	 * @param status
+	 * @return List<PostVO>
+	 */
+	@RequestMapping("/getReceiveMessageListAPI.do")
+	@ResponseBody
+	public Map<String,Object> getReceiveMessageList(String receiveId,String status) {
+		ListVO listVO=messageService.getReceiveMessageList(receiveId, null,status);
+		Map<String,Object> map=new HashMap<>();
+		map.put("count", listVO.getPagingBean().getTotalPostCount());
+		map.put("list", listVO.getList());
+		return map;
 	}
 	/**
 	 * 검색 조건에 따라 보낸 메세지목록을 보여준다.
@@ -116,15 +136,24 @@ public class MessageController {
 	 * @return url 메세지 타입에 따라 목록으로 돌아간다.
 	 */
 	@RequestMapping("delete_message.do")
-	public String deleteMessage(int messageNo,String messageType,HttpServletRequest request) {
+	public String deleteMessage(int messageNo,String messageType,String beforePageUrl,HttpServletRequest request) {
 		HttpSession session=request.getSession(false);
 		MemberVO memberVO=(MemberVO)session.getAttribute("member");
 		messageService.deleteMessage(messageNo, messageType);
 		String url=null;
-		if(messageType.equals("receive")) {
-			url="redirect:getReceiveMessageList.do?receiveId="+memberVO.getId();
-		} else {
-			url="redirect:getSendMessageList.do?sendId="+memberVO.getId();
+		System.out.println(beforePageUrl);
+		int flag=beforePageUrl.indexOf("MessageList");
+		System.out.println(flag);
+		if(flag>0){
+			url="redirect:"+beforePageUrl;
+			System.out.println(url);
+		} else{
+			String redirectUrl=beforePageUrl.substring(0, beforePageUrl.indexOf("?"));
+			if(messageType.equals("receive")){
+				url=redirectUrl+"?receiveId="+memberVO.getId();	
+			} else{
+				url=redirectUrl+"?sendId="+memberVO.getId();
+			}
 		}
 		return url;
 	}
