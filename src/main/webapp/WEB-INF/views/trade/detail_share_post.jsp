@@ -82,7 +82,9 @@
 			<div class="row" align="left">
 				<div class="col-sm-12">
 					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${pvo.memberVO.id}</span>
-					<button id="message_btn" class="fa fa-envelope"></button>
+						<c:if test="${sessionScope.member.id != requestScope.pvo.memberVO.id && !empty member}">
+							<button id="message_btn" class="fa fa-envelope"></button>
+						</c:if>
 				</div>
 			</div>
 			<div class="row" align="left">
