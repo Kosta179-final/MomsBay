@@ -1,21 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
 <script type="text/javascript">
-    $(document).ready(function(){
-    	$("#deleteBtn").click(function(){ 
-    		if(confirm("게시물을 삭제하시겠습니까?")){
-    			location.href="deleteQnaPost.do?bayPostNo=${qvo.bayPostNo}&boardTypeNo=${qvo.boardTypeNo}";
-    		}
-    	});
-    });	
-    	function updateQnaPost() {
-    		if(confirm("글수정 페이지로 이동 하시겠습니까?")==true){
-    			location.href="updateQnaPostView.do?bayPostNo="+${requestScope.qvo.bayPostNo};
-    		}else{
-    			return;			
-    		}
-    	}
+$(document).ready(function(){
+	$("#deleteBtn").click(function(){ 
+		if(confirm("게시물을 삭제하시겠습니까?"))
+		var url = "${pageContext.request.contextPath}";
+		var bayPostNo = "${requestScope.qnaPostVO.bayPostNo}";
+		$("#bay").attr("action", url+"/bay/deleteQnaPost.do");
+		$("#bayPostNo").attr("value",bayPostNo);
+		$("#bay").submit();
+	});
+	
+	$("#updateBtn").click(function(){  
+		if(confirm("게시물을 수정하시겠습니까?"))
+		var url = "${pageContext.request.contextPath}";
+		var bayPostNo = "${requestScope.qnaPostVO.bayPostNo}";
+		$("#bay").attr("action", url+"/bay/updateQnaPostView.do");
+		$("#bayPostNo").attr("value",bayPostNo);
+		$("#bay").submit();
+	});
+});	
 </script>
 <!-- container-fluid: 화면 너비와 상관없이 항상 100% -->
 <div class="container-fluid">
@@ -28,7 +35,8 @@
   <div class="row main">
     <div class="col-sm-2" ></div>
     <div class="col-sm-8">
-    
+     <form action="" id="bay" method="post">
+     <input type="hidden" value="${requestScope.qvo.bayPostNo}" name="bayPostNo"> 
 <table  class="table">
 	<tr>
 			<td>글번호 ${requestScope.qvo.bayPostNo }</td>
@@ -43,14 +51,17 @@
 		</tr>
 		<tr>
 			<td colspan="5" class="btnArea">
+			<c:if test="${requestScope.qvo.memberVO.id==sessionScope.member.id}">
+			 <button type="button" id="updateBtn" class="btn">수정</button>
+			 </c:if>
 			 <c:if test="${requestScope.qvo.memberVO.id==sessionScope.member.id}">
-			 <input type="button" class="btn" onclick="updateQnaPost()" value="수정">
-			 <input type="button" name="button" id="deleteBtn" class="btn" value="삭제">
+			<input type="hidden" name="boardTypeNo" value="${requestScope.qvo.boardTypeNo}">
+			 <button type="button" id="deleteBtn" class="btn" >삭제</button>
 			 </c:if>
 			 </td>
 		</tr>
 	</table>
+	</form>
     </div>
-    <div class="col-sm-2" ></div>
   </div>
 </div>
