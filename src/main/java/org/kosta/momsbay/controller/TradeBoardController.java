@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.HistoryService;
+import org.kosta.momsbay.model.service.PointService;
 import org.kosta.momsbay.model.service.SharePostService;
 import org.kosta.momsbay.model.service.TradePostService;
 import org.kosta.momsbay.model.vo.SharePostVO;
@@ -41,8 +42,10 @@ public class TradeBoardController {
 	private SharePostService sharePostService;
 	@Resource
 	private HistoryService historyService;
-	/*@Resource(name="uploadPathVar")*/
+	@Resource(name="uploadPathVar")
 	private String uploadPath = "C:/java-kosta/framework-workspace2/resources/upload/postImg/";
+	@Resource
+	private PointService pointService;
 	
 	/**
 	 * 중고거래 게시판 클릭시 실행되는 메서드.
