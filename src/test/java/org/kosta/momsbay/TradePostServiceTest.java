@@ -48,15 +48,6 @@ public class TradePostServiceTest {
 	}
 	
 	/**
-	 * 로그인한 사용자의 찜목록을 가져오는 메서드 테스트.
-	 * @author Jung
-	 */
-	@Test
-	public void findPickListById() {
-		assertNotEquals(null, tradePostService.findPickListById("java"));
-	}
-	
-	/**
 	 * 거래게시판의 글쓰기 메서드 테스트.
 	 * @author Jung
 	 */

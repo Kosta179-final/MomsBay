@@ -88,7 +88,7 @@ public class TradeController {
 	 */
 	@Transactional
 	@RequestMapping(method= RequestMethod.POST,value="cancelTransaction.do")
-	public String cancelTransaction(String tradeId, String id, String tradePostNo) {
+	public String cancelTransaction(String tradeId, String id, String tradePostNo,String boardTypeNo) {
 		TradePostVO tradePostVO = new TradePostVO();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
@@ -96,15 +96,19 @@ public class TradeController {
 		tradePostVO.setMemberVO(memberVO);
 		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
 		
-		tradeService.cancelTransaction(tradePostVO);
-		tradePostService.deleteTradeId(tradePostVO.getTradePostNo());
-		historyService.deleteTradeHistory(tradePostVO);
-		
-		String temp = tradePostVO.getTradeId();
-		tradePostVO.setTradeId(tradePostVO.getMemberVO().getId());
-		tradePostVO.getMemberVO().setId(temp);
-		historyService.deleteTradeHistory(tradePostVO);
-		
+		if(boardTypeNo.equals("2")) {
+			tradeService.cancelTransaction(tradePostVO);
+			tradePostService.deleteTradeId(tradePostVO.getTradePostNo());
+			historyService.deleteTradeHistory(tradePostVO);
+			
+			String temp = tradePostVO.getTradeId();
+			tradePostVO.setTradeId(tradePostVO.getMemberVO().getId());
+			tradePostVO.getMemberVO().setId(temp);
+			historyService.deleteTradeHistory(tradePostVO);
+		}
+		else {
+			tradePostService.deleteTradeId(tradePostVO.getTradePostNo());
+		}
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostNo;
 	}
 	
@@ -160,6 +164,17 @@ public class TradeController {
 		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
 		historyService.updateDeliveryTradeHistory(tradePostVO);
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
+	}
+	
+	/**
+	 * 판매 신청 페이지에서 판매할 제품에 대한 글을 쓰고 거래신청.
+	 * @param tradePostVO
+	 * @return
+	 */
+	@RequestMapping("/applySell.do")
+	public String applySell(TradePostVO tradePostVO) {
+		tradePostService.updateTradeIdAndSuggestContent(tradePostVO);
+		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo();
 	}
 	
 }
