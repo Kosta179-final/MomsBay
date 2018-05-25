@@ -45,7 +45,7 @@
 	
 <bean id="uploadPathVar" class="java.lang.String">
     <!-- 파일업로드 디렉토리-->
-    <constructor-arg value="C:/Users/barom/Documents/workspace-sts-3.9.3.RELEASE2/resources/upload/postImg" />
+    <constructor-arg value="C:\java-kosta\framework-workspace2\resources\upload\postImg" />
 </bean>
 	<!-- Handler Interceptor 설정 mapping path : 인터셉터 적용할 url 명시 
 	<mvc:mapping path="/cafe.do"/> path에 /를 반드시 명시

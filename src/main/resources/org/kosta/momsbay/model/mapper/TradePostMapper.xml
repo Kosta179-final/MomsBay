@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 , tp.price
 				 , bm.name
 				 , tp.imgAddress
+				 , tp.regdate
 		  FROM (
 						SELECT row_number() over(ORDER BY t.trade_post_no DESC) AS rnum
 								 , t.id
@@ -49,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								 , t.price
 								 , t.category_no
 								 , t.board_type_no
+								 , to_char(t.regdate,'yyyy-mm-dd')as regdate
 								 , p.photo_path AS imgAddress 
 						  FROM trade_post t, photo p
 						WHERE t.board_type_no=#{board_type_no} 

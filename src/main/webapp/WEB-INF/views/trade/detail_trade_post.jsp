@@ -106,22 +106,43 @@
 	<div class="col-sm-7">
 		<div class="product-information">
 			<!--/product-information-->
-			<div class="row">
-				<div class="col-sm-5">
-					<span>희망가격 : </span>
-				</div>
-				<div class="col-sm-7">
-					<span>${requestScope.tradePostVO.price}원</span>
-				</div>
+			<div class="row" align="left">
+				<div class="col-sm-12">
+					<span style="font-size: 30px">${requestScope.tradePostVO.title}</span>
+				</div><hr>
 			</div>
 			<div class="row">
+				<div class=col-sm-12><br><br><hr></div>
+			</div>
+			<div class="row" align="left">
+				<div class="col-sm-12">
+					<span>희망가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.price}원</span>
+				</div>
+			</div>
+			<div class="row" align="left">
+				<div class="col-sm-12">
+					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.memberVO.name}</span>
+					<button class="fa fa-envelope"></button>
+				</div>
+			</div>
+			<div class="row" align="left">
+				<div class="col-sm-3">
+					<span>등록일시&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: </span>
+				</div>
+				<div class="col-sm-7">
+					<span>${requestScope.tradePostVO.regdate}</span>
+				</div>
+				<div class="col-sm-12"><br></div>
+				<div class="col-sm-12"><br></div>
+			</div>
+			<!-- 버전 2때<div class="row">
 				<div class="col-sm-5">
 					<span>평점 : </span>
 				</div>
 				<div class="col-sm-7">
 					<span>* * * * *</span>
 				</div>
-			</div>
+			</div> -->
 			
 		</div>
 		<c:choose>
@@ -136,14 +157,14 @@
 						<div class="btn-group">
 							<c:choose>
 								<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
-									<span><button type="button" class="btn btn-primary">${requestScope.tradePostVO.status}</button></span>
+									<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
 								</c:when>
 								<c:when test="${requestScope.historyStatus eq '물품배송'}">
-									<span><button type="button" class="btn btn-primary">배송완료</button></span>
+									<span><button type="button" class="btn btn-info3">배송완료</button></span>
 								</c:when>
 								<c:otherwise>
-									<span><button type="button" id="updateDeliveryTradeHistory" class="btn btn-primary">물품배송</button></span>
-									<span><button type="button" id="cancelTransactionfromPublisher" class="btn btn-primary">거래취소</button></span>
+									<span><button type="button" id="updateDeliveryTradeHistory" class="btn btn-info3">물품배송</button></span>
+									<span><button type="button" id="cancelTransactionfromPublisher" class="btn btn-info3">거래취소</button></span>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -154,20 +175,20 @@
 				<c:choose>
 					<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 						<div class="btn-group">
-							<span><button type="button" id="applyTradeView" class="btn btn-primary">거래신청</button></span>
+							<span><button type="button" id="applyTradeView" class="btn btn-info3">거래신청</button></span>
 						</div>
 					</c:when>
 					<c:otherwise>
 						<div class="btn-group">
 						<c:choose>
 							<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
-								<span><button type="button" class="btn btn-primary">${requestScope.tradePostVO.status}</button></span>
+								<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
 							</c:when>
 							<c:when test="${requestScope.historyStatus eq '물품배송'}">
-								<span><button type="button" class="btn btn-primary" id="completeTransaction">거래완료</button></span>
+								<span><button type="button" class="btn btn-info3" id="completeTransaction">거래완료</button></span>
 							</c:when>
 							<c:otherwise>
-								<span><button type="button" class="btn btn-primary" id="cancelTransactionFromApplicant">거래취소</button></span>
+								<span><button type="button" class="btn btn-info3" id="cancelTransactionFromApplicant">거래취소</button></span>
 							</c:otherwise>
 						</c:choose>
 						</div>
@@ -177,27 +198,21 @@
 		</c:choose>
 	</div>
 </div>
-
-<div class="category-tab">
-	<!--category-tab-->
-	<div class="tab-content">
-		<div class="tab-pane fade active in" id="reviews">
-			<ul>
-				<li><i class="fa fa-user"></i>${requestScope.tradePostVO.memberVO.name}</li>
-				<li><i class="fa fa-clock-o"></i>${requestScope.tradePostVO.regdate}</li>
-			</ul>
-			<p>제목 : ${requestScope.tradePostVO.title}</p>
-		</div>
+<div class="category-tab">	
+	<h1 align="left">DETAIL INFO</h1><hr>
+	<div style="text-align: left;">
+		<p align="left">${requestScope.tradePostVO.content}</p>
 	</div>
-	<pre>${requestScope.tradePostVO.content}</pre>
-</div>
-
+</div><hr>
+<div class="row">
+	<img src="${pageContext.request.contextPath}/resources/upload/images/detailfooter.png" alt=""/>
+</div><br><br>
 <c:if test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id || sessionScope.member.grade == 'admin'}">
 	<div class="row">
 		<div class="col-sm-11">
 			<div align="right">
-				<button name="button" class="btn btn-primary" id="updateTradePostView">글수정</button>
-				<button name="button" class="btn btn-primary" id="deleteTradePost">글삭제</button>
+				<button name="button" class="btn btn-info2" id="updateTradePostView">글수정</button>
+				<button name="button" class="btn btn-info3" id="deleteTradePost">글삭제</button>
 			</div>
 		</div>
 	</div>

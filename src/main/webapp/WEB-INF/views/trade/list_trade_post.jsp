@@ -24,8 +24,10 @@
 						<c:if test="${tpVO.imgAddress ne 'noPhoto'}">
 							<img src="${pageContext.request.contextPath}/resources/upload/postImg/${tpVO.imgAddress }" >
 						</c:if>
-						<h2>${tpVO.price}원</h2>
-						<p>${tpVO.title}</p>
+						<h4 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${tpVO.title}</h4><hr>
+						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가격 &nbsp;&nbsp;: &nbsp;&nbsp;${tpVO.price}</p>
+						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록일 &nbsp;&nbsp;: &nbsp;&nbsp;${tpVO.regdate}</p>
+						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자 &nbsp;&nbsp;: &nbsp;&nbsp;${tpVO.memberVO.name}</p>
 					</div>
 				</div>
 				<div class="choose">
@@ -57,7 +59,7 @@
 	<div class="row">
 		<div class="col-sm-11">
 			<div align="right">
-				<button name="button" class="btn btn-primary" onclick="addTradePost()">글쓰기</button><br>
+				<button name="button" class="btn btn-info5" onclick="addTradePost()">글쓰기</button><br>
 			</div>
 		</div>
 	</div>
