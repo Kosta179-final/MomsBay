@@ -77,8 +77,10 @@ function getThumbnailPrivew(html, $target) {
 		<textarea rows="10" name="content">${requestScope.tradePostVO.content}</textarea>
 	</div>
 	<input type="hidden" name="tradePostNo" value="${requestScope.tradePostVO.tradePostNo}">
-	<div class="btn-group">
-		<span><input type="submit" class="btn btn-primary" value="글수정"></span>
+	<div class="row">
+		<div class="btn-group">
+			<span><input type="submit" class="btn btn-info2" value="글수정"></span>
+		</div>
 	</div>
 </div>
 </form>
