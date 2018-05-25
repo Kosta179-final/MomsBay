@@ -40,6 +40,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		     , id
 		     , category_no
 		     , board_type_no 
+		     , trade_status_no 
 		     , imgAddress
 	  FROM ( 
 	  			 SELECT n.none_trade_post_no
@@ -49,6 +50,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  			 		  , b.id
 	  			 		  , n.category_no
 	  			 		  , n.board_type_no
+	  			 		  , n.trade_status_no
 	  			 		  , p.photo_path AS imgAddress
 	  			 		  , row_number() over(ORDER BY n.none_trade_post_no DESC) AS rnum 
 				   FROM none_trade_post n
@@ -87,7 +89,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <!-- 나눔(교환) 게시글 거래완료시 상태변경 업데이트 -->
 <update id="updateSharePostByStatus" parameterType="int">
 	UPDATE none_trade_post 
-	SET trade_status_no=7 
+	SET trade_status_no=3
 	WHERE none_trade_post_no=#{noneTradePostNo}
 </update>
+<!-- 카테고리명 불러오기 -->
+<select id="findCategory" resultType="string">
+	SELECT category 
+	FROM category 
+	WHERE category_no=#{values}
+</select>
 </mapper>

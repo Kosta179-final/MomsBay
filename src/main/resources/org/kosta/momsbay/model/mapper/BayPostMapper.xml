@@ -18,14 +18,14 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			bay_post_no, title, regdate, id, subject_no,board_type_no
 			FROM bay_post
 			WHERE board_type_no=#{boardTypeNo} 
-			AND subject_no=6
+			AND subject_no=7
 			<if test="searchWord != null">
 			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 			</if>
 			)b, bay_member m,subject s
 		WHERE b.id = m.id 
 		AND rnum 
-		BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+		BETWEEN #{pagingBean.startRowNumber} AND 3
 		AND b.subject_no = s.subject_no
 		ORDER BY bay_post_no DESC
 	</select>
@@ -36,7 +36,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 			SELECT row_number() over(ORDER BY bay_post_no DESC) AS rnum,
 			bay_post_no, title, regdate, id, subject_no,board_type_no
 			FROM bay_post
-			WHERE board_type_no=#{boardTypeNo} AND subject_no!=4
+			WHERE board_type_no=#{boardTypeNo} AND subject_no!=7
 			<if test="searchWord != null">
 			AND (title LIKE '%' || #{searchWord} || '%' OR content LIKE '%' || #{searchWord} || '%')
 			</if>
@@ -79,7 +79,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<update id="updatePost" parameterType="bayPostVO">
-		UPDATE bay_post SET title=#{title},content=#{content}
+		UPDATE bay_post SET title=#{title},content=#{content},subject_no=#{subjectVO.subjectNo}
 		WHERE bay_post_no = #{bayPostNo}
 	</update>
 </mapper>

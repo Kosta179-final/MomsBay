@@ -1,6 +1,5 @@
 package org.kosta.momsbay.model.service;
 
-import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +11,6 @@ import org.kosta.momsbay.model.mapper.PhotoUploadMapper;
 import org.kosta.momsbay.model.mapper.SharePostMapper;
 import org.kosta.momsbay.model.vo.SharePostVO;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  * 교환게시판 관련 비즈니스로직 서비스.
@@ -151,5 +149,16 @@ public class SharePostService {
 		map.put("savedName",savedName);
 		map.put("postNo", postNo);
 		photoUploadMapper.updateSharePostPhoto(map);
+	}
+	
+	/**
+	 * 나눔 게시판 카테고리명 불러오기
+	 * @param categoryNo
+	 * @return category
+	 * @author rws
+	 */
+	public String findCategory(int categoryNo) {
+		String category=sharePostMapper.findCategory(categoryNo);
+		return category;
 	}
 }

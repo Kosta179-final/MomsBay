@@ -33,9 +33,10 @@ public class TradePostService {
 	 */
 	public ListVO getTradePostList(String pageNo,String boardTypeNo, String searchWord,String categoryNo) {
 		PagingBean pagingBean=null;
+		@SuppressWarnings({ "unchecked", "rawtypes" })
 		Map<String,Object> map = new HashMap();
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
-		map.put("category_no", categoryNo.equals("")? null : Integer.parseInt(categoryNo));
+		map.put("category_no", categoryNo == null ? null : Integer.parseInt(categoryNo));
 		map.put("searchWord", searchWord);
 		int totalCount=tradePostMapper.getTotalTradePostCount(map);
 		if(pageNo==null) {
@@ -116,15 +117,56 @@ public class TradePostService {
 		photoUploadMapper.insertTradePostPhoto(map);
 	}
 
+	/**
+	 * 게시물 번호에 해당하는 사진경로를 찾는다.
+	 * @param tradePostNo
+	 * @return imgAddress
+	 * @author Hwang
+	 */
 	public String findTradePostImgByPostNo(int tradePostNo) {
 		String imgAddress=photoUploadMapper.findTradePostImgByPostNo(tradePostNo);
 		return imgAddress;
 	}
 
+	/**
+	 * 게시물 번호에 해당하는 게시글의 사진을 수정.
+	 * @param savedName
+	 * @param tradePostNo
+	 * @author Hwang
+	 */
 	public void updateTradePostPhoto(String savedName, int tradePostNo) {
 		Map<String, Object> map= new HashMap<>();
 		map.put("savedName",savedName);
 		map.put("postNo", tradePostNo);
 		photoUploadMapper.updateTradePostPhoto(map);
+	}
+	
+	
+	/**
+	 * 거래 신청 시 게시물의 거래자에 id를 업데이트 하는 메서드.
+	 * @param id
+	 * @author Jung
+	 */
+	public void updateTradeId(TradePostVO tradePostVO) {
+		tradePostMapper.updateTradeId(tradePostVO);
+	}
+	
+	/**
+	 * 거래 취소 시 게시물의 거래자에 id를 NULL로 업데이트 하는 메서드.
+	 * @param id
+	 * @author Jung
+	 */
+	public void deleteTradeId(int tradePostNo) {
+		tradePostMapper.deleteTradeId(tradePostNo);
+	}
+	
+	/**
+	 * 게시물의 가격을 조회하는 메서드
+	 * @param tradePostNo
+	 * @return price
+	 * @author Jung
+	 */
+	public int findPirceByTradePostNo(int tradePostNo) {
+		return tradePostMapper.findPirceByTradePostNo(tradePostNo);
 	}
 }

@@ -69,7 +69,7 @@ $(document).ready(function(){
 				<div class="social-icons pull-right">
 					<ul class="nav navbar-nav">
 						<li><a href="${pageContext.request.contextPath}/admin/test.do"><i class="fa fa-facebook"></i></a></li>
-						<li><a href="#"><i class="fa fa-twitter"></i></a></li>
+						<li><a href="${pageContext.request.contextPath}/a32fse.do"><i class="fa fa-twitter"></i></a></li>
 						<li><a href="#"><i class="fa fa-linkedin"></i></a></li>
 						<li><a href="#"><i class="fa fa-dribbble"></i></a></li>
 						<li><a href="#"><i class="fa fa-google-plus"></i></a></li>
@@ -106,7 +106,7 @@ $(document).ready(function(){
 								<c:if test="${member.grade eq 'member'}">
 									<li><a href="${pageContext.request.contextPath}/myaccount/getPointHistoryById.do"><i class="fa fa-user"></i> 내 계정</a></li>
 									<li><a href="${pageContext.request.contextPath}/myaccount/findNowpointById.do"><i class="fa fa-usd"></i> 포인트 충전/환전</a></li>
-									<li><a href="${pageContext.request.contextPath}/myaccount/getPickListById.do"><i class="fa fa-heart"></i> 찜목록</a></li>
+									<li><a href="${pageContext.request.contextPath}/myaccount/findPickListById.do"><i class="fa fa-heart"></i> 찜목록</a></li>
 								</c:if>
 								<c:if test="${member.grade  eq 'admin'}">
 									<li><a href="${pageContext.request.contextPath}/admin/getPeopleList.do"><i class="fa fa-user"></i> 관리자 페이지</a></li>

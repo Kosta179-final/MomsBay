@@ -18,4 +18,5 @@ public class SharePostVO extends PostVO{
 	private int tradeStatusNo;
 	private MultipartFile file; 
 	private String imgAddress;
+	private String category;
 }

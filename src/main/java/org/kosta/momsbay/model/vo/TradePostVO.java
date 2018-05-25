@@ -24,4 +24,5 @@ public class TradePostVO extends PostVO{
 	private String suggestContent;
 	private MultipartFile file; 
 	private String imgAddress;
+	private String tradeType;
 }

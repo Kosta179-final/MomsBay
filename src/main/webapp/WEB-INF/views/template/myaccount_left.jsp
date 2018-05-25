@@ -4,11 +4,11 @@
 	<div class="left-sidebar" style="margin-bottom: 30px;">
 		<h2>My Page</h2>
 		<div class="panel-group category-products" id="accordian">
-			<!--category-productsr-->
+			
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordian" href="#a">
+						<a href="findTradeHistoryListById.do?boardTypeNo=1">
 							<span class="pull-right"></span>
 							거래내역
 						</a>
@@ -19,7 +19,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						<a href="getPickListById.do">
+						<a href="findPickListById.do">
 							<span class="pull-right"></span>
 							찜목록
 						</a>

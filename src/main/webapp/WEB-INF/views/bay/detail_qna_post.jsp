@@ -4,14 +4,18 @@
 <script type="text/javascript">
     $(document).ready(function(){
     	$("#deleteBtn").click(function(){ 
-    		if(confirm("게시물을 삭제하시겠습니까?"))
-    		location.href="deleteQnaPost.do?bayPostNo=${qvo.bayPostNo}&boardTypeNo=${qvo.boardTypeNo}";
-    	});
-    	$("#updateBtn").click(function(){  
-    		if(confirm("게시물을 수정하시겠습니까?"))
-    		location.href="updateQnaPostView.do?bayPostNo=${qvo.bayPostNo}&boardTypeNo=${qvo.boardTypeNo}";
+    		if(confirm("게시물을 삭제하시겠습니까?")){
+    			location.href="deleteQnaPost.do?bayPostNo=${qvo.bayPostNo}&boardTypeNo=${qvo.boardTypeNo}";
+    		}
     	});
     });	
+    	function updateQnaPost() {
+    		if(confirm("글수정 페이지로 이동 하시겠습니까?")==true){
+    			location.href="updateQnaPostView.do?bayPostNo="+${requestScope.qvo.bayPostNo};
+    		}else{
+    			return;			
+    		}
+    	}
 </script>
 <!-- container-fluid: 화면 너비와 상관없이 항상 100% -->
 <div class="container-fluid">
@@ -24,6 +28,7 @@
   <div class="row main">
     <div class="col-sm-2" ></div>
     <div class="col-sm-8">
+    
 <table  class="table">
 	<tr>
 			<td>글번호 ${requestScope.qvo.bayPostNo }</td>
@@ -39,8 +44,8 @@
 		<tr>
 			<td colspan="5" class="btnArea">
 			 <c:if test="${requestScope.qvo.memberVO.id==sessionScope.member.id}">
-			 <button type="button" id="updateBtn">수정</button>
-			 <button type="button" id="deleteBtn">삭제</button>
+			 <input type="button" class="btn" onclick="updateQnaPost()" value="수정">
+			 <input type="button" name="button" id="deleteBtn" class="btn" value="삭제">
 			 </c:if>
 			 </td>
 		</tr>
