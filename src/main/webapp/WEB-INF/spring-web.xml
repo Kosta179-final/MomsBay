@@ -43,10 +43,10 @@
 		<property name="maxInMemorySize" value="100000000" />
 	</bean>
 	
-<bean id="uploadPathVar" class="java.lang.String">
-    <!-- 파일업로드 디렉토리-->
+<!-- <bean id="uploadPathVar" class="java.lang.String">
+    파일업로드 디렉토리
     <constructor-arg value="C:/java-kosta/framework-workspace2/resources/upload/postImg/" />
-</bean>
+</bean> -->
 	<!-- Handler Interceptor 설정 mapping path : 인터셉터 적용할 url 명시 
 	<mvc:mapping path="/cafe.do"/> path에 /를 반드시 명시
 	 ** : 디렉토리, 서브디렉토리까지 포함, 0개 이상의 디렉토리와 파일 매칭 

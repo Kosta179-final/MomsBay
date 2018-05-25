@@ -2,12 +2,14 @@ package org.kosta.momsbay.controller;
 
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.MemberPickService;
 import org.kosta.momsbay.model.service.MemberService;
+import org.kosta.momsbay.model.service.PickService;
 import org.kosta.momsbay.model.service.PointService;
 import org.kosta.momsbay.model.service.TradePostService;
 import org.kosta.momsbay.model.vo.MemberPickVO;
@@ -39,6 +41,8 @@ public class MyAccountController {
 	TradePostService tradePostService;
 	@Autowired
 	MemberPickService memberPickService;
+	@Resource
+	private PickService pickService;
 
 	@RequestMapping("/{viewName}.do")
 	public String showTiles(@PathVariable String viewName) {
@@ -167,7 +171,7 @@ public class MyAccountController {
 	public String getPickListById(HttpServletRequest request) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		List<TradePostVO> list = tradePostService.findPickListById(member.getId());
+		List<TradePostVO> list = pickService.findPickListById(member.getId());
 		request.setAttribute("list", list);
 		return "service_myaccount" + ".page_" + "list_pick";
 	}

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#cancelTransactionfromPublisher").click(function(){
+		$("#cancelTransactionFromPublisher").click(function(){
 			if(confirm("거래를 취소하시겠습니까?")){
 				var tradeId = "${requestScope.tradePostVO.tradeId}";
 				var memberVOId = "${sessionScope.member.id}";
@@ -31,12 +31,20 @@
 			}
 		});
 		
-		$("#applyTradeView").click(function(){
+		$("#applyBuyView").click(function(){
 				var url = "${pageContext.request.contextPath}";
 				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-				$("#trade").attr("action", url+"/trade/applyTradeView.do");
+				$("#trade").attr("action", url+"/trade/applyBuyView.do");
 				$("#tradePostNo").attr("value",tradePostNo);
 				$("#trade").submit();
+		});
+		
+		$("#applySellView").click(function(){
+			var url = "${pageContext.request.contextPath}";
+			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
+			$("#trade").attr("action", url+"/trade/applySellView.do");
+			$("#tradePostNo").attr("value",tradePostNo);
+			$("#trade").submit();
 		});
 		
 		$("#updateTradePostView").click(function(){
@@ -124,6 +132,45 @@
 			</div>
 			
 		</div>
+		<!-- 삽니다 게시판 버튼 -->
+		<c:if test="${requestScope.tradePostVO.boardTypeNo eq '1'}">
+			<c:choose>
+				<c:when test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id}">
+					<c:choose>
+						<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
+							<div class="btn-group">
+								<span><button type="button" class="btn btn-primary">${requestScope.tradePostVO.status}</button></span>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="btn-group">
+								<span><button type="button" id="applyBuyView" class="btn btn-primary">입금하기</button></span>
+								<span><button type="button" id="cancelTransactionFromApplicant" class="btn btn-primary">거래취소</button></span>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</c:when>
+				
+				<c:otherwise>
+					<c:choose>
+						<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
+							<div class="btn-group">
+								<span><button type="button" id="applySellView" class="btn btn-primary">거래신청</button></span>
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="btn-group">
+								<span><button type="button" id="#" class="btn btn-primary">물품배송</button></span>
+								<span><button type="button" id="cancelTransactionFromPublisher" class="btn btn-primary">거래취소</button></span>
+							</div>
+						</c:otherwise>
+					</c:choose>
+				</c:otherwise>
+			</c:choose>
+		</c:if>
+
+		<!-- 팝니다 게시판 버튼 -->
+		<c:if test="${requestScope.tradePostVO.boardTypeNo eq '2'}">
 		<c:choose>
 			<c:when test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id}">
 				<c:choose>
@@ -143,7 +190,7 @@
 								</c:when>
 								<c:otherwise>
 									<span><button type="button" id="updateDeliveryTradeHistory" class="btn btn-primary">물품배송</button></span>
-									<span><button type="button" id="cancelTransactionfromPublisher" class="btn btn-primary">거래취소</button></span>
+									<span><button type="button" id="cancelTransactionFromPublisher" class="btn btn-primary">거래취소</button></span>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -154,7 +201,7 @@
 				<c:choose>
 					<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 						<div class="btn-group">
-							<span><button type="button" id="applyTradeView" class="btn btn-primary">거래신청</button></span>
+							<span><button type="button" id="applyBuyView" class="btn btn-primary">거래신청</button></span>
 						</div>
 					</c:when>
 					<c:otherwise>
@@ -175,6 +222,7 @@
 				</c:choose>
 			</c:otherwise>
 		</c:choose>
+		</c:if>
 	</div>
 </div>
 
@@ -191,6 +239,13 @@
 	</div>
 	<pre>${requestScope.tradePostVO.content}</pre>
 </div>
+
+<c:if test="${requestScope.tradePostVO.suggestContent ne NULL}">
+<p>판매자 상품 정보</p>
+<div class="category-tab">
+	<pre>${requestScope.tradePostVO.suggestContent}</pre>
+</div>
+</c:if>
 
 <c:if test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id || sessionScope.member.grade == 'admin'}">
 	<div class="row">

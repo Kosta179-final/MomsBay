@@ -1,7 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-
+<script type="text/javascript">
+	function detail(tradePostNo){
+		var url = "${pageContext.request.contextPath}";
+		location.href=url+"/trade/detail_trade_post.do?tradePostNo="+tradePostNo+"";
+	}
+</script>
+	
 <div class="container">
 	<ul class="nav nav-tabs">
 		<li class="active"><a data-toggle="tab" href="#home">구매내역</a></li>
@@ -26,7 +32,7 @@
 				<tbody>
 					<c:if test="${!empty tradeHistoryVO }">
 						<c:forEach items="${tradeHistoryVO}" var="list" varStatus="cc">
-							<tr>
+							<tr onclick="detail(${list.tradePostVO.tradePostNo})">
 								<td>${cc.count}</td>
 								<td>${list.status}</td>
 								<td>${list.tradePostVO.tradeId}</td>
@@ -34,12 +40,6 @@
 								<td>${list.tradePostVO.price}</td>
 								<td>${list.tradePostVO.tradeType}</td>
 								<td>${list.regdate}</td>
-								<td><button class="btn btn-primary">
-									<c:if test="${list.status eq '거래중'}">
-										거래완료
-									</c:if>
-								</button>
-								</td>
 							</tr>
 						</c:forEach>
 					</c:if>
