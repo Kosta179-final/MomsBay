@@ -9,6 +9,10 @@
 				$("#deleteForm").submit();
 			}
 		});
+		
+		$("#message_btn").click(function(){
+			location.href='${pageContext.request.contextPath}/message/add_message_form.do?receiveId=${pvo.memberVO.id}';
+		});
 	});
 	/* 글 수정 */
 	function updateSharePost() {
@@ -78,7 +82,7 @@
 			<div class="row" align="left">
 				<div class="col-sm-12">
 					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${pvo.memberVO.id}</span>
-					<button class="fa fa-envelope"></button>
+					<button id="message_btn" class="fa fa-envelope"></button>
 				</div>
 			</div>
 			<div class="row" align="left">

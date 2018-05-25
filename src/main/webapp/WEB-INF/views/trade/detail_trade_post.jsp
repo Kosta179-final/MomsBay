@@ -302,6 +302,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$("#message_btn").click(function(){
+			location.href='${pageContext.request.contextPath}/message/add_message_form.do?receiveId=${requestScope.tradePostVO.memberVO.id}';
+		});
+		
 		$("#cancelTransactionfromPublisher").click(function(){
 			if(confirm("거래를 취소하시겠습니까?")){
 				var tradeId = "${requestScope.tradePostVO.tradeId}";
@@ -421,7 +425,7 @@
 			<div class="row" align="left">
 				<div class="col-sm-12">
 					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.memberVO.name}</span>
-					<button class="fa fa-envelope"></button>
+					<button id="message_btn" class="fa fa-envelope"></button>
 				</div>
 			</div>
 			<div class="row" align="left">
