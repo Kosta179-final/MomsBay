@@ -8,11 +8,20 @@
     $(document).ready(function(){
     	$("#deleteBtn").click(function(){ 
     		if(confirm("게시물을 삭제하시겠습니까?"))
-    		location.href="deletePost.do?bayPostNo=${pvo.bayPostNo}&boardTypeNo=${pvo.boardTypeNo}";
+    		var url = "${pageContext.request.contextPath}";
+			var bayPostNo = "${requestScope.bayPostVO.bayPostNo}";
+			$("#bay").attr("action", url+"/bay/deletePost.do");
+			$("#bayPostNo").attr("value",bayPostNo);
+    		$("#bay").submit();
     	});
+    	
     	$("#updateBtn").click(function(){  
     		if(confirm("게시물을 수정하시겠습니까?"))
-    		location.href="updatePostView.do?bayPostNo=${pvo.bayPostNo}&boardTypeNo=${pvo.boardTypeNo}";
+    		var url = "${pageContext.request.contextPath}";
+			var bayPostNo = "${requestScope.bayPostVO.bayPostNo}";
+			$("#bay").attr("action", url+"/bay/updatePostView.do");
+			$("#bayPostNo").attr("value",bayPostNo);
+			$("#bay").submit();
     	});
     });	
 </script>
@@ -28,6 +37,8 @@
   <div class="row main">
     <div class="col-sm-2" ></div>
     <div class="col-sm-8">
+    <form action="" id="bay" method="post">
+    <input type="hidden" value="${requestScope.pvo.bayPostNo}" name="bayPostNo"> 
 <table  class="table">
 	<tr>
 			<td>글번호 ${requestScope.pvo.bayPostNo }</td>
@@ -40,16 +51,20 @@
 			<pre>${requestScope.pvo.content}</pre>
 			</td>
 		</tr>
+		
 		<tr>
 			<td colspan="5" class="btnArea">
 			 <c:if test="${requestScope.pvo.memberVO.id==sessionScope.member.id}">
 			 <button type="button" id="updateBtn" class="btn">수정</button>
-			 <button type="button" id="deleteBtn" class="btn">삭제</button>
+			 </c:if>
+			 <c:if test="${requestScope.pvo.memberVO.id==sessionScope.member.id}">			 
+			 <input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
+			 <button type="button" id="deleteBtn" class="btn">삭제</button>			
 			 </c:if>
 			 </td>
-		</tr>
+			 </tr>
 	</table>
+	</form>
     </div>
-    <div class="col-sm-2" ></div>
   </div>
 </div>

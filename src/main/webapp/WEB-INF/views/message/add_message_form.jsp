@@ -9,6 +9,12 @@ $(document).ready(function(){
 		source : "${pageContext.request.contextPath}/admin/searchMemberById.do?",
 		minLength : 2
 	});
+	
+	// 메세지 전송 버튼 클릭시 웹소켓에 보낸 사실을 전달   
+	$("#add_message_btn").click(function(){
+		messageSend();
+	});
+	
 });
 </script>
 <div class="container">
@@ -33,7 +39,7 @@ $(document).ready(function(){
 		                <textarea name="content" id="message" required="required" class="form-control" rows="8" placeholder="메세지를 입력하세요"></textarea>
 		            </div>                        
 		            <div class="form-group col-md-12">
-		                <input type="submit" name="submit" class="btn btn-primary pull-right" value="전송">
+		                <input type="submit" id="add_message_btn" name="submit" class="btn btn-primary pull-right" value="전송">
 		            </div>
 		        </form>
    			</div>
