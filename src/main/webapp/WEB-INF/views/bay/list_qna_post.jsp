@@ -15,19 +15,19 @@
 				</ol>
 			</div>
 		<div class="table-responsive cart_info">
-				<table class="table table-condensed">
+				<table class="table table-hover">
 					<thead>
 						<tr class="cart_menu">
-							<td class="cart_product">글 번호</td>
+							<td class="price">글 번호</td>
 							<td class="description">제목</td>
-							<td class="price">작성자</td>
-							<td class="quantity">작성일</td>
+							<td class="quantity">작성자</td>
+							<td class="price">작성일</td>
 						</tr>
 					</thead>
 					<tbody>
 						<c:forEach var="qvo" items="${requestScope.qlvo.list}">
 							<tr>
-								<td class="cart_product">${qvo.bayPostNo}</td>
+								<td class="cart_price">${qvo.bayPostNo}</td>
 								<td class="cart_description">
 								<c:choose>
 									<c:when test="${sessionScope.member!=null }">
@@ -38,13 +38,13 @@
 									</c:otherwise>
 									</c:choose>
 									</td>
-								<td class="cart_price">${qvo.memberVO.name}</td>
-				 				<td class="cart_quantity">${qvo.regdate}</td>
+								<td class="cart_quantity">${qvo.memberVO.name}</td>
+				 				<td class="cart_price">${qvo.regdate}</td>
 							</tr>
 						</c:forEach>
 						<c:forEach var="qv" items="${requestScope.lvo.list}">
 							<tr>
-								<td class="cart_product">${qv.bayPostNo}</td>
+								<td class="cart_price">${qv.bayPostNo}</td>
 								<td class="cart_description">
 									<c:choose>
 									<c:when test="${sessionScope.member!=null }">
@@ -55,8 +55,8 @@
 									</c:otherwise>
 									</c:choose>
 									</td>
-								<td class="cart_price">${qv.memberVO.name}</td>
-				 				<td class="cart_quantity">${qv.regdate }</td>
+								<td class="cart_quantity">${qv.memberVO.name}</td>
+				 				<td class="cart_price">${qv.regdate }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -91,9 +91,9 @@
 						</c:choose>
 					</c:forEach>
 					<li>
-					<c:if test="${pb.nextPageGroup}">
+					 <c:if test="${pb.nextPageGroup}">
 						<a href="list_qna_post.do?pageNo=${pb.endPageOfPageGroup+1}&boardTypeNo=${requestScope.boardTypeNo}">&raquo;</a>
-					</c:if>
+					 </c:if>
 					</li>
 				</ul>
 			</div>

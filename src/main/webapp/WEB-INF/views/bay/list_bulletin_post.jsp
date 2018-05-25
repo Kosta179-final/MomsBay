@@ -6,7 +6,6 @@
 		location.href="${pageContext.request.contextPath}/bay/add_bulletin_post.do?boardTypeNo=${requestScope.boardTypeNo}";
 	}
 </script>
-
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
