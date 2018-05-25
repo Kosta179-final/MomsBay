@@ -10,10 +10,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="title" property="tradePostVO.title"/>
 		<result column="trade_type" property="tradePostVO.tradeType"/>
 		<result column="price" property="tradePostVO.price"/>
+		<result column="trade_post_no" property="tradePostVO.tradePostNo"/>
 	</resultMap>
 
 	<select id="findTradeHistoryListById" parameterType="map" resultMap="tradeHistoryRM">
-		SELECT th.regdate, th.id, tp.trade_id, tp.title, ts.status, tp.price, th.trade_type
+		SELECT th.regdate, th.id, tp.trade_id, tp.title, ts.status, tp.price, th.trade_type, tp.trade_post_no
 		FROM trade_history th, trade_post tp, trade_status ts
 		WHERE th.id=#{id} AND ts.trade_status_no=th.trade_status_no AND 
 		th.trade_post_no=tp.trade_post_no AND tp.board_type_no=board_type_no
