@@ -41,6 +41,13 @@ public class QnaPostService {
 		map.put("pagingBean", pagingBean);
 		return new ListVO(qnaPostMapper.getQnaPostList(map),pagingBean);
 	}
+	/**
+	 * Q&A 글목록 & pagingbean처리 공지사항 메서드
+	 * @param pageNo
+	 * @param boardTypeNo
+	 * @param searchWord
+	 * @author sam
+	 */
 	public ListVO getAnnounceQnaList(String pageNo, String boardTypeNo,String searchWord) {
 		Map<String,Object> map = new HashMap();
 		map.put("boardTypeNo", boardTypeNo);
@@ -81,7 +88,10 @@ public class QnaPostService {
 	public void deleteQnaPost(int bayPostNo) {
 		qnaPostMapper.deleteQnaPost(bayPostNo);
 	}
-	
+	/**
+	 * Q&A 게시판 글 수정 메서드
+	 * @param qnaPostVO
+	 */
 	public void updateQnaPost(QnaPostVO qnaPostVO) {
 		 qnaPostMapper.updateQnaPost(qnaPostVO);
 	}

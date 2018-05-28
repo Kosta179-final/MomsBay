@@ -54,7 +54,7 @@ $(document).ready(function(){
 			<c:if test="${requestScope.qvo.memberVO.id==sessionScope.member.id}">
 			 <button type="button" id="updateBtn" class="btn">수정</button>
 			 </c:if>
-			 <c:if test="${requestScope.qvo.memberVO.id==sessionScope.member.id}">
+			 <c:if test="${requestScope.qvo.memberVO.id==sessionScope.member.id || sessionScope.member.id eq 'sys'}">
 			<input type="hidden" name="boardTypeNo" value="${requestScope.qvo.boardTypeNo}">
 			 <button type="button" id="deleteBtn" class="btn" >삭제</button>
 			 </c:if>
