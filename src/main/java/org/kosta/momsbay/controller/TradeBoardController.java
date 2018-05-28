@@ -42,7 +42,7 @@ public class TradeBoardController {
 	private SharePostService sharePostService;
 	@Resource
 	private HistoryService historyService;
-	@Resource(name="uploadPathVar")
+	
 	private String uploadPath = "C:/java-kosta/framework-workspace2/resources/upload/postImg/";
 	@Resource
 	private PointService pointService;
