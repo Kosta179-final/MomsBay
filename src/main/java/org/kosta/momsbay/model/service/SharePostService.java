@@ -41,6 +41,7 @@ public class SharePostService {
 	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo, String searchWord){
 		PagingBean pagingBean=null;
 		Map<String, Object> map=new HashMap();
+		map.put("pageNo", pageNo==null ? null : pageNo);
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
 		map.put("category_no", categoryNo==null ? null : Integer.parseInt(categoryNo));
 		map.put("searchWord", searchWord);
