@@ -144,13 +144,22 @@ public class BayBoardController {
 		qnaPostService.deleteQnaPost(Integer.parseInt(bayPostNo));
 		return "redirect:list_qna_post.do?boardTypeNo="+boardTypeNo;
 	}
-	
+	/**
+	 * Q&A 게시판 수정 메서드
+	 * @param qnaPostVO
+	 * @author sam
+	 */
 	   @RequestMapping("updateQnaPost.do")
 	   public String updateQnaPost(QnaPostVO qnaPostVO) {
 	      qnaPostService.updateQnaPost(qnaPostVO);
 	      return "redirect:detail_qna_post.do?bayPostNo="+qnaPostVO.getBayPostNo();
 	   }
-	   
+	/**
+	 * Q&A 게시판 수정폼제공 메서드
+	 * @param model
+	 * @param bayPostNo
+	 * @author sam
+	 */
 	@RequestMapping("updateQnaPostView.do")
 	public String updateQnaPostView(Model model,int bayPostNo) {
 		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
