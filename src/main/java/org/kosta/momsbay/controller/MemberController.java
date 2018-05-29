@@ -1,5 +1,7 @@
 package org.kosta.momsbay.controller;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -9,17 +11,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.momsbay.model.exception.LoginException;
+import org.kosta.momsbay.model.exception.NoMemberFoundException;
 import org.kosta.momsbay.model.service.MemberService;
 import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
-/**
- * Member관련 mapping처리를 하는 controller.
- * ex)가입, 수정, 탈퇴
- * @author Hwang
- */
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -53,12 +51,12 @@ public class MemberController {
 			member = memberService.login(userId, userPassword);
 		} catch (LoginException error) {
 			requset.setAttribute("message", error.getMessage());
-			return "member/login_fail";
+			return "member/system_alert";
 		}
 		
 		if(member.getGrade().equals("blacklist")) {
 			requset.setAttribute("message","차단된 회원입니다. 관리자에게 문의하세요.");
-			return "member/login_fail";
+			return "member/system_alert";
 		}
 		
 		member.setPassword("");
@@ -154,5 +152,24 @@ public class MemberController {
 		}
 		memberService.addMember(member, children);	
 		return "redirect:register_succ.do";
+	}
+	
+	@RequestMapping(method=RequestMethod.POST, value="findPasswordByNameAndEmail.do")
+	public String findPasswordByNameAndEmail(MemberVO member, HttpServletRequest request) {
+		try {
+			memberService.findPasswordByNameAndEmail(member);
+		}catch (NoMemberFoundException e) {
+			// TODO: handle exception
+			request.setAttribute("message", e.getMessage());
+			return "member/system_alert";
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			request.setAttribute("message", "DB ERROR!\n Try Again");
+			return "member/system_alert";
+		} catch (IOException e) {
+			request.setAttribute("message",e.getMessage());
+		}
+		request.setAttribute("message", "We Send Temp password to Your Email\nPlease Check Email");
+		return  "redirect:/member/system_alert.do";
 	}
 }

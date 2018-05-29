@@ -106,4 +106,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	AND g.grade=#{values}
 	</select>
 	
+	<select id="findMemberExsitByName" resultType="string">
+		SELECT email
+		FROM
+		bay_member
+		Where name = #{values}
+	</select>
+	
+	<update id="updateMemberPassword" parameterType="map">
+		UPDATE bay_member SET password=#{pwd}
+		WHERE email=#{email}
+	</update>
 </mapper>
