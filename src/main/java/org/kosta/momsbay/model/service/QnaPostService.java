@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.QnaPostMapper;
+import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
 import org.springframework.stereotype.Service;
 /**
@@ -90,9 +91,24 @@ public class QnaPostService {
 	}
 	/**
 	 * Q&A 게시판 글 수정 메서드
-	 * @param qnaPostVO
+	 * @author sam
 	 */
 	public void updateQnaPost(QnaPostVO qnaPostVO) {
 		 qnaPostMapper.updateQnaPost(qnaPostVO);
+	}
+	/**
+	 * Q&A 게시판 조회수 증가 메서드
+	 * @author sam
+	 */
+	public void updateQnaCount(int bayPostNo) {
+		qnaPostMapper.updateQnaCount(bayPostNo);
+	}
+	/**
+	 * Q&A 게시판 조회수 증가하지않는 메서드
+	 * @param bayPostNo
+	 * @author sam
+	 */
+	public PostVO getQnaDetailNoHit(int bayPostNo) {
+		return qnaPostMapper.getQnaDetail(bayPostNo);
 	}
 }

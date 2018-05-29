@@ -5,7 +5,6 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
-import org.apache.ibatis.type.IntegerTypeHandler;
 import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.BayPostMapper;
