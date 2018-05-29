@@ -7,21 +7,25 @@
       <script type="text/javascript">
     $(document).ready(function(){
     	$("#deleteBtn").click(function(){ 
-    		if(confirm("게시물을 삭제하시겠습니까?"))
+    		if(confirm("게시물을 삭제하시겠습니까?")) {
     		var url = "${pageContext.request.contextPath}";
 			var bayPostNo = "${requestScope.bayPostVO.bayPostNo}";
 			$("#bay").attr("action", url+"/bay/deletePost.do");
 			$("#bayPostNo").attr("value",bayPostNo);
     		$("#bay").submit();
+    		} else
+    			return;
     	});
     	
     	$("#updateBtn").click(function(){  
-    		if(confirm("게시물을 수정하시겠습니까?"))
+    		if(confirm("게시물을 수정하시겠습니까?")==true) {
     		var url = "${pageContext.request.contextPath}";
 			var bayPostNo = "${requestScope.bayPostVO.bayPostNo}";
 			$("#bay").attr("action", url+"/bay/updatePostView.do");
 			$("#bayPostNo").attr("value",bayPostNo);
 			$("#bay").submit();
+    		}else
+			return;
     	});
     });	
 </script>
@@ -44,6 +48,7 @@
 			<td>글번호 ${requestScope.pvo.bayPostNo }</td>
 			<td>제목: ${requestScope.pvo.title} </td>
 			<td>작성자:  ${requestScope.pvo.memberVO.id }</td>
+			<td>조회수:  ${requestScope.pvo.hits }</td>
 			<td>${requestScope.pvo.regdate }</td>
 		</tr>		
 		<tr>

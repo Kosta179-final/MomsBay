@@ -23,6 +23,7 @@
 			if(confirm("수정을 취소하시겠습니까?")){
 				location.href="detail_bay.do?bayPostNo="+${pvo.bayPostNo};
 			}
+			return "bay/detail_bay_post";
 		});
 	});
 </script>
