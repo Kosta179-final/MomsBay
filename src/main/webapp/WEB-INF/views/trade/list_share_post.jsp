@@ -37,7 +37,7 @@
 				</div>
 				<div class="choose">
 					<ul class="nav nav-pills nav-justified">
-						<li><a class="btn btn-info4" href="detail_share_post.do?noneTradePostNo=${pvo.noneTradePostNo}">
+						<li><a class="btn btn-info4" href="detail_share_post.do?pageNo=${requestScope.pageNo}&noneTradePostNo=${pvo.noneTradePostNo}">
 							<i></i>상세보기</a>
 						</li>
 					</ul>
