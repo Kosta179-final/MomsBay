@@ -3,6 +3,7 @@ package org.kosta.momsbay.controller;
 import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.service.BayPostService;
+import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.QnaPostService;
 import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
@@ -11,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 /**
  * BayPost 처리하는 Controller. 관련 Service: QnaPostService, BayPostService,
@@ -26,6 +28,8 @@ public class BayBoardController {
 	private BayPostService bayPostService;
 	@Resource
 	private QnaPostService qnaPostService;
+	@Resource
+	private CommentService commentService;  
 	/**
 	 * 일반게시판 &  Q&A게시판 클릭시 실행되는 메서드.
 	 * @param viewName
@@ -86,6 +90,7 @@ public class BayBoardController {
 	 */
 	@RequestMapping("detail_bay.do")
 	public String getPostDetail(int bayPostNo,Model model) {
+		bayPostService.updatePostCount(bayPostNo);
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
 		return "bay/detail_bay_post" + ".tiles";
 	}
@@ -110,7 +115,13 @@ public class BayBoardController {
 	@RequestMapping(value="updatePost.do", method = RequestMethod.POST)
 	public String updatePost(BayPostVO bayPostVO) {
 		bayPostService.updatePost(bayPostVO);
-		return "redirect:detail_bay.do?bayPostNo="+bayPostVO.getBayPostNo();
+		return "redirect:getPostDetailNoHit.do?bayPostNo="+bayPostVO.getBayPostNo();
+	}
+	
+	@RequestMapping("getPostDetailNoHit.do")
+	public String getPostDetailNoHit(int bayPostNo, Model model) {
+		model.addAttribute("pvo", bayPostService.getPostDetailNohit(bayPostNo));
+		return "bay/detail_bay_post" + ".tiles";
 	}
 	/**
 	 * Q&A 게시판 글목록 상세보기 메서드
@@ -165,5 +176,9 @@ public class BayBoardController {
 		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
 		return "bay/update_qna_post" + ".tiles";
 	}
-
+	@RequestMapping("")
+	public String getBayCommentList(int bayPostNo, Model model) {
+		model.addAttribute("bc", commentService.getBayCommentList(bayPostNo));
+		return "bay/detail_bay_post"+".tiles";
+	}
 }

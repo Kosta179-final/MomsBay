@@ -10,6 +10,7 @@ import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.BayPostMapper;
 import org.kosta.momsbay.model.vo.BayPostVO;
+import org.kosta.momsbay.model.vo.PostVO;
 import org.springframework.stereotype.Service;
 /**
  * 일반게시판 관련 비즈니스로직 서비스.
@@ -71,5 +72,11 @@ public class BayPostService {
 	
 	public void updatePost(BayPostVO bayPostVO) {
 		bayPostMapper.updatePost(bayPostVO);
+	}
+	public void updatePostCount(int bayPostNo) {
+		bayPostMapper.updatePostCount(bayPostNo);
+	}
+	public PostVO getPostDetailNohit(int bayPostNo) {
+		return bayPostMapper.getPostDetail(bayPostNo);
 	}
 }
