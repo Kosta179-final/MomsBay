@@ -86,6 +86,7 @@ public class BayBoardController {
 	 */
 	@RequestMapping("detail_bay.do")
 	public String getPostDetail(int bayPostNo,Model model) {
+		bayPostService.updatePostCount(bayPostNo);
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
 		return "bay/detail_bay_post" + ".tiles";
 	}
@@ -110,7 +111,13 @@ public class BayBoardController {
 	@RequestMapping(value="updatePost.do", method = RequestMethod.POST)
 	public String updatePost(BayPostVO bayPostVO) {
 		bayPostService.updatePost(bayPostVO);
-		return "redirect:detail_bay.do?bayPostNo="+bayPostVO.getBayPostNo();
+		return "redirect:getPostDetailNoHit.do?bayPostNo="+bayPostVO.getBayPostNo();
+	}
+	
+	@RequestMapping("getPostDetailNoHit.do")
+	public String getPostDetailNoHit(int bayPostNo, Model model) {
+		model.addAttribute("pvo", bayPostService.getPostDetailNohit(bayPostNo));
+		return "bay/detail_bay_post" + ".tiles";
 	}
 	/**
 	 * Q&A 게시판 글목록 상세보기 메서드
@@ -162,7 +169,7 @@ public class BayBoardController {
 	 * @author sam
 	 */
 	   @RequestMapping("updateQnaPost.do")
-	   public String updateQnaPost(QnaPostVO qnaPostVO,int bayPostNo) {
+	   public String updateQnaPost(QnaPostVO qnaPostVO) {
 	      qnaPostService.updateQnaPost(qnaPostVO);
 	      return "redirect:getQnaDetailNoHit.do?bayPostNo="+qnaPostVO.getBayPostNo();
 	   }

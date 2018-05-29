@@ -31,14 +31,16 @@ function getThumbnailPrivew(html, $target) {
 		<span>희망가격 : </span>
 		<span><input type="number" name="price">원</span><br>
 		<br>
-		<textarea rows="1" name="title" placeholder="제목을 입력하세요"></textarea><br><br>
+		<textarea rows="1" name="title" placeholder="제목을 입력하세요" required="required"></textarea><br><br>
 		<textarea rows="10" name="content" placeholder="내용을 입력하세요"></textarea>
 	</div>
 	<div class="btn-group">
 		<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
 		<input type="hidden" name="categoryNo" value="${requestScope.categoryNo}">
-		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>
+		<div class="col-sm-12"><br></div>
+		<span><input type="submit" class="btn btn-info2" value="작성"></span>
+		<div class="col-sm-12"><br></div>
 	</div>
 </div>
 <!-- 에디터 스크립트 소스
