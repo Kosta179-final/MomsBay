@@ -85,6 +85,10 @@ public class TradeBoardController {
 	@RequestMapping("/list_trade_post.do")
 	public String listTradePostTiles(String categoryNo, String boardTypeNo, String searchWord, String pageNo,
 			Model model) {
+		if(pageNo==null || pageNo.equals("")) {
+			pageNo="1";
+		}
+		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
 		model.addAttribute("searchWord", searchWord);
@@ -219,11 +223,12 @@ public class TradeBoardController {
 	 * @author Jung
 	 */
 	@RequestMapping("detail_trade_post.do")
-	public String detailTradePost(String tradePostNo, Model model) {
+	public String detailTradePost(String pageNo, String tradePostNo, Model model) {
 		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo));
 		model.addAttribute("tradePostVO", tradePostVO);
 		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
+		model.addAttribute("pageNo", pageNo);
 		if(tradePostVO.getTradeId()!=null) {
 			model.addAttribute("historyStatus",historyService.findTradeStatusByIdAndTradePostNo(tradePostVO));
 		}
