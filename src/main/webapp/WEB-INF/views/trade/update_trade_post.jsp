@@ -32,57 +32,50 @@ function getThumbnailPrivew(html, $target) {
 				</c:choose>
 				<br>
 				<input type="file" name="file"onchange="getThumbnailPrivew(this,$('#main_image'))" />
-				<ul>
-					<li><i class="fa fa-clock-o"></i>등록일시 ${requestScope.tradePostVO.regdate}</li>
-				</ul>
 		</div>
 	</div>
 	<div class="col-sm-7">
 		<div class="product-information">
 			<!--/product-information-->
-			<div class="row">
-				<div class="col-sm-5">
-					<span>희망가격 : </span>
+			<div class="row" align="left">
+				<div class="col-sm-4">
+					<span>희망가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:</span>
 				</div>
-				<div class="col-sm-7">
-					<span><input type="number" name="price" value="${requestScope.tradePostVO.price}">원</span>
+				<div class="col-sm-8">
+					<span><input type="number" name="price" style="width: 150px;" value="${requestScope.tradePostVO.price}">원</span>
 				</div>
 			</div>
-			<div class="row">
-				<div class="col-sm-5">
-					<span>평점 : </span>
-				</div>
+			<div class="row" align="left">
 				<div class="col-sm-7">
-					<span>(회원평점)</span>
+					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.memberVO.name}</span>
 				</div>
+			</div>
+			<div class="row" align="left">
+				<div class="col-sm-7">
+					<span>등록일시&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.regdate}</span>
+				</div>
+				<div class="col-sm-12"><br></div>
+				<div class="col-sm-12"><br></div>
 			</div>
 		</div>
 	</div>
 </div>
 
 <div class="category-tab">
-	<!--category-tab-->
+<h1 align="left">DETAIL INFO</h1><hr>
 	<div class="col-sm-12">
-		<div class="tab-content">
-			<div class="tab-pane fade active in" id="reviews">
-				<ul>
-					<li><i class="fa fa-user">${requestScope.tradePostVO.memberVO.name}</i></li>
-					<li><i class="fa fa-clock-o">${requestScope.tradePostVO.regdate}</i></li>
-				</ul>
-			</div>
-		</div>
 		<ul class="nav">
-			<li><input type="text" name="title" value="${requestScope.tradePostVO.title}"></li>
+			<li><input type="text" name="title" style="width: 833px;" value="${requestScope.tradePostVO.title}"></li>
 		</ul>
 		<textarea rows="10" name="content">${requestScope.tradePostVO.content}</textarea>
 	</div>
-	<input type="hidden" name="tradePostNo" value="${requestScope.tradePostVO.tradePostNo}">
+	<input type="hidden" name="tradePostNo" value="${requestScope.tradePostVO.tradePostNo}"><br>
 	<div class="row">
 		<div class="btn-group">
 			<span><input type="submit" class="btn btn-info2" value="글수정"></span>
 		</div>
 	</div>
-</div>
+</div><br>
 </form>
 <!-- 에디터 스크립트 소스
 			약간 이상한건 스크립트 소스가 위에가있으면

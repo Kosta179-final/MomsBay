@@ -2,18 +2,27 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <script>
-	/* 글 삭제  */
 	$(document).ready(function() {
+		/* 글 삭제  */
 		$("#deleteBtn").click(function() {
 			if(confirm("삭제하시겠습니까??")){
 				$("#deleteForm").submit();
-			}
-		});
+			}//confirm
+		});//click
 		
+		/* 메세지 보내기 */
 		$("#message_btn").click(function(){
 			location.href='${pageContext.request.contextPath}/message/add_message_form.do?receiveId=${pvo.memberVO.id}';
-		});
-	});
+		});//click
+		
+		/* 상세보기에서 글목록으로 가기 */
+		$("#listBtn").click(function(){
+			location.href="${pageContext.request.contextPath}/trade/list_share_post.do?pageNo=${requestScope.pageNo}&boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}";
+		});//click
+		
+	});//ready
+	
+	
 	/* 글 수정 */
 	function updateSharePost() {
 		if(confirm("글수정 페이지로 이동 하시겠습니까?")==true){
@@ -135,23 +144,30 @@
 <div class="row">
 	<img src="${pageContext.request.contextPath}/resources/upload/images/detailfooter.png" alt=""/>
 </div><br><br>
+<div class="row">
+	<button type="button" name="button" class="btn btn-info6 pull-right" id="listBtn">목록으로</button>
+	<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
+	<input type="hidden" name="categoryNo" value="${requestScope.pvo.categoryNo}">
+	<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
+</div>
+<div class="row">
+	<div class="col-sm-12"><br><br></div>
+</div>
 <c:if test="${!empty member}">
 	<div class="row">
 		<div class="col-sm-11">
 			<c:if test="${sessionScope.member.id==requestScope.pvo.memberVO.id || sessionScope.member.grade=='admin'}">
 			<div align="center">
 				<div class="row">
-					<div class="col-sm-11" align="right">
-						<button name="button" class="btn btn-info2" onclick="updateSharePost()">글수정</button>
+					<div class="col-sm-5">
+						<button name="button" class="btn btn-info2 pull-right" onclick="updateSharePost()">글수정</button>
 					</div>
-					<div class="col-sm-1">
-						
+					<div class="col-sm-5">
 						<form name="deleteForm" id="deleteForm" method="post" action="deleteSharePost.do">
-							<button type="button" name="button" class="btn btn-info3" id="deleteBtn">글삭제</button>
+							<button type="button" name="button" class="btn btn-info3 pull-left" id="deleteBtn">글삭제</button>
 							<input type="hidden" name="noneTradePostNo" value="${requestScope.pvo.noneTradePostNo}">
 							<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
 						</form>
-						
 					</div>
 				</div>
 			</div>

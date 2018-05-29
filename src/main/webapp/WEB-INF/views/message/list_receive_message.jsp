@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script>
+$(document).ready(function(){
+    if (performance.navigation.type != 1) {
+      location.reload();
+    }
+});
+</script>
 <section id="cart_items">
 	<div class="breadcrumbs">
 		  <h3 class="active">받은 쪽지함</h3>

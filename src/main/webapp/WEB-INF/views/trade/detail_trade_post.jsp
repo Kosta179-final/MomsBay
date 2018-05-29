@@ -86,7 +86,13 @@
 			$("#tradePostNo").attr("value",tradePostNo);
 			$("#trade").submit();
 		});
-	});
+		
+		/* 목록으로 돌아가기 */
+		$("#listBtn").click(function() {
+			location.href="${pageContext.request.contextPath}/trade/list_trade_post.do?pageNo=${requestScope.pageNo}&boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}";
+		});
+		
+	});//ready
 </script>
 
 
@@ -264,13 +270,26 @@
 <div class="row">
 	<img src="${pageContext.request.contextPath}/resources/upload/images/detailfooter.png" alt=""/>
 </div><br><br>
+<div class="row">
+	<button type="button" name="button" class="btn btn-info6 pull-right" id="listBtn">목록으로</button>
+	<input type="hidden" name="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}"> 
+	<input type="hidden" name="categoryNo" value="${requestScope.tradePostVO.categoryNo}">
+	<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
+</div>
+<div class="row">
+	<div class="col-sm-12"><br><br></div>
+</div>
 <c:if test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id || sessionScope.member.grade == 'admin'}">
 	<div class="row">
 		<div class="col-sm-11">
-			<div align="right">
+			<div align="center">
 				<button name="button" class="btn btn-info2" id="updateTradePostView">글수정</button>
 				<button name="button" class="btn btn-info3" id="deleteTradePost">글삭제</button>
 			</div>
+		</div>
+	</div>
+		<div class="row">
+			<div class=col-sm-12><br><br><br><br>
 		</div>
 	</div>
 </c:if>
