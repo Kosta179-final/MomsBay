@@ -91,6 +91,20 @@ public interface TradePostMapper {
 	 * @author Jung
 	 */
 	public void updateTradeIdAndSuggestContent(TradePostVO tradePostVO);
+	
+	/**
+	 * 홈화면 삽니다 팝니다 게시글 최신순 리스트
+	 * @return List
+	 * @author rws
+	 */
+	public List<PostVO> getMainTradePostList();
+	
+	/**
+	 * 삽니다 팝니다 총 개시글수
+	 * @return int
+	 * @author rws
+	 */
+	public int getTotalMainTradePostCount();
 }
 
 

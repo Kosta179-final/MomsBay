@@ -376,10 +376,10 @@ public class TradeBoardController {
 	 * @author rws
 	 */
 	@RequestMapping(value="/deleteSharePost.do",method=RequestMethod.POST)
-	public String deleteSharePost(String noneTradePostNo) {
+	public String deleteSharePost(String noneTradePostNo, String pageNo, String boardTypeNo, String categoryNo, String searchWord) {
 		SharePostVO sharePostVO = sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
-		return "redirect:list_share_post.do?boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
-				+ sharePostVO.getCategoryNo() + "";
+			return "redirect:list_share_post.do?pageNo=" + pageNo +"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
+					+ sharePostVO.getCategoryNo() + "";
 	}
 
 	/**
