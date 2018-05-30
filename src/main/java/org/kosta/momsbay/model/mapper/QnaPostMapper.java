@@ -46,5 +46,16 @@ public interface QnaPostMapper {
 	 * @param qnaPostVO
 	 */
 	public void updateQnaPost(QnaPostVO qnaPostVO);
+	/**
+	 * Q&A 게시판 공지사항 메서드
+	 * @param map
+	 * @author sam
+	 */
 	public List<PostVO> getAnnounceQnaList(Map map);
+	/**
+	 * Q&A 게시판 조회수 증가 메서드
+	 * @param bayPostNo
+	 * @author sam
+	 */
+	public void updateQnaCount(int bayPostNo);
 }

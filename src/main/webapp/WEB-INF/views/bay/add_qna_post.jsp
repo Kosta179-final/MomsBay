@@ -4,6 +4,17 @@
 <script src="https://cdn.ckeditor.com/4.9.2/standard-all/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	$("#add_btn").click(function() {
+		 var data = CKEDITOR.instances.content.getData();
+        if ($("#title").val() == "") {
+           alert("제목을 입력하세요!");
+           return false;
+        }
+        if (data == "") {
+           alert("본문을 입력하세요!");
+           return false;
+        }        
+     });
 	$("#resetBtn").click(function() {
 		if(confirm("글쓰기를 취소하시겠습니까?")){
 			location.href="list_qna_post.do?boardTypeNo=6";
@@ -29,12 +40,12 @@ $(document).ready(function() {
 				</select>	
 			</div> 
 			<div class="col-sm-8">
-				<textarea cols="90" rows="1" name="title" required="required"
+				<textarea cols="90" rows="1" id="title" name="title" required="required"
 						placeholder="제목을 입력하세요"></textarea>
 			</div>
 			<br><br>
-			<textarea cols="90" rows="15" name="content" required="required"
-						placeholder="내용을 입력하세요" id="content"></textarea>
+			<textarea cols="90" rows="15" name="content" id="content" required="required"
+						placeholder="내용을 입력하세요" ></textarea>
 			<!-- 에디터 스크립트 소스
 			약간 이상한건 스크립트 소스가 위에가있으면
 			에러가 남. 그래서 위치가 이래요.
@@ -104,7 +115,7 @@ $(document).ready(function() {
 	</script>
 			<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 			<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
-			<input type="submit" class="btn btn-primary" value="작성">
+			<input type="submit" id="add_btn" class="btn btn-primary" value="작성">
 			<input type="reset" class="btn btn-primary" id="resetBtn" value="취소">
 		</form>
 	</div>

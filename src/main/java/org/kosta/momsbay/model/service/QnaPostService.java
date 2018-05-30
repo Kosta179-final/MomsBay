@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.common.PagingBean;
 import org.kosta.momsbay.model.mapper.QnaPostMapper;
+import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
 import org.springframework.stereotype.Service;
 /**
@@ -41,6 +42,13 @@ public class QnaPostService {
 		map.put("pagingBean", pagingBean);
 		return new ListVO(qnaPostMapper.getQnaPostList(map),pagingBean);
 	}
+	/**
+	 * Q&A 글목록 & pagingbean처리 공지사항 메서드
+	 * @param pageNo
+	 * @param boardTypeNo
+	 * @param searchWord
+	 * @author sam
+	 */
 	public ListVO getAnnounceQnaList(String pageNo, String boardTypeNo,String searchWord) {
 		Map<String,Object> map = new HashMap();
 		map.put("boardTypeNo", boardTypeNo);
@@ -81,8 +89,26 @@ public class QnaPostService {
 	public void deleteQnaPost(int bayPostNo) {
 		qnaPostMapper.deleteQnaPost(bayPostNo);
 	}
-	
+	/**
+	 * Q&A 게시판 글 수정 메서드
+	 * @author sam
+	 */
 	public void updateQnaPost(QnaPostVO qnaPostVO) {
 		 qnaPostMapper.updateQnaPost(qnaPostVO);
+	}
+	/**
+	 * Q&A 게시판 조회수 증가 메서드
+	 * @author sam
+	 */
+	public void updateQnaCount(int bayPostNo) {
+		qnaPostMapper.updateQnaCount(bayPostNo);
+	}
+	/**
+	 * Q&A 게시판 조회수 증가하지않는 메서드
+	 * @param bayPostNo
+	 * @author sam
+	 */
+	public PostVO getQnaDetailNoHit(int bayPostNo) {
+		return qnaPostMapper.getQnaDetail(bayPostNo);
 	}
 }

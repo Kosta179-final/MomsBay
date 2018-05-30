@@ -89,6 +89,10 @@ public class TradeBoardController {
 	@RequestMapping("/list_trade_post.do")
 	public String listTradePostTiles(String categoryNo, String boardTypeNo, String searchWord, String pageNo,
 			Model model,HttpServletRequest request) {
+		if(pageNo==null || pageNo.equals("")) {
+			pageNo="1";
+		}
+		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
 		model.addAttribute("searchWord", searchWord);
@@ -228,11 +232,12 @@ public class TradeBoardController {
 	 * @author Jung
 	 */
 	@RequestMapping("detail_trade_post.do")
-	public String detailTradePost(String tradePostNo, Model model) {
+	public String detailTradePost(String pageNo, String tradePostNo, Model model) {
 		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo));
 		model.addAttribute("tradePostVO", tradePostVO);
 		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
+		model.addAttribute("pageNo", pageNo);
 		if(tradePostVO.getTradeId()!=null) {
 			model.addAttribute("historyStatus",historyService.findTradeStatusByIdAndTradePostNo(tradePostVO));
 		}
@@ -250,11 +255,12 @@ public class TradeBoardController {
 	 * @author rws
 	 */
 	@RequestMapping("detail_share_post.do")
-	public String findDetailSharePost(String noneTradePostNo, Model model) {
+	public String findDetailSharePost(String pageNo, String noneTradePostNo, Model model) {
 		SharePostVO sharePostVO = sharePostService.findDetailSharePost(Integer.parseInt(noneTradePostNo));
 		model.addAttribute("pvo", sharePostVO);
 		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
+		model.addAttribute("pageNo", pageNo);
 		/*
 		 * 업로드 한 이미지 불러오기
 		 */
@@ -389,6 +395,10 @@ public class TradeBoardController {
 	@RequestMapping("/list_share_post.do")
 	public String listNoneTradePostTiles(String pageNo, String boardTypeNo, String categoryNo, String searchWord,
 			Model model) {
+		if(pageNo==null || pageNo.equals("")) {
+			pageNo="1";
+		}
+		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
 		model.addAttribute("searchWord", searchWord);

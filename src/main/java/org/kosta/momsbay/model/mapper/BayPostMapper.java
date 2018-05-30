@@ -25,4 +25,6 @@ public interface BayPostMapper {
 	public void updatePost(BayPostVO bayPostVO);
 	
 	public List<PostVO> getAnnounceList(Map map);
+	
+	public void updatePostCount(int bayPostNo);
 }

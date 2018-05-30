@@ -86,6 +86,7 @@ public class BayBoardController {
 	 */
 	@RequestMapping("detail_bay.do")
 	public String getPostDetail(int bayPostNo,Model model) {
+		bayPostService.updatePostCount(bayPostNo);
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
 		return "bay/detail_bay_post" + ".tiles";
 	}
@@ -110,7 +111,13 @@ public class BayBoardController {
 	@RequestMapping(value="updatePost.do", method = RequestMethod.POST)
 	public String updatePost(BayPostVO bayPostVO) {
 		bayPostService.updatePost(bayPostVO);
-		return "redirect:detail_bay.do?bayPostNo="+bayPostVO.getBayPostNo();
+		return "redirect:getPostDetailNoHit.do?bayPostNo="+bayPostVO.getBayPostNo();
+	}
+	
+	@RequestMapping("getPostDetailNoHit.do")
+	public String getPostDetailNoHit(int bayPostNo, Model model) {
+		model.addAttribute("pvo", bayPostService.getPostDetailNohit(bayPostNo));
+		return "bay/detail_bay_post" + ".tiles";
 	}
 	/**
 	 * Q&A 게시판 글목록 상세보기 메서드
@@ -119,10 +126,22 @@ public class BayBoardController {
 	 * @author sam
 	 */
 	@RequestMapping("detail_qna_post.do")
-	public String getQnaDetail(int bayPostNo,Model model) {
-		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
-		return "bay/detail_qna_post" + ".tiles";
-	}
+	   public String getQnaDetail(int bayPostNo,Model model) {
+	      qnaPostService.updateQnaCount(bayPostNo);
+	      model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
+	      return "bay/detail_qna_post" + ".tiles";
+	   }
+	/**
+	 * Q&A 게시판 조회수 증가하지않는 메서드
+	 * @param bayPostNo
+	 * @param model
+	 * @author sam
+	 */
+	  @RequestMapping("getQnaDetailNoHit.do")
+	   public String getQnaDetailNoHit(int bayPostNo,Model model) {
+	      model.addAttribute("qvo", qnaPostService.getQnaDetailNoHit(bayPostNo));
+	      return "bay/detail_qna_post" + ".tiles";
+	   }
 	/**
 	 * Q&A 게시판 글쓰기 메서드
 	 * @param bayPostVO
@@ -144,17 +163,25 @@ public class BayBoardController {
 		qnaPostService.deleteQnaPost(Integer.parseInt(bayPostNo));
 		return "redirect:list_qna_post.do?boardTypeNo="+boardTypeNo;
 	}
-	
+	/**
+	 * Q&A 게시판 수정 메서드
+	 * @param qnaPostVO
+	 * @author sam
+	 */
 	   @RequestMapping("updateQnaPost.do")
 	   public String updateQnaPost(QnaPostVO qnaPostVO) {
 	      qnaPostService.updateQnaPost(qnaPostVO);
-	      return "redirect:detail_qna_post.do?bayPostNo="+qnaPostVO.getBayPostNo();
+	      return "redirect:getQnaDetailNoHit.do?bayPostNo="+qnaPostVO.getBayPostNo();
 	   }
-	   
+	/**
+	 * Q&A 게시판 수정폼제공 메서드
+	 * @param model
+	 * @param bayPostNo
+	 * @author sam
+	 */
 	@RequestMapping("updateQnaPostView.do")
 	public String updateQnaPostView(Model model,int bayPostNo) {
 		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
 		return "bay/update_qna_post" + ".tiles";
 	}
-
 }
