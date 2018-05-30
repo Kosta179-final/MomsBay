@@ -118,7 +118,7 @@ $(document).ready(function(){
 									        <div id="message-body">
 									        </div>
 									        <div class="divider"></div>
-									        <div class="dropdown-menu-footer"><a href="/momsbay/message/getReceiveMessageList.do?receiveId=${sessionScope.member.id }"><span>받은 메세지함에서 보기<span></a></div>
+									        <div class="dropdown-menu-footer"><a href="/momsbay/message/getReceiveMessageList.do?id=${sessionScope.member.id }"><span>받은 메세지함에서 보기<span></a></div>
 									    </div>
 								</li>
 								<li><a href="${pageContext.request.contextPath}/member/logout.do"><i class="fa fa-unlock"></i> 로그아웃</a></li>
