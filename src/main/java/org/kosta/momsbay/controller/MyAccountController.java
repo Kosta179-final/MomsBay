@@ -1,27 +1,22 @@
 package org.kosta.momsbay.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.MemberPickService;
 import org.kosta.momsbay.model.service.MemberService;
-import org.kosta.momsbay.model.service.PickService;
 import org.kosta.momsbay.model.service.PointService;
 import org.kosta.momsbay.model.service.TradePostService;
-import org.kosta.momsbay.model.vo.MemberPickVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 계정관련 작업 처리 Controller. ex)찜목록, 포인트충전, 거래내역 및 포인트 내역출력
@@ -41,8 +36,6 @@ public class MyAccountController {
 	TradePostService tradePostService;
 	@Autowired
 	MemberPickService memberPickService;
-	@Resource
-	private PickService pickService;
 
 	@RequestMapping("/{viewName}.do")
 	public String showTiles(@PathVariable String viewName) {
@@ -168,11 +161,10 @@ public class MyAccountController {
 	 * @author Jung
 	 */
 	@RequestMapping("findPickListById.do")
-	public String getPickListById(HttpServletRequest request) {
+	public String getPickListById(HttpServletRequest request,String nowPage) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		List<TradePostVO> list = pickService.findPickListById(member.getId());
-		request.setAttribute("list", list);
+		request.setAttribute("listVO", memberPickService.findPickListById(member.getId(),nowPage));
 		return "service_myaccount" + ".page_" + "list_pick";
 	}
 	
@@ -184,28 +176,11 @@ public class MyAccountController {
 	 * @author Jung
 	 */
 	@RequestMapping("deleteMemberPick.do")
-	public String deleteMemberPick(HttpServletRequest request,MemberPickVO memberPickVO) {
+	public String deleteMemberPick(HttpServletRequest request,TradePostVO tradePostVO) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		memberPickVO.setId(member.getId());
-		memberPickService.deleteMemberPick(memberPickVO);
-		return "redirect:findPickListById.do";
-	}
-	
-	
-	/**
-	 * 찜 추가
-	 * @param request
-	 * @param memberPickVO
-	 * @return url
-	 * @author Jung
-	 */
-	@RequestMapping("addMemberPick.do")
-	public String addMemberPick(HttpServletRequest request,MemberPickVO memberPickVO) {
-		HttpSession session = request.getSession();
-		MemberVO member = (MemberVO) session.getAttribute("member");
-		memberPickVO.setId(member.getId());
-		memberPickService.addMemberPick(memberPickVO);
+		tradePostVO.setMemberVO(member);
+		memberPickService.memberPick(tradePostVO);
 		return "redirect:findPickListById.do";
 	}
 	
@@ -217,10 +192,12 @@ public class MyAccountController {
 	 * @author Jung
 	 */
 	@RequestMapping("findTradeHistoryListById.do")
-	public String findTradeHistoryListById(HttpServletRequest request,Model model,String boardTypeNo) {
+	public String findTradeHistoryListById(HttpServletRequest request, String type, String nowPage, String nowPage2) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		model.addAttribute("tradeHistoryVO", historyService.findTradeHistoryListById(member.getId(),boardTypeNo));
+		request.setAttribute("listVO", historyService.findTradeHistoryListById(member.getId(), "판매", nowPage));
+		request.setAttribute("listVO2", historyService.findTradeHistoryListById(member.getId(), "구매", nowPage2));
+		request.setAttribute("type", type);
 		return "service_myaccount" + ".page_" + "list_trade_history";
 	}
 	
@@ -254,10 +231,19 @@ public class MyAccountController {
 			/* 비밀번호가 틀렸으니 쫒아낸다. */
 			msg = "password error! Try Again";
 		}
-		int point = pointService.findNowpointById(id);
+		int point = pointService.findNowpointById(id);	
 		session.setAttribute("point", point);
 		return "redirect:charge_point_status.do?message=" + msg;
 	}
 	
-	
+	@RequestMapping(method = RequestMethod.POST, value = "pickTradePost.do")
+	@ResponseBody
+	public String pickTradePost(String tradePostNo, String id) {
+		TradePostVO tradePostVO = new TradePostVO();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
+		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+		tradePostVO.setMemberVO(memberVO);
+		return memberPickService.memberPick(tradePostVO);
+	}
 }

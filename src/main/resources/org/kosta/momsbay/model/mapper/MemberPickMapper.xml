@@ -4,13 +4,63 @@
 PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.kosta.momsbay.model.mapper.MemberPickMapper">
-	<insert id="addMemberPick" parameterType="memberPickVO">
+	<insert id="addMemberPick" parameterType="tradePostVO">
 		INSERT INTO member_pick(member_pick_no,id,trade_post_no)
-		VALUES(member_pick_seq.nextval,#{id},#{tradePostNo})
+		VALUES(member_pick_seq.nextval,#{memberVO.id},#{tradePostNo})
 	</insert>
 	
-	<delete id="deleteMemberPick" parameterType="memberPickVO">
+	<delete id="deleteMemberPick" parameterType="tradePostVO">
 		DELETE FROM member_pick
-		WHERE id=#{id} AND trade_post_no=#{tradePostNo}
+		WHERE id=#{memberVO.id} AND trade_post_no=#{tradePostNo}
 	</delete>
+	
+	<resultMap type="tradePostVO" id="tradePostRM">
+		<result column="name" property="memberVO.name"/>
+		<result column="id" property="memberVO.id"/>
+		<result column="grade" property="memberVO.grade"/>
+	</resultMap>
+	
+	<select id="findPickListById" resultMap="tradePostRM" parameterType="map">
+		SELECT tp.trade_post_no, tp.title, tp.content, tp.delete_status,
+		mp.name, tp.regdate, tp.pick_count
+		FROM(
+		SELECT mp.trade_post_no, bm.name, 
+		row_number() over(ORDER BY mp.trade_post_no DESC) AS rnum
+		FROM member_pick mp, bay_member bm
+		WHERE mp.id=#{id} AND mp.id=bm.id
+		)mp, trade_post tp
+		WHERE mp.trade_post_no = tp.trade_post_no AND tp.delete_status=0
+		AND rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+		ORDER BY rnum DESC
+	</select>
+	
+	<select id="findAllPickListById" resultMap="tradePostRM" parameterType="string">
+		SELECT tp.trade_post_no, tp.title, tp.content, 
+		mp.name, tp.regdate, tp.pick_count, tp.delete_status
+		FROM(
+		SELECT mp.trade_post_no, bm.name
+		FROM member_pick mp, bay_member bm
+		WHERE mp.id=#{value} AND mp.id=bm.id
+		)mp, trade_post tp
+		WHERE mp.trade_post_no = tp.trade_post_no AND tp.delete_status=0
+	</select>
+	
+	<select id="isPickTradePost" parameterType="tradePostVO" resultType="boolean">
+		SELECT count(*)
+		FROM trade_post tp, member_pick mp
+		WHERE tp.trade_post_no = mp.trade_post_no
+		AND tp.trade_post_no = #{tradePostNo} AND mp.id=#{memberVO.id}
+	</select>
+
+	<update id="updatePickCount" parameterType="map">
+		UPDATE trade_post SET pick_count = pick_count + #{count}
+		WHERE trade_post_no = #{tradePostNo}
+	</update>
+	
+	<select id="findTotalPickCountById" resultType="int">
+		SELECT count(*)
+		FROM trade_post tp, member_pick mp
+		WHERE tp.trade_post_no = mp.trade_post_no AND tp.delete_status = 0
+		AND mp.id=#{id}
+	</select>
 </mapper>

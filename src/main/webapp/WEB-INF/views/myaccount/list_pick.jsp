@@ -6,7 +6,14 @@
 	function deleteMemberPick(tradePostNo){
 		location.href="deleteMemberPick.do?tradePostNo="+tradePostNo;
 	}
+	function detail(tradePostNo){
+		var url = "${pageContext.request.contextPath}";
+		location.href=url+"/trade/detail_trade_post.do?tradePostNo="+tradePostNo+"";
+	}
 </script>
+
+
+
 
 <div class="container">
 	<ul class="nav nav-tabs">
@@ -32,97 +39,54 @@
 				</thead>
 				<tbody>
 					<c:choose>
-						<c:when test="${!empty list }">
-							<c:forEach items="${list}" var="list" varStatus="cc">
-								<tr>
+						<c:when test="${!empty listVO }">
+							<c:forEach items="${listVO.list}" var="list" varStatus="cc">
+								<tr onclick="detail(${list.tradePostNo})">
 									<td>${cc.count }</td>
-									<td><a href="${pageContext.request.contextPath}/trade/detail_trade_post.do?tradePostNo=${list.tradePostNo}">${list.title}</a></td>
+									<td>${list.title}</td>
 									<td>${list.memberVO.name}</td>
 									<td>${list.regdate}</td>
 									<td>${list.pickCount}</td>
-									<td><button class="btn btn-primary" onclick="deleteMemberPick(${list.tradePostNo})">삭제</button></td>
+									<td><a href="deleteMemberPick.do?tradePostNo=${list.tradePostNo}" class="btn btn-primary" onclick="deleteMemberPick(${list.tradePostNo})">삭제</a></td>
 								</tr>
 							</c:forEach>
 						</c:when>
 					</c:choose>
 				</tbody>
 			</table>
-			<c:if test="${empty list}">
+			<c:if test="${empty listVO.list}">
 				<label> 찜 목록이 없습니다. </label>
 			</c:if>
 		</div>
-
-		<%-- <div id="menu1" class="tab-pane fade">
-			<br>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>거래 종류</th>
-						<th>거래 포인트</th>
-						<th>남은 포인트</th>
-						<th>거래 날짜</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${!empty pointHistory }">
-							<c:forEach items="${pointHistory}" var="list" varStatus="cc">
-								<c:if test="${list.type eq '구매' || list.type eq '판매'}">
-									<tr>
-										<td>${cc.count }</td>
-										<td>${list.type}</td>
-										<c:if test="${list.type eq '구매' }">
-											<td>-${list.price}</td>
-										</c:if>
-										<c:if test="${list.type eq '판매'}">
-											<td>+${list.price}</td>
-										</c:if>
-										<td>${list.point}</td>
-										<td>${list.regdate}</td>
-									</tr>
-								</c:if>
-							</c:forEach>
-						</c:when>
-					</c:choose>
-				</tbody>
-			</table>
-			<c:if test="${empty pointHistory}">
-				<label> 포인트 내역이 없습니다. </label>
-			</c:if>
+		<div class="row col-sm-offset-5">
+			<div class="pagingInfo">
+				<c:set var="pb" value="${requestScope.listVO.pagingBean}"></c:set>
+				<ul class="pagination">
+					<c:if test="${pb.previousPageGroup}">
+						<li><a
+							href="findPickListById.do?nowPage=${pb.startPageOfPageGroup-1}">&laquo;</a></li>
+					</c:if>
+					<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
+						end="${pb.endPageOfPageGroup}">
+						<c:choose>
+							<c:when test="${pb.nowPage!=i}">
+								<li><a
+									href="findPickListById.do?nowPage=${i}">${i}</a></li>
+							</c:when>
+							<c:otherwise>
+								<li class="active"><a href="javascript:;">${i}</a></li>
+							</c:otherwise>
+						</c:choose>
+						&nbsp;
+					</c:forEach>
+					<c:if test="${pb.nextPageGroup}">
+						<li><a
+							href="findPickListById.do?nowPage=${pb.endPageOfPageGroup+1}">&raquo;</a>
+						</li>
+					</c:if>
+				</ul>
+			</div>
 		</div>
-		<div id="menu2" class="tab-pane fade">
-			<br>
-			<table class="table">
-				<thead>
-					<tr>
-						<th>No.</th>
-						<th>충전 내역</th>
-						<th>남은 포인트</th>
-						<th>거래 날짜</th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:choose>
-						<c:when test="${!empty pointHistory }">
-							<c:forEach items="${pointHistory}" var="list" varStatus="cc">
-								<c:if test="${list.type eq '충전' }">
-									<tr>
-										<td>${cc.count }</td>
-										<td>+${list.price}</td>
-										<td>${list.point}</td>
-										<td>${list.regdate}</td>
-									</tr>
-								</c:if>
-							</c:forEach>
-						</c:when>
-					</c:choose>
-				</tbody>
-			</table>
-			<c:if test="${empty pointHistory}">
-				<label> 포인트 내역이 없습니다. </label>
-			</c:if>
-		</div> --%>
 	</div>
 </div>
 
