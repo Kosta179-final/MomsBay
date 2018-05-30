@@ -1,13 +1,27 @@
 package org.kosta.momsbay.model.service;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
+import org.apache.ibatis.io.Resources;
 import org.kosta.momsbay.model.exception.LoginException;
+import org.kosta.momsbay.model.exception.NoMemberFoundException;
 import org.kosta.momsbay.model.mapper.ChildrenMapper;
 import org.kosta.momsbay.model.mapper.MemberMapper;
 import org.kosta.momsbay.model.vo.ChildrenStatisticsVO;
@@ -15,9 +29,10 @@ import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 /**
- * 회원관련 서비스 제공.
- * 관련Mapper: MemberMapper
+ * 회원관련 서비스 제공. 관련Mapper: MemberMapper
+ * 
  * @author Hwang
  */
 @Service
@@ -26,32 +41,29 @@ public class MemberService {
 	private MemberMapper memberMapper;
 	@Resource
 	private ChildrenMapper childrenMapper;
-	
+
 	/**
-	 * 로그인 비즈니스로직.
-	 * 1.파라미터의 id로 Member를 검색, 
-	 *    존재하지 않을 시에 "아이디 존재하지 않음" 메시지 throw
-	 * 2.id가 존재하면 password를 비교
-	 *   일치하지 않으면, "비밀번호가 다름" 메시지 throw
-	 * 3.두 조건 모두 만족시, 자녀정보를 회원 id로 검색
-	 *    MemberVO에 SET하여 Return
+	 * 로그인 비즈니스로직. 1.파라미터의 id로 Member를 검색, 존재하지 않을 시에 "아이디 존재하지 않음" 메시지 throw 2.id가
+	 * 존재하면 password를 비교 일치하지 않으면, "비밀번호가 다름" 메시지 throw 3.두 조건 모두 만족시, 자녀정보를 회원 id로
+	 * 검색 MemberVO에 SET하여 Return
+	 * 
 	 * @param id
 	 * @param password
 	 * @return 자녀정보가 포함된 MemberVO
 	 * @throws LoginException
 	 */
 	public MemberVO login(String id, String password) throws LoginException {
-		MemberVO memberVO=memberMapper.findMemberById(id);
-		if(memberVO==null)
+		MemberVO memberVO = memberMapper.findMemberById(id);
+		if (memberVO == null)
 			throw new LoginException("아이디가 존재하지 않습니다");
-		else if(password==null||password.equals(memberVO.getPassword())==false)
+		else if (password == null || password.equals(memberVO.getPassword()) == false)
 			throw new LoginException("비밀번호가 다릅니다");
-		
+
 		List<ChildrenVO> children = memberMapper.findChildrenByMemberId(id);
 		memberVO.setList(children);
 		return memberVO;
 	}
-	
+
 	/**
 	 * 아이디가 존재할 경우 false return, 사용가능 할 경우 true return.
 	 * 
@@ -89,7 +101,7 @@ public class MemberService {
 	public void addMember(MemberVO member, List<ChildrenVO> children) {
 		// TODO Auto-generated method stub
 		memberMapper.addMember(member);
-		if (children.size()>0) {
+		if (children.size() > 0) {
 			for (int i = 0; i < children.size(); i++) {
 				Map<String, String> tempMap = new HashMap<String, String>();
 				tempMap.put("id", member.getId());
@@ -99,9 +111,10 @@ public class MemberService {
 			}
 		}
 	}
-	
+
 	/**
 	 * 회원정보 수정 메소드.
+	 * 
 	 * @param member
 	 * @author hwang
 	 */
@@ -111,6 +124,7 @@ public class MemberService {
 
 	/**
 	 * 포인트 환전시 비밀번호 일치하는지 확인하는 메소드.
+	 * 
 	 * @param id
 	 * @param password
 	 * @return flag
@@ -121,45 +135,47 @@ public class MemberService {
 		temp_map.put("id", id);
 		temp_map.put("password", password);
 		int count = memberMapper.findMemberByPasswordAndId(temp_map);
-		if(count==0) {
+		if (count == 0) {
 			return false;
-		}else {
+		} else {
 			return true;
 		}
 	}
 
 	/**
 	 * 회원 리스트를 등급별로 출력하는 메소드.
+	 * 
 	 * @param i
 	 * @return 회원 리스트.
 	 * @author hwang
 	 */
 	public List<String> getMemberList(int i) {
 		List<String> list = new ArrayList<String>();
-		list=memberMapper.getMemberList(i);
+		list = memberMapper.getMemberList(i);
 		return list;
 	}
 
 	/**
 	 * 회원 등급 업데이트하는 메서드.
+	 * 
 	 * @param id
 	 * @return 업데이트 현황.
 	 */
 	public String updateMemberStatus(String id) {
 		int grade_no = memberMapper.findMemberGradeById(id);
-		if(grade_no==1) {
+		if (grade_no == 1) {
 			memberMapper.updateMemberToBlackList(id);
 			return "toBlackList";
-		}else if(grade_no==3){
+		} else if (grade_no == 3) {
 			memberMapper.updateBlackListToMember(id);
 			return "toMemberList";
-		}else {
+		} else {
 			return "admin";
 		}
 	}
 
 	public List<String> findMemberIdByPart(String id) {
-		String temp_id=id+"%";
+		String temp_id = id + "%";
 		return memberMapper.findMemberIdByPart(temp_id);
 	}
 
@@ -168,11 +184,11 @@ public class MemberService {
 	}
 
 	public StringBuilder getMemberChildStatistics() {
-		StringBuilder children= new StringBuilder();
+		StringBuilder children = new StringBuilder();
 		children.append("['여아',");
-		children.append(memberMapper.getMemberChildStatistics("female")+"],");
+		children.append(memberMapper.getMemberChildStatistics("female") + "],");
 		children.append("['남아',");
-		children.append(memberMapper.getMemberChildStatistics("male")+"]");
+		children.append(memberMapper.getMemberChildStatistics("male") + "]");
 		return children;
 	}
 
@@ -186,19 +202,84 @@ public class MemberService {
 
 	public List<ChildrenStatisticsVO> getChildrenAgeStatistics() {
 		List<ChildrenStatisticsVO> list = new ArrayList<>();
-		ChildrenStatisticsVO ch= new ChildrenStatisticsVO();
+		ChildrenStatisticsVO ch = new ChildrenStatisticsVO();
 		Map<String, Object> map = new HashMap<>();
 		map.put("gender", "male");
-		ch=childrenMapper.getChildrenAgeStatistics(0);
+		ch = childrenMapper.getChildrenAgeStatistics(0);
 		ch.setAge("2세 미만");
 		list.add(ch);
-		
-		for(int i=1;i<10;i++) {
-			ChildrenStatisticsVO temp_ch= new ChildrenStatisticsVO();
-			temp_ch=childrenMapper.getChildrenAgeStatistics(i);
-			temp_ch.setAge(i+1+"세");
+
+		for (int i = 1; i < 10; i++) {
+			ChildrenStatisticsVO temp_ch = new ChildrenStatisticsVO();
+			temp_ch = childrenMapper.getChildrenAgeStatistics(i);
+			temp_ch.setAge(i + 1 + "세");
 			list.add(temp_ch);
 		}
 		return list;
+	}
+
+	public void findPasswordByNameAndEmail(MemberVO member) throws NoMemberFoundException, SQLException, IOException {
+		String email = memberMapper.findMemberExsitByName(member.getName());
+		Random rnd = new Random();
+		StringBuilder tempPwd = new StringBuilder();
+
+		if (email == null || email.equals("")) {
+			throw new NoMemberFoundException("입력한 이름의 계정이 존재하지 않습니다");
+		} else {
+			email = memberMapper.findMemberByEmail(member.getEmail());
+			if (email == null || email.equals("")) {
+				throw new NoMemberFoundException("입력한 이메일의 계정이 존재하지 않습니다");
+			} else {
+				for (int i = 0; i < 7; i++)
+					if (i % 2 == 0)
+						tempPwd.append(String.valueOf((char) ((int) (rnd.nextInt(26)) + 65)));
+					else
+						tempPwd.append(String.valueOf(rnd.nextInt(10)));
+				/*
+				 * 비밀번호 변경
+				 */
+				Map<String, String> map = new HashMap<>();
+				map.put("email", email);
+				map.put("pwd", tempPwd.toString());
+				memberMapper.updateMemberPassword(map);
+			}
+
+		}
+		/*
+		 * mail test
+		 */
+		
+		Properties props = new Properties();
+		String resource="/mail.properties";
+		Reader reader;
+			reader = Resources.getResourceAsReader(resource);
+			props.load(reader);
+		
+		String user =props.getProperty("user") ;
+		String password = props.getProperty("password");
+		String to = email;
+
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(user, password);
+			}
+		});
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setFrom(new InternetAddress(user));
+			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+			
+			String htmlContent = "당신의 임시 비밀번호는 <Strong>" + tempPwd 
+					+ "</Strong> 입니다. 사이트에 접속해서 로그인 후 비밀번호를 변경하세요.<br>";
+
+			// Subject
+			message.setSubject("Mom's Bay 비밀번호 찾기 입니다");
+			// Text
+			message.setText(htmlContent, "UTF-8", "html");
+			// send the message
+			Transport.send(message);			
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -1,7 +1,6 @@
 package org.kosta.momsbay.model.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -35,6 +34,7 @@ public class TradePostService {
 		PagingBean pagingBean=null;
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		Map<String,Object> map = new HashMap();
+		map.put("pageNo", pageNo==null ? null : pageNo);
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
 		map.put("category_no", categoryNo == null ? null : Integer.parseInt(categoryNo));
 		map.put("searchWord", searchWord);

@@ -5,13 +5,16 @@ import java.io.IOException;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.HistoryService;
+import org.kosta.momsbay.model.service.MemberPickService;
 import org.kosta.momsbay.model.service.PointService;
 import org.kosta.momsbay.model.service.SharePostService;
 import org.kosta.momsbay.model.service.TradePostService;
+import org.kosta.momsbay.model.vo.MemberVO;
 import org.kosta.momsbay.model.vo.SharePostVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.stereotype.Controller;
@@ -34,6 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/trade")
 @Controller
 public class TradeBoardController {
+	private String uploadPath = "C:/java-kosta/framework-workspace2/resources/upload/postImg/";
 	@Resource
 	private CommentService commentService;
 	@Resource
@@ -42,10 +46,10 @@ public class TradeBoardController {
 	private SharePostService sharePostService;
 	@Resource
 	private HistoryService historyService;
-	
-	private String uploadPath = "C:/java-kosta/framework-workspace2/resources/upload/postImg/";
 	@Resource
 	private PointService pointService;
+	@Resource
+	private MemberPickService memberPickService;
 	
 	/**
 	 * 중고거래 게시판 클릭시 실행되는 메서드.
@@ -84,11 +88,20 @@ public class TradeBoardController {
 	 */
 	@RequestMapping("/list_trade_post.do")
 	public String listTradePostTiles(String categoryNo, String boardTypeNo, String searchWord, String pageNo,
-			Model model) {
+			Model model,HttpServletRequest request) {
+		if(pageNo==null || pageNo.equals("")) {
+			pageNo="1";
+		}
+		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
 		model.addAttribute("searchWord", searchWord);
 		model.addAttribute("listVO", tradePostService.getTradePostList(pageNo, boardTypeNo, searchWord, categoryNo));
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		if(memberVO!=null) {
+			model.addAttribute("pickList",memberPickService.findAllPickListById(memberVO.getId()));
+		}
 		return "service_trade.page_list_trade_post";
 	}
 
@@ -219,11 +232,12 @@ public class TradeBoardController {
 	 * @author Jung
 	 */
 	@RequestMapping("detail_trade_post.do")
-	public String detailTradePost(String tradePostNo, Model model) {
+	public String detailTradePost(String pageNo, String tradePostNo, Model model) {
 		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo));
 		model.addAttribute("tradePostVO", tradePostVO);
 		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
+		model.addAttribute("pageNo", pageNo);
 		if(tradePostVO.getTradeId()!=null) {
 			model.addAttribute("historyStatus",historyService.findTradeStatusByIdAndTradePostNo(tradePostVO));
 		}
@@ -241,11 +255,12 @@ public class TradeBoardController {
 	 * @author rws
 	 */
 	@RequestMapping("detail_share_post.do")
-	public String findDetailSharePost(String noneTradePostNo, Model model) {
+	public String findDetailSharePost(String pageNo, String noneTradePostNo, Model model) {
 		SharePostVO sharePostVO = sharePostService.findDetailSharePost(Integer.parseInt(noneTradePostNo));
 		model.addAttribute("pvo", sharePostVO);
 		model.addAttribute("boardTypeNo", sharePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", sharePostVO.getCategoryNo());
+		model.addAttribute("pageNo", pageNo);
 		/*
 		 * 업로드 한 이미지 불러오기
 		 */
@@ -297,7 +312,7 @@ public class TradeBoardController {
 	}
 
 	/**
-	 * 나눔 게시판 게시글 수정 페이지로 이동하는 메서드
+	 * 나눔 게시판 게시글 수정 페이지로 이동하는 메서드.
 	 * 
 	 * @param noneTradePostNo
 	 * @param model
@@ -380,6 +395,10 @@ public class TradeBoardController {
 	@RequestMapping("/list_share_post.do")
 	public String listNoneTradePostTiles(String pageNo, String boardTypeNo, String categoryNo, String searchWord,
 			Model model) {
+		if(pageNo==null || pageNo.equals("")) {
+			pageNo="1";
+		}
+		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
 		model.addAttribute("searchWord", searchWord);

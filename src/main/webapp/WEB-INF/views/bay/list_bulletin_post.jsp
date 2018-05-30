@@ -22,6 +22,7 @@
 							<td class="description">제목</td>
 							<td class="quantity">작성자</td>
 							<td class="price">작성일</td>
+							<td class="price">조회수</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -40,6 +41,7 @@
 									</td>
 								<td class="cart_quantity">${pv.memberVO.name}</td>
 				 				<td class="cart_price">${pv.regdate }</td>
+				 				<td class="cart_price">${pv.hits }</td>
 							</tr>
 							</c:forEach>
 						<c:forEach var="pvo" items="${requestScope.lvo.list}">
@@ -57,6 +59,7 @@
 									</td>
 								<td class="cart_quantity">${pvo.memberVO.name}</td>
 				 				<td class="cart_price">${pvo.regdate }</td>
+				 				<td class="cart_price">${pvo.hits }</td>
 							</tr>
 						</c:forEach>
 					</tbody>
