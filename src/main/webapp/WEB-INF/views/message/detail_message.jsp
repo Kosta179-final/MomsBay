@@ -10,18 +10,26 @@
 		});
 		
 		$('#list_btn').click(function(){
-			var beforePageUrl=document.referrer;
-			var flag=beforePageUrl.indexOf("MessageList");
-			if(flag>0){
-				location.href=beforePageUrl;
+			var url;
+			var messageType="${param.messageType}";
+			if(messageType=='receive'){
+				url='getReceiveMessageList.do';	
+			} else if(messageType=='send'){
+				url='getSendMessageList.do';
 			} else{
-				var messageType="${param.messageType}";
-				if(messageType=='receive'){
-					location.href='getReceiveMessageList.do?receiveId=${sessionScope.member.id}';	
-				} else{
-					location.href='getSendMessageList.do?sendId=${sessionScope.member.id}';
-				}
+				url='getTotalMessageList.do';
 			}
+			url+='?id=${sessionScope.member.id}';
+			
+			var pageNo='${param.pageNo}';
+			if(pageNo!=''){
+				url+='&pageNo='+pageNo;
+			}
+			var status='${param.status}';
+			if(status!=''){
+				url+='&status='+status;
+			}
+			location.href=url;
 		});
 		
 		$('#delete_btn').click(function(){
@@ -32,8 +40,9 @@
 			
 		    var messageNo = $("<input type='hidden' value='${param.messageNo }' name='messageNo'>");
 		    var messageType = $("<input type='hidden' value='${param.messageType }' name='messageType'>");
-		    var beforePageUrl = $("<input type='hidden' value='"+document.referrer+"' name='beforePageUrl'>");
-		    $deleteForm.append(messageNo).append(messageType).append(beforePageUrl);
+		    var pageNo = $("<input type='hidden' value='${param.pageNo}' name='pageNo'>");
+		    var status = $("<input type='hidden' value='${param.status}' name='status'>");
+		    $deleteForm.append(messageNo).append(messageType).append(pageNo).append(status);
 		    $deleteForm.submit();
 		});
 		
@@ -72,7 +81,7 @@
 		            </div>       
 		        <br>
    				<div>
-   					<c:if test="${param.messageType=='receive'}">
+   					<c:if test="${param.messageType=='receive' || param.messageType=='total_receive'}">
 	   				    <button id="reply_btn" type="button" class="btn btn-default">답장</button>
    					</c:if>
    				    <button id="list_btn" type="button" class="btn btn-default">목록</button>

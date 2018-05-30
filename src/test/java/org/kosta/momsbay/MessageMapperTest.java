@@ -79,7 +79,7 @@ public class MessageMapperTest {
 	 */
 	@Test
 	public void getReceiveMessageList() {
-		String receiveId="java";
+		String receiveId="sys";
 		String status="0";
 		Map<String,Object> map=new HashMap<>();
 		map.put("id", receiveId);
@@ -105,7 +105,7 @@ public class MessageMapperTest {
 	
 	@Test
 	public void getSendMessageList() {
-		String sendId="sys";
+		String sendId="java";
 		Map map=new HashMap<String,Object>();
 		map.put("id", sendId);
 		PagingBean pagingBean=new PagingBean(messageMapper.getTotalSendMessageCount(map));
@@ -116,7 +116,7 @@ public class MessageMapperTest {
 	
 	@Test
 	public void getTotalMessageList() {
-		String id="sys";
+		String id="java";
 		String requestStatus="0";
 		Map map=new HashMap<String,Object>();
 		map.put("id", id);

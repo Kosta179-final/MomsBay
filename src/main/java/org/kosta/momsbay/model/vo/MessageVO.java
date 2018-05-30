@@ -21,4 +21,5 @@ public class MessageVO extends PostVO{
 	private int sendMessageNo;
 	private boolean receiveFlag;
 	private String receiveDate;
+	private String messageType;
 }
