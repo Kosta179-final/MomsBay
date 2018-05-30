@@ -2,8 +2,6 @@ package org.kosta.momsbay.model.common;
 
 import java.util.List;
 
-import org.kosta.momsbay.model.vo.PointHistoryVO;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +10,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PointListVO {
-	private List<PointHistoryVO> list;
+	private List<Object> list;
 	private PagingBean pagingBean;
 	
 	public PointListVO(PagingBean pagingBean) {

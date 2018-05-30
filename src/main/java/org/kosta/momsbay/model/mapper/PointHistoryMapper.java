@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosta.momsbay.model.vo.PointHistoryVO;
 /**
  * 포인트 관련 처리 DB연동 Mapper.
  * 관련VO: PointHistoryVO
@@ -17,7 +16,7 @@ public interface PointHistoryMapper {
 	void addPointSellHistory(Map<String, Object> map);
 	void addPointBuyHistory(Map<String, Object> map);
 	int getTotalPointHistoryById(String id);
-	List<PointHistoryVO> getPointHistoryById(Map<String, Object> map);
+	List<Object> getPointHistoryById(Map<String, Object> map);
 	int getTotalPointHistoryByIdAndDate(Map<String, Object> map);
-	List<PointHistoryVO> getPointHistoryByIdAndDate(Map<String, Object> map);	
+	List<Object> getPointHistoryByIdAndDate(Map<String, Object> map);	
 }
