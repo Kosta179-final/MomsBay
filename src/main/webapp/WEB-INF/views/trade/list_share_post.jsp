@@ -11,37 +11,45 @@
 	<!--features_items-->
 	<h2 class="title text-center">게시글 목록</h2>
 	
-
 	<c:forEach items="${requestScope.svo.list}" var="pvo">
 		<%-- 나눔 게시글 목록 --%>
 		<div class="col-sm-4">
 			<div class="product-image-wrapper">
 				<div class="single-products">
 					<div class="productinfo text-center">
-						<c:if test="${pvo.imgAddress eq 'noPhoto'}">
-							<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
-						</c:if>
-						<c:if test="${pvo.imgAddress ne 'noPhoto'}">
-							<img src="${pageContext.request.contextPath}/resources/upload/postImg/${pvo.imgAddress }" >
-						</c:if>
-						<c:if test="${pvo.tradeStatusNo==3}">
-							<div style="position: absolute;">
-								<div style="position: relative; top: -205px; left: 20px;"><img src="${pageContext.request.contextPath}/resources/images/product-details/soldout11.png" style="width: 225px; height: 205px;"></img>
-								</div>
-							</div>
-						</c:if>
-						<h4 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${pvo.title}</h4><hr>
-						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록일 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.regdate}</p>
-						<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.memberVO.id}</p>
+						<a class="btn btn-info4" href="detail_share_post.do?pageNo=${requestScope.pageNo}&noneTradePostNo=${pvo.noneTradePostNo}">
+							<c:if test="${pvo.imgAddress eq 'noPhoto'}">
+								<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
+							</c:if>
+							<c:if test="${pvo.imgAddress ne 'noPhoto'}">
+								<img src="${pageContext.request.contextPath}/resources/upload/postImg/${pvo.imgAddress }" >
+							</c:if>
+						</a>
+						<div class="row" style="border-bottom: 1px solid #eee; padding: 10px;">
+							<strong style="margin: 20px;">
+								<span class="title" style="display:inline-block; width:230px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">
+								${pvo.title}
+								</span>
+							</strong>
+						</div>
+						<div align="left" style="padding: 10px;">
+							<span style="padding-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글쓴이 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.memberVO.id}</span>
+							<c:if test="${pvo.tradeStatusNo==3}">
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label label-danger">거래완료</span>
+							</c:if>
+						</div>
+						<%-- 리스트 목록에서 날짜표기 삭제 --%>
+						<%-- <p align="left">&nbsp;&nbsp;(${pvo.regdate})</p> --%>
 					</div>
 				</div>
-				<div class="choose">
+				<%-- 상세보기 버튼 제거 --%>
+				<%-- <div class="choose">
 					<ul class="nav nav-pills nav-justified">
 						<li><a class="btn btn-info4" href="detail_share_post.do?pageNo=${requestScope.pageNo}&noneTradePostNo=${pvo.noneTradePostNo}">
 							<i></i>상세보기</a>
 						</li>
 					</ul>
-				</div>
+				</div> --%>
 			</div>
 		</div>	
 		</c:forEach>
