@@ -195,8 +195,8 @@ public class MyAccountController {
 	public String findTradeHistoryListById(HttpServletRequest request, String type, String nowPage, String nowPage2) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		request.setAttribute("listVO", historyService.findTradeHistoryListById(member.getId(), "판매", nowPage));
-		request.setAttribute("listVO2", historyService.findTradeHistoryListById(member.getId(), "구매", nowPage2));
+		/*request.setAttribute("listVO", historyService.findTradeHistoryListById(member.getId(), "판매", nowPage));
+		request.setAttribute("listVO2", historyService.findTradeHistoryListById(member.getId(), "구매", nowPage2));*/
 		request.setAttribute("type", type);
 		return "service_myaccount" + ".page_" + "list_trade_history";
 	}
