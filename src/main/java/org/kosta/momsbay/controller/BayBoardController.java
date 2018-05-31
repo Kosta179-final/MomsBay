@@ -3,7 +3,9 @@ package org.kosta.momsbay.controller;
 import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.service.BayPostService;
+import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.QnaPostService;
+import org.kosta.momsbay.model.vo.BayCommentVO;
 import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * BayPost 처리하는 Controller. 관련 Service: QnaPostService, BayPostService,
@@ -26,6 +29,8 @@ public class BayBoardController {
 	private BayPostService bayPostService;
 	@Resource
 	private QnaPostService qnaPostService;
+	@Resource
+	private CommentService commentService;  
 	/**
 	 * 일반게시판 &  Q&A게시판 클릭시 실행되는 메서드.
 	 * @param viewName
@@ -85,10 +90,10 @@ public class BayBoardController {
 	 * @author barom
 	 */
 	@RequestMapping("detail_bay.do")
-	public String getPostDetail(int bayPostNo,Model model) {
+	public String getPostDetail(int bayPostNo,Model model, BayPostVO bayPostVO) {
 		bayPostService.updatePostCount(bayPostNo);
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
-		return "bay/detail_bay_post" + ".tiles";
+		return "redirect:getPostDetailNoHit.do?bayPostNo="+bayPostVO.getBayPostNo();
 	}
 	/**
 	 * 일반게시판 글삭제 메서드
@@ -183,5 +188,30 @@ public class BayBoardController {
 	public String updateQnaPostView(Model model,int bayPostNo) {
 		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
 		return "bay/update_qna_post" + ".tiles";
+	}
+	
+	@ResponseBody
+	@RequestMapping("getBayCommentList.do")
+	public String getBayCommentList(BayCommentVO bayCommentVO, int bayPostNo) {
+		commentService.getBayCommentList(bayPostNo);
+		return "redirect:detail_bay.do?bayCommentContent="+bayCommentVO.getBayCommentContent();
+	}
+	
+	@RequestMapping("addComment.do")
+	public String addComment(BayCommentVO bayCommentVO) {
+		commentService.addComment(bayCommentVO);
+		return "redirect:getBayCommentList.do?bayCommentNo="+bayCommentVO.getBayCommentNo();
+	}
+	
+	@RequestMapping("deleteComment.do")
+	public String deleteComment(int bayCommentNo, BayCommentVO bayCommentVO) {
+		commentService.deleteComment(bayCommentNo);
+		return "redirect:getBayCommentList.do?bayCommentNo="+bayCommentVO.getBayCommentNo();
+	}
+	
+	@RequestMapping("updateComment.do")
+	public String updateComment(BayCommentVO bayCommentVO) {
+		commentService.updateComment(bayCommentVO);
+		return "redirect:getBayCommentList.do?bayCommentNo="+bayCommentVO.getBayCommentNo();
 	}
 }

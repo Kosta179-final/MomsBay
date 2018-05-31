@@ -38,6 +38,7 @@ public class SharePostService {
 	 * @return 나눔 게시판 List
 	 * @author rws
 	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo, String searchWord){
 		PagingBean pagingBean=null;
 		Map<String, Object> map=new HashMap();
@@ -46,7 +47,7 @@ public class SharePostService {
 		map.put("category_no", categoryNo==null ? null : Integer.parseInt(categoryNo));
 		map.put("searchWord", searchWord);
 		int totalCount=sharePostMapper.getTotalSharePostCount(map);
-		if(pageNo==null) {
+		if(pageNo==null || pageNo=="") {
 			pagingBean=new PagingBean(totalCount);
 			pagingBean.setPostCountPerPage(9);
 		}else {

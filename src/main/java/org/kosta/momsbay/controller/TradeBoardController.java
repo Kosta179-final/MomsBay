@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.momsbay.model.common.ListVO;
 import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.MemberPickService;
@@ -161,10 +162,16 @@ public class TradeBoardController {
 	 * @return
 	 */
 	@RequestMapping(value = "/deleteTradePost.do", method = RequestMethod.POST)
-	public String deleteTradePost(String tradePostNo) {
+	public String deleteTradePost(String tradePostNo, String pageNo, String boardTypeNo, String categoryNo) {
 		TradePostVO tradePostVO = tradePostService.deleteTradePost(Integer.parseInt(tradePostNo));
-		return "redirect:list_trade_post.do?boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
-				+ tradePostVO.getCategoryNo() + "";
+		ListVO listVO=tradePostService.getTradePostList(pageNo, boardTypeNo, null, categoryNo);
+		if(listVO.getList().isEmpty() || listVO.getList()==null) {
+			return "redirect:list_trade_post.do?pageNo="+(listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
+					+ tradePostVO.getCategoryNo() + "";
+		}else {
+			return "redirect:list_trade_post.do?pageNo="+pageNo+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
+					+ tradePostVO.getCategoryNo() + "";
+		}
 	}
 
 	/**
@@ -376,10 +383,16 @@ public class TradeBoardController {
 	 * @author rws
 	 */
 	@RequestMapping(value="/deleteSharePost.do",method=RequestMethod.POST)
-	public String deleteSharePost(String noneTradePostNo) {
+	public String deleteSharePost(String noneTradePostNo, String pageNo, String boardTypeNo, String categoryNo, String searchWord) {
 		SharePostVO sharePostVO = sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
-		return "redirect:list_share_post.do?boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
-				+ sharePostVO.getCategoryNo() + "";
+		ListVO listVO = sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo,null);
+		if(listVO.getList().isEmpty() || listVO.getList()==null) {
+			return "redirect:list_share_post.do?pageNo=" + (listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
+					+ sharePostVO.getCategoryNo() + "";
+		}else {
+			return "redirect:list_share_post.do?pageNo=" + pageNo +"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
+						+ sharePostVO.getCategoryNo() + "";
+		}
 	}
 
 	/**

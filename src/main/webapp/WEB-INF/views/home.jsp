@@ -91,31 +91,44 @@
 				<div class="col-sm-12 padding-right">
 					<div class="features_items"><!-- 최근 등록 상품 -->
 						<h2 class="title text-center">최근 등록 상품</h2>
-						<div class="col-sm-4">
-							<div class="product-image-wrapper">
-								<div class="single-products">
-										<div class="productinfo text-center">
-											<img src="resources/images/home/product1.jpg" alt="" />
-											<h2>$56</h2>
-											<p>Easy Polo Black Edition</p>
-											<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-										</div>
-										<div class="product-overlay">
-											<div class="overlay-content">
-												<h2>$56</h2>
-												<p>Easy Polo Black Edition</p>
-												<a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+						<div class="col-sm-12">
+							
+						<div class="product-image-wrapper">
+						<div class="single-products">
+							<c:forEach items="${requestScope.mainList.list}" var="tpVO" varStatus="i">
+								<%-- 게시물 1개 목록 --%>
+								<div class="col-sm-4">
+									<div class="product-image-wrapper">
+										<div class="single-products">
+											<div class="productinfo text-center">
+												<c:if test="${tpVO.imgAddress eq 'noPhoto'}">
+													<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
+												</c:if>
+												<c:if test="${tpVO.imgAddress ne 'noPhoto'}">
+													<img src="${pageContext.request.contextPath}/resources/upload/postImg/${tpVO.imgAddress }" >
+												</c:if>
+												<h4 style="width:100%; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">${tpVO.title}</h4><hr>
+												<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가격 &nbsp;&nbsp;: &nbsp;&nbsp;${tpVO.price}</p>
+												<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;등록일 &nbsp;&nbsp;: &nbsp;&nbsp;${tpVO.regdate}</p>
+												<p align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;작성자 &nbsp;&nbsp;: &nbsp;&nbsp;${tpVO.memberVO.name}</p>
 											</div>
 										</div>
-								</div>
-								<div class="choose">
-									<ul class="nav nav-pills nav-justified">
-										<li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-										<li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-									</ul>
-								</div>
-							</div>
+										<div class="choose">
+											<ul class="nav nav-pills nav-justified">
+												<li><a class = "btn btn-primary" href="trade/detail_trade_post.do?tradePostNo=${tpVO.tradePostNo}">
+													<i class="fa fa-plus-square"></i>상세보기
+												</a></li>
+											</ul>
+										</div>
+									</div>
+								</div>	
+							</c:forEach>
 						</div>
+						</div>
+							
+							<!-- <div class="product-image-wrapper">
+								최근 상품1
+							</div>
 						<div class="col-sm-4">
 							<div class="product-image-wrapper">
 								<div class="single-products">
@@ -165,9 +178,15 @@
 									</ul>
 								</div>
 							</div>
-						</div>
+						</div> -->
 					</div><!-- 최근 등록 상품 -->
+				</div>
+			</div>
+		</div>
 					
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 padding-right">
 					<div class="recommended_items"><!--  자녀추천  -->
 						<h2 class="title text-center">{자녀이름} 추천 상품</h2>
 						
@@ -226,4 +245,5 @@
 				</div>
 			</div>
 		</div>
+	</div>
 	</section>

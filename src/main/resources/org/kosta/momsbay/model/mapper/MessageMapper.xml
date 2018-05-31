@@ -8,15 +8,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<selectKey order="BEFORE" resultType="int" keyProperty="messageNo">
 			SELECT receive_message_seq.nextval FROM dual
 		</selectKey>
-		INSERT INTO receive_message(receive_message_no,title,content,regdate,send_id,receive_id,send_message_no)
-		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id},#{sendMessageNo})
+		INSERT INTO receive_message(receive_message_no,title,content,regdate,send_id,receive_id,send_message_no,message_type)
+		VALUES(#{messageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id},#{sendMessageNo},'receive')
 	</insert>
 	<insert id="addSendMessage" parameterType="messageVO">
 		<selectKey order="BEFORE" resultType="int" keyProperty="sendMessageNo">
 			SELECT send_message_seq.nextval FROM dual
 		</selectKey>
-		INSERT INTO send_message(send_message_no,title,content,regdate,send_id,receive_id)
-		VALUES(#{sendMessageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id})
+		INSERT INTO send_message(send_message_no,title,content,regdate,send_id,receive_id,message_type)
+		VALUES(#{sendMessageNo},#{title},#{content},sysdate,#{memberVO.id},#{receiveMemberVO.id},'send')
 	</insert>
 	
 	<resultMap type="messageVO" id="messageRM">
@@ -66,15 +66,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</select>
 	
 	<select id="getTotalMessageList" parameterType="map" resultMap="messageRM">
-		SELECT rnum,message_no,receive_id,send_id,regdate,title
+		SELECT rnum,message_no,receive_id,send_id,regdate,title,message_type
 		FROM
-			(SELECT row_number() over(ORDER BY regdate DESC) AS rnum,message_no,receive_id,send_id,title,regdate 
+			(SELECT row_number() over(ORDER BY regdate DESC) AS rnum,message_no,receive_id,send_id,title,regdate,message_type 
 			FROM 
-				(SELECT receive_message_no as message_no,send_id,receive_id,title,regdate 
+				(SELECT receive_message_no as message_no,send_id,receive_id,title,regdate,message_type
 				 FROM receive_message
 				 WHERE receive_id=#{id}
 				 UNION ALL
-				 SELECT send_message_no as message_no,send_id,receive_id,title,regdate 
+				 SELECT send_message_no as message_no,send_id,receive_id,title,regdate,message_type
 				 FROM SEND_MESSAGE
 				 WHERE send_id=#{id}
 				)

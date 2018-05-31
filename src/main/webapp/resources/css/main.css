@@ -689,7 +689,7 @@ ul.sub-menu {
 .left-sidebar h2, .brands_products h2 {
   color: #FE980F;
   font-family: 'Roboto', sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   margin: 0 auto 30px;
   text-align: center;
@@ -864,7 +864,7 @@ h2.title:before{
 h2.title {
   color: #FE980F;
   font-family: 'Roboto', sans-serif;
-  font-size: 18px;
+  font-size: 17px;
   font-weight: 700;
   margin: 0 15px;
   text-transform: uppercase;
@@ -904,7 +904,7 @@ h2.title {
 
 .productinfo p{
   font-family: 'Roboto', sans-serif;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 400;
   color: #696763;
 }
@@ -1232,9 +1232,9 @@ h2.title {
 .product-information {
   border: 1px solid #F7F7F0;
   overflow: hidden;
-  padding-bottom: 60px;
+  padding-bottom: 0px;
   padding-left: 60px;
-  padding-top: 60px;
+  padding-top: 5px;
   position: relative;
 }
 

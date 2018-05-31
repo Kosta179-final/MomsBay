@@ -108,7 +108,41 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE trade_post SET trade_id=#{tradeId}, trade_status_no=trade_status_no+1,
 		suggest_content=#{suggestContent}
 		WHERE trade_post_no=#{tradePostNo}
-	</update>	
+	</update>
+	
+	<!-- 홈화면 최근 등록 게시판 리스트 3개 -->
+	<select id="getMainTradePostList" resultMap="tradePostRM" parameterType="map">
+		SELECT tp.trade_post_no
+				 , tp.title
+				 , tp.price
+				 , tp.board_type_no
+				 , bm.name
+				 , tp.imgAddress
+				 , tp.regdate
+		  FROM (
+						SELECT row_number() over(ORDER BY t.trade_post_no DESC) AS rnum
+								 , t.id
+								 , t.trade_post_no
+								 , t.title
+								 , t.price
+								 , t.board_type_no
+								 , to_char(t.regdate,'yyyy-mm-dd')as regdate
+								 , p.photo_path AS imgAddress 
+						  FROM trade_post t, photo p
+						WHERE t.trade_post_no= p.trade_post_no
+							AND t.delete_status=0
+					)tp
+				  , bay_member bm
+		 WHERE tp.id=bm.id 
+		 	 AND rnum <![CDATA[<]]>= 3 
+		 ORDER BY trade_post_no DESC
+	</select>
+	<!-- 홈화면 거래 게시글 총갯수-->	
+	<select id="getTotalMainTradePostCount" resultType="int">
+		SELECT count(*) 
+		FROM trade_post
+		WHERE delete_status=0
+	</select>
 </mapper>
 
 
