@@ -60,7 +60,7 @@ public class MemberService {
 		MemberVO memberVO = memberMapper.findMemberById(id);
 		if (memberVO == null)
 			throw new LoginException("아이디가 존재하지 않습니다");
-		else if (password == null || BCrypt.checkpw(password, memberVO.getPassword() ))
+		else if (password == null || !BCrypt.checkpw(password, memberVO.getPassword() ))
 			throw new LoginException("비밀번호가 다릅니다");
 
 		List<ChildrenVO> children = memberMapper.findChildrenByMemberId(id);
