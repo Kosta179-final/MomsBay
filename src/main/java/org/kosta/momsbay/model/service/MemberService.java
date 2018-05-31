@@ -48,16 +48,19 @@ public class MemberService {
 	 * 존재하면 password를 비교 일치하지 않으면, "비밀번호가 다름" 메시지 throw 3.두 조건 모두 만족시, 자녀정보를 회원 id로
 	 * 검색 MemberVO에 SET하여 Return
 	 * 
+	 * refactoring : 암호화 된 비밀번호와 받아온 비밀번호를 비교한다.
+	 * 사용 암호화방법 : bCrypt
 	 * @param id
 	 * @param password
 	 * @return 자녀정보가 포함된 MemberVO
 	 * @throws LoginException
+	 * @author Hwang
 	 */
 	public MemberVO login(String id, String password) throws LoginException {
 		MemberVO memberVO = memberMapper.findMemberById(id);
 		if (memberVO == null)
 			throw new LoginException("아이디가 존재하지 않습니다");
-		else if (password == null || password.equals(memberVO.getPassword()) == false)
+		else if (password == null || BCrypt.checkpw(password, memberVO.getPassword() ))
 			throw new LoginException("비밀번호가 다릅니다");
 
 		List<ChildrenVO> children = memberMapper.findChildrenByMemberId(id);
@@ -97,6 +100,7 @@ public class MemberService {
 	 * 
 	 * @param member
 	 * @param children
+	 * @author Hwang
 	 */
 	@Transactional
 	public void addMember(MemberVO member, List<ChildrenVO> children) {
@@ -104,7 +108,9 @@ public class MemberService {
 		 String hashPassword = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
 		 member.setPassword(hashPassword);
 		memberMapper.addMember(member);
-		
+		/*
+		 * 암호화 하여 저장
+		 */
 		if (children.size() > 0) {
 			for (int i = 0; i < children.size(); i++) {
 				Map<String, String> tempMap = new HashMap<String, String>();
@@ -125,6 +131,9 @@ public class MemberService {
 	public void updateMember(MemberVO member) {
 		String hashPassword = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
 		 member.setPassword(hashPassword);
+		 /*
+			 * 암호화 하여 저장
+			 */
 		memberMapper.updateMember(member);
 	}
 
