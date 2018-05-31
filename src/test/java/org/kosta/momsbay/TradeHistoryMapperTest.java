@@ -19,7 +19,7 @@ public class TradeHistoryMapperTest {
 	
 	@Test
 	public void findTradeHistoryListById() {
-		Map<String, String> map = new HashMap<String, String>();
+		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", "java");
 		map.put("board_type_no", "1");
 		tradeHistoryMapper.findTradeHistoryListById(map);
