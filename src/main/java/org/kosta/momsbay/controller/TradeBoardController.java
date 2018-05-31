@@ -37,7 +37,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("/trade")
 @Controller 
 public class TradeBoardController {
-	private String uploadPath = "C:/java-kosta/framework-workspace2/resources/upload/postImg/";
+	private String uploadPath = "/resources/upload/postImg/";
 	@Resource
 	private CommentService commentService;
 	@Resource
@@ -118,7 +118,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(uploadPath, savedName);
+				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				tradePostService.addTradePostPhoto(savedName, tradePostVO.getTradePostNo());
 			} catch (IOException e) {
@@ -193,7 +193,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(uploadPath, savedName);
+				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				tradePostService.updateTradePostPhoto(savedName, tradePostVO.getTradePostNo());
 			} catch (IOException e) {
@@ -281,7 +281,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(uploadPath, savedName);
+				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				sharePostService.addSharePostPhoto(savedName, sharePostVO.getNoneTradePostNo());
 			} catch (IOException e) {
@@ -345,7 +345,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(uploadPath, savedName);
+				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				sharePostService.updateSharePostPhoto(savedName, sharePostVO.getNoneTradePostNo());
 			} catch (IOException e) {
