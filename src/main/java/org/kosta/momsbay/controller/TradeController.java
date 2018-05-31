@@ -51,26 +51,42 @@ public class TradeController {
 		TradePostVO tradePostVO = new TradePostVO();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
-		tradePostVO.setTradeId(tradeId);
-		tradePostVO.setMemberVO(memberVO);
-		tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
-		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
-		try {
-			tradeService.applyTransaction(tradePostVO);
-		} catch (TradeException e) {
-			model.addAttribute("message", e.getMessage());
-			model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
-			return "trade/trade_fail";
-		}
-		tradePostService.updateTradeId(tradePostVO);
-		if(tradePostVO.getBoardTypeNo() == 2) {
-			tradePostVO.setTradeType("구매");
+		if (tradePostVO.getBoardTypeNo() == 2) {
+			System.out.println(boardTypeNo);
+			tradePostVO.setTradeId(tradeId);
+			tradePostVO.setMemberVO(memberVO);
+			tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
+			tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+			try {
+				tradeService.applyTransaction(tradePostVO);
+			} catch (TradeException e) {
+				model.addAttribute("message", e.getMessage());
+				model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
+				return "trade/trade_fail";
+			}
+			tradePostService.updateTradeId(tradePostVO);
+			tradePostVO.setTradeType("판매");
 			historyService.addTradeHistory(tradePostVO);
 			String temp = tradePostVO.getTradeId();
 			tradePostVO.setTradeId(tradePostVO.getMemberVO().getId());
 			tradePostVO.getMemberVO().setId(temp);
-			tradePostVO.setTradeType("판매");
+			tradePostVO.setTradeType("구매");
 			historyService.addTradeHistory(tradePostVO);
+		} else {
+			System.out.println(boardTypeNo);
+			memberVO.setId(id);
+			tradePostVO.setTradeId(tradeId);
+			tradePostVO.setMemberVO(memberVO);
+			tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
+			tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+			try {
+				tradeService.applyTransaction(tradePostVO);
+				historyService.updateDepositTradeHistory(tradePostVO);
+			} catch (TradeException e) {
+				model.addAttribute("message", e.getMessage());
+				model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
+				return "trade/trade_fail";
+			}
 		}
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
@@ -105,9 +121,6 @@ public class TradeController {
 			tradePostVO.setTradeId(tradePostVO.getMemberVO().getId());
 			tradePostVO.getMemberVO().setId(temp);
 			historyService.deleteTradeHistory(tradePostVO);
-		}
-		else {
-			tradePostService.deleteTradeId(tradePostVO.getTradePostNo());
 		}
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostNo;
 	}
@@ -172,9 +185,53 @@ public class TradeController {
 	 * @return
 	 */
 	@RequestMapping("/applySell.do")
-	public String applySell(TradePostVO tradePostVO) {
+	public String applySell(TradePostVO tradePostVO, Model model) {
 		tradePostService.updateTradeIdAndSuggestContent(tradePostVO);
+		TradePostVO tVO = tradePostService.findTradePostByTradePostNo(tradePostVO.getTradePostNo());
+		tVO.getMemberVO().setId(tradePostVO.getTradeId());
+		tVO.setTradeId(tradePostVO.getMemberVO().getId());
+		tVO.setTradeType("판매");
+		historyService.addTradeHistory(tVO);
+		tradePostVO.setTradeId(tradePostVO.getTradeId());
+		tradePostVO.setTradeType("구매");
+		historyService.addTradeHistory(tradePostVO);
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo();
+	}
+	
+	/**
+	 * 삽니다 게시판에서 취소.
+	 * @param tradePostNo
+	 * @return detail_trade_post.jsp
+	 * @author Jung
+	 */
+	@RequestMapping(method= RequestMethod.POST,value="cancelTransaction2.do")
+	public String cancelTransaction2(String tradePostNo) {
+		TradePostVO tradePostVO = new TradePostVO();
+		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+		tradePostService.deleteTradeId(tradePostVO.getTradePostNo());
+		historyService.deleteTradeHistory(tradePostVO);
+		return "redirect:detail_trade_post.do?tradePostNo="+tradePostNo;
+	}
+	
+	@Transactional
+	@RequestMapping(method= RequestMethod.POST,value="deposit.do")
+	public String deposit(String tradePostNo, String id, String tradeId, String boardTypeNo, Model model) {
+		TradePostVO tradePostVO = new TradePostVO();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
+		tradePostVO.setTradeId(tradeId);
+		tradePostVO.setMemberVO(memberVO);
+		tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
+		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+		try {
+			tradeService.applyTransaction(tradePostVO);
+			historyService.updateDeliveryTradeHistory(tradePostVO);
+		} catch (TradeException e) {
+			model.addAttribute("message", e.getMessage());
+			model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
+			return "trade/trade_fail";
+		}
+		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
 	
 }

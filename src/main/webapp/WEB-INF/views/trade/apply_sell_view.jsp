@@ -29,6 +29,7 @@ function getThumbnailPrivew(html, $target) {
 		<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
 		<input type="hidden" name="categoryNo" value="${requestScope.categoryNo}">
 		<input type="hidden" name="tradePostNo" value="${requestScope.tradePostNo}">
+		<input type="hidden" name="memberVO.id" value="${requestScope.id}">
 		<span><input type="submit" class="btn btn-primary" value="글쓰기"></span>
 	</div>
 </div>

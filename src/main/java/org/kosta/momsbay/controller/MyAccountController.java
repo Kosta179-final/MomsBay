@@ -192,13 +192,20 @@ public class MyAccountController {
 	 * @author Jung
 	 */
 	@RequestMapping("findTradeHistoryListById.do")
-	public String findTradeHistoryListById(HttpServletRequest request, String type, String nowPage, String nowPage2) {
+	public String findTradeHistoryListById(HttpServletRequest request, String type, String nowPage) {
 		HttpSession session = request.getSession();
 		MemberVO member = (MemberVO) session.getAttribute("member");
-		/*request.setAttribute("listVO", historyService.findTradeHistoryListById(member.getId(), "판매", nowPage));
-		request.setAttribute("listVO2", historyService.findTradeHistoryListById(member.getId(), "구매", nowPage2));*/
 		request.setAttribute("type", type);
-		return "service_myaccount" + ".page_" + "list_trade_history";
+		if(type==null || type=="") {
+			request.setAttribute("listVO", historyService.findTradeHistoryListById(member.getId(), "판매", nowPage));
+			return "service_myaccount" + ".page_" + "list_sell_history";
+		} else if(type.equals("판매")) {
+			request.setAttribute("listVO", historyService.findTradeHistoryListById(member.getId(), "판매", nowPage));
+			return "service_myaccount" + ".page_" + "list_sell_history";
+		} else {
+			request.setAttribute("listVO2", historyService.findTradeHistoryListById(member.getId(), "구매", nowPage));
+			return "service_myaccount" + ".page_" + "list_buy_history";
+		}
 	}
 	
 	/**
