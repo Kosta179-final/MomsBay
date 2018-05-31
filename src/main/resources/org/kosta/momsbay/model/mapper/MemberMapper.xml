@@ -37,8 +37,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 
 	<insert id="addMember" parameterType="memberVO">
 		INSERT INTO
-		bay_member(id,name,password,email,tel,address,member_grade_no,
-		address2)
+		bay_member(id,name,password,email,tel,address,member_grade_no,address2)
 		VALUES(#{id},#{name},#{password},#{email},#{tel},#{address},'1',#{address2})
 	</insert>
 

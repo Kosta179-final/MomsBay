@@ -190,7 +190,7 @@ public class BayBoardController {
 		return "bay/update_qna_post" + ".tiles";
 	}
 	
-	@ResponseBody
+	/*@ResponseBody
 	@RequestMapping("getBayCommentList.do")
 	public String getBayCommentList(BayCommentVO bayCommentVO, int bayPostNo) {
 		commentService.getBayCommentList(bayPostNo);
@@ -213,5 +213,5 @@ public class BayBoardController {
 	public String updateComment(BayCommentVO bayCommentVO) {
 		commentService.updateComment(bayCommentVO);
 		return "redirect:getBayCommentList.do?bayCommentNo="+bayCommentVO.getBayCommentNo();
-	}
+	}*/
 }
