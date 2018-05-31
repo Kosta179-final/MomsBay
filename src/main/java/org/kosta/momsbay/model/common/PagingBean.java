@@ -55,6 +55,23 @@ public class PagingBean {
 		return nowPage;
 	}
 
+	public void setNowPage(int nowPage) {
+		this.nowPage=nowPage;
+	}
+	
+	/**
+	 * 현재 Paging의 마지막 페이지를 찾기 위한 메소드.
+	 * totalPostCount/postCountPerPage==0이면 그대로 리턴 그외는 +1한 값을 리턴
+	 * @return totalPostCount/postCountPerPage
+	 */
+	public int getEndPageNo() {
+		int value=totalPostCount/postCountPerPage;
+		if(totalPostCount%postCountPerPage==0)
+			return value;
+		else
+			return value+1; 
+	}
+
  /**
   * 현재 페이지번호에 해당하는 시작 게시물의 row number를 반환 hint : 이전페이지의 마지막 번호 + 1 ((현재페이지-1)
   * * 페이지당 게시물수) +1

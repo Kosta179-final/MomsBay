@@ -28,7 +28,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}">
+						<a href="getReceiveMessageList.do?id=${sessionScope.member.id}">
 							받은 쪽지함
 						</a>
 					</h3>
@@ -38,7 +38,7 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h3 class="panel-title">
-						<a href="getSendMessageList.do?sendId=${sessionScope.member.id}">
+						<a href="getSendMessageList.do?id=${sessionScope.member.id}">
 							보낸 쪽지함
 						</a>
 					</h3>

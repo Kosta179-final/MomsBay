@@ -38,7 +38,7 @@ $(document).ready(function(){
 							</c:otherwise>
 							</c:choose>
 						</td>
-						<td class="cart_description"><a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=receive">${pvo.title}</a></td>
+						<td class="cart_description"><a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=receive&pageNo=${requestScope.lvo.pagingBean.nowPage}">${pvo.title}</a></td>
 						<td class="cart_price">${pvo.memberVO.id}</td>
 		 				<td class="cart_quantity">${pvo.regdate}</td>
 					</tr>
@@ -50,7 +50,7 @@ $(document).ready(function(){
 		<ul class="pagination">
 			<li>
 				<c:if test="${pb.previousPageGroup}">
-					<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}&pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a>
+					<a href="getReceiveMessageList.do?id=${sessionScope.member.id}&pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a>
 				</c:if>
 			</li>
 			<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
@@ -58,7 +58,7 @@ $(document).ready(function(){
 				<c:choose>
 					<c:when test="${pb.nowPage!=i}">
 						<li>
-						<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}&pageNo=${i}">${i}</a>
+						<a href="getReceiveMessageList.do?id=${sessionScope.member.id}&pageNo=${i}">${i}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -68,7 +68,7 @@ $(document).ready(function(){
 			</c:forEach>
 			<li>
 				<c:if test="${pb.nextPageGroup}">
-				<a href="getReceiveMessageList.do?receiveId=${sessionScope.member.id}&pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a>
+				<a href="getReceiveMessageList.do?id=${sessionScope.member.id}&pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a>
 				</c:if>
 			</li>
 		</ul>

@@ -31,22 +31,22 @@
 			return;			
 		}
 	}
-	/* 거래 완료 하기 */
+	/* 거래 완료 하기 기능*/
 	function updateSharePostByStatus() {
 		if(confirm("거래를 완료 하셨습니까?")==true){
 			location.href="${pageContext.request.contextPath}/trade/updateSharePostByStatus.do?noneTradePostNo=${requestScope.pvo.noneTradePostNo}"
 		}else{
 			return;
 		}
-	}
-	/* 거래 요청 하기 */
-	function updateShareAndExchangeTrade() {
+	} 
+	/* 거래 요청 하기  기능 삭제함*/
+	/* function updateShareAndExchangeTrade() {
 		if(confirm("거래를 요청 하시겠습니까?")==true){
 			location.href=""
 		}else{
 			return;
 		}
-	}
+	} */
 </script>
 <div class="product-details">
 	<!--product-details-->
@@ -62,22 +62,28 @@
 			</c:choose>
 		</div>
 	</div>
-	<c:if test="${requestScope.pvo.tradeStatusNo==3}">
+	<%-- 거래완료 된 이미지에 soldout 이미지 제거함 --%>
+	<%-- <c:if test="${requestScope.pvo.tradeStatusNo==3}">
 		<div style="position: absolute;">
 			<div style="position: relative; top: 45px; left: -7px;"><img src="${pageContext.request.contextPath}/resources/images/product-details/soldout11.png" style="width: 375px; height: 290px;"></img>
 			</div>
 		</div>
-	</c:if>
+	</c:if> --%>
 	<div class="col-sm-7">
 		<div class="product-information">
 			<!--/product-information-->
 			<div class="row" align="left">
+				<span>
+					<c:if test="${requestScope.pvo.tradeStatusNo==3}">
+						<div class="label label-danger" align="right">거래완료</div>
+					</c:if>
+				</span>
 				<div class="col-sm-12">
 					<span style="font-size: 30px">${requestScope.pvo.title}</span>
 				</div><hr>
 			</div>
 			<div class="row">
-				<div class=col-sm-12><br><br><hr></div>
+				<div class=col-sm-12><hr></div>
 			</div>
 			<%-- 평점은 버전2 --%>
 			<%--<div class="row" align="left">
@@ -127,11 +133,14 @@
 			<c:if test="${requestScope.pvo.tradeStatusNo==3}">
 				<div></div>
 			</c:if>
-			<c:if test="${sessionScope.member.id!=requestScope.pvo.memberVO.id}">
-				<c:if test="${requestScope.pvo.tradeStatusNo==1}">
-					<button name="button" class="btn btn-info3" onclick="updateShareAndExchangeTrade()">거래 신청</button>
+			<%-- 거래신청 버튼 기능 삭제함 --%>
+    		<%-- <c:if test="${!empty member}">
+				<c:if test="${sessionScope.member.id!=requestScope.pvo.memberVO.id}">
+					<c:if test="${requestScope.pvo.tradeStatusNo==1}">
+						<button name="button" class="btn btn-info3" onclick="updateShareAndExchangeTrade()">거래 신청</button>
+					</c:if>
 				</c:if>
-			</c:if>
+			</c:if> --%>
 		</div>
 	</div>
 </div>
@@ -167,6 +176,7 @@
 							<button type="button" name="button" class="btn btn-info3 pull-left" id="deleteBtn">글삭제</button>
 							<input type="hidden" name="noneTradePostNo" value="${requestScope.pvo.noneTradePostNo}">
 							<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
+							<input type="hidden" name="pageNo" value="${requestScope.pageNo}"> 
 						</form>
 					</div>
 				</div>

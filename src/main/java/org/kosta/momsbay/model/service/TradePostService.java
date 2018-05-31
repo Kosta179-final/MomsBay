@@ -167,4 +167,13 @@ public class TradePostService {
 	public void updateTradeIdAndSuggestContent(TradePostVO tradePostVO) {
 		tradePostMapper.updateTradeIdAndSuggestContent(tradePostVO);
 	}
+	
+	/**
+	 * 삽니다 팝니다 게시글 홈화면에 최신순으로 3개 등록
+	 * @return List
+	 * @author rws
+	 */
+	public ListVO getMainTradePostList() {
+		return new ListVO(tradePostMapper.getMainTradePostList(),null);
+	}
 }

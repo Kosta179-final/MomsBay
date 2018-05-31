@@ -60,7 +60,7 @@ public class MessageController {
 	@RequestMapping("/add_message.do")
 	public String addMessage(MessageVO messageVO) {
 		messageService.addMessage(messageVO);
-		return "redirect:getReceiveMessageList.do?receiveId="+messageVO.getMemberVO().getId();
+		return "redirect:getReceiveMessageList.do?id="+messageVO.getMemberVO().getId();
 	}
 	/**	
 	 * 검색 조건에 따라 받은 메세지목록을 보여준다.
@@ -71,8 +71,8 @@ public class MessageController {
 	 * 
 	 */
 	@RequestMapping("/getReceiveMessageList.do")
-	public String getReceiveMessageList(String receiveId,String pageNo,String status,Model model) {
-		model.addAttribute("lvo",messageService.getReceiveMessageList(receiveId, pageNo,null));
+	public String getReceiveMessageList(String id,String pageNo,String status,Model model) {
+		model.addAttribute("lvo",messageService.getReceiveMessageList(id, pageNo,null));
 		return "message/list_receive_message.m_tiles";
 	}
 	/**
@@ -98,8 +98,8 @@ public class MessageController {
 	 * @return message/list_send_message.m_tiles
 	 */
 	@RequestMapping("/getSendMessageList.do")
-	public String getSendMessageList(String sendId,String pageNo,Model model) {
-		model.addAttribute("lvo",messageService.getSendMessageList(sendId, pageNo));
+	public String getSendMessageList(String id,String pageNo,String status,Model model) {
+		model.addAttribute("lvo",messageService.getSendMessageList(id, pageNo));
 		return "message/list_send_message.m_tiles";
 	}
 	
@@ -111,7 +111,7 @@ public class MessageController {
 	 * @return message/list_total_message.m_tiles
 	 */
 	@RequestMapping("getTotalMessageList.do")
-	public String getTotalMessageList(String id,String pageNo,Model model) {
+	public String getTotalMessageList(String id,String pageNo,String status,Model model) {
 		model.addAttribute("lvo", messageService.getTotalMessageList(id, pageNo));
 		return "message/list_total_message.m_tiles";
 	}
@@ -123,7 +123,8 @@ public class MessageController {
 	 * @return message/detail_message.m_tiles
 	 */
 	@RequestMapping("detail_message.do")
-	public String detailMessage(int messageNo,String messageType,Model model) {
+	public String detailMessage(int messageNo,String messageType,String status,Model model) {
+		messageType=messageType.substring(messageType.indexOf("_")+1);
 		model.addAttribute("messageVO",messageService.detailMessage(messageNo,messageType));
 		return "message/detail_message.m_tiles";
 	}
@@ -136,25 +137,24 @@ public class MessageController {
 	 * @return url 메세지 타입에 따라 목록으로 돌아간다.
 	 */
 	@RequestMapping("delete_message.do")
-	public String deleteMessage(int messageNo,String messageType,String beforePageUrl,HttpServletRequest request) {
+	public String deleteMessage(int messageNo,String messageType,int pageNo,String status,HttpServletRequest request) {
 		HttpSession session=request.getSession(false);
 		MemberVO memberVO=(MemberVO)session.getAttribute("member");
-		messageService.deleteMessage(messageNo, messageType);
+		messageService.deleteMessage(messageNo, messageType.substring(messageType.indexOf("_")+1));
 		String url=null;
-		System.out.println(beforePageUrl);
-		int flag=beforePageUrl.indexOf("MessageList");
-		System.out.println(flag);
-		if(flag>0){
-			url="redirect:"+beforePageUrl;
-			System.out.println(url);
-		} else{
-			String redirectUrl=beforePageUrl.substring(0, beforePageUrl.indexOf("?"));
-			if(messageType.equals("receive")){
-				url=redirectUrl+"?receiveId="+memberVO.getId();	
-			} else{
-				url=redirectUrl+"?sendId="+memberVO.getId();
-			}
+		if(messageType.equals("receive")){
+			url="redirect:getReceiveMessageList.do?";	
+		} else if(messageType.equals("send")){
+			url="redirect:getSendMessageList.do?";
+		} else {
+			url="redirect:getTotalMessageList.do?";
 		}
+		url+="id="+memberVO.getId();
+		url+="&pageNo="+pageNo;
+		if(status!=null) {
+			url+="&status="+status;
+		}
+		
 		return url;
 	}
 }
