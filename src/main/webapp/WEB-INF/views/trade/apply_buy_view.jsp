@@ -5,6 +5,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#applyTransaction").click(function(){
+			var boardTypeNo = "${requestScope.tradePostVO.boardTypeNo}";
 			if(confirm("거래를 신청하시겠습니까?")){
 				var tradeId = "${sessionScope.member.id}";
 				var memberVOId = "${requestScope.tradePostVO.memberVO.id}";

@@ -442,6 +442,7 @@ public class TradeBoardController {
 	@RequestMapping("/applySellView.do")
 	public String applySellView(String tradePostNo, Model model) {
 		TradePostVO tradePostVO = tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo));
+		model.addAttribute("id",tradePostVO.getMemberVO().getId());
 		model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
 		model.addAttribute("boardTypeNo", tradePostVO.getBoardTypeNo());
 		model.addAttribute("categoryNo", tradePostVO.getCategoryNo());
