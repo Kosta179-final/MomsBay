@@ -115,6 +115,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT tp.trade_post_no
 				 , tp.title
 				 , tp.price
+				 , tp.board_type_no
 				 , bm.name
 				 , tp.imgAddress
 				 , tp.regdate
@@ -124,6 +125,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								 , t.trade_post_no
 								 , t.title
 								 , t.price
+								 , t.board_type_no
 								 , to_char(t.regdate,'yyyy-mm-dd')as regdate
 								 , p.photo_path AS imgAddress 
 						  FROM trade_post t, photo p
