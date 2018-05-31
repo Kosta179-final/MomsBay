@@ -30,7 +30,7 @@ public class TradePostService {
 	 * @return ListVO
 	 * @author Jung
 	 */
-	public ListVO getTradePostList(String pageNo,String boardTypeNo, String searchWord,String categoryNo) {
+	public ListVO getTradePostList(String pageNo,String boardTypeNo, String categoryNo, String searchWord) {
 		PagingBean pagingBean=null;
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		Map<String,Object> map = new HashMap();
@@ -39,7 +39,7 @@ public class TradePostService {
 		map.put("category_no", categoryNo == null ? null : Integer.parseInt(categoryNo));
 		map.put("searchWord", searchWord);
 		int totalCount=tradePostMapper.getTotalTradePostCount(map);
-		if(pageNo==null) {
+		if(pageNo==null || pageNo=="") {
 			pagingBean=new PagingBean(totalCount);
 			pagingBean.setPostCountPerPage(9);
 		}

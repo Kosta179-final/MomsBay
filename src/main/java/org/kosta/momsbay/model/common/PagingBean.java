@@ -112,7 +112,7 @@ public class PagingBean {
   * 
   * @return
   */
-	private int getTotalPage() {
+	public int getTotalPage() {
 		int num = this.totalPostCount % this.postCountPerPage;
 		int totalPage = 0;
 		if (num == 0) {

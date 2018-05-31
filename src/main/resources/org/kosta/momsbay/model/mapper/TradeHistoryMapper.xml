@@ -14,15 +14,24 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</resultMap>
 
 	<select id="findTradeHistoryListById" parameterType="map" resultMap="tradeHistoryRM">
-		SELECT th.regdate, th.id, tp.trade_id, tp.title, ts.status, tp.price, th.trade_type, tp.trade_post_no
-		FROM trade_history th, trade_post tp, trade_status ts
-		WHERE th.id=#{id} AND ts.trade_status_no=th.trade_status_no AND 
-		th.trade_post_no=tp.trade_post_no AND tp.board_type_no=board_type_no
+		SELECT regdate,id,trade_id,title,status,price,trade_type,trade_post_no
+		FROM(
+			SELECT th.regdate, th.id, th.trade_id, tp.title, ts.status, tp.price, th.trade_type, tp.trade_post_no,
+			row_number() over(ORDER BY th.regdate DESC) AS rnum
+			FROM trade_history th, trade_post tp, trade_status ts
+			WHERE th.id=#{id}
+			AND trade_type=#{tradeType} 
+			AND ts.trade_status_no=th.trade_status_no 
+			AND th.trade_post_no=tp.trade_post_no 
+			AND tp.board_type_no=board_type_no
+		)
+		WHERE rnum BETWEEN #{pagingBean.startRowNumber} AND #{pagingBean.endRowNumber}
+		ORDER BY rnum DESC
 	</select>
 	
 	<insert id="addTradeHistory" parameterType="tradePostVO">
-		INSERT INTO trade_history(trade_history_no,id,trade_post_no,trade_status_no,regdate,trade_type)
-		VALUES (trade_history_seq.nextval,#{tradeId},#{tradePostNo},2,sysdate,#{tradeType})
+		INSERT INTO trade_history(trade_history_no,id,trade_post_no,trade_status_no,regdate,trade_type,trade_id)
+		VALUES (trade_history_seq.nextval,#{memberVO.id},#{tradePostNo},2,sysdate,#{tradeType},#{tradeId})
 	</insert>
 	
 	<delete id="deleteTradeHistory" parameterType="tradePostVO">
@@ -37,7 +46,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<update id="updateDeliveryTradeHistory" parameterType="tradePostVO">
 		update trade_history set trade_status_no=4
-		where trade_post_no=#{tradePostNo} AND id=#{memberVO.id}
+		where trade_post_no=#{tradePostNo}
 	</update>
 	
 	<select id="findTradeStatusByIdAndTradePostNo" parameterType="tradePostVO" resultType="string">
@@ -46,5 +55,16 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		WHERE ts.trade_status_no=th.trade_status_no AND th.trade_post_no = #{tradePostNo} 
 		AND th.id = #{memberVO.id}
 	</select>
+	
+	<select id="findTotalTradeHistoryCountById" parameterType="map" resultType="int">
+		SELECT count(*)
+		FROM trade_history
+		WHERE trade_type=#{tradeType} and id=#{id}
+	</select>
+	
+	<update id="updateDepositTradeHistory" parameterType="tradePostVO">
+		update trade_history set trade_status_no=5
+		where trade_post_no=#{tradePostNo}
+	</update>
 	
 </mapper>

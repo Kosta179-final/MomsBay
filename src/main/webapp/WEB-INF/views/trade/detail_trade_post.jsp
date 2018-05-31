@@ -31,6 +31,16 @@
 			}
 		});
 		
+		$("#cancelTransaction").click(function(){
+			if(confirm("거래를 취소하시겠습니까?")){
+				var url = "${pageContext.request.contextPath}";
+				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
+				$("#trade").attr("action", url+"/trade/cancelTransaction2.do");
+				$("#tradePostNo").attr("value",tradePostNo);
+				$("#trade").submit();
+			}
+		});
+		
 		$("#applyBuyView").click(function(){
 				var url = "${pageContext.request.contextPath}";
 				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
@@ -87,6 +97,30 @@
 			$("#trade").submit();
 		});
 		
+		$("#deposit").click(function(){
+			var url = "${pageContext.request.contextPath}";
+			var tradeId = "${requestScope.tradePostVO.memberVO.id}";
+			var memberVOId = "${requestScope.tradePostVO.tradeId}";
+			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
+			$("#trade").attr("action", url+"/trade/deposit.do");
+			$("#memberVOId").attr("value",memberVOId);
+			$("#tradeId").attr("value",tradeId);
+			$("#tradePostNo").attr("value",tradePostNo);
+			$("#trade").submit();
+		});
+		
+		$("#completeTransaction2").click(function(){
+			var url = "${pageContext.request.contextPath}";
+			var memberVOId = "${requestScope.tradePostVO.tradeId}";
+			var tradeId = "${requestScope.tradePostVO.memberVO.id}";
+			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
+			$("#trade").attr("action", url+"/trade/completeTransaction.do");
+			$("#memberVOId").attr("value",memberVOId);
+			$("#tradeId").attr("value",tradeId);
+			$("#tradePostNo").attr("value",tradePostNo);
+			$("#trade").submit();
+		});
+		
 		/* 목록으로 돌아가기 */
 		$("#listBtn").click(function() {
 			location.href="${pageContext.request.contextPath}/trade/list_trade_post.do?pageNo=${requestScope.pageNo}&boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}";
@@ -101,6 +135,7 @@
 <input type="hidden" name="tradeId" id="tradeId">
 <input type="hidden" name="id" id="memberVOId">
 <input type="hidden" name="boardTypeNo" id="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}">
+<input type="hidden" name="pageNo" id="pageNo" value="${requestScope.pageNo}">
 </form>
 
 <div class="product-details">
@@ -164,34 +199,75 @@
 		<!-- 삽니다 게시판 버튼 -->
 		<c:if test="${requestScope.tradePostVO.boardTypeNo eq '1'}">
 			<c:choose>
+				<%-- 게시자(구매자)면 --%>
 				<c:when test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id}">
 					<c:choose>
+						<%-- 신청이 없으면 --%>
 						<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 							<div class="btn-group">
 								<span><button type="button" class="btn btn-primary">${requestScope.tradePostVO.status}</button></span>
 							</div>
 						</c:when>
+						<%-- 신청이 있으면 --%>
 						<c:otherwise>
 							<div class="btn-group">
-								<span><button type="button" id="applyBuyView" class="btn btn-primary">입금하기</button></span>
-								<span><button type="button" id="cancelTransactionFromApplicant" class="btn btn-primary">거래취소</button></span>
+							<c:choose>
+								<c:when test="${requestScope.historyStatus eq '거래중'}">
+									<span><button type="button" id="applyBuyView" class="btn btn-info3">입금하기</button></span>
+									<span><button type="button" id="cancelTransaction" class="btn btn-info3">거래취소</button></span>
+								</c:when>
+								<c:when test="${requestScope.historyStatus eq '물품배송'}">
+									<span><button type="button" id="completeTransaction2" class="btn btn-info3">거래완료</button></span>
+								</c:when>
+								<c:otherwise>
+									<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+								</c:otherwise>
+							</c:choose>
 							</div>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 				
+				<%-- 게시자(구매자)가 아니면 --%>
 				<c:otherwise>
 					<c:choose>
+						<%-- 신청이 없으면 --%>
 						<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 							<div class="btn-group">
 								<span><button type="button" id="applySellView" class="btn btn-info3">거래신청</button></span>
 							</div>
 						</c:when>
+						<%-- 신청이 있으면 --%>
 						<c:otherwise>
-							<div class="btn-group">
-								<span><button type="button" id="#" class="btn btn-info3">물품배송</button></span>
-								<span><button type="button" id="cancelTransactionFromPublisher" class="btn btn-info3">거래취소</button></span>
-							</div>
+							<c:choose>
+								<%-- 신청자 본인이면 --%>
+								<c:when test="${requestScope.tradePostVO.tradeId eq sessionScope.member.id}">
+									<div class="btn-group">
+										<c:choose>
+											<c:when test="${requestScope.historyStatus eq '거래중'}">
+												<span><button type="button" id="cancelTransaction" class="btn btn-info3">거래취소</button></span>
+											</c:when>
+											<c:when test="${requestScope.historyStatus eq '입금완료'}">
+												<span><button type="button" id="updateDeliveryTradeHistory" class="btn btn-info3">물품배송</button></span>
+											</c:when>
+											<c:otherwise>
+												<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+											</c:otherwise>
+										</c:choose>
+									</div>
+								</c:when>
+								<%-- 신청자 본인이 아니면 --%>
+								<c:otherwise>
+									<c:choose>
+										<c:when test="${requestScope.historyStatus eq '물품배송' or requestScope.historyStatus eq '입금완료'}">
+											<span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span>
+										</c:when>
+										<c:otherwise>
+											<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+										</c:otherwise>
+									</c:choose>
+								</c:otherwise>						
+							</c:choose>
 						</c:otherwise>
 					</c:choose>
 				</c:otherwise>
@@ -234,19 +310,35 @@
 						</div>
 					</c:when>
 					<c:otherwise>
-						<div class="btn-group">
 						<c:choose>
-							<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
-								<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
-							</c:when>
-							<c:when test="${requestScope.historyStatus eq '물품배송'}">
-								<span><button type="button" class="btn btn-info3" id="completeTransaction">거래완료</button></span>
+							<c:when test="${requestScope.tradePostVO.tradeId eq sessionScope.member.id}">
+								<div class="btn-group">
+								<c:choose>
+									<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
+										<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+									</c:when>
+									<c:when test="${requestScope.historyStatus eq '물품배송'}">
+										<span><button type="button" class="btn btn-info3" id="completeTransaction">거래완료</button></span>
+									</c:when>
+									<c:otherwise>
+										<span><button type="button" class="btn btn-info3" id="cancelTransactionFromApplicant">거래취소</button></span>
+									</c:otherwise>
+								</c:choose>
+								</div>
 							</c:when>
 							<c:otherwise>
-								<span><button type="button" class="btn btn-info3" id="cancelTransactionFromApplicant">거래취소</button></span>
+								<div class="btn-group">
+								<c:choose>
+									<c:when test="${requestScope.tradePostVO.status eq '물품배송'}">
+										<span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span>
+									</c:when>
+									<c:otherwise>
+										<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+									</c:otherwise>
+								</c:choose>
+								</div>
 							</c:otherwise>
 						</c:choose>
-						</div>
 					</c:otherwise>
 				</c:choose>
 			</c:otherwise>
