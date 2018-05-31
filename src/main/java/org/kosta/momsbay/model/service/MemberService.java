@@ -27,6 +27,7 @@ import org.kosta.momsbay.model.mapper.MemberMapper;
 import org.kosta.momsbay.model.vo.ChildrenStatisticsVO;
 import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -100,7 +101,10 @@ public class MemberService {
 	@Transactional
 	public void addMember(MemberVO member, List<ChildrenVO> children) {
 		// TODO Auto-generated method stub
+		 String hashPassword = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
+		 member.setPassword(hashPassword);
 		memberMapper.addMember(member);
+		
 		if (children.size() > 0) {
 			for (int i = 0; i < children.size(); i++) {
 				Map<String, String> tempMap = new HashMap<String, String>();
@@ -119,6 +123,8 @@ public class MemberService {
 	 * @author hwang
 	 */
 	public void updateMember(MemberVO member) {
+		String hashPassword = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
+		 member.setPassword(hashPassword);
 		memberMapper.updateMember(member);
 	}
 
