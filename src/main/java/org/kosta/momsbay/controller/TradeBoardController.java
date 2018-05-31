@@ -137,10 +137,15 @@ public class TradeBoardController {
 	@RequestMapping(value = "/deleteTradePost.do", method = RequestMethod.POST)
 	public String deleteTradePost(String tradePostNo, String pageNo, String boardTypeNo, String categoryNo) {
 		TradePostVO tradePostVO = tradePostService.deleteTradePost(Integer.parseInt(tradePostNo));
-		ListVO listVO=tradePostService.getTradePostList(pageNo, boardTypeNo, categoryNo);
+		ListVO listVO=tradePostService.getTradePostList(pageNo, boardTypeNo, tradePostVO.getCategoryNo()+"");
 		if(listVO.getList().isEmpty() || listVO.getList()==null) {
-			return "redirect:list_trade_post.do?pageNo="+(listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
-					+ tradePostVO.getCategoryNo() + "";
+			if(listVO.getPagingBean().getTotalPage() == 0) {
+				return "redirect:list_trade_post.do?pageNo=1&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
+						+ tradePostVO.getCategoryNo() + "";
+			} else {
+				return "redirect:list_trade_post.do?pageNo="+(listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
+						+ tradePostVO.getCategoryNo() + "";
+			}
 		}else {
 			return "redirect:list_trade_post.do?pageNo="+pageNo+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
 					+ tradePostVO.getCategoryNo() + "";
@@ -367,8 +372,13 @@ public class TradeBoardController {
 		SharePostVO sharePostVO = sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
 		ListVO listVO = sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo);
 		if(listVO.getList().isEmpty() || listVO.getList()==null) {
-			return "redirect:list_share_post.do?pageNo=" + (listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
-					+ sharePostVO.getCategoryNo() + "";
+			if(listVO.getPagingBean().getTotalPage() == 0) {
+				return "redirect:list_share_post.do?pageNo=1&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
+						+ sharePostVO.getCategoryNo() + "";
+			} else {
+				return "redirect:list_share_post.do?pageNo=" + (listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
+						+ sharePostVO.getCategoryNo() + "";
+			}
 		}else {
 			return "redirect:list_share_post.do?pageNo=" + pageNo +"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
 						+ sharePostVO.getCategoryNo() + "";

@@ -91,8 +91,13 @@
 					</ul>
 				</div>
 			</div>
-		</div>	
+		</div>
 		</c:forEach>
+		<div>
+			<c:if test="${empty requestScope.listVO.list}">
+				게시글이 존재하지 않습니다.
+			</c:if>
+		</div>
 		
 		
 	</div>
