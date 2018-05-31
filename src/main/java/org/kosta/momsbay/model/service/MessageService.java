@@ -138,13 +138,10 @@ public class MessageService {
 		map.put("messageNo", messageNo);
 		map.put("messageType", messageType);
 		MessageVO messageVO=messageMapper.detailMessage(map);
-		System.out.println("test2 "+messageVO);
-		System.out.println(messageType);
 		if(messageVO!=null && messageType.equals("receive") && messageVO.isStatus()==false) {
 			messageMapper.updateStatus(messageNo);
 			messageVO.setStatus(true);
 			messageMapper.updateReceiveFlag(messageVO.getSendMessageNo());
-			System.out.println("test3");
 		}
 		return messageVO;
 	}

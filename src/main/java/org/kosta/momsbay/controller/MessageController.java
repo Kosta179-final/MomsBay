@@ -124,7 +124,6 @@ public class MessageController {
 	 */
 	@RequestMapping("detail_message.do")
 	public String detailMessage(int messageNo,String messageType,String status,Model model) {
-		System.out.println("test1 "+ messageType.substring(messageType.indexOf("_")+1));
 		messageType=messageType.substring(messageType.indexOf("_")+1);
 		model.addAttribute("messageVO",messageService.detailMessage(messageNo,messageType));
 		return "message/detail_message.m_tiles";
