@@ -101,6 +101,7 @@
 <input type="hidden" name="tradeId" id="tradeId">
 <input type="hidden" name="id" id="memberVOId">
 <input type="hidden" name="boardTypeNo" id="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}">
+<input type="hidden" name="pageNo" id="pageNo" value="${requestScope.pageNo}">
 </form>
 
 <div class="product-details">
