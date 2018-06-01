@@ -280,8 +280,8 @@ a {
 }
 
 a:hover, a:focus {
-	color: #2a6496;
-	text-decoration: underline
+	/* color: #2a6496;
+	text-decoration: underline */
 }
 
 a:focus {
@@ -431,7 +431,7 @@ cite {
 }
 
 .text-primary:hover {
-	color: #3071a9
+	/* color: #3071a9 */
 }
 
 .text-warning {
@@ -971,7 +971,7 @@ pre code {
 		width: 91.66666666666666%
 	}
 	.col-sm-10 {
-		width: 83.33333333333334%
+		width: 73.33333333333334%
 	}
 	.col-sm-9 {
 		width: 75%
@@ -2080,7 +2080,7 @@ textarea.input-lg {
 
 .btn-primary:hover, .btn-primary:focus, .btn-primary:active,
 	.btn-primary.active, .open .dropdown-toggle.btn-primary {
-	color: #fff;
+	color: #ca3333;
 	background-color: #3276b1;
 	border-color: #285e8e
 }

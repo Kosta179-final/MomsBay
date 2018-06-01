@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/resources/css/image-magnify.css" rel="stylesheet">
 <script src='${pageContext.request.contextPath}/resources/js/jquery.zoom.js'></script>
 <script type="text/javascript">
@@ -168,7 +169,7 @@
 			</div>
 			<div class="row" align="left">
 				<div class="col-sm-12">
-					<span>희망가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.price}원</span>
+					<span>희망가격&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<fmt:formatNumber value="${requestScope.tradePostVO.price}" pattern="#,###.##"/>원</span>
 				</div>
 			</div>
 			<div class="row" align="left">
@@ -353,33 +354,40 @@
 <div class="category-tab">
 	<h1 align="left">DETAIL INFO</h1><hr>
 	<div style="text-align: left;">
-	<pre>${requestScope.tradePostVO.content}</pre>
+		<p align="left">${requestScope.tradePostVO.content}</p>
 	</div>
 </div><hr>
 <c:if test="${requestScope.tradePostVO.suggestContent ne NULL}">
-<p>판매자 상품 정보</p>
-<div class="category-tab">
-	<pre>${requestScope.tradePostVO.suggestContent}</pre>
-</div>
+	<p>판매자 상품 정보</p>
+		<div class="category-tab">
+			<pre>${requestScope.tradePostVO.suggestContent}</pre>
+		</div>
 </c:if>
 <div class="row">
 	<img src="${pageContext.request.contextPath}/resources/upload/images/detailfooter.png" alt=""/>
 </div><br><br>
-<div class="row">
-	<button type="button" name="button" class="btn btn-info6 pull-right" id="listBtn">목록으로</button>
-	<input type="hidden" name="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}"> 
-	<input type="hidden" name="categoryNo" value="${requestScope.tradePostVO.categoryNo}">
-	<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
-</div>
+
 <div class="row">
 	<div class="col-sm-12"><br><br></div>
 </div>
 <c:if test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id || sessionScope.member.grade == 'admin'}">
 	<div class="row">
-		<div class="col-sm-11">
+		<div class="col-sm-12">
 			<div align="center">
-				<button name="button" class="btn btn-info2" id="updateTradePostView">글수정</button>
-				<button name="button" class="btn btn-info3" id="deleteTradePost">글삭제</button>
+				<div class="row">
+					<div class="col-sm-5" style="padding-right: 6px;">
+						<button name="button" class="btn btn-info2 pull-right" id="updateTradePostView">글수정</button>
+					</div>
+					<div class="col-sm-1" style="padding-left: 0px; padding-right: 0px;">
+						<button name="button" class="btn btn-info3 pull-left" id="deleteTradePost">글삭제</button>
+					</div>
+					<div class="col-sm-6" style="padding-left: 3px;">
+						<button type="button" name="button" class="btn btn-info6 pull-left" id="listBtn">목록으로</button>
+						<input type="hidden" name="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}"> 
+						<input type="hidden" name="categoryNo" value="${requestScope.tradePostVO.categoryNo}">
+						<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
