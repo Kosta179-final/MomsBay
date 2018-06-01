@@ -140,7 +140,7 @@ public class TradeController {
 	 */
 	@Transactional
 	@RequestMapping(method= RequestMethod.POST,value="completeTransaction.do")
-	public String completeTransaction(String tradePostNo, String id, String tradeId,String rating) {
+	public String completeTransaction(String boardTypeNo, String tradePostNo, String id, String tradeId,String rating) {
 		TradePostVO tradePostVO = new TradePostVO();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
@@ -157,7 +157,12 @@ public class TradeController {
 		
 		historyService.addPointBuyHistory(tradePostVO.getTradeId(), price);
 		historyService.addPointSellHistory(tradePostVO.getMemberVO().getId(), price);
-		ratingService.updateRating(memberVO);
+		if (boardTypeNo.equals("2") || boardTypeNo == "2") {
+			ratingService.updateRating(memberVO);
+		}else {
+			memberVO.setId(tradeId);
+			ratingService.updateRating(memberVO);
+		}
 		return "redirect:/myaccount/findTradeHistoryListById.do";
 	}
 	

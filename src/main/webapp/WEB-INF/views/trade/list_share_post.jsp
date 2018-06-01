@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="${pageContext.request.contextPath}/resources/css/list-image-hover.css" rel="stylesheet">
 <script type="text/javascript">
 	function addSharePost(){
 		location.href="add_share_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}";
@@ -17,14 +18,14 @@
 			<div class="product-image-wrapper">
 				<div class="single-products">
 					<div class="productinfo text-center">
-						<a class="btn btn-info4" href="detail_share_post.do?pageNo=${requestScope.pageNo}&noneTradePostNo=${pvo.noneTradePostNo}">
+						<div class="list-img" onclick="location.href='detail_share_post.do?pageNo=${requestScope.pageNo}&noneTradePostNo=${pvo.noneTradePostNo}'">
 							<c:if test="${pvo.imgAddress eq 'noPhoto'}">
 								<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
 							</c:if>
 							<c:if test="${pvo.imgAddress ne 'noPhoto'}">
 								<img src="${pageContext.request.contextPath}/resources/upload/postImg/${pvo.imgAddress }" >
 							</c:if>
-						</a>
+						</div>
 						<div class="row" style="border-bottom: 1px solid #eee; padding: 10px;">
 							<strong style="margin: 20px;">
 								<span class="title" style="display:inline-block; width:230px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;">

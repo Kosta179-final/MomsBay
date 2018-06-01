@@ -95,9 +95,6 @@ function getNewMessage(){
 				$('#message-badge').text('');
 				$('#message-body').text('새로운 쪽지가 없습니다.')
 			}
-		},
-		error:function(){
-			alert('데이터 로드 실패 - 관리자에게 문의하세요');
 		}
 	})
 }
