@@ -53,9 +53,9 @@
 					</c:if>
 				</tbody>
 			</table>
-			<c:if test="${empty listVO.list}">
-				<label> 거래 내역이 없습니다. </label>
-			</c:if>
+					<c:if test="${empty listVO.list}">
+						<label> 거래 내역이 없습니다. </label>
+					</c:if>
 			<div class="row">
 				<%-- pagingBean --%>
 				<div class="row col-sm-offset-5">

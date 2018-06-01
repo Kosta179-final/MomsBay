@@ -430,8 +430,11 @@ public class TradeBoardController {
 	 * @author Jung
 	 */
 	@RequestMapping("/applyBuyView.do")
-	public String applyTradeView(String tradePostNo, Model model) {
-		model.addAttribute("tradePostVO",tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+	public String applyTradeView(String tradePostNo, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		request.setAttribute("tradePostVO",tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+		request.setAttribute("nowPoint",pointService.findNowpointById(memberVO.getId()));
 		return "service_trade.page_apply_buy_view";
 	}
 	
