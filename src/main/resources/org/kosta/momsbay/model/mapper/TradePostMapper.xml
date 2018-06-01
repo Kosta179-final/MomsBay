@@ -41,6 +41,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 , bm.name
 				 , tp.imgAddress
 				 , tp.regdate
+				 , tp. status
 		  FROM (
 						SELECT row_number() over(ORDER BY t.trade_post_no DESC) AS rnum
 								 , t.id
@@ -51,11 +52,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								 , t.board_type_no
 								 , to_char(t.regdate,'yyyy-mm-dd')as regdate
 								 , p.photo_path AS imgAddress 
-						  FROM trade_post t, photo p
+								 , ts.status
+						  FROM trade_post t, photo p, trade_status ts
 						WHERE t.board_type_no=#{board_type_no} 
 							 AND t.trade_post_no= p.trade_post_no
 							AND t.category_no=#{category_no} 
 							AND t.delete_status=0
+							AND ts.trade_status_no = t.trade_status_no
 					)tp
 				  , bay_member bm
 		 WHERE tp.id=bm.id 
@@ -113,6 +116,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 				 , bm.name
 				 , tp.imgAddress
 				 , tp.regdate
+				 , tp.status
 		  FROM (
 						SELECT row_number() over(ORDER BY t.trade_post_no DESC) AS rnum
 								 , t.id
@@ -122,9 +126,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 								 , t.board_type_no
 								 , to_char(t.regdate,'yyyy-mm-dd')as regdate
 								 , p.photo_path AS imgAddress 
-						  FROM trade_post t, photo p
+								 , ts.status
+						  FROM trade_post t, photo p, trade_status ts
 						WHERE t.trade_post_no= p.trade_post_no
 							AND t.delete_status=0
+							AND ts.trade_status_no=t.trade_status_no
 					)tp
 				  , bay_member bm
 		 WHERE tp.id=bm.id 

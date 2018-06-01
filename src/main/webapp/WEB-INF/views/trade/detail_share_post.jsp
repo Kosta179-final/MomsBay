@@ -158,24 +158,18 @@
 	<img src="${pageContext.request.contextPath}/resources/upload/images/detailfooter.png" alt=""/>
 </div><br><br>
 <div class="row">
-	<button type="button" name="button" class="btn btn-info6 pull-right" id="listBtn">목록으로</button>
-	<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
-	<input type="hidden" name="categoryNo" value="${requestScope.pvo.categoryNo}">
-	<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
-</div>
-<div class="row">
 	<div class="col-sm-12"><br><br></div>
 </div>
-<c:if test="${!empty member}">
+<c:choose>
+	<c:when test="${sessionScope.member.id==requestScope.pvo.memberVO.id || sessionScope.member.grade=='admin'}">
 	<div class="row">
-		<div class="col-sm-11">
-			<c:if test="${sessionScope.member.id==requestScope.pvo.memberVO.id || sessionScope.member.grade=='admin'}">
+		<div class="col-sm-12">
 			<div align="center">
 				<div class="row">
-					<div class="col-sm-5">
+					<div class="col-sm-5" style="padding-right: 6px;">
 						<button name="button" class="btn btn-info2 pull-right" onclick="updateSharePost()">글수정</button>
 					</div>
-					<div class="col-sm-5">
+					<div class="col-sm-1" style="padding-left: 0px; padding-right: 0px;">
 						<form name="deleteForm" id="deleteForm" method="post" action="deleteSharePost.do">
 							<button type="button" name="button" class="btn btn-info3 pull-left" id="deleteBtn">글삭제</button>
 							<input type="hidden" name="noneTradePostNo" value="${requestScope.pvo.noneTradePostNo}">
@@ -183,15 +177,33 @@
 							<input type="hidden" name="pageNo" value="${requestScope.pageNo}"> 
 						</form>
 					</div>
+					<div class="col-sm-6" style="padding-left: 3px;">
+						<button type="button" name="button" class="btn btn-info6 pull-left" id="listBtn">목록으로</button>
+						<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
+						<input type="hidden" name="categoryNo" value="${requestScope.pvo.categoryNo}">
+						<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
+					</div>
 				</div>
 			</div>
-			</c:if>
 		</div>
 	</div>
 	<div class="row">
 		<div class=col-sm-12><br><br><br><br>
 		</div>
 	</div>
-</c:if>
+	</c:when>
+	<c:otherwise>
+		<div class="col-sm-12" style="padding-left: 3px;">
+			<button type="button" name="button" class="btn btn-info6" id="listBtn">목록으로</button>
+			<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
+			<input type="hidden" name="categoryNo" value="${requestScope.pvo.categoryNo}">
+			<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
+		</div>
+		<div class="row">
+			<div class=col-sm-12><br><br><br><br></div>
+		</div>
+	</c:otherwise>
+</c:choose>
+
 
 
