@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.exception.TradeException;
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.PointService;
+import org.kosta.momsbay.model.service.RatingService;
 import org.kosta.momsbay.model.service.TradePostService;
 import org.kosta.momsbay.model.service.TradeService;
 import org.kosta.momsbay.model.vo.MemberVO;
@@ -32,6 +33,8 @@ public class TradeController {
 	private PointService pointService;
 	@Resource
 	private TradeService tradeService;
+	@Resource
+	private RatingService ratingService;
 	
 	/**
 	 * 거래신청 완료시 실행.
@@ -51,8 +54,7 @@ public class TradeController {
 		TradePostVO tradePostVO = new TradePostVO();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
-		if (tradePostVO.getBoardTypeNo() == 2) {
-			System.out.println(boardTypeNo);
+		if (boardTypeNo.equals("2") || boardTypeNo == "2") {
 			tradePostVO.setTradeId(tradeId);
 			tradePostVO.setMemberVO(memberVO);
 			tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
@@ -73,7 +75,6 @@ public class TradeController {
 			tradePostVO.setTradeType("구매");
 			historyService.addTradeHistory(tradePostVO);
 		} else {
-			System.out.println(boardTypeNo);
 			memberVO.setId(id);
 			tradePostVO.setTradeId(tradeId);
 			tradePostVO.setMemberVO(memberVO);
@@ -139,13 +140,15 @@ public class TradeController {
 	 */
 	@Transactional
 	@RequestMapping(method= RequestMethod.POST,value="completeTransaction.do")
-	public String completeTransaction(String tradePostNo, String id, String tradeId) {
+	public String completeTransaction(String tradePostNo, String id, String tradeId,String rating) {
 		TradePostVO tradePostVO = new TradePostVO();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
+		memberVO.setRating(Integer.parseInt(rating));
 		tradePostVO.setTradeId(tradeId);
 		tradePostVO.setMemberVO(memberVO);
 		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+		memberVO.setRating(Integer.parseInt(rating));
 		
 		tradeService.completeTransaction(tradePostVO);
 		tradePostService.updateTradeId(tradePostVO);
@@ -154,6 +157,7 @@ public class TradeController {
 		
 		historyService.addPointBuyHistory(tradePostVO.getTradeId(), price);
 		historyService.addPointSellHistory(tradePostVO.getMemberVO().getId(), price);
+		ratingService.updateRating(memberVO);
 		return "redirect:/myaccount/findTradeHistoryListById.do";
 	}
 	
