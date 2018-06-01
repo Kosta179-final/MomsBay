@@ -97,12 +97,18 @@
 							                        </div>
 												</div>
 												<div class="row">
-								                     <div class="col-sm-9" style="padding-left: 0px;">
-								                        <div class="tradeId">글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.name}</div>
+								                     <div class="col-sm-8" style="padding-left: 0px;">
+								                        <div class="tradeId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.name}</div>
 								                     </div>
-								                     <div class="col-sm-3">
-								                        <c:if test="${tpVO.status!='거래대기'}">
-								                              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label label-danger">${tpVO.status}</span>
+								                     <div class="col-sm-4" style="padding-right: 31px;">
+								                        <c:if test="${tpVO.status eq '거래대기'}">
+								                              <span class="label label-info">${tpVO.status}</span>
+								                        </c:if>
+								                        <c:if test="${tpVO.status eq '거래중'}">
+								                              <span class="label label-warning">${tpVO.status}</span>
+								                        </c:if>
+								                        <c:if test="${tpVO.status eq '거래완료'}">
+								                              <span class="label label-danger">${tpVO.status}</span>
 								                        </c:if>
 								                     </div>
 								                  </div>
