@@ -143,7 +143,7 @@ public class MessageController {
 		messageService.deleteMessage(messageNo, messageType.substring(messageType.indexOf("_")+1));
 		String url=null;
 		if(messageType.equals("receive")){
-			url="redirect:getReceiveMessageList.do?";	
+			url="redirect:getReceiveMessageList.do?";
 		} else if(messageType.equals("send")){
 			url="redirect:getSendMessageList.do?";
 		} else {

@@ -5,7 +5,7 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#register").click(function(){
-		location.href="${pageContext.request.contextPath}/home.do"
+		location.href="${pageContext.request.contextPath}/member/register.do";
 	});
 	
 	$("#findPasswordBtn").click(function(){
