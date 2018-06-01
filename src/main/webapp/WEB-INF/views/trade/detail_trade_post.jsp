@@ -1,8 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link href="${pageContext.request.contextPath}/resources/css/image-magnify.css" rel="stylesheet">
+<script src='${pageContext.request.contextPath}/resources/js/jquery.zoom.js'></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		$('.zoom').zoom();
 		$("#cancelTransactionFromPublisher").click(function(){
 			if(confirm("거래를 취소하시겠습니까?")){
 				var tradeId = "${requestScope.tradePostVO.tradeId}";
@@ -141,7 +144,7 @@
 <div class="product-details">
 	<!--product-details-->
 	<div class="col-sm-5">
-		<div class="view-product">
+		<div class="zoom view-product">
 			<c:choose>
 				<c:when test="${ imgAddress eq 'noPhoto'}">
 					<img src="${pageContext.request.contextPath}/resources/upload/images/default.png" >
