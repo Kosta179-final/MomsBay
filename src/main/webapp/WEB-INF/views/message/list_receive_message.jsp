@@ -45,6 +45,9 @@ $(document).ready(function(){
 				</c:forEach>
 			</tbody>
 		</table>
+		<c:if test="${empty requestScope.lvo.list}">
+			게시글이 존재하지 않습니다.
+		</c:if>
 	</div>
 		<c:set var="pb" value="${requestScope.lvo.pagingBean}"></c:set>
 		<ul class="pagination">
