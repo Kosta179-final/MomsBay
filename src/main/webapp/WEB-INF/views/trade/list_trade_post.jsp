@@ -22,12 +22,6 @@
 					$(selector).addClass('fa-heart-o');
 					$(selector).removeClass('fa-heart');
 				}
-				if(result=='1'){
-					alert("찜 목록 삭제");
-					
-				} else {
-					alert("찜 목록 추가");
-				}
 			}
 		});
 	}

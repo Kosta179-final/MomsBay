@@ -13,10 +13,12 @@ import javax.servlet.http.HttpSession;
 import org.kosta.momsbay.model.exception.LoginException;
 import org.kosta.momsbay.model.exception.NoMemberFoundException;
 import org.kosta.momsbay.model.service.MemberService;
+import org.kosta.momsbay.model.service.RatingService;
 import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,6 +33,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MemberController {
 	@Autowired
 	MemberService memberService;
+	@Autowired
+	RatingService ratingService;
 	
 	/**
 	 * 로그인처리.
@@ -133,6 +137,7 @@ public class MemberController {
 	 * @param address2
 	 * @return 주소URL
 	 */
+	@Transactional
 	@RequestMapping(method = RequestMethod.POST, value = "register.do")
 	public String register(MemberVO member, String year, String month, String day, String gender, String address2) {
 		/*
@@ -150,7 +155,9 @@ public class MemberController {
 				children.add(new ChildrenVO(cGender[i], birth));
 			}
 		}
-		memberService.addMember(member, children);	
+		memberService.addMember(member, children);
+		ratingService.createRating(member.getId());
+		
 		return "redirect:register_succ.do";
 	}
 	

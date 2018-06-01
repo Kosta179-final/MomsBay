@@ -58,10 +58,10 @@
 					<td>이메일</td><td>${sessionScope.member.email}</td>
 				</tr>
 				<tr>
-					<td>현재 포인트</td><td>${sessionScope.member.point}</td>
+					<td>현재 포인트</td><td>${nowPoint}</td>
 				</tr>
 				<tr>
-					<td>거래 후 포인트</td><td>${sessionScope.member.point - requestScope.tradePostVO.price}</td>
+					<td>거래 후 포인트</td><td>${nowPoint - requestScope.tradePostVO.price}</td>
 				</tr>
 			</table>
 		</div>

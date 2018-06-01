@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.momsbay.model.mapper.RatingMapper">
+	<insert id="createRating" parameterType="string">
+		INSERT INTO rating(id) values(#{value})
+	</insert>
+	
+	<update id="updateRating" parameterType="MemberVO">
+		UPDATE rating SET trade_count = trade_count + 1,
+		rating = (#{rating} + rating*trade_count)/(trade_count+1)
+		WHERE id = #{id}
+	</update>
+</mapper>
