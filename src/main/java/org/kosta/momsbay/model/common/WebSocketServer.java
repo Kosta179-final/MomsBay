@@ -17,7 +17,6 @@ public class WebSocketServer {
 
 	@OnMessage
 	public void onMessage(String message, Session session) throws IOException {
-		System.out.println(message);
 		synchronized (clients) {
 			// Iterate over the connected sessions
 			// and broadcast the received message
