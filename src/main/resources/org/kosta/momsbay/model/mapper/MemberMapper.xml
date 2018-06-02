@@ -117,4 +117,25 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		UPDATE bay_member SET password=#{pwd}
 		WHERE email=#{email}
 	</update>
+	
+	<select id="findTokenById" resultType="string">
+		SELECT token
+		FROM token_saving
+		WHERE id = #{values}
+	</select>
+	
+	<insert id="addAutoLoginToken">
+		INSERT INTO token_saving
+		VALUES(#{id},#{token},sysdate)
+	</insert>
+	
+	<update id="updateAutoLoginToken">
+		UPDATE token_saving SET token=#{token}, ondate=sysdate
+		WHERE id=#{id}
+	</update>
+
+	<delete id="deleteTokenById">
+		DELETE FROM token_saving
+		where id=#{values}
+	</delete>
 </mapper>

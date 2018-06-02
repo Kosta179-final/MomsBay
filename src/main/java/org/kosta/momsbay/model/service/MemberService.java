@@ -59,9 +59,9 @@ public class MemberService {
 	public MemberVO login(String id, String password) throws LoginException {
 		MemberVO memberVO = memberMapper.findMemberById(id);
 		if (memberVO == null)
-			throw new LoginException("아이디가 존재하지 않습니다");
+			throw new LoginException("Nonexistent ID");
 		else if (password == null || !BCrypt.checkpw(password, memberVO.getPassword()))
-			throw new LoginException("비밀번호가 다릅니다");
+			throw new LoginException("Nonexistent Password");
 
 		List<ChildrenVO> children = memberMapper.findChildrenByMemberId(id);
 		memberVO.setList(children);
@@ -206,7 +206,10 @@ public class MemberService {
 	 * @author Hwang
 	 */
 	public MemberVO findMemberById(String id) {
-		return memberMapper.findMemberById(id);
+		MemberVO memberVO = memberMapper.findMemberById(id);
+		List<ChildrenVO> children = memberMapper.findChildrenByMemberId(id);
+		memberVO.setList(children);
+		return memberVO;
 	}
 
 	/**
@@ -333,6 +336,51 @@ public class MemberService {
 			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
+		}
+	}
+
+	/**
+	 * 이전에 자동로그인 기록이 있는지 확인한다.
+	 * 그리고 있으면 update를, 없으면 insert를 한다.
+	 * @param id
+	 * @param token
+	 * @author Hwang
+	 */
+	public void addAutoLoginToken(String id, String token) {
+		Map<String, String> map = new HashMap<>();
+		map.put("id", id);
+		map.put("token", token);
+		if(memberMapper.findTokenById(id)==null) {
+			/*insert*/
+			memberMapper.addAutoLoginToken(map);
+		}else {
+			/*update*/
+			memberMapper.updateAutoLoginToken(map);
+		}
+	}
+
+	/**
+	 * 기존 토큰세이빙 테이블에서 로우를 제거한다.
+	 * @param id
+	 * @author Administrator
+	 */
+	public void deleteTokenById(String id) {
+		memberMapper.deleteTokenById(id);
+	}
+
+	/**
+	 * 쿠키와 db의 토큰정보를 비교한다.
+	 * @param id
+	 * @param token
+	 * @return 로그인 가능여부
+	 * @author Hwang
+	 */
+	public boolean autoLogin(String id, String token) {
+		String oldToken= memberMapper.findTokenById(id);
+		if(oldToken==null ||!oldToken.equals(token) ){
+			return false;
+		}else {
+			return true;
 		}
 	}
 }

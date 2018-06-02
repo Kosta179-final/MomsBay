@@ -31,4 +31,8 @@ public interface MemberMapper {
 	public int getMemberCountByGrade(String grade);
 	public String findMemberEmailById(String string);
 	public void updateMemberPassword(Map<String, String> map);
+	public String  findTokenById(String id);
+	public void addAutoLoginToken(Map<String, String> map);
+	public void updateAutoLoginToken(Map<String, String> map);
+	public void deleteTokenById(String id);
 }
