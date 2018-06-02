@@ -48,8 +48,8 @@ public class MemberService {
 	 * 존재하면 password를 비교 일치하지 않으면, "비밀번호가 다름" 메시지 throw 3.두 조건 모두 만족시, 자녀정보를 회원 id로
 	 * 검색 MemberVO에 SET하여 Return
 	 * 
-	 * refactoring : 암호화 된 비밀번호와 받아온 비밀번호를 비교한다.
-	 * 사용 암호화방법 : bCrypt
+	 * refactoring : 암호화 된 비밀번호와 받아온 비밀번호를 비교한다. 사용 암호화방법 : bCrypt
+	 * 
 	 * @param id
 	 * @param password
 	 * @return 자녀정보가 포함된 MemberVO
@@ -60,7 +60,7 @@ public class MemberService {
 		MemberVO memberVO = memberMapper.findMemberById(id);
 		if (memberVO == null)
 			throw new LoginException("아이디가 존재하지 않습니다");
-		else if (password == null || !BCrypt.checkpw(password, memberVO.getPassword() ))
+		else if (password == null || !BCrypt.checkpw(password, memberVO.getPassword()))
 			throw new LoginException("비밀번호가 다릅니다");
 
 		List<ChildrenVO> children = memberMapper.findChildrenByMemberId(id);
@@ -105,8 +105,8 @@ public class MemberService {
 	@Transactional
 	public void addMember(MemberVO member, List<ChildrenVO> children) {
 		// TODO Auto-generated method stub
-		 String hashPassword = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
-		 member.setPassword(hashPassword);
+		String hashPassword = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
+		member.setPassword(hashPassword);
 		memberMapper.addMember(member);
 		/*
 		 * 암호화 하여 저장
@@ -130,10 +130,10 @@ public class MemberService {
 	 */
 	public void updateMember(MemberVO member) {
 		String hashPassword = BCrypt.hashpw(member.getPassword(), BCrypt.gensalt());
-		 member.setPassword(hashPassword);
-		 /*
-			 * 암호화 하여 저장
-			 */
+		member.setPassword(hashPassword);
+		/*
+		 * 암호화 하여 저장
+		 */
 		memberMapper.updateMember(member);
 	}
 
@@ -146,15 +146,12 @@ public class MemberService {
 	 * @author hwang
 	 */
 	public boolean findMemberByPasswordAndId(String id, String password) {
-		Map<String, String> temp_map = new HashMap<String, String>();
-		temp_map.put("id", id);
-		temp_map.put("password", password);
-		int count = memberMapper.findMemberByPasswordAndId(temp_map);
-		if (count == 0) {
+		MemberVO memberVO = memberMapper.findMemberById(id);
+
+		if (password == null || !BCrypt.checkpw(password, memberVO.getPassword()))
 			return false;
-		} else {
+		else
 			return true;
-		}
 	}
 
 	/**
@@ -190,8 +187,8 @@ public class MemberService {
 	}
 
 	/**
-	 * 관리자모드에서 회원검색시 자동완성 기능을 위한 메소드.
-	 * 입력받은 id로 시작하는 모든 아이디를 반환한다.
+	 * 관리자모드에서 회원검색시 자동완성 기능을 위한 메소드. 입력받은 id로 시작하는 모든 아이디를 반환한다.
+	 * 
 	 * @param id
 	 * @return 아이디리스트
 	 * @author Hwang
@@ -203,6 +200,7 @@ public class MemberService {
 
 	/**
 	 * 아이디로 멤버의 정보를 찾아온다.
+	 * 
 	 * @param id
 	 * @return 멤버vo
 	 * @author Hwang
@@ -212,8 +210,8 @@ public class MemberService {
 	}
 
 	/**
-	 * 구글차트를 이용한 자녀 통계를 뽑는 메소드.
-	 * 남/여로 구분하여 추출.
+	 * 구글차트를 이용한 자녀 통계를 뽑는 메소드. 남/여로 구분하여 추출.
+	 * 
 	 * @return JSON
 	 * @author Hwang
 	 */
@@ -227,8 +225,8 @@ public class MemberService {
 	}
 
 	/**
-	 * 구글차트를 이용한 회원등급통계를 뽑는 메소드.
-	 * 회원등급별로 map에담아 return
+	 * 구글차트를 이용한 회원등급통계를 뽑는 메소드. 회원등급별로 map에담아 return
+	 * 
 	 * @return map
 	 * @author Hwang
 	 */
@@ -241,8 +239,8 @@ public class MemberService {
 	}
 
 	/**
-	 *  구글차트를 이용한 자녀 통계를 뽑는 메소드.
-	 * 남/여+나이대별로 구분하여 추출.
+	 * 구글차트를 이용한 자녀 통계를 뽑는 메소드. 남/여+나이대별로 구분하여 추출.
+	 * 
 	 * @return 자녀 나이+성별 통계
 	 * @author Hwang
 	 */
@@ -265,9 +263,8 @@ public class MemberService {
 	}
 
 	/**
-	 * 비밀번호 찾기 메소드.
-	 * 입력한 값과 비교하여 모두 일치하면 등록된 이메일로 임시비밀번호를 전송한 후, 
-	 * 임시비밀번호를 db에 업데이트한다.
+	 * 비밀번호 찾기 메소드. 입력한 값과 비교하여 모두 일치하면 등록된 이메일로 임시비밀번호를 전송한 후, 임시비밀번호를 db에 업데이트한다.
+	 * 
 	 * @param member
 	 * @throws NoMemberFoundException
 	 * @throws SQLException
@@ -275,16 +272,15 @@ public class MemberService {
 	 * @author Hwang
 	 */
 	public void findPasswordByNameAndEmail(MemberVO member) throws NoMemberFoundException, SQLException, IOException {
-		String email = memberMapper.findMemberExsitByName(member.getName());
+		String email = memberMapper.findMemberEmailById(member.getId());
 		Random rnd = new Random();
 		StringBuilder tempPwd = new StringBuilder();
 
 		if (email == null || email.equals("")) {
-			throw new NoMemberFoundException("입력한 이름의 계정이 존재하지 않습니다");
+			throw new NoMemberFoundException("No match id");
 		} else {
-			email = memberMapper.findMemberByEmail(member.getEmail());
-			if (email == null || email.equals("")) {
-				throw new NoMemberFoundException("입력한 이메일의 계정이 존재하지 않습니다");
+			if (!email.equals(member.getEmail())) {
+				throw new NoMemberFoundException("No match email");
 			} else {
 				for (int i = 0; i < 7; i++)
 					if (i % 2 == 0)
@@ -294,9 +290,11 @@ public class MemberService {
 				/*
 				 * 비밀번호 변경
 				 */
+				String hashPassword = tempPwd.toString();
+				hashPassword = BCrypt.hashpw(hashPassword, BCrypt.gensalt());
 				Map<String, String> map = new HashMap<>();
 				map.put("email", email);
-				map.put("pwd", tempPwd.toString());
+				map.put("pwd", hashPassword);
 				memberMapper.updateMemberPassword(map);
 			}
 
@@ -304,14 +302,14 @@ public class MemberService {
 		/*
 		 * mail method
 		 */
-		
+
 		Properties props = new Properties();
-		String resource="/mail.properties";
+		String resource = "/mail.properties";
 		Reader reader;
-			reader = Resources.getResourceAsReader(resource);
-			props.load(reader);
-		
-		String user =props.getProperty("user") ;
+		reader = Resources.getResourceAsReader(resource);
+		props.load(reader);
+
+		String user = props.getProperty("user");
 		String password = props.getProperty("password");
 		String to = email;
 
@@ -324,16 +322,15 @@ public class MemberService {
 			MimeMessage message = new MimeMessage(session);
 			message.setFrom(new InternetAddress(user));
 			message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
-			
-			String htmlContent = "당신의 임시 비밀번호는 <Strong>" + tempPwd 
-					+ "</Strong> 입니다. 사이트에 접속해서 로그인 후 비밀번호를 변경하세요.<br>";
+
+			String htmlContent = "당신의 임시 비밀번호는 <Strong>" + tempPwd + "</Strong> 입니다. 사이트에 접속해서 로그인 후 비밀번호를 변경하세요.<br>";
 
 			// Subject
 			message.setSubject("Mom's Bay 비밀번호 찾기 입니다");
 			// Text
 			message.setText(htmlContent, "UTF-8", "html");
 			// send the message
-			Transport.send(message);			
+			Transport.send(message);
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}

@@ -106,11 +106,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	AND g.grade=#{values}
 	</select>
 	
-	<select id="findMemberExsitByName" resultType="string">
+	<select id="findMemberEmailById" resultType="string">
 		SELECT email
 		FROM
 		bay_member
-		Where name = #{values}
+		Where id = #{values}
 	</select>
 	
 	<update id="updateMemberPassword" parameterType="map">

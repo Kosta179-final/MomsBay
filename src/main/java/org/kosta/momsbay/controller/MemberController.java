@@ -172,20 +172,21 @@ public class MemberController {
 	 */
 	@RequestMapping(method=RequestMethod.POST, value="findPasswordByNameAndEmail.do")
 	public String findPasswordByNameAndEmail(MemberVO member, HttpServletRequest request) {
+		String message="";
 		try {
 			memberService.findPasswordByNameAndEmail(member);
 		}catch (NoMemberFoundException e) {
 			// TODO: handle exception
-			request.setAttribute("message", e.getMessage());
-			return "member/system_alert";
+			message= e.getMessage();
+			return  "redirect:/member/system_paramAlert.do?message="+message;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
-			request.setAttribute("message", "DB ERROR!\n Try Again");
-			return "member/system_alert";
+			message= "DB ERROR!\n Try Again";
+			return  "redirect:/member/system_paramAlert.do?message="+message;
 		} catch (IOException e) {
-			request.setAttribute("message",e.getMessage());
+			message=e.getMessage();
 		}
-		request.setAttribute("message", "We Send Temp password to Your Email\nPlease Check Email");
-		return  "redirect:/member/system_alert.do";
+		message= "We Send Temp password to Your Email\nPlease Check Email";
+		return  "redirect:/member/system_paramAlert.do?message="+message;
 	}
 }

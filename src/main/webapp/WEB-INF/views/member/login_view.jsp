@@ -47,11 +47,11 @@ $(document).ready(function(){
 					</div>
 
 					<div class="modal-body">
-						<p>이름과 이메일을  입력해 주세요.</p>
+						<p>아이디와 이메일을  입력해 주세요.</p>
 						<div>
 						<form id="findPasswordForm" action="findPasswordByNameAndEmail.do" method="post">
-						<input type="text" name="name" id="name"  class="form-control" placeholder="ex)홍길동" style="width: 30%; margin: 0 auto;" required="required" > 
-						<input type="email" name="email" id="email" class="form-control" placeholder="ex)piwhd@naver.com" style="width: 30%; margin: 0 auto;" required="required"> 
+						<input type="text" name="id" id="name"  class="form-control" placeholder="ID" style="width: 30%; margin: 0 auto;" required="required" > 
+						<input type="email" name="email" id="email" class="form-control" placeholder="EMAIL" style="width: 30%; margin: 0 auto;" required="required"> 
 						<input type="button" class="btn  btn-success form-control" id="findPasswordBtn" style="width: 30%; margin: 0 auto;" data-dismiss="modal" value="확인">
 						</form>
 						</div>

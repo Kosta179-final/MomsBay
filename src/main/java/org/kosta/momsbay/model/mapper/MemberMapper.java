@@ -29,6 +29,6 @@ public interface MemberMapper {
 	public List<String> findMemberIdByPart(String id);
 	public String getMemberChildStatistics(String gender);
 	public int getMemberCountByGrade(String grade);
-	public String findMemberExsitByName(String string);
+	public String findMemberEmailById(String string);
 	public void updateMemberPassword(Map<String, String> map);
 }
