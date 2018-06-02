@@ -8,7 +8,7 @@ import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
 /**
  * Q&A 게시판 DB연동 Mapper.
- * @author sam
+ * @author 개발제발
  */
 @Mapper
 public interface QnaPostMapper {

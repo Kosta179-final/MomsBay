@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 /**
  * 댓글 관련 비즈니스로직 서비스.
  * 관련Mapper: CommentMapper
- * @author Jung
+ * @author 개발제발
  */
 @Service
 public class CommentService {

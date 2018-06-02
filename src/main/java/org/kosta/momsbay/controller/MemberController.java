@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * Member관련 요청 Mapping을 처리하는 컨트롤러
- * @author Hwang
+ * @author 개발제발
  */
 @RequestMapping("/member")
 @Controller
@@ -161,6 +161,15 @@ public class MemberController {
 		return "redirect:register_succ.do";
 	}
 	
+	/**
+	 * 비밀번호 찾기 메소드.
+	 * 입력한 이름과 이메일주소가 db값과 일치하면 
+	 * 등록되어있는 메일로 임시 비밀번호를 보내고, db의 값으로 update한다.
+	 * @param member
+	 * @param request
+	 * @return 메시지
+	 * @author Hwang
+	 */
 	@RequestMapping(method=RequestMethod.POST, value="findPasswordByNameAndEmail.do")
 	public String findPasswordByNameAndEmail(MemberVO member, HttpServletRequest request) {
 		try {

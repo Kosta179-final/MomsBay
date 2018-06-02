@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * 구매, 판매 관련 작업 서비스 제공.
  * 관련Mapper: TradeMapper, PointHistoryMapper, TradePostMapper
- * @author Hwang
+ * @author 개발제발
  */
 @Service
 public class TradeService {

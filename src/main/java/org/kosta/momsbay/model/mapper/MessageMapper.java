@@ -9,7 +9,7 @@ import org.kosta.momsbay.model.vo.PostVO;
 
 /**
  * 쪽지 서비스 DB연동 Mapper.
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface MessageMapper {

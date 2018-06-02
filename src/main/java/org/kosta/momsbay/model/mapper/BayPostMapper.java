@@ -8,7 +8,7 @@ import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.PostVO;
 /**
  * 일반 게시판 DB연동 Mapper.
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface BayPostMapper {

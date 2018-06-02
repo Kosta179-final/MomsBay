@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 /**
  * 평점 관련 Service
  * 관련Mapper: RatingMapper
- * @author Jung
+ * @author 개발제발
  */
 @Service
 public class RatingService {

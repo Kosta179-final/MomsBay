@@ -8,7 +8,7 @@ import org.kosta.momsbay.model.vo.TradePostVO;
 /**
  * 거래내역 DB연동 Mapper.
  * 관련VO: TradeHistoryVO
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface TradeHistoryMapper {

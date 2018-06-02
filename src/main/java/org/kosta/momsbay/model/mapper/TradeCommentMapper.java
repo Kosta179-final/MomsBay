@@ -6,7 +6,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.kosta.momsbay.model.vo.TradeCommentVO;
 /**
  * 거래 게시판 관련 DB연동 Mapper.
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface TradeCommentMapper {

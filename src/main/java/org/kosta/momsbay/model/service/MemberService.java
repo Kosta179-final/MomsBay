@@ -34,7 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 회원관련 서비스 제공. 관련Mapper: MemberMapper
  * 
- * @author Hwang
+ * @author 개발제발
  */
 @Service
 public class MemberService {
@@ -189,15 +189,34 @@ public class MemberService {
 		}
 	}
 
+	/**
+	 * 관리자모드에서 회원검색시 자동완성 기능을 위한 메소드.
+	 * 입력받은 id로 시작하는 모든 아이디를 반환한다.
+	 * @param id
+	 * @return 아이디리스트
+	 * @author Hwang
+	 */
 	public List<String> findMemberIdByPart(String id) {
 		String temp_id = id + "%";
 		return memberMapper.findMemberIdByPart(temp_id);
 	}
 
+	/**
+	 * 아이디로 멤버의 정보를 찾아온다.
+	 * @param id
+	 * @return 멤버vo
+	 * @author Hwang
+	 */
 	public MemberVO findMemberById(String id) {
 		return memberMapper.findMemberById(id);
 	}
 
+	/**
+	 * 구글차트를 이용한 자녀 통계를 뽑는 메소드.
+	 * 남/여로 구분하여 추출.
+	 * @return JSON
+	 * @author Hwang
+	 */
 	public StringBuilder getMemberChildStatistics() {
 		StringBuilder children = new StringBuilder();
 		children.append("['여아',");
@@ -207,6 +226,12 @@ public class MemberService {
 		return children;
 	}
 
+	/**
+	 * 구글차트를 이용한 회원등급통계를 뽑는 메소드.
+	 * 회원등급별로 map에담아 return
+	 * @return map
+	 * @author Hwang
+	 */
 	public Map<String, Integer> getMemberGradeStatistics() {
 		Map<String, Integer> list = new HashMap<>();
 		list.put("member", memberMapper.getMemberCountByGrade("member"));
@@ -215,6 +240,12 @@ public class MemberService {
 		return list;
 	}
 
+	/**
+	 *  구글차트를 이용한 자녀 통계를 뽑는 메소드.
+	 * 남/여+나이대별로 구분하여 추출.
+	 * @return 자녀 나이+성별 통계
+	 * @author Hwang
+	 */
 	public List<ChildrenStatisticsVO> getChildrenAgeStatistics() {
 		List<ChildrenStatisticsVO> list = new ArrayList<>();
 		ChildrenStatisticsVO ch = new ChildrenStatisticsVO();
@@ -233,6 +264,16 @@ public class MemberService {
 		return list;
 	}
 
+	/**
+	 * 비밀번호 찾기 메소드.
+	 * 입력한 값과 비교하여 모두 일치하면 등록된 이메일로 임시비밀번호를 전송한 후, 
+	 * 임시비밀번호를 db에 업데이트한다.
+	 * @param member
+	 * @throws NoMemberFoundException
+	 * @throws SQLException
+	 * @throws IOException
+	 * @author Hwang
+	 */
 	public void findPasswordByNameAndEmail(MemberVO member) throws NoMemberFoundException, SQLException, IOException {
 		String email = memberMapper.findMemberExsitByName(member.getName());
 		Random rnd = new Random();
@@ -261,7 +302,7 @@ public class MemberService {
 
 		}
 		/*
-		 * mail test
+		 * mail method
 		 */
 		
 		Properties props = new Properties();

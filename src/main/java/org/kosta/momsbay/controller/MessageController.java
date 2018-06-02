@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 쪽지 관련 작업처리 Controller.
- * @author Hwang
+ * @author 개발제발
  */
 @RequestMapping("/message")
 @Controller

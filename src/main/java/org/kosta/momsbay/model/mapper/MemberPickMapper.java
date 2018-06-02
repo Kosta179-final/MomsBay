@@ -8,7 +8,7 @@ import org.kosta.momsbay.model.vo.PostVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 /**
  * 찜 목록 추가, 삭제 기능 DB연동 Mapper.
- * @author Jung
+ * @author 개발제발
  */
 @Mapper
 public interface MemberPickMapper {
