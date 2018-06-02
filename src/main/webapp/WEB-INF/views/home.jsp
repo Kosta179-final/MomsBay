@@ -37,7 +37,7 @@
 						
 						<div class="item">
 							<div class="col-sm-12">
-								<img style="border: 3px;border-radius: 7px;-moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px" src="resources/images/home/원피스7.png" class="girl img-responsive"
+								<img style="border: 3px;border-radius: 7px;-moz-border-radius: 7px;-khtml-border-radius: 7px;-webkit-border-radius: 7px" src="resources/images/home/원피스_new.png" class="girl img-responsive"
 									alt="" /> 
 							</div>
 						</div>
