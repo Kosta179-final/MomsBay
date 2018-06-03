@@ -97,7 +97,7 @@
 	                  </div>
 	                  <div class="row">
 	                     <div class="col-sm-9" style="padding-left: 0px;">
-	                        <div class="tradeId">글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.name}</div>
+	                        <div class="tradeId">글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.id}</div>
 	                     </div>
 	                     <div class="col-sm-3">
 	                        <c:if test="${tpVO.status!='거래대기'}">
