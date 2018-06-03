@@ -50,15 +50,8 @@ public class TradeController {
 	 */
 	@Transactional
 	@RequestMapping(method= RequestMethod.POST,value="applyTransaction.do")
-	public String applyTrade(String tradePostNo, String id, String tradeId,String boardTypeNo, Model model){
-		TradePostVO tradePostVO = new TradePostVO();
-		MemberVO memberVO = new MemberVO();
-		memberVO.setId(id);
-		if (boardTypeNo.equals("2") || boardTypeNo == "2") {
-			tradePostVO.setTradeId(tradeId);
-			tradePostVO.setMemberVO(memberVO);
-			tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
-			tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+	public String applyTrade(TradePostVO tradePostVO, Model model){
+		if (tradePostVO.getBoardTypeNo()==2) {
 			try {
 				tradeService.applyTransaction(tradePostVO);
 			} catch (TradeException e) {
@@ -75,11 +68,6 @@ public class TradeController {
 			tradePostVO.setTradeType("구매");
 			historyService.addTradeHistory(tradePostVO);
 		} else {
-			memberVO.setId(id);
-			tradePostVO.setTradeId(tradeId);
-			tradePostVO.setMemberVO(memberVO);
-			tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
-			tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
 			try {
 				tradeService.applyTransaction(tradePostVO);
 				historyService.updateDepositTradeHistory(tradePostVO);
@@ -150,17 +138,21 @@ public class TradeController {
 		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
 		memberVO.setRating(Integer.parseInt(rating));
 		
-		tradeService.completeTransaction(tradePostVO);
+		int price=tradePostService.findPirceByTradePostNo(tradePostVO.getTradePostNo());
 		tradePostService.updateTradeId(tradePostVO);
 		historyService.updateCompleteTradeHistory(tradePostVO);
-		int price=tradePostService.findPirceByTradePostNo(tradePostVO.getTradePostNo());
 		
-		historyService.addPointBuyHistory(tradePostVO.getTradeId(), price);
-		historyService.addPointSellHistory(tradePostVO.getMemberVO().getId(), price);
 		if (boardTypeNo.equals("2") || boardTypeNo == "2") {
+			tradeService.completeTransaction(tradePostVO);
+			historyService.addPointBuyHistory(tradePostVO.getTradeId(), price);
+			historyService.addPointSellHistory(tradePostVO.getMemberVO().getId(), price);
 			ratingService.updateRating(memberVO);
 		}else {
+			historyService.addPointBuyHistory(tradePostVO.getMemberVO().getId(), price);
+			historyService.addPointSellHistory(tradePostVO.getTradeId(), price);
 			memberVO.setId(tradeId);
+			tradePostVO.setTradeId(id);
+			tradeService.completeTransaction(tradePostVO);
 			ratingService.updateRating(memberVO);
 		}
 		return "redirect:/myaccount/findTradeHistoryListById.do";
