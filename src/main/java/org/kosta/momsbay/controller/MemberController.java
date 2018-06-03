@@ -85,6 +85,8 @@ public class MemberController {
 					response.addCookie(tokenCookie);
 					makeTokenCookie(id, token);
 					response.sendRedirect("/momsbay/home.do");
+				}else {
+					response.sendRedirect("/momsbay/home.do");
 				}
 			}
 		} catch (LoginException error) {
