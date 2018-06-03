@@ -164,6 +164,11 @@
 		<div class="product-information">
 			<!--/product-information-->
 			<div class="row" align="left">
+				<span>
+					<c:if test="${requestScope.tradePostVO.status eq '거래완료'}">
+						<div class="label label-danger" align="right">거래완료</div>
+					</c:if>
+				</span>
 				<div class="col-sm-12">
 					<span style="font-size: 30px">${requestScope.tradePostVO.title}</span>
 				</div><hr>
@@ -291,7 +296,7 @@
 					<%-- 신청이 없으면 --%>
 					<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 						<div class="btn-group">
-							<span><button type="button" class="btn btn-primary">${requestScope.tradePostVO.status}</button></span>
+							<div class="label label-info">${requestScope.tradePostVO.status}</div>
 						</div>
 					</c:when>
 					<%-- 신청이 있으면 --%>
@@ -299,7 +304,7 @@
 						<div class="btn-group">
 							<c:choose>
 								<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
-									<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+									<span><%-- 거래 완료시 상세페이지 제목공간에 거래완료 라벨 생긴다. --%></span>
 								</c:when>
 								<c:when test="${requestScope.historyStatus eq '물품배송'}">
 									<span><button type="button" class="btn btn-info3">배송완료</button></span>
@@ -330,7 +335,7 @@
 								<div class="btn-group">
 								<c:choose>
 									<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
-										<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+										<span><%-- 거래 완료시 상세페이지 제목공간에 거래완료 라벨 생긴다. --%></span>
 									</c:when>
 									<c:when test="${requestScope.historyStatus eq '물품배송'}">
 										<span><button type="button" class="btn btn-info3" data-toggle="modal" data-target="#myModal">거래완료</button></span>
@@ -347,6 +352,9 @@
 								<c:choose>
 									<c:when test="${requestScope.tradePostVO.status eq '물품배송'}">
 										<span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span>
+									</c:when>
+									<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
+										<%-- <span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span> --%>
 									</c:when>
 									<c:otherwise>
 										<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
@@ -382,7 +390,8 @@
 <div class="row">
 	<div class="col-sm-12"><br><br></div>
 </div>
-<c:if test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id || sessionScope.member.grade == 'admin'}">
+<c:choose>
+	<c:when test="${sessionScope.member.id==requestScope.tradePostVO.memberVO.id || sessionScope.member.grade == 'admin'}">
 	<div class="row">
 		<div class="col-sm-12">
 			<div align="center">
@@ -407,8 +416,21 @@
 			<div class=col-sm-12><br><br><br><br>
 		</div>
 	</div>
-</c:if>
-
+	</c:when>
+	<c:otherwise>
+		<div class="row">
+			<div class="col-sm-12" style="padding-left: 3px;">
+				<button type="button" name="button" class="btn btn-info6" id="listBtn">목록으로</button>
+				<input type="hidden" name="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}"> 
+				<input type="hidden" name="categoryNo" value="${requestScope.tradePostVO.categoryNo}">
+				<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
+			</div>
+		</div>	
+		<div class="row">
+			<div class=col-sm-12><br><br><br><br></div>
+		</div>
+	</c:otherwise>
+</c:choose>
 
 <!--  modal -->
 <div class="modal fade" id="myModal" role="dialog">

@@ -160,10 +160,10 @@
 <div class="row">
 	<div class="col-sm-12"><br><br></div>
 </div>
-<c:if test="${!empty member}">
+<c:choose>
+	<c:when test="${sessionScope.member.id==requestScope.pvo.memberVO.id || sessionScope.member.grade=='admin'}">
 	<div class="row">
 		<div class="col-sm-12">
-			<c:if test="${sessionScope.member.id==requestScope.pvo.memberVO.id || sessionScope.member.grade=='admin'}">
 			<div align="center">
 				<div class="row">
 					<div class="col-sm-5" style="padding-right: 6px;">
@@ -185,13 +185,25 @@
 					</div>
 				</div>
 			</div>
-			</c:if>
 		</div>
 	</div>
 	<div class="row">
 		<div class=col-sm-12><br><br><br><br>
 		</div>
 	</div>
-</c:if>
+	</c:when>
+	<c:otherwise>
+		<div class="col-sm-12" style="padding-left: 3px;">
+			<button type="button" name="button" class="btn btn-info6" id="listBtn">목록으로</button>
+			<input type="hidden" name="boardTypeNo" value="${requestScope.pvo.boardTypeNo}"> 
+			<input type="hidden" name="categoryNo" value="${requestScope.pvo.categoryNo}">
+			<input type="hidden" name="pageNo" value="${requestScope.pageNo}">
+		</div>
+		<div class="row">
+			<div class=col-sm-12><br><br><br><br></div>
+		</div>
+	</c:otherwise>
+</c:choose>
+
 
 

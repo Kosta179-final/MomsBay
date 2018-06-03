@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 쪽지 관련 서비스 제공.
  * 관련Mapper: MessageMapper
- * @author Hwang
+ * @author 개발제발
  */
 @Service
 public class MessageService {

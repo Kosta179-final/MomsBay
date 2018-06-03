@@ -12,6 +12,24 @@
       }   
       location.href=lc
    }
+   
+   $(document).ready(function(){
+	  /*
+	  	현재 페이지에 대한 메뉴 표시를 위한 css 설정
+	  */
+		var requestUrl=location.search;
+	  	var strIndex=requestUrl.indexOf('categoryNo=');
+	  	if(strIndex!=-1){
+			var categoryNo=requestUrl.substr(strIndex+11);
+			var categoryId='#category_no'+categoryNo;
+			$(categoryId).css({
+				"color": "#FE980F",
+				"text-decoration": "underline"
+			});
+			$(categoryId).closest('.panel-collapse').removeClass('collapse');
+			$(categoryId).closest('.panel-collapse').addClass('in');
+	  	}
+   });
 </script>
    <div class="left-sidebar">
       <h2>카테고리</h2>
@@ -21,17 +39,16 @@
             <div class="panel-heading">
                <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordian" href="#a">
-                     <span class="pull-right"><i class="fa fa-plus"></i></span>
-                     아기띠/외출용품
+                     <span class="pull-right"><i class="fa fa-plus"></i></span> 아기띠/외출용품
                   </a>
                </h4>
             </div>
             <div id="a" class="panel-collapse collapse" style="height: auto;">
                <div class="panel-body">
                   <ul>
-                     <li><a href="#this" onclick="url('1')">유모차</a></li>
-                     <li><a href="#this" onclick="url('2')">카시트</a></li>
-                     <li><a href="#this" onclick="url('3')">아기띠</a></li>
+                     <li><a id="category_no1" href="#this" onclick="url('1')">유모차</a></li>
+                     <li><a id="category_no2" href="#this" onclick="url('2')">카시트</a></li>
+                     <li><a id="category_no3" href="#this" onclick="url('3')">아기띠</a></li>
                   </ul>
                </div>
             </div>
@@ -47,10 +64,10 @@
             <div id="b" class="panel-collapse collapse">
                <div class="panel-body">
                   <ul>
-                     <li><a href="#this" onclick="url(4)">유아동 의류</a></li>
-                     <li><a href="#this" onclick="url(5)">신생아 의류</a></li>
-                     <li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=6">신발</a></li>
-                     <li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=7">인형</a></li>
+                     <li><a id="category_no4" href="#this" onclick="url(4)">유아동 의류</a></li>
+                     <li><a id="category_no5" href="#this" onclick="url(5)">신생아 의류</a></li>
+                     <li><a id="category_no6" href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=6">신발</a></li>
+                     <li><a id="category_no7" href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=7">인형</a></li>
                   </ul>
                </div>
             </div>
@@ -67,8 +84,8 @@
             <div id="c" class="panel-collapse collapse">
                <div class="panel-body">
                   <ul>
-                     <li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=8">물티슈</a></li>
-                     <li><a href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=9">욕조/탕 온도계/샴푸캡</a></li>
+                     <li><a id="category_no8"href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=8">물티슈</a></li>
+                     <li><a id="category_no9"href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=9">욕조/탕 온도계/샴푸캡</a></li>
                   </ul>
                </div>
             </div>

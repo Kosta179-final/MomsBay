@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * BayPost 처리하는 Controller. 관련 Service: QnaPostService, BayPostService,
  * TradePostService
  * 
- * @author Hwang
+ * @author 개발제발
  *
  */
 @RequestMapping("/bay")

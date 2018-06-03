@@ -6,7 +6,7 @@ package org.kosta.momsbay.model.common;
  * getNowPageGroup()<br>getStartPageOfPageGroup()<br>
  * getEndPageOfPageGroup()<br> isPreviousPageGroup()<br>isNextPageGroup()
  * 
- * @author kosta
+ * @author 개발제발
  *
  */
 public class PagingBean {

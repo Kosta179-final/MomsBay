@@ -71,6 +71,9 @@ function getThumbnailPrivew(html, $target) {
 	</div>
 	<input type="hidden" name="tradePostNo" value="${requestScope.tradePostVO.tradePostNo}"><br>
 	<div class="row">
+		<div class="col-sm-12"><br></div>
+	</div>
+	<div class="row">
 		<div class="btn-group">
 			<span><input type="submit" class="btn btn-info2" value="글수정"></span>
 		</div>

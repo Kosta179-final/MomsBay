@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * 관리자 기능 수행하는 컨트롤러.
  * 
- * @author Hwang
+ * @author 개발제발
  */
 @RequestMapping("/admin")
 @Controller

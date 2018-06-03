@@ -4,7 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.kosta.momsbay.model.vo.MemberVO;
 /**
  * 평점 기능 DB연동 Mapper.
- * @author Jung
+ * @author 개발제발
  */
 @Mapper
 public interface RatingMapper {

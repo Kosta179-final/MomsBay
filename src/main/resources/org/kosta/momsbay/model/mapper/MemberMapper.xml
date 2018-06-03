@@ -106,15 +106,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	AND g.grade=#{values}
 	</select>
 	
-	<select id="findMemberExsitByName" resultType="string">
+	<select id="findMemberEmailById" resultType="string">
 		SELECT email
 		FROM
 		bay_member
-		Where name = #{values}
+		Where id = #{values}
 	</select>
 	
 	<update id="updateMemberPassword" parameterType="map">
 		UPDATE bay_member SET password=#{pwd}
 		WHERE email=#{email}
 	</update>
+	
+	<select id="findTokenById" resultType="string">
+		SELECT token
+		FROM token_saving
+		WHERE id = #{values}
+	</select>
+	
+	<insert id="addAutoLoginToken">
+		INSERT INTO token_saving
+		VALUES(#{id},#{token},sysdate)
+	</insert>
+	
+	<update id="updateAutoLoginToken">
+		UPDATE token_saving SET token=#{token}, ondate=sysdate
+		WHERE id=#{id}
+	</update>
+
+	<delete id="deleteTokenById">
+		DELETE FROM token_saving
+		where id=#{values}
+	</delete>
 </mapper>

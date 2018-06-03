@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 /**
  * 찜관련 서비스 제공.
  * 관련Mapper: MemberPickMapper
- * @author Hwang
+ * @author 개발제발
  */
 @Service
 public class MemberPickService {

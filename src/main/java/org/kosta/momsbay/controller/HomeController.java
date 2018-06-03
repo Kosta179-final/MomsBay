@@ -9,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * Home으로 mapping과 PathVariable을 통해 페이지이동을 담당하는 컨트롤러.
- * @author Hwang
+ * @author 개발제발
  *
  */
 @Controller

@@ -5,7 +5,7 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 /**
  * 찜 관련 기능 DB연동 Mapper.
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface PhotoUploadMapper {
