@@ -86,7 +86,11 @@ function getNewMessage(){
 					str+="<a href='" + "/momsbay/message/detail_message.do?messageNo=" +value.messageNo+ "&messageType=receive"+ "'>";
 					str+="<span class='pull-right'>"+value.regdate.substring(0,value.regdate.length-3)+"</span><br>";
 					str+="<span class='pull-left'>"+value.memberVO.id+"</span>";
-					str+="<span class='pull-right'>"+value.title+"</span>";
+					var title=value.title;
+					if(title.length>5){
+						title=title.substr(0,5)+'...';
+					}
+					str+="<span class='pull-right'>"+title+"</span>";
 					str+="</a>";
 					str+="</div>";
 					$('#message-body').append(str);
