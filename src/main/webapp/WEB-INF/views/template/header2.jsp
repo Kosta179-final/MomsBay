@@ -85,7 +85,7 @@ $(document).ready(function(){
 								<li><a href="${pageContext.request.contextPath}/myaccount/findPickListById.do"><i class="fa fa-heart"></i> 찜목록</a></li>
 								</c:if>
 								<c:if test="${member.grade  eq 'admin'}">
-								<li><a href="#"><i class="fa fa-user"></i> 관리자 페이지</a></li>
+								<li><a href="${pageContext.request.contextPath}/admin/getPeopleList.do"><i class="fa fa-user"></i> 관리자 페이지</a></li>
 								</c:if>
 								
 								<li class="dropdown">
