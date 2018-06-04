@@ -24,7 +24,7 @@
 <form action="" id="trade" method="post">
 <input type="hidden" name="tradePostNo" id="tradePostNo">
 <input type="hidden" name="tradeId" id="tradeId">
-<input type="hidden" name="id" id="memberVOId">
+<input type="hidden" name="memberVO.id" id="memberVOId">
 <input type="hidden" name="boardTypeNo" id="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}">
 </form>
 

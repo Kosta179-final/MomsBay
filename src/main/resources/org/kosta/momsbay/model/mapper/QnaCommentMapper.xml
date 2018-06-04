@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.momsbay.model.mapper.QnaCommentMapper">
+	<select id="getQnaCommentList" parameterType="map" resultType="qnaCommentVO">
+	    select BAY_COMMENT_no,bay_comment_content,bay_comment_regdate,id
+		from BAY_COMMENT
+		where bay_post_no=#{bayPostNo}
+		order by bay_comment_no desc
+	</select>
+	<insert id="addQnaComment" parameterType="qnaCommentVO">
+		<selectKey keyProperty="bayCommentNo" resultType="int" order="BEFORE">
+			SELECT bay_comment_seq.nextval FROM dual
+		</selectKey>
+		insert into bay_comment(bay_comment_no,bay_comment_content,bay_comment_regdate,id,bay_post_no)
+		values(#{bayCommentNo},#{bayCommentContent},sysdate,#{id},#{bayPostNo})
+		</insert>
+	<delete id="deleteComment">
+		DELETE FROM bay_comment 
+		WHERE bay_comment_no= #{value}
+	</delete>
+	<update id="updateComment" parameterType="qnaCommentVO">
+	UPDATE bay_comment 
+	SET bay_comment_content = #{bayCommentContent}
+	where BAY_COMMENT_no = #{bayCommentNo}
+	</update>
+</mapper>

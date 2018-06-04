@@ -107,7 +107,7 @@
                      
                      <div class="row">
                         <div class="col-sm-8" style="padding-left: 0px;">
-                           <div class="tradeId">글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.name}</div>
+                           <div class="tradeId">글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.id}</div>
                         </div>
                         <div class="col-sm-4" style="padding-right: 31px;">
                         	<c:choose>

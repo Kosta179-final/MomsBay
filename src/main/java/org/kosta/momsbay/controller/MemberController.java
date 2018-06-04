@@ -20,7 +20,6 @@ import org.kosta.momsbay.model.service.RatingService;
 import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
