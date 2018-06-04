@@ -10,7 +10,6 @@ import org.kosta.momsbay.model.mapper.BayCommentMapper;
 import org.kosta.momsbay.model.mapper.TradeCommentMapper;
 import org.kosta.momsbay.model.vo.BayCommentVO;
 import org.kosta.momsbay.model.vo.CommentVO;
-import org.kosta.momsbay.model.vo.TradeCommentVO;
 import org.springframework.stereotype.Service;
 /**
  * 댓글 관련 비즈니스로직 서비스.
@@ -20,13 +19,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class CommentService {
 	@Resource
+
 	private TradeCommentMapper tradeCommentMapper;
 	@Resource
 	private BayCommentMapper bayCommentMapper;
-	
-	public List<TradeCommentVO> getTradeCommentList(int tradePostNo){
-		return tradeCommentMapper.getTradeCommentList(tradePostNo);
-	}
 	
 	public List<CommentVO> getBayCommentList(int bayPostNo) {
 		Map<String,Object> map=new HashMap<String,Object>();

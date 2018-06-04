@@ -1,3 +1,4 @@
+
 package org.kosta.momsbay.model.vo;
 
 import lombok.AllArgsConstructor;

@@ -1,9 +1,11 @@
 package org.kosta.momsbay.controller;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.kosta.momsbay.model.service.MemberService;
 import org.kosta.momsbay.model.vo.MemberVO;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -17,6 +19,8 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * @author Jung
  */
 public class CheckMemberInterceptor extends HandlerInterceptorAdapter {
+	@Resource
+	private MemberService memberService;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, 
@@ -24,12 +28,7 @@ public class CheckMemberInterceptor extends HandlerInterceptorAdapter {
 		HttpSession session = request.getSession(false);
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		if(session != null && memberVO != null) {
-			if(memberVO.getGrade().equals("blacklist")) {
-				response.sendRedirect("../home.do");
-				return false;
-			}
-			else 
-				return true;
+			return true;
 		}
 		else {
 			response.sendRedirect("../home.do");

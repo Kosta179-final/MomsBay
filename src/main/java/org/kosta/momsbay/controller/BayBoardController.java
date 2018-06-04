@@ -6,21 +6,20 @@ import javax.annotation.Resource;
 
 import org.kosta.momsbay.model.service.BayPostService;
 import org.kosta.momsbay.model.service.CommentService;
+import org.kosta.momsbay.model.service.QnaCommentService;
 import org.kosta.momsbay.model.service.QnaPostService;
 import org.kosta.momsbay.model.vo.BayCommentVO;
 import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.CommentVO;
+import org.kosta.momsbay.model.vo.QnaCommentVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * BayPost 처리하는 Controller. 관련 Service: QnaPostService, BayPostService,
@@ -37,7 +36,9 @@ public class BayBoardController {
 	@Resource
 	private QnaPostService qnaPostService;
 	@Resource
-	private CommentService commentService;  
+	private CommentService commentService;
+	@Resource
+	private QnaCommentService qnaCommentService;  
 	/**
 	 * 일반게시판 &  Q&A게시판 클릭시 실행되는 메서드.
 	 * @param viewName
@@ -196,7 +197,44 @@ public class BayBoardController {
 		model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
 		return "bay/update_qna_post" + ".tiles";
 	}
-	
+	/**
+	 * Q&A 게시판의 댓글 리스트 메서드
+	 * @param bayPostNo
+	 * @author sam
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "getQnaCommentList.do")
+	public @ResponseBody List<CommentVO> getQnaCommentList(@RequestParam("bayPostNo") int bayPostNo) {
+		// 서비스에서 리스트가져오기
+		List<CommentVO> comment = qnaCommentService.getQnaCommentList(bayPostNo);
+		return comment;
+	}
+	/**
+	 * Q&A 게시판의 댓글 등록 메서드
+	 * @param qnaCommentVO
+	 * @author sam
+	 */
+	@RequestMapping(method = RequestMethod.POST, value = "addQnaComment.do")
+	public @ResponseBody int addQnaComment(QnaCommentVO qnaCommentVO) {
+		return qnaCommentService.addQnaComment(qnaCommentVO);
+	}
+	/**
+	 * Q&A 게시판의 댓글 삭제 메서드
+	 * @param bayCommentNo
+	 * @author sam
+	 */
+	@RequestMapping(value = "deleteComment.do", method = RequestMethod.POST)
+	public @ResponseBody int deleteQnaComment(@RequestParam("bayCommentNo") int bayCommentNo) {
+		return qnaCommentService.deleteComment(bayCommentNo);
+	}
+	/**
+	 * Q&A 게시판의 댓글 수정 메서드
+	 * @param qnaCommentVO
+	 * @author sam
+	 */
+	@RequestMapping(value = "updateComment.do", method = RequestMethod.POST)
+	public @ResponseBody int updateQnaComment(QnaCommentVO qnaCommentVO) {	
+		return qnaCommentService.updateComment(qnaCommentVO);
+	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="getBayCommentList.do")
 	public @ResponseBody List<CommentVO> getBayCommentList(@RequestParam("bayPostNo") int bayPostNo) {
