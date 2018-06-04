@@ -183,7 +183,7 @@
 			</div>
 			<div class="row" align="left">
 				<div class="col-sm-12">
-					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.memberVO.name}</span>
+					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.tradePostVO.memberVO.name}&nbsp;(${requestScope.tradePostVO.memberVO.id})</span>
 						<c:if test="${sessionScope.member.id != requestScope.tradePostVO.memberVO.id && !empty member}">
 							<button id="message_btn" class="fa fa-envelope"></button>
 						</c:if>
@@ -218,7 +218,10 @@
 						<%-- 신청이 없으면 --%>
 						<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 							<div class="btn-group">
-								<span><button type="button" class="btn btn-primary">${requestScope.tradePostVO.status}</button></span>
+								<div class="label label-info">${requestScope.tradePostVO.status}</div>
+							</div>
+							<div class="btn-group">
+								<span><button type="button" class="btn btn-primary"></button></span>
 							</div>
 						</c:when>
 						<%-- 신청이 있으면 --%>
@@ -233,7 +236,7 @@
 									<span><button type="button" class="btn btn-info3" data-toggle="modal" data-target="#myModal">거래완료</button></span>
 								</c:when>
 								<c:otherwise>
-									<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+									<span><%-- 거래완료시 버튼은 사라지고 제목 위에 거래완료 라벨 생성된다. --%></span>
 								</c:otherwise>
 							</c:choose>
 							</div>
@@ -264,7 +267,7 @@
 												<span><button type="button" id="updateDeliveryTradeHistory" class="btn btn-info3">물품배송</button></span>
 											</c:when>
 											<c:otherwise>
-												<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+												<span><%-- 신청자는 거래 완료된 게시물 상세페이지에 버튼 사라지고 제목에 거래완료 라벨 생성된다. --%></span>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -276,7 +279,7 @@
 											<span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span>
 										</c:when>
 										<c:otherwise>
-											<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>
+											<span><%-- 비회원은 거래완료 된 상세페이지에서 버튼이 보이지 않는다. --%></span>
 										</c:otherwise>
 									</c:choose>
 								</c:otherwise>						
@@ -351,10 +354,13 @@
 								<div class="btn-group">
 								<c:choose>
 									<c:when test="${requestScope.tradePostVO.status eq '물품배송'}">
-										<span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span>
+										<%--<span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span> --%>
 									</c:when>
 									<c:when test="${requestScope.tradePostVO.status eq '거래완료'}">
 										<%-- <span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span> --%>
+									</c:when>
+									<c:when test="${requestScope.tradePostVO.status eq '거래중'}">
+										<%-- 거래중입니다. --%>
 									</c:when>
 									<c:otherwise>
 										<span><button type="button" class="btn btn-info3">${requestScope.tradePostVO.status}</button></span>

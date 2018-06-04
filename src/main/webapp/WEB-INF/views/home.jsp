@@ -97,8 +97,9 @@
 							                        </div>
 												</div>
 												<div class="row">
-								                     <div class="col-sm-8" style="padding-left: 0px;">
-								                        <div class="tradeId">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.name}</div>
+								                     <div class="col-sm-8">
+								                        <span style="position: absolute; left: 60px;">글쓴이</span> 
+                           								<span style="position: absolute; left: 105px;">:&nbsp;&nbsp;${tpVO.memberVO.name}</span>
 								                     </div>
 								                     <div class="col-sm-4" style="padding-right: 31px;">
 								                        <c:if test="${tpVO.status eq '거래대기'}">

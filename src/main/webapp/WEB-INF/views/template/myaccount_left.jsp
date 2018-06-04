@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-	<div class="left-sidebar" style="margin-bottom: 30px;">
+	<div class="left-sidebar" style="height: 452px;">
 		<h2>My Page</h2>
 		<div class="panel-group category-products" id="accordian">
 			
@@ -67,11 +67,4 @@
 
 		<!--/category-products-->
 
-		<div class="shipping text-center">
-			<!-- 광고  -->
-			<img
-				src="${pageContext.request.contextPath}/resources/images/home/shipping.jpg"
-				alt="" />
-		</div>
-		<!--/shipping-->
 	</div>
