@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.list-img {
+	overflow: hidden;
+    background-color: #fffefaba;
+    border-color: #c1c1c1;
+	position: relative;	
+	cursor:pointer;
+}
+.list-img img {
+	width: 200px;
+	height: 200px;
+	margin-bottom: -5px;
+	transition: all 0.3s ease-out;
+	position: relative;
+	z-index: 2;
+	
+}
+
+.list-img:hover img {
+	transform: scale(1.2, 1.2);
+	z-index: 9;
+}

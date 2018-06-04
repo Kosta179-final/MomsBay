@@ -208,6 +208,12 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>3.2.8.RELEASE</version>
 		</dependency>
+		<!--보안관련 -->
+		<dependency>
+			<groupId>org.mindrot</groupId>
+			<artifactId>jbcrypt</artifactId>
+			<version>0.3m</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>

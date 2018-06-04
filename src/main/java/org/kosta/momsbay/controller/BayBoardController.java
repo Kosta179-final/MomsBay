@@ -63,7 +63,6 @@ public class BayBoardController {
 
 	/**
 	 * 일반게시판 글쓰기 메서드
-	 * 
 	 * @param bayPostVO
 	 * @author barom
 	 */
@@ -104,12 +103,11 @@ public class BayBoardController {
 	 * @author barom
 	 */
 	@RequestMapping("detail_bay.do")
-	public String getPostDetail(int bayPostNo, Model model) {
+	public String getPostDetail(int bayPostNo,Model model, BayPostVO bayPostVO) {
 		bayPostService.updatePostCount(bayPostNo);
 		model.addAttribute("pvo", bayPostService.getPostDetail(bayPostNo));
-		return "bay/detail_bay_post" + ".tiles";
+		return "redirect:getPostDetailNoHit.do?bayPostNo="+bayPostVO.getBayPostNo();
 	}
-
 	/**
 	 * 일반게시판 글삭제 메서드
 	 * 

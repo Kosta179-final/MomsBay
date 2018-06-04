@@ -5,6 +5,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.exception.TradeException;
 import org.kosta.momsbay.model.service.HistoryService;
 import org.kosta.momsbay.model.service.PointService;
+import org.kosta.momsbay.model.service.RatingService;
 import org.kosta.momsbay.model.service.TradePostService;
 import org.kosta.momsbay.model.service.TradeService;
 import org.kosta.momsbay.model.vo.MemberVO;
@@ -18,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 /**
  * TradePost 처리하는 Controller.
  * 관련Service: TradeService, BayPostService, TradePostService
- * @author Hwang
+ * @author 개발제발
  *
  */
 @RequestMapping("/trade")
@@ -32,6 +33,8 @@ public class TradeController {
 	private PointService pointService;
 	@Resource
 	private TradeService tradeService;
+	@Resource
+	private RatingService ratingService;
 	
 	/**
 	 * 거래신청 완료시 실행.
@@ -47,30 +50,32 @@ public class TradeController {
 	 */
 	@Transactional
 	@RequestMapping(method= RequestMethod.POST,value="applyTransaction.do")
-	public String applyTrade(String tradePostNo, String id, String tradeId,String boardTypeNo, Model model){
-		TradePostVO tradePostVO = new TradePostVO();
-		MemberVO memberVO = new MemberVO();
-		memberVO.setId(id);
-		tradePostVO.setTradeId(tradeId);
-		tradePostVO.setMemberVO(memberVO);
-		tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
-		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
-		try {
-			tradeService.applyTransaction(tradePostVO);
-		} catch (TradeException e) {
-			model.addAttribute("message", e.getMessage());
-			model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
-			return "trade/trade_fail";
-		}
-		tradePostService.updateTradeId(tradePostVO);
-		if(tradePostVO.getBoardTypeNo() == 2) {
-			tradePostVO.setTradeType("구매");
+	public String applyTrade(TradePostVO tradePostVO, Model model){
+		if (tradePostVO.getBoardTypeNo()==2) {
+			try {
+				tradeService.applyTransaction(tradePostVO);
+			} catch (TradeException e) {
+				model.addAttribute("message", e.getMessage());
+				model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
+				return "trade/trade_fail";
+			}
+			tradePostService.updateTradeId(tradePostVO);
+			tradePostVO.setTradeType("판매");
 			historyService.addTradeHistory(tradePostVO);
 			String temp = tradePostVO.getTradeId();
 			tradePostVO.setTradeId(tradePostVO.getMemberVO().getId());
 			tradePostVO.getMemberVO().setId(temp);
-			tradePostVO.setTradeType("판매");
+			tradePostVO.setTradeType("구매");
 			historyService.addTradeHistory(tradePostVO);
+		} else {
+			try {
+				tradeService.applyTransaction(tradePostVO);
+				historyService.updateDepositTradeHistory(tradePostVO);
+			} catch (TradeException e) {
+				model.addAttribute("message", e.getMessage());
+				model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
+				return "trade/trade_fail";
+			}
 		}
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
@@ -106,9 +111,6 @@ public class TradeController {
 			tradePostVO.getMemberVO().setId(temp);
 			historyService.deleteTradeHistory(tradePostVO);
 		}
-		else {
-			tradePostService.deleteTradeId(tradePostVO.getTradePostNo());
-		}
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostNo;
 	}
 	
@@ -126,21 +128,33 @@ public class TradeController {
 	 */
 	@Transactional
 	@RequestMapping(method= RequestMethod.POST,value="completeTransaction.do")
-	public String completeTransaction(String tradePostNo, String id, String tradeId) {
+	public String completeTransaction(String boardTypeNo, String tradePostNo, String id, String tradeId,String rating) {
 		TradePostVO tradePostVO = new TradePostVO();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
+		memberVO.setRating(Integer.parseInt(rating));
 		tradePostVO.setTradeId(tradeId);
 		tradePostVO.setMemberVO(memberVO);
 		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+		memberVO.setRating(Integer.parseInt(rating));
 		
-		tradeService.completeTransaction(tradePostVO);
+		int price=tradePostService.findPirceByTradePostNo(tradePostVO.getTradePostNo());
 		tradePostService.updateTradeId(tradePostVO);
 		historyService.updateCompleteTradeHistory(tradePostVO);
-		int price=tradePostService.findPirceByTradePostNo(tradePostVO.getTradePostNo());
 		
-		historyService.addPointBuyHistory(tradePostVO.getTradeId(), price);
-		historyService.addPointSellHistory(tradePostVO.getMemberVO().getId(), price);
+		if (boardTypeNo.equals("2") || boardTypeNo == "2") {
+			tradeService.completeTransaction(tradePostVO);
+			historyService.addPointBuyHistory(tradePostVO.getTradeId(), price);
+			historyService.addPointSellHistory(tradePostVO.getMemberVO().getId(), price);
+			ratingService.updateRating(memberVO);
+		}else {
+			historyService.addPointBuyHistory(tradePostVO.getMemberVO().getId(), price);
+			historyService.addPointSellHistory(tradePostVO.getTradeId(), price);
+			memberVO.setId(tradeId);
+			tradePostVO.setTradeId(id);
+			tradeService.completeTransaction(tradePostVO);
+			ratingService.updateRating(memberVO);
+		}
 		return "redirect:/myaccount/findTradeHistoryListById.do";
 	}
 	
@@ -172,9 +186,53 @@ public class TradeController {
 	 * @return
 	 */
 	@RequestMapping("/applySell.do")
-	public String applySell(TradePostVO tradePostVO) {
+	public String applySell(TradePostVO tradePostVO, Model model) {
 		tradePostService.updateTradeIdAndSuggestContent(tradePostVO);
+		TradePostVO tVO = tradePostService.findTradePostByTradePostNo(tradePostVO.getTradePostNo());
+		tVO.getMemberVO().setId(tradePostVO.getTradeId());
+		tVO.setTradeId(tradePostVO.getMemberVO().getId());
+		tVO.setTradeType("판매");
+		historyService.addTradeHistory(tVO);
+		tradePostVO.setTradeId(tradePostVO.getTradeId());
+		tradePostVO.setTradeType("구매");
+		historyService.addTradeHistory(tradePostVO);
 		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo();
+	}
+	
+	/**
+	 * 삽니다 게시판에서 취소.
+	 * @param tradePostNo
+	 * @return detail_trade_post.jsp
+	 * @author Jung
+	 */
+	@RequestMapping(method= RequestMethod.POST,value="cancelTransaction2.do")
+	public String cancelTransaction2(String tradePostNo) {
+		TradePostVO tradePostVO = new TradePostVO();
+		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+		tradePostService.deleteTradeId(tradePostVO.getTradePostNo());
+		historyService.deleteTradeHistory(tradePostVO);
+		return "redirect:detail_trade_post.do?tradePostNo="+tradePostNo;
+	}
+	
+	@Transactional
+	@RequestMapping(method= RequestMethod.POST,value="deposit.do")
+	public String deposit(String tradePostNo, String id, String tradeId, String boardTypeNo, Model model) {
+		TradePostVO tradePostVO = new TradePostVO();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
+		tradePostVO.setTradeId(tradeId);
+		tradePostVO.setMemberVO(memberVO);
+		tradePostVO.setBoardTypeNo(Integer.parseInt(boardTypeNo));
+		tradePostVO.setTradePostNo(Integer.parseInt(tradePostNo));
+		try {
+			tradeService.applyTransaction(tradePostVO);
+			historyService.updateDeliveryTradeHistory(tradePostVO);
+		} catch (TradeException e) {
+			model.addAttribute("message", e.getMessage());
+			model.addAttribute("tradePostNo", tradePostVO.getTradePostNo());
+			return "trade/trade_fail";
+		}
+		return "redirect:detail_trade_post.do?tradePostNo="+tradePostVO.getTradePostNo()+"";
 	}
 	
 }

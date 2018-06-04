@@ -46,7 +46,7 @@ public class SharePostServiceTest {
 	 */
 	@Test
 	public void getSharePostList() {
-		assertNotNull(sharePostService.getSharePostList("1", "3", "1",null));
+		assertNotNull(sharePostService.getSharePostList("1", "3", "1"/*,null*/));
 	}
 	
 	/**

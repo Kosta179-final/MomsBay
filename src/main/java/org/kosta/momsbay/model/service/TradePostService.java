@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * 교환게시판 관련 비즈니스로직 서비스.
  * 관련Mapper: TradePostMapper
- * @author Ryu
+ * @author 개발제발
  */
 @Service
 public class TradePostService {
@@ -30,16 +30,16 @@ public class TradePostService {
 	 * @return ListVO
 	 * @author Jung
 	 */
-	public ListVO getTradePostList(String pageNo,String boardTypeNo, String searchWord,String categoryNo) {
+	public ListVO getTradePostList(String pageNo,String boardTypeNo, String categoryNo/*, String searchWord*/) {
 		PagingBean pagingBean=null;
 		@SuppressWarnings({ "unchecked", "rawtypes" })
 		Map<String,Object> map = new HashMap();
 		map.put("pageNo", pageNo==null ? null : pageNo);
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
 		map.put("category_no", categoryNo == null ? null : Integer.parseInt(categoryNo));
-		map.put("searchWord", searchWord);
+		/*map.put("searchWord", searchWord);*/
 		int totalCount=tradePostMapper.getTotalTradePostCount(map);
-		if(pageNo==null) {
+		if(pageNo==null || pageNo=="") {
 			pagingBean=new PagingBean(totalCount);
 			pagingBean.setPostCountPerPage(9);
 		}
@@ -166,5 +166,14 @@ public class TradePostService {
 	 */
 	public void updateTradeIdAndSuggestContent(TradePostVO tradePostVO) {
 		tradePostMapper.updateTradeIdAndSuggestContent(tradePostVO);
+	}
+	
+	/**
+	 * 삽니다 팝니다 게시글 홈화면에 최신순으로 3개 등록
+	 * @return List
+	 * @author rws
+	 */
+	public ListVO getMainTradePostList() {
+		return new ListVO(tradePostMapper.getMainTradePostList(),null);
 	}
 }

@@ -6,7 +6,7 @@ package org.kosta.momsbay.model.common;
  * getNowPageGroup()<br>getStartPageOfPageGroup()<br>
  * getEndPageOfPageGroup()<br> isPreviousPageGroup()<br>isNextPageGroup()
  * 
- * @author kosta
+ * @author 개발제발
  *
  */
 public class PagingBean {
@@ -55,6 +55,10 @@ public class PagingBean {
 		return nowPage;
 	}
 
+	public void setNowPage(int nowPage) {
+		this.nowPage=nowPage;
+	}
+	
  /**
   * 현재 페이지번호에 해당하는 시작 게시물의 row number를 반환 hint : 이전페이지의 마지막 번호 + 1 ((현재페이지-1)
   * * 페이지당 게시물수) +1
@@ -95,7 +99,7 @@ public class PagingBean {
   * 
   * @return
   */
-	private int getTotalPage() {
+	public int getTotalPage() {
 		int num = this.totalPostCount % this.postCountPerPage;
 		int totalPage = 0;
 		if (num == 0) {

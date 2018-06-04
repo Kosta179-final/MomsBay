@@ -8,7 +8,7 @@ import org.kosta.momsbay.model.vo.ChildrenVO;
 import org.kosta.momsbay.model.vo.MemberVO;
 /**
  * member 관련 DB연동 Mapper.
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface MemberMapper {
@@ -29,6 +29,10 @@ public interface MemberMapper {
 	public List<String> findMemberIdByPart(String id);
 	public String getMemberChildStatistics(String gender);
 	public int getMemberCountByGrade(String grade);
-	public String findMemberExsitByName(String string);
+	public String findMemberEmailById(String string);
 	public void updateMemberPassword(Map<String, String> map);
+	public String  findTokenById(String id);
+	public void addAutoLoginToken(Map<String, String> map);
+	public void updateAutoLoginToken(Map<String, String> map);
+	public void deleteTokenById(String id);
 }

@@ -10,7 +10,7 @@ import org.kosta.momsbay.model.vo.TradePostVO;
 /**
  * 중고물품 게시판 관련 DB연동 Mapper.
  * 
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface TradePostMapper {
@@ -91,6 +91,20 @@ public interface TradePostMapper {
 	 * @author Jung
 	 */
 	public void updateTradeIdAndSuggestContent(TradePostVO tradePostVO);
+	
+	/**
+	 * 홈화면 삽니다 팝니다 게시글 최신순 리스트
+	 * @return List
+	 * @author rws
+	 */
+	public List<PostVO> getMainTradePostList();
+	
+	/**
+	 * 삽니다 팝니다 총 개시글수
+	 * @return int
+	 * @author rws
+	 */
+	public int getTotalMainTradePostCount();
 }
 
 

@@ -25,11 +25,11 @@
 						<td class="cart_price">${pvo.memberVO.id}</td>
 						<td class="cart_description">
 							<c:choose>
-							<c:when test="${pvo.memberVO.id eq sessionScope.member.id}">
-								<a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=send">${pvo.title}</a>
+							<c:when test="${pvo.messageType eq 'send'}">
+								<a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=total_send&pageNo=${requestScope.lvo.pagingBean.nowPage}">${pvo.title}</a>
 							</c:when>
 							<c:otherwise>
-								<a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=receive">${pvo.title}</a>
+								<a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=total_receive&pageNo=${requestScope.lvo.pagingBean.nowPage}">${pvo.title}</a>
 							</c:otherwise>
 							</c:choose>
 						</td>
@@ -38,6 +38,9 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<c:if test="${empty requestScope.lvo.list}">
+			게시글이 존재하지 않습니다.
+		</c:if>
 	</div>
 		<c:set var="pb" value="${requestScope.lvo.pagingBean}"></c:set>
 		<ul class="pagination">

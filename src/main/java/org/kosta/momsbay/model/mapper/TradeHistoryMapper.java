@@ -4,12 +4,11 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.kosta.momsbay.model.vo.TradeHistoryVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 /**
  * 거래내역 DB연동 Mapper.
  * 관련VO: TradeHistoryVO
- * @author Hwang
+ * @author 개발제발
  */
 @Mapper
 public interface TradeHistoryMapper {
@@ -19,8 +18,7 @@ public interface TradeHistoryMapper {
 	 * @return 거래 내역 리스트
 	 * @author Jung
 	 */
-	@SuppressWarnings("rawtypes")
-	public List<TradeHistoryVO> findTradeHistoryListById(Map map);
+	public List<Object> findTradeHistoryListById(Map<String,Object> map);
 	
 	
 	/**
@@ -59,4 +57,19 @@ public interface TradeHistoryMapper {
 	 * @author Jung
 	 */
 	public String findTradeStatusByIdAndTradePostNo(TradePostVO tradePostVO);
+
+	/**
+	 * 거래내역의 총 수
+	 * @param map
+	 * @return int
+	 * @author Jung
+	 */
+	public int findTotalTradeHistoryCountById(Map<String,Object> map);
+	
+	/**
+	 * 판매자가 입금 완료시 거래상태를 거래중에서 입금완료로 변경하는 메서드.
+	 * @param tradePostVO
+	 * @author Jung
+	 */
+	public void updateDepositTradeHistory(TradePostVO tradePostVO);
 }

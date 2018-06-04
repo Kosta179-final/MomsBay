@@ -5,6 +5,7 @@
 <script type="text/javascript">
 	$(document).ready(function(){
 		$("#applyTransaction").click(function(){
+			var boardTypeNo = "${requestScope.tradePostVO.boardTypeNo}";
 			if(confirm("거래를 신청하시겠습니까?")){
 				var tradeId = "${sessionScope.member.id}";
 				var memberVOId = "${requestScope.tradePostVO.memberVO.id}";
@@ -23,7 +24,7 @@
 <form action="" id="trade" method="post">
 <input type="hidden" name="tradePostNo" id="tradePostNo">
 <input type="hidden" name="tradeId" id="tradeId">
-<input type="hidden" name="id" id="memberVOId">
+<input type="hidden" name="memberVO.id" id="memberVOId">
 <input type="hidden" name="boardTypeNo" id="boardTypeNo" value="${requestScope.tradePostVO.boardTypeNo}">
 </form>
 
@@ -57,10 +58,10 @@
 					<td>이메일</td><td>${sessionScope.member.email}</td>
 				</tr>
 				<tr>
-					<td>현재 포인트</td><td>${sessionScope.member.point}</td>
+					<td>현재 포인트</td><td>${nowPoint}</td>
 				</tr>
 				<tr>
-					<td>거래 후 포인트</td><td>${sessionScope.member.point - requestScope.tradePostVO.price}</td>
+					<td>거래 후 포인트</td><td>${nowPoint - requestScope.tradePostVO.price}</td>
 				</tr>
 			</table>
 		</div>

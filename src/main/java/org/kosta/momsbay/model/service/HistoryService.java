@@ -1,7 +1,6 @@
 package org.kosta.momsbay.model.service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.kosta.momsbay.model.common.PagingBean;
@@ -9,14 +8,13 @@ import org.kosta.momsbay.model.common.PointListVO;
 import org.kosta.momsbay.model.mapper.MemberMapper;
 import org.kosta.momsbay.model.mapper.PointHistoryMapper;
 import org.kosta.momsbay.model.mapper.TradeHistoryMapper;
-import org.kosta.momsbay.model.vo.TradeHistoryVO;
 import org.kosta.momsbay.model.vo.TradePostVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 /**
  * 포인트와 거래내역 처리 비즈니스로직 서비스.
  * 관련Mapper: PointHistoryMapper, TradeHistoryMapper
- * @author Hwang
+ * @author 개발제발
  */
 @Service
 public class HistoryService {
@@ -98,11 +96,22 @@ public class HistoryService {
 	 * @return 거래 내역 리스트
 	 * @author Jung
 	 */
-	public List<TradeHistoryVO> findTradeHistoryListById(String id,String boardTypeNo){
-		Map<String, String> map = new HashMap<String, String>();
+	public PointListVO findTradeHistoryListById(String id,String tradeType,String nowPage){
+		PagingBean pagingBean=null;
+		Map<String,Object> map = new HashMap<String,Object>();
 		map.put("id", id);
-		map.put("board_type_no", boardTypeNo);
-		return tradeHistoryMapper.findTradeHistoryListById(map);
+		map.put("tradeType", tradeType);
+		int totalCount=tradeHistoryMapper.findTotalTradeHistoryCountById(map);
+		if(nowPage==null) {
+			pagingBean=new PagingBean(totalCount);
+			pagingBean.setPostCountPerPage(5);
+		}
+		else {
+			pagingBean=new PagingBean(totalCount,Integer.parseInt(nowPage));
+			pagingBean.setPostCountPerPage(5);
+		}
+		map.put("pagingBean", pagingBean);
+		return new PointListVO(tradeHistoryMapper.findTradeHistoryListById(map),pagingBean);
 	}
 	
 	/**
@@ -161,9 +170,23 @@ public class HistoryService {
 		return new PointListVO(pointHistoryMapper.getPointHistoryByIdAndDate(map),pagingBean);
 	}
 
-	
+	/**
+	 * 게시물 상태 반환
+	 * @param tradePostVO
+	 * @return trade_stats
+	 * @author Jung
+	 */
 	public String findTradeStatusByIdAndTradePostNo(TradePostVO tradePostVO) {
 		return tradeHistoryMapper.findTradeStatusByIdAndTradePostNo(tradePostVO);
+	}
+	
+	/**
+	 * 판매자가 입금 완료시 거래상태를 거래중에서 입금완료로 변경하는 메서드.
+	 * @param tradePostVO
+	 * @author Jung
+	 */
+	public void updateDepositTradeHistory(TradePostVO tradePostVO) {
+		tradeHistoryMapper.updateDepositTradeHistory(tradePostVO);
 	}
 	
 }

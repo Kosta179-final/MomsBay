@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 /**
  * 교환게시판 관련 비즈니스로직 서비스.
  * 관련Mapper: SharePostMapper
- * @author Ryu
+ * @author 개발제발
  */
 @Service
 public class SharePostService {
@@ -38,15 +38,16 @@ public class SharePostService {
 	 * @return 나눔 게시판 List
 	 * @author rws
 	 */
-	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo, String searchWord){
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	public ListVO getSharePostList(String pageNo, String boardTypeNo, String categoryNo/*, String searchWord*/){
 		PagingBean pagingBean=null;
 		Map<String, Object> map=new HashMap();
 		map.put("pageNo", pageNo==null ? null : pageNo);
 		map.put("board_type_no", Integer.parseInt(boardTypeNo));
 		map.put("category_no", categoryNo==null ? null : Integer.parseInt(categoryNo));
-		map.put("searchWord", searchWord);
+		/*map.put("searchWord", searchWord);*/
 		int totalCount=sharePostMapper.getTotalSharePostCount(map);
-		if(pageNo==null) {
+		if(pageNo==null || pageNo=="") {
 			pagingBean=new PagingBean(totalCount);
 			pagingBean.setPostCountPerPage(9);
 		}else {

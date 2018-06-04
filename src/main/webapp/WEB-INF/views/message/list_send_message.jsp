@@ -22,7 +22,7 @@
 					<tr>
 						<td class="cart_price">${pvo.messageNo}</td>
 						<td class="cart_price">${pvo.receiveMemberVO.id}</td>
-						<td class="cart_description"><a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=send">${pvo.title}</a></td>
+						<td class="cart_description"><a href="detail_message.do?messageNo=${pvo.messageNo}&messageType=send&pageNo=${requestScope.lvo.pagingBean.nowPage}">${pvo.title}</a></td>
 		 				<td class="cart_quantity">${pvo.regdate}</td>
 		 				<td class="cart_price">
 							<c:choose>
@@ -38,12 +38,15 @@
 				</c:forEach>
 			</tbody>
 		</table>
+		<c:if test="${empty requestScope.lvo.list}">
+			게시글이 존재하지 않습니다.
+		</c:if>
 	</div>
 		<c:set var="pb" value="${requestScope.lvo.pagingBean}"></c:set>
 		<ul class="pagination">
 			<li>
 				<c:if test="${pb.previousPageGroup}">
-					<a href="getSendMessageList.do?sendId=${sessionScope.member.id}&pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a>
+					<a href="getSendMessageList.do?id=${sessionScope.member.id}&pageNo=${pb.startPageOfPageGroup-1}">&laquo;</a>
 				</c:if>
 			</li>
 			<c:forEach var="i" begin="${pb.startPageOfPageGroup}"
@@ -51,7 +54,7 @@
 				<c:choose>
 					<c:when test="${pb.nowPage!=i}">
 						<li>
-						<a href="getSendMessageList.do?sendId=${sessionScope.member.id}&pageNo=${i}">${i}</a>
+						<a href="getSendMessageList.do?id=${sessionScope.member.id}&pageNo=${i}">${i}</a>
 						</li>
 					</c:when>
 					<c:otherwise>
@@ -61,7 +64,7 @@
 			</c:forEach>
 			<li>
 				<c:if test="${pb.nextPageGroup}">
-				<a href="getSendMessageList.do?sendId=${sessionScope.member.id}&pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a>
+				<a href="getSendMessageList.do?id=${sessionScope.member.id}&pageNo=${pb.endPageOfPageGroup+1}">&raquo;</a>
 				</c:if>
 			</li>
 		</ul>
