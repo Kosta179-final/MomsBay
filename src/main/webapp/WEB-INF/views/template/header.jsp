@@ -113,7 +113,7 @@ $(document).ready(function(){
 							</c:when>
 							<c:otherwise>
 								<c:if test="${member.grade eq 'member'}">
-									<li><a href="${pageContext.request.contextPath}/myaccount/getPointHistoryById.do"><i class="fa fa-user"></i> 내 계정</a></li>
+									<li><a href="${pageContext.request.contextPath}/myaccount/findMypointById.do"><i class="fa fa-user"></i> 내 계정</a></li>
 									<li><a href="${pageContext.request.contextPath}/myaccount/findNowpointById.do"><i class="fa fa-usd"></i> 포인트 충전/환전</a></li>
 									<li><a href="${pageContext.request.contextPath}/myaccount/findPickListById.do"><i class="fa fa-heart"></i> 찜목록</a></li>
 								</c:if>

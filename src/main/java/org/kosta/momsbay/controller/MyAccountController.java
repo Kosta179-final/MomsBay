@@ -54,6 +54,7 @@ public class MyAccountController {
 	public String update(MemberVO member, HttpServletRequest request) {
 		memberService.updateMember(member);
 		HttpSession session = request.getSession();
+		member =memberService.findMemberById(member.getId());
 		session.setAttribute("member", member);
 		return "redirect:modify_myinfo.do";
 	}
@@ -153,6 +154,22 @@ public class MyAccountController {
 		return "service_myaccount" + ".page_" + "service_point";
 	}
 	
+	/**
+	 * 포인트 조회, 내정보에서 사용한다.
+	 * 
+	 * @param request
+	 * @return url
+	 * @author Hwang
+	 */
+	@RequestMapping("findMypointById.do")
+	public String findMypointById(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		String id = member.getId();
+		int point = pointService.findNowpointById(id);
+		session.setAttribute("currentPoint", point);
+		return "service_myaccount" + ".page_" + "show_myinfo";
+	}
 	/**
 	 * 찜 내역 조회.
 	 * 

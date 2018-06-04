@@ -184,7 +184,7 @@ $(document).ready(function(){
             <span id="idCheck" ></span><br>    
             
             <label  for="inputsm"><b>이름</b></label> <br>
-            <input type="text" maxlength="10" autocomplete="name" class="form-control" name="name" id="name" required><br>            
+            <input type="text" maxlength="5" autocomplete="name" class="form-control" name="name" id="name" required><br>            
             
             <label for="psw"><b>비밀번호</b></label> <br>
             <input type="password" autocomplete="password" class="form-control" placeholder="비밀번호를 6자 이상 입력해주세요" name="password" required id="password"> <br>
@@ -194,7 +194,7 @@ $(document).ready(function(){
             <span id="pwdCheck"></span><br>
             
             <label for="email"><b>이메일</b></label> <br>
-            <input type="email" autocomplete="email"  placeholder="ex)admin@naver.com" name="email" id="email" required class="form-control"> 
+            <input type="email" autocomplete="email" maxlength="10"  placeholder="ex)admin@naver.com" name="email" id="email" required class="form-control"> 
             <input type="button" id="emailCheckbtn" value="중복체크" class="btn-link"> 
             <span id="emailCheck"></span><br>
             
