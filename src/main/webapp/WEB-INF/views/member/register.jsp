@@ -199,7 +199,7 @@ $(document).ready(function(){
             <span id="emailCheck"></span><br>
             
             <label for="tel"><b>연락처</b></label> <br>
-            <input type="number" autocomplete="tel" name="tel" required class="form-control" min="0"> <br>
+            <input type="tel" autocomplete="tel" name="tel" required class="form-control" maxlength="11" pattern="[0-9]{10}[0-9]?" > <br>
             
             <label for="address"><b>주소</b></label> <br>
             <input type="text" autocomplete="address-level1" name="address" required class="form-control" id="address"><br>

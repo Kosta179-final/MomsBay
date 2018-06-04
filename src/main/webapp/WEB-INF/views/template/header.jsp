@@ -19,10 +19,20 @@
 <script src="${pageContext.request.contextPath}/resources/js/websocket.js"></script>
 
 <script type="text/javascript">
+var getCookie = function(name) {
+	  var value = document.cookie.match('(^|;) ?' + name + '=([^;]*)(;|$)');
+	  return value? value[2] : null;
+	};
+
 $(document).ready(function(){
 	sessionId='${sessionScope.member.id}';
 	getNewMessage();
 	
+	var uId = getCookie("mbId");
+	var uToken = getCookie("mbToken");
+		console.log(uId);
+		console.log(uToken);
+
 	<%-- 검색기능 jquery --%>
 	var frm = $('#conditionSearchFrom'); //폼
 	var searchBtn = $('#btn_search'); //search 버튼 
@@ -121,7 +131,7 @@ $(document).ready(function(){
 									        <div class="dropdown-menu-footer"><a href="/momsbay/message/getReceiveMessageList.do?id=${sessionScope.member.id }"><span>받은 메세지함에서 보기<span></a></div>
 									    </div>
 								</li>
-								<li><a href="${pageContext.request.contextPath}/member/logout.do"><i class="fa fa-unlock"></i> 로그아웃</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/logout.do?id=${member.id }"><i class="fa fa-unlock"></i> 로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>

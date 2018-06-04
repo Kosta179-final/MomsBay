@@ -38,7 +38,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					<c:if test="${!empty listVO2.list }">
+					<c:if test="${!empty listVO2.list}">
 						<c:forEach items="${listVO2.list}" var="list" varStatus="cc">
 							<tr onclick="detail(${list.tradePostVO.tradePostNo})">
 								<td>${cc.count}</td>
@@ -53,9 +53,9 @@
 					</c:if>
 				</tbody>
 			</table>
-			<c:if test="${empty ListVO2.list}">
-				<label> 거래 내역이 없습니다. </label>
-			</c:if>
+					<c:if test="${empty listVO2.list}">
+						<label> 거래 내역이 없습니다. </label>
+					</c:if>
 			<div class="row">
 				<%-- pagingBean --%>
 				<div class="row col-sm-offset-5">

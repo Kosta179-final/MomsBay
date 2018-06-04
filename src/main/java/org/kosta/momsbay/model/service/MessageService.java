@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 /**
  * 쪽지 관련 서비스 제공.
  * 관련Mapper: MessageMapper
- * @author Hwang
+ * @author 개발제발
  */
 @Service
 public class MessageService {
@@ -49,12 +49,15 @@ public class MessageService {
 		} else if(status == null){
 			int tempPageNo=Integer.parseInt(pageNo);
 			pagingBean=new PagingBean(messageMapper.getTotalReceiveMessageCount(map),tempPageNo);
-			int endPageNo=pagingBean.getEndPageNo();
+			int endPageNo=pagingBean.getTotalPage();
 			if(tempPageNo>endPageNo) {
 				pagingBean.setNowPage(endPageNo);
 			}
 			map.put("pagingBean", pagingBean);
 			list=messageMapper.getReceiveMessageList(map);
+			if(list.isEmpty()) {
+				pagingBean.setNowPage(1);
+			}
 		} else if(pageNo == null){
 			map.put("requestStatus", status);
 			list=messageMapper.getReceiveMessageList(map);
@@ -63,12 +66,15 @@ public class MessageService {
 			int tempPageNo=Integer.parseInt(pageNo);
 			map.put("requestStatus", status);
 			pagingBean=new PagingBean(messageMapper.getTotalReceiveMessageCount(map),tempPageNo);
-			int endPageNo=pagingBean.getEndPageNo();
+			int endPageNo=pagingBean.getTotalPage();
 			if(tempPageNo>endPageNo) {
 				pagingBean.setNowPage(endPageNo);
 			}
 			map.put("pagingBean", pagingBean);
 			list=messageMapper.getReceiveMessageList(map);
+			if(list.isEmpty()) {
+				pagingBean.setNowPage(1);
+			}
 		}
 		return new ListVO(list,pagingBean);
 	}
@@ -91,12 +97,15 @@ public class MessageService {
 		} else {
 			int tempPageNo=Integer.parseInt(pageNo);
 			pagingBean=new PagingBean(messageMapper.getTotalSendMessageCount(map),tempPageNo);
-			int endPageNo=pagingBean.getEndPageNo();
+			int endPageNo=pagingBean.getTotalPage();
 			if(tempPageNo>endPageNo) {
 				pagingBean.setNowPage(endPageNo);
 			}
 			map.put("pagingBean", pagingBean);
 			list=messageMapper.getSendMessageList(map);
+			if(list.isEmpty()) {
+				pagingBean.setNowPage(1);
+			}
 		}
 		return new ListVO(list,pagingBean);
 	}
@@ -117,13 +126,16 @@ public class MessageService {
 		} else {
 			int tempPageNo=Integer.parseInt(pageNo);
 			pagingBean=new PagingBean(totalCount,tempPageNo);
-			int endPageNo=pagingBean.getEndPageNo();
+			int endPageNo=pagingBean.getTotalPage();
 			if(tempPageNo>endPageNo) {
 				pagingBean.setNowPage(endPageNo);
 			}
 			map.put("pagingBean", pagingBean);
 		}
 		List<PostVO> list=messageMapper.getTotalMessageList(map);
+		if(list.isEmpty()) {
+			pagingBean.setNowPage(1);
+		}
 		return new ListVO(list,pagingBean);
 	}
 	/**

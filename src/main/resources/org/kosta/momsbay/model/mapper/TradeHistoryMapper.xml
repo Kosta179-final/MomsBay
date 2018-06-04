@@ -17,7 +17,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		SELECT regdate,id,trade_id,title,status,price,trade_type,trade_post_no
 		FROM(
 			SELECT th.regdate, th.id, th.trade_id, tp.title, ts.status, tp.price, th.trade_type, tp.trade_post_no,
-			row_number() over(ORDER BY th.regdate DESC) AS rnum
+			row_number() over(ORDER BY th.regdate ASC) AS rnum
 			FROM trade_history th, trade_post tp, trade_status ts
 			WHERE th.id=#{id}
 			AND trade_type=#{tradeType} 

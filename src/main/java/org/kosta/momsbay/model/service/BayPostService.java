@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 /**
  * 일반게시판 관련 비즈니스로직 서비스.
  * 관련Mapper: BayPostMapper
- * @author Hwang
+ * @author 개발제발
  */
 @Service
 public class BayPostService {

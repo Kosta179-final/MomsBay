@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,13 +31,13 @@ import org.springframework.web.multipart.MultipartFile;
  * TradePost 처리하는 Controller. 관련Service: TradeService, BayPostService,
  * TradePostService
  * 
- * @author Hwang
+ * @author 개발제발
  *
  */
 @RequestMapping("/trade")
-@Controller
+@Controller 
 public class TradeBoardController {
-	private String uploadPath = "/resources/upload/postImg/";
+	private String uploadPath = "C:\\java-kosta\\framework-workspace2\\resources\\upload\\postImg";
 	@Resource
 	private CommentService commentService;
 	@Resource
@@ -51,32 +50,6 @@ public class TradeBoardController {
 	private PointService pointService;
 	@Resource
 	private MemberPickService memberPickService;
-	
-	/**
-	 * 중고거래 게시판 클릭시 실행되는 메서드.
-	 * 
-	 * @param viewName
-	 *            righ
-	 * @param boardTypeNo
-	 * @param pageNo
-	 * @param model
-	 * @return
-	 */
-	@RequestMapping("{viewName}.do")
-	public String showTiles(@PathVariable String viewName, String categoryNo, String boardTypeNo, String searchWord,
-			String pageNo, Model model) {
-		model.addAttribute("boardTypeNo", boardTypeNo);
-		model.addAttribute("categoryNo", categoryNo);
-		model.addAttribute("searchWord", searchWord);
-		if (boardTypeNo.equals("1") || boardTypeNo.equals("2")) {
-			model.addAttribute("listVO",
-					tradePostService.getTradePostList(pageNo, boardTypeNo, categoryNo, searchWord));
-			return "service_trade" + ".page_" + viewName;
-		} else {
-			model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo, searchWord));
-			return "service_trade" + ".page_" + viewName;
-		}
-	}
 
 	/**
 	 * 게시판 종류를 클릭했을때 실행되는 메서드.
@@ -88,7 +61,7 @@ public class TradeBoardController {
 	 * @return list_trade_post.jsp
 	 */
 	@RequestMapping("/list_trade_post.do")
-	public String listTradePostTiles(String categoryNo, String boardTypeNo, String searchWord, String pageNo,
+	public String listTradePostTiles(String categoryNo, String boardTypeNo,/* String searchWord,*/ String pageNo,
 			Model model,HttpServletRequest request) {
 		if(pageNo==null || pageNo.equals("")) {
 			pageNo="1";
@@ -96,8 +69,8 @@ public class TradeBoardController {
 		model.addAttribute("pageNo", pageNo);
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
-		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("listVO", tradePostService.getTradePostList(pageNo, boardTypeNo, searchWord, categoryNo));
+		/*model.addAttribute("searchWord", searchWord);*/
+		model.addAttribute("listVO", tradePostService.getTradePostList(pageNo, boardTypeNo, /*searchWord,*/ categoryNo));
 		HttpSession session = request.getSession(false);
 		MemberVO memberVO = (MemberVO) session.getAttribute("member");
 		if(memberVO!=null) {
@@ -145,7 +118,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
+				File target = new File(uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				tradePostService.addTradePostPhoto(savedName, tradePostVO.getTradePostNo());
 			} catch (IOException e) {
@@ -164,10 +137,15 @@ public class TradeBoardController {
 	@RequestMapping(value = "/deleteTradePost.do", method = RequestMethod.POST)
 	public String deleteTradePost(String tradePostNo, String pageNo, String boardTypeNo, String categoryNo) {
 		TradePostVO tradePostVO = tradePostService.deleteTradePost(Integer.parseInt(tradePostNo));
-		ListVO listVO=tradePostService.getTradePostList(pageNo, boardTypeNo, null, categoryNo);
+		ListVO listVO=tradePostService.getTradePostList(pageNo, boardTypeNo, tradePostVO.getCategoryNo()+"");
 		if(listVO.getList().isEmpty() || listVO.getList()==null) {
-			return "redirect:list_trade_post.do?pageNo="+(listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
-					+ tradePostVO.getCategoryNo() + "";
+			if(listVO.getPagingBean().getTotalPage() == 0) {
+				return "redirect:list_trade_post.do?pageNo=1&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
+						+ tradePostVO.getCategoryNo() + "";
+			} else {
+				return "redirect:list_trade_post.do?pageNo="+(listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
+						+ tradePostVO.getCategoryNo() + "";
+			}
 		}else {
 			return "redirect:list_trade_post.do?pageNo="+pageNo+"&boardTypeNo=" + tradePostVO.getBoardTypeNo() + "&categoryNo="
 					+ tradePostVO.getCategoryNo() + "";
@@ -220,7 +198,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
+				File target = new File(uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				tradePostService.updateTradePostPhoto(savedName, tradePostVO.getTradePostNo());
 			} catch (IOException e) {
@@ -308,7 +286,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
+				File target = new File(uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				sharePostService.addSharePostPhoto(savedName, sharePostVO.getNoneTradePostNo());
 			} catch (IOException e) {
@@ -317,7 +295,14 @@ public class TradeBoardController {
 			return "redirect:detail_share_post.do?noneTradePostNo=" + sharePostVO.getNoneTradePostNo() + "";
 		}
 	}
-
+	
+	@RequestMapping("/add_share_post.do")
+	public String addSharePostView(String boardTypeNo, String categoryNo,Model model) {
+		model.addAttribute("boardTypeNo", boardTypeNo);
+		model.addAttribute("categoryNo", categoryNo);
+		return "service_trade.page_add_share_post";
+	}
+	
 	/**
 	 * 나눔 게시판 게시글 수정 페이지로 이동하는 메서드.
 	 * 
@@ -365,7 +350,7 @@ public class TradeBoardController {
 			try {
 				UUID uid = UUID.randomUUID();
 				savedName = uid.toString().substring(0, 5) + "_" + multifile.getOriginalFilename();
-				File target = new File(session.getServletContext().getRealPath("/")+uploadPath, savedName);
+				File target = new File(uploadPath, savedName);
 				FileCopyUtils.copy(multifile.getBytes(), target);
 				sharePostService.updateSharePostPhoto(savedName, sharePostVO.getNoneTradePostNo());
 			} catch (IOException e) {
@@ -385,10 +370,15 @@ public class TradeBoardController {
 	@RequestMapping(value="/deleteSharePost.do",method=RequestMethod.POST)
 	public String deleteSharePost(String noneTradePostNo, String pageNo, String boardTypeNo, String categoryNo, String searchWord) {
 		SharePostVO sharePostVO = sharePostService.deleteSharePost(Integer.parseInt(noneTradePostNo));
-		ListVO listVO = sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo,null);
+		ListVO listVO = sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo);
 		if(listVO.getList().isEmpty() || listVO.getList()==null) {
-			return "redirect:list_share_post.do?pageNo=" + (listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
-					+ sharePostVO.getCategoryNo() + "";
+			if(listVO.getPagingBean().getTotalPage() == 0) {
+				return "redirect:list_share_post.do?pageNo=1&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
+						+ sharePostVO.getCategoryNo() + "";
+			} else {
+				return "redirect:list_share_post.do?pageNo=" + (listVO.getPagingBean().getTotalPage())+"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
+						+ sharePostVO.getCategoryNo() + "";
+			}
 		}else {
 			return "redirect:list_share_post.do?pageNo=" + pageNo +"&boardTypeNo=" + sharePostVO.getBoardTypeNo() + "&categoryNo="
 						+ sharePostVO.getCategoryNo() + "";
@@ -415,7 +405,7 @@ public class TradeBoardController {
 		model.addAttribute("boardTypeNo", boardTypeNo);
 		model.addAttribute("categoryNo", categoryNo);
 		model.addAttribute("searchWord", searchWord);
-		model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo, searchWord));
+		model.addAttribute("svo", sharePostService.getSharePostList(pageNo, boardTypeNo, categoryNo/*searchWord*/));
 		return "service_trade.page_list_share_post";
 	}
 
@@ -440,8 +430,11 @@ public class TradeBoardController {
 	 * @author Jung
 	 */
 	@RequestMapping("/applyBuyView.do")
-	public String applyTradeView(String tradePostNo, Model model) {
-		model.addAttribute("tradePostVO",tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+	public String applyTradeView(String tradePostNo, HttpServletRequest request) {
+		HttpSession session = request.getSession(false);
+		MemberVO memberVO = (MemberVO) session.getAttribute("member");
+		request.setAttribute("tradePostVO",tradePostService.findTradePostByTradePostNo(Integer.parseInt(tradePostNo)));
+		request.setAttribute("nowPoint",pointService.findNowpointById(memberVO.getId()));
 		return "service_trade.page_apply_buy_view";
 	}
 	
