@@ -81,11 +81,13 @@ $(document).ready(function(){
 							<c:otherwise>
 								<c:if test="${member.grade eq 'member'}">
 								<li><a href="${pageContext.request.contextPath}/myaccount/getPointHistoryById.do"><i class="fa fa-user"></i> 내 계정</a></li>
+								<li><a href="${pageContext.request.contextPath}/myaccount/findNowpointById.do"><i class="fa fa-usd"></i> 포인트 충전/환전</a></li>
+								<li><a href="${pageContext.request.contextPath}/myaccount/findPickListById.do"><i class="fa fa-heart"></i> 찜목록</a></li>
 								</c:if>
 								<c:if test="${member.grade  eq 'admin'}">
 								<li><a href="#"><i class="fa fa-user"></i> 관리자 페이지</a></li>
 								</c:if>
-								<li><a href="#"><i class="fa fa-heart"></i> 찜목록</a></li>
+								
 								<li class="dropdown">
 									<a href="#this" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope"></i> 쪽지 <span id="message-badge" class="badge"></span></a> 
 									    <div class="dropdown-menu">
@@ -97,7 +99,7 @@ $(document).ready(function(){
 									        <div class="dropdown-menu-footer"><a href="/momsbay/message/getReceiveMessageList.do?id=${sessionScope.member.id }"><span>받은 메세지함에서 보기<span></a></div>
 									    </div>
 								</li>
-								<li><a href="${pageContext.request.contextPath}/member/logout.do"><i class="fa fa-unlock"></i> 로그아웃</a></li>
+								<li><a href="${pageContext.request.contextPath}/member/logout.do?id=${member.id }"><i class="fa fa-unlock"></i> 로그아웃</a></li>
 							</c:otherwise>
 						</c:choose>
 					</ul>
