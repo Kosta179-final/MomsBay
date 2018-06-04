@@ -34,7 +34,7 @@
 							</strong>
 						</div>
 						<div align="left" style="padding: 10px;">
-							<span style="padding-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글쓴이 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.memberVO.id}</span>
+							<span style="padding-top: 10px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;글쓴이 &nbsp;&nbsp;: &nbsp;&nbsp;${pvo.memberVO.name}</span>
 							<c:if test="${pvo.tradeStatusNo==3}">
 								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="label label-danger">거래완료</span>
 							</c:if>

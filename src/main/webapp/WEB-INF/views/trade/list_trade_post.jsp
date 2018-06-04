@@ -99,15 +99,25 @@
 		                     </div>
                      	</c:when>
                      	<c:otherwise>
-                     		<div class="row" style="padding-bottom: 12px;">
-                     		${requestScope.tradePostVO.status}<%-- 거래완료시 찜버튼 사라짐 --%>&nbsp;
-                     		</div>
+	                     	<div class="row">
+	                     		<div align="left" style="padding: 10px;">
+		                           <div class="col-sm-10">
+		                              <strong>
+		                                 <span class="postPrice">&nbsp;&nbsp;₩&nbsp;<fmt:formatNumber value="${tpVO.price}" pattern="#,###.##"/></span><br>
+		                              </strong>
+		                           </div>
+		                           <div class="col-sm-2" style="padding: 0px;">
+		                     		${requestScope.tradePostVO.status}<%-- 거래완료시 찜버튼 사라짐 --%>&nbsp;
+		                           </div>
+	                           </div>
+	                     	</div>
                      	</c:otherwise>
                      </c:choose>
                      
                      <div class="row">
-                        <div class="col-sm-8" style="padding-left: 0px;">
-                           <div class="tradeId">글쓴이 &nbsp;: &nbsp;&nbsp;${tpVO.memberVO.id}</div>
+                        <div class="col-sm-8">
+                           <span style="position: absolute; left: 23px;">글쓴이</span> 
+                           <span style="position: absolute; left: 68px;">:&nbsp;&nbsp;${tpVO.memberVO.name}</span>
                         </div>
                         <div class="col-sm-4" style="padding-right: 31px;">
                         	<c:choose>
