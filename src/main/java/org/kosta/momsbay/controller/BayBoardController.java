@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.kosta.momsbay.model.service.BayPostService;
 import org.kosta.momsbay.model.service.CommentService;
 import org.kosta.momsbay.model.service.QnaPostService;
+import org.kosta.momsbay.model.vo.BayCommentVO;
 import org.kosta.momsbay.model.vo.BayPostVO;
 import org.kosta.momsbay.model.vo.CommentVO;
 import org.kosta.momsbay.model.vo.QnaPostVO;
@@ -17,12 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-=======
->>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 
 /**
  * BayPost 처리하는 Controller. 관련 Service: QnaPostService, BayPostService,
@@ -199,19 +197,11 @@ public class BayBoardController {
 		return "bay/update_qna_post" + ".tiles";
 	}
 	
-<<<<<<< HEAD
 	
 	@RequestMapping(method=RequestMethod.POST, value="getBayCommentList.do")
 	public @ResponseBody List<CommentVO> getBayCommentList(@RequestParam("bayPostNo") int bayPostNo) {
 		List<CommentVO> comment = commentService.getBayCommentList(bayPostNo);
 		return comment;
-=======
-	/*@ResponseBody
-	@RequestMapping("getBayCommentList.do")
-	public String getBayCommentList(BayCommentVO bayCommentVO, int bayPostNo) {
-		commentService.getBayCommentList(bayPostNo);
-		return "redirect:detail_bay.do?bayCommentContent="+bayCommentVO.getBayCommentContent();
->>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="write_comment.do")
@@ -224,22 +214,8 @@ public class BayBoardController {
 		return commentService.deleteComment(bayCommentNo);
 	}
 	
-<<<<<<< HEAD
 	@RequestMapping("update_comment.do")
 	public @ResponseBody int updateComment(BayCommentVO bayCommentVO) {
 		return commentService.updateComment(bayCommentVO);
 	}
-=======
-	@RequestMapping("deleteComment.do")
-	public String deleteComment(int bayCommentNo, BayCommentVO bayCommentVO) {
-		commentService.deleteComment(bayCommentNo);
-		return "redirect:getBayCommentList.do?bayCommentNo="+bayCommentVO.getBayCommentNo();
-	}
-	
-	@RequestMapping("updateComment.do")
-	public String updateComment(BayCommentVO bayCommentVO) {
-		commentService.updateComment(bayCommentVO);
-		return "redirect:getBayCommentList.do?bayCommentNo="+bayCommentVO.getBayCommentNo();
-	}*/
->>>>>>> branch 'master' of https://github.com/KostaFinal2ZO/MomsBay.git
 }
