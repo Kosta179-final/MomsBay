@@ -17,10 +17,17 @@
 	  /*
 	  	현재 페이지에 대한 메뉴 표시를 위한 css 설정
 	  */
-		var requestUrl=location.search;
-	  	var strIndex=requestUrl.indexOf('categoryNo=');
-	  	if(strIndex!=-1){
-			var categoryNo=requestUrl.substr(strIndex+11);
+		var requestUrl=location.href;
+	 	var page=requestUrl.indexOf('/trade/detail_');
+	 	var categoryNo=-1;
+	 	
+		if(page!=-1){ // 거래 게시글 상세 페이지 일때
+			categoryNo='${requestScope.tradePostVO.categoryNo}';
+		} else{ // 거래 게시글 목록 페이지 일때
+			var strIndex=requestUrl.indexOf('categoryNo=');
+			categoryNo=requestUrl.substr(strIndex+11);
+		}
+		if(categoryNo!=-1){
 			var categoryId='#category_no'+categoryNo;
 			$(categoryId).css({
 				"color": "#FE980F",
@@ -28,7 +35,7 @@
 			});
 			$(categoryId).closest('.panel-collapse').removeClass('collapse');
 			$(categoryId).closest('.panel-collapse').addClass('in');
-	  	}
+		}
    });
 </script>
    <div class="left-sidebar" style="height: 500px;">

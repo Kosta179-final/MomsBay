@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 /**
  * 계정관련 작업 처리 Controller. ex)찜목록, 포인트충전, 거래내역 및 포인트 내역출력
  * 
- * @author 개발제발
+ * @author Hwang
  */
 @RequestMapping("/myaccount")
 @Controller
@@ -54,6 +54,7 @@ public class MyAccountController {
 	public String update(MemberVO member, HttpServletRequest request) {
 		memberService.updateMember(member);
 		HttpSession session = request.getSession();
+		member =memberService.findMemberById(member.getId());
 		session.setAttribute("member", member);
 		return "redirect:modify_myinfo.do";
 	}
@@ -153,6 +154,22 @@ public class MyAccountController {
 		return "service_myaccount" + ".page_" + "service_point";
 	}
 	
+	/**
+	 * 포인트 조회, 내정보에서 사용한다.
+	 * 
+	 * @param request
+	 * @return url
+	 * @author Hwang
+	 */
+	@RequestMapping("findMypointById.do")
+	public String findMypointById(HttpServletRequest request) {
+		HttpSession session = request.getSession();
+		MemberVO member = (MemberVO) session.getAttribute("member");
+		String id = member.getId();
+		int point = pointService.findNowpointById(id);
+		session.setAttribute("currentPoint", point);
+		return "service_myaccount" + ".page_" + "show_myinfo";
+	}
 	/**
 	 * 찜 내역 조회.
 	 * 

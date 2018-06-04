@@ -5,12 +5,12 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	/* 자동로그인 */
-	var uId = getCookie("mbId");
+	/* var uId = getCookie("mbId");
 	var uToken = getCookie("mbToken");
 	
 	if(uId!="" &&  uToken !=""){
 		location.href="${pageContext.request.contextPath}/member/autoLogin.do?id="+uId+"&token="+uToken
-	}
+	} */
 	
 	$("#register").click(function(){
 		location.href="${pageContext.request.contextPath}/member/register.do";

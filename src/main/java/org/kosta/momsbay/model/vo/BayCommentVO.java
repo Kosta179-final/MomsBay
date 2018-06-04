@@ -1,3 +1,4 @@
+
 package org.kosta.momsbay.model.vo;
 
 import lombok.AllArgsConstructor;
@@ -10,7 +11,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BayCommentVO extends CommentVO{
-	private String bayComment;
 	private int bayPostNo;
-	
 }

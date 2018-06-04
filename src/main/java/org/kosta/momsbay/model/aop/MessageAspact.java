@@ -27,7 +27,7 @@ public class MessageAspact {
 			+ "execution(public * org.kosta.momsbay.controller.TradeController.updateDeliveryTradeHistory(..)) || "
 			+ "execution(public * org.kosta.momsbay.controller.MemberController.register(..)) || "
 			+ "execution(public * org.kosta.momsbay.controller.TradeController.completeTransaction(..))")
-	public Object saveReport(ProceedingJoinPoint point) throws Throwable {
+	public Object adminMessage(ProceedingJoinPoint point) throws Throwable {
 		Object retValue = null;
 		retValue = point.proceed();
 		String mn = point.getSignature().getName();

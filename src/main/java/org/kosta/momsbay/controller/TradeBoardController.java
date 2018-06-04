@@ -39,8 +39,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class TradeBoardController {
 	private String uploadPath = "C:\\java-kosta\\framework-workspace2\\resources\\upload\\postImg";
 	@Resource
-	private CommentService commentService;
-	@Resource
 	private TradePostService tradePostService;
 	@Resource
 	private SharePostService sharePostService;

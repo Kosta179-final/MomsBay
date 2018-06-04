@@ -50,6 +50,10 @@
 	 <mvc:exclude-mapping path="/user_*.do"/> user_요청url.do로 요청하면 핸들러 인터셉터 적용대상에서 제외 -->
 	<mvc:interceptors>
 		<mvc:interceptor>
+			<mvc:mapping path="/**/*.do"/>
+			<bean class="org.kosta.momsbay.controller.AutoLoginInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
 			<mvc:mapping path="/**/*.do" />
 			<mvc:exclude-mapping path="/home.do"/>
 			<mvc:exclude-mapping path="/member/*.do"/>
@@ -69,6 +73,7 @@
 		</mvc:interceptor>
 		<mvc:interceptor>
 			<mvc:mapping path="/admin/*.do"/>
+			<mvc:exclude-mapping path="/admin/searchMemberById.do"/>
 			<bean class="org.kosta.momsbay.controller.CheckAdminInterceptor"/>
 		</mvc:interceptor>
 	</mvc:interceptors>

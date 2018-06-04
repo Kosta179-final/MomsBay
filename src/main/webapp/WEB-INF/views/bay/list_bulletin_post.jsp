@@ -39,7 +39,7 @@
 									</c:otherwise>
 									</c:choose>
 									</td>
-								<td class="cart_quantity">${pv.memberVO.name}</td>
+								<td class="cart_quantity">${pv.memberVO.id}</td>
 				 				<td class="cart_price">${pv.regdate }</td>
 				 				<td class="cart_price">${pv.hits }</td>
 							</tr>
@@ -57,7 +57,7 @@
 									</c:otherwise>
 									</c:choose>
 									</td>
-								<td class="cart_quantity">${pvo.memberVO.name}</td>
+								<td class="cart_quantity">${pvo.memberVO.id}</td>
 				 				<td class="cart_price">${pvo.regdate }</td>
 				 				<td class="cart_price">${pvo.hits }</td>
 							</tr>
