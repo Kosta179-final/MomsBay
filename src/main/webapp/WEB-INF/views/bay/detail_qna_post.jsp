@@ -1,8 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>   
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>  
+<script src="${pageContext.request.contextPath}/resources/js/qna.reply.js"></script>   
 <script type="text/javascript">
 $(document).ready(function(){
 	$("#deleteBtn").click(function(){ 
@@ -47,7 +48,7 @@ $(document).ready(function(){
 	<tr>
 			<td>글번호 ${requestScope.qvo.bayPostNo }</td>
 			<td>제목: ${requestScope.qvo.title} </td>
-			<td>작성자:  ${requestScope.qvo.memberVO.id }</td>
+			<td>작성자:  ${requestScope.qvo.memberVO.id}</td>
 			<td>조회수: ${requestScope.qvo.hits} </td>
 			<td>${requestScope.qvo.regdate}</td>
 		</tr>		
@@ -72,3 +73,25 @@ $(document).ready(function(){
     </div>
   </div>
 </div>
+<!--                     추가                         -->
+    <!--  댓글  -->
+    <div class="container">
+        <label for="content">comment</label>
+        <input type="hidden" id="sessionId" value="${sessionScope.member.id }"/>
+        <form method="post" id="write_commentForm">
+            <div class="input-group" style="margin-bottom: 15px;">
+               <input type="hidden" name="bayPostNo" id="bayPostNo" value="${requestScope.qvo.bayPostNo}"/>
+                <input type="hidden" id="sessionId" name="id" value="${sessionScope.member.id}"/>
+               <input type="text" class="form-control" id="bayCommentContent" name="bayCommentContent" placeholder="내용을 입력하세요.">
+               <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" id="insert">등록</button>
+               </span>
+              </div>
+        </form>
+    </div>
+    <div class="container">
+        <div class="commentList"></div>
+    </div>
+
+
+

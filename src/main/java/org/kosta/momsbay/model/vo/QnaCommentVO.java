@@ -2,14 +2,13 @@ package org.kosta.momsbay.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Data
+@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @AllArgsConstructor
-public abstract class CommentVO {
-	private int bayCommentNo;
-	private String bayCommentContent;
-	private String bayCommentRegdate;
-	private String id;
+public class QnaCommentVO extends CommentVO{
+	private int bayPostNo;
 }
