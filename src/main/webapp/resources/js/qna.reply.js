@@ -38,6 +38,9 @@ function deleteComment(target){
 function insertComment(){
       var formData = $("#write_commentForm").serialize();
       var bayPostNo = $("#bayPostNo").val();
+      if($("#bayCommentContent").val()==''){
+     	 alert("댓글 내용을 작성 해 주세요");
+      }else{
       $.ajax({
          type:'post',
          data:formData,
@@ -50,7 +53,8 @@ function insertComment(){
 			alert('댓글 작성 오류!');
 			alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
          }
-      })
+      });
+      }
    }
 function selectData(num){
 	var sessionId = $("#sessionId").val();

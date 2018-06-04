@@ -77,7 +77,7 @@
   				<div class="input-group" style="margin-bottom: 15px;">
   					<input type="hidden" name="bayPostNo" id="bayPostNo" value="${requestScope.pvo.bayPostNo }"/>
   					<input type="hidden" id="sessionId" name="id" value="${sessionScope.member.id }"/>
-  					<input type="text" class="form-control" id="bayCommentContent" name="bayCommentContent" placeholder="내용을 입력해주세요">
+  					<input type="text" class="form-control" id="bayCommentContent" name="bayCommentContent" required="required" placeholder="내용을 입력해주세요">
   					<span class="input-group-btn">
   						<button class="btn btn-default" type="button" id="insert">등록</button>
   					</span>
