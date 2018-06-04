@@ -70,13 +70,7 @@ $(document).ready(function(){
 		</tr>
 	</table>
 	</form>
-    </div>
-  </div>
-</div>
-<!--                     추가                         -->
-    <!--  댓글  -->
-    <div class="container">
-        <label for="content">comment</label>
+	  <label for="content">comment</label>
         <input type="hidden" id="sessionId" value="${sessionScope.member.id }"/>
         <form method="post" id="write_commentForm">
             <div class="input-group" style="margin-bottom: 15px;">
@@ -88,10 +82,12 @@ $(document).ready(function(){
                </span>
               </div>
         </form>
-    </div>
-    <div class="container">
         <div class="commentList"></div>
     </div>
+  </div>
+</div>
+<!--                     추가                         -->
+    <!--  댓글  -->
 
 
 
