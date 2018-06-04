@@ -71,7 +71,7 @@ function selectData(num){
             $(".commentList").empty();
 			$.each(data, function(index, item){ 
 				a += '<div class="commentArea row" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                a += '<div id="bayCommentNo" class="commentInfo'+item.bayCommentNo+'  col-sm-10 text-left">'+'댓글번호 : '+item.bayCommentNo+' / 작성자 : '+item.id+'</div>';
+                a += '<div id="bayCommentNo" class="commentInfo'+item.bayCommentNo+'  col-sm-10 text-left">'+'작성자 : '+item.id+' / '+item.bayCommentRegdate+'</div>';
                 if(item.id == sessionId){
                 	a += '<div><a id="updateComment" class="col-sm-1 text-right" onclick="formUpdate('+item.bayCommentNo+',\''+item.bayCommentContent+'\');"> 수정 </a>';
                 	a += '<a id="deleteComment" class="col-sm-1 text-right" data-value='+item.bayCommentNo+'> 삭제 </a></div>';
@@ -112,7 +112,7 @@ function commentUpdate(bayCommentNo){
         	selectData(bayPostNo);
         },
         error:function(){
-			alert('댓글 수정시 네트워크 오류!');
+			alert('댓글 내용을 작성 해 주세요!');
 		}
     });
 }
