@@ -8,7 +8,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public abstract class CommentVO {
-	private int thread;
-	private int depth;
+	private int bayCommentNo;
+	private String bayCommentContent;
+	private String bayCommentRegdate;
 	private String id;
 }

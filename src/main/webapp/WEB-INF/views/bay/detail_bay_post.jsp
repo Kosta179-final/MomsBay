@@ -4,6 +4,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/bulletin.reply.js"></script>   
       <script type="text/javascript">
     $(document).ready(function(){
     	$("#deleteBtn").click(function(){ 
@@ -72,4 +73,21 @@
 	</form>
     </div>
   </div>
+  	<div class="container">
+  		<label for="content">comment</label>
+  			<input type="hidden" id="sessionId" value="${sessionScope.member.id }"/>
+  			<form method="post" id="write_commentForm">
+  				<div class="input-group" style="margin-bottom: 15px;">
+  					<input type="hidden" name="bayPostNo" id="bayPostNo" value="${requestScope.pvo.bayPostNo }"/>
+  					<input type="hidden" id="sessionId" name="id" value="${sessionScope.member.id }"/>
+  					<input type="text" class="form-control" id="bayCommentContent" name="bayCommentContent" placeholder="내용을 입력해주세요">
+  					<span class="input-group-btn">
+  						<button class="btn btn-default" type="button" id="insert">등록</button>
+  					</span>
+  				</div>
+  			</form>
+  	</div>
+  	<div class="container">
+  		<div class="commentList"></div>
+  	</div>
 </div>
