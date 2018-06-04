@@ -58,6 +58,7 @@
 				<div id="c" class="panel-collapse collapse">
 					<div class="panel-body">
 						<ul>
+							<li><a href="findMypointById.do">내 정보</a></li>
 							<li><a href="password_check.do">회원정보 수정</a></li>
 						</ul>
 					</div>
