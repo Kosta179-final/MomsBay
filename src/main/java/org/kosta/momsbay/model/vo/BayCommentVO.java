@@ -10,7 +10,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class BayCommentVO extends CommentVO{
-	private String bayComment;
 	private int bayPostNo;
-	
 }
