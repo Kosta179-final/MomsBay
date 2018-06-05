@@ -4,6 +4,17 @@
 <script src="https://cdn.ckeditor.com/4.9.2/standard-all/ckeditor.js"></script>
 <script type="text/javascript">
 $(document).ready(function() {
+	$("#add_btn").click(function() {
+		 var data = CKEDITOR.instances.content.getData();
+       if ($("#title").val() == "") {
+          alert("제목을 입력하세요!");
+          return false;
+       }
+       if (data == "") {
+          alert("본문을 입력하세요!");
+          return false;
+       }        
+    });
 	$("#resetBtn").click(function() {
 		if(confirm("글쓰기를 취소하시겠습니까?")){
 			location.href="list_bulletin_post.do?boardTypeNo=5";
@@ -35,10 +46,7 @@ $(document).ready(function() {
 			<br><br>
 			<textarea cols="90" rows="15" name="content" required="required"
 						placeholder="내용을 입력하세요" id="content"></textarea>
-	<!-- 에디터 스크립트 소스
-			약간 이상한건 스크립트 소스가 위에가있으면
-			에러가 남. 그래서 위치가 이래요.
-	 -->
+	<!-- 에디터 스크립트 소스	 -->
 	<script>
 		// Don't forget to add CSS for your custom styles.
 		CKEDITOR.addCss( 'figure[class*=easyimage-gradient]::before { content: ""; position: absolute; top: 0; bottom: 0; left: 0; right: 0; }' +
@@ -105,7 +113,7 @@ $(document).ready(function() {
 			<br>
 			<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 			<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
-			<input type="submit" class="btn btn-info3" value="작성">
+			<input type="submit" class="btn btn-info3" value="작성" id="add_btn">
 			<input type="reset" class="btn btn-info3" id="resetBtn" value="취소">
 		</form>
 	</div>
