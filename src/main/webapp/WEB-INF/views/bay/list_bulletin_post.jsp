@@ -66,6 +66,17 @@
 				</table>
 			</div>
 			<div class="row">
+			<form id="conditionSearchFrom">
+				<div class="center-aligned">
+					<select name="boardTypeNo" id="boardTypeNo" style="width: 140px; height: 36.33px;" >
+						<option value="5">제목+내용</option>
+					</select>
+					<input type="text" placeholder="검색어 입력" name="searchWord" />
+					<button class="btn searchform fa fa-search" type="button" id="btn_search"></button>
+				</div>
+			</form>
+			</div>
+			<div class="row">
 					<div class="pull-right">
 					<c:if test="${sessionScope.member!=null }">
 						<button name="button" class="btn btn-info5" onclick="addPost()">글쓰기</button><br>
