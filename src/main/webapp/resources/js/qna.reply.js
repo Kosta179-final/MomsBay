@@ -17,13 +17,14 @@ $(document).ready(function(){
 		
 	});
 });
+//댓글 삭제
 function deleteComment(target){
 	var commentNo = parseInt(target.getAttribute("data-value"));
 	var bayPostNo = $("#bayPostNo").val();
 	$.ajax({
 	        type : 'post',
 	        data:{bayCommentNo:commentNo},
-	        url : 'deleteComment.do',
+	        url : 'deleteQnaComment.do',
 	        dateType:'json',
 	        cache:false,
 	        timeout:30000,
@@ -35,6 +36,7 @@ function deleteComment(target){
 			}
 	    });
 }
+//댓글 등록
 function insertComment(){
       var formData = $("#write_commentForm").serialize();
       var bayPostNo = $("#bayPostNo").val();
@@ -56,6 +58,34 @@ function insertComment(){
       });
       }
    }
+//댓글 글자수 카운터
+$(function() {
+    var maxLength = 300;
+
+    function updateInputCount() {
+        var textLength = $('textarea').val().length;
+        var count = maxLength - textLength;
+        $('span.input-counter').text(count+"/300");
+        if (count <= 0) {
+            $('span.input-counter').addClass('disabled');
+            alert("입력범위를 초과하였습니다");
+            $("#bayCommentContent").val('');
+            $('input#input-submit').prop('disabled', true);
+        } else {
+            $('span.input-counter').removeClass('disabled');
+            $('input#input-submit').prop('disabled', false);
+        }
+    }
+
+    $('textarea')
+        .focus(updateInputCount)
+        .blur(updateInputCount)
+        .keypress(updateInputCount);
+    window.setInterval(updateInputCount, 500);
+
+    updateInputCount();
+});
+// 댓글 리스트 출력
 function selectData(num){
 	var sessionId = $("#sessionId").val();
 	$.ajax({
@@ -104,7 +134,7 @@ function commentUpdate(bayCommentNo){
 	$.ajax({
         type : 'post',
         data:{bayCommentNo:bayCommentNo, bayCommentContent:updateContent},
-        url : 'updateComment.do',
+        url : 'updateQnaComment.do',
         dateType:'json',
         cache:false,
         timeout:30000,

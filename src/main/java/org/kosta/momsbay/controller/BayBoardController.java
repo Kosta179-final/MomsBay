@@ -139,10 +139,10 @@ public class BayBoardController {
 	 * @author sam
 	 */
 	@RequestMapping("detail_qna_post.do")
-	   public String getQnaDetail(int bayPostNo,Model model) {
+	   public String getQnaDetail(int bayPostNo,Model model,QnaPostVO qnaPostVO) {
 	      qnaPostService.updateQnaCount(bayPostNo);
 	      model.addAttribute("qvo", qnaPostService.getQnaDetail(bayPostNo));
-	      return "bay/detail_qna_post" + ".tiles";
+	      return "redirect:getQnaDetailNoHit.do?bayPostNo=" + qnaPostVO.getBayPostNo();
 	   }
 	/**
 	 * Q&A 게시판 조회수 증가하지않는 메서드
@@ -222,7 +222,7 @@ public class BayBoardController {
 	 * @param bayCommentNo
 	 * @author sam
 	 */
-	@RequestMapping(value = "deleteComment.do", method = RequestMethod.POST)
+	@RequestMapping(value = "deleteQnaComment.do", method = RequestMethod.POST)
 	public @ResponseBody int deleteQnaComment(@RequestParam("bayCommentNo") int bayCommentNo) {
 		return qnaCommentService.deleteComment(bayCommentNo);
 	}
@@ -231,7 +231,7 @@ public class BayBoardController {
 	 * @param qnaCommentVO
 	 * @author sam
 	 */
-	@RequestMapping(value = "updateComment.do", method = RequestMethod.POST)
+	@RequestMapping(value = "updateQnaComment.do", method = RequestMethod.POST)
 	public @ResponseBody int updateQnaComment(QnaCommentVO qnaCommentVO) {	
 		return qnaCommentService.updateComment(qnaCommentVO);
 	}
