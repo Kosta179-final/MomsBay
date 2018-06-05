@@ -77,10 +77,11 @@
   				<div class="input-group" style="margin-bottom: 15px;">
   					<input type="hidden" name="bayPostNo" id="bayPostNo" value="${requestScope.pvo.bayPostNo }"/>
   					<input type="hidden" id="sessionId" name="id" value="${sessionScope.member.id }"/>
-  					<input type="text" class="form-control" id="bayCommentContent" name="bayCommentContent" required="required" placeholder="내용을 입력해주세요">
+  					<textarea rows="1" cols="100" name="bayCommentContent" id="bayCommentContent" maxlength="300" class="form-control rep-content" required="required" placeholder="내용을 입력해주세요"></textarea>
   					<span class="input-group-btn">
   						<button class="btn btn-default" type="button" id="insert">등록</button>
   					</span>
+  					<span class="input-counter"></span>
   				</div>
   			</form>
   			<div class="commentList"></div>

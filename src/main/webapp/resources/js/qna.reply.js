@@ -17,13 +17,14 @@ $(document).ready(function(){
 		
 	});
 });
+//댓글 삭제
 function deleteComment(target){
 	var commentNo = parseInt(target.getAttribute("data-value"));
 	var bayPostNo = $("#bayPostNo").val();
 	$.ajax({
 	        type : 'post',
 	        data:{bayCommentNo:commentNo},
-	        url : 'deleteComment.do',
+	        url : 'deleteQnaComment.do',
 	        dateType:'json',
 	        cache:false,
 	        timeout:30000,
@@ -35,6 +36,7 @@ function deleteComment(target){
 			}
 	    });
 }
+//댓글 등록
 function insertComment(){
       var formData = $("#write_commentForm").serialize();
       var bayPostNo = $("#bayPostNo").val();
@@ -56,6 +58,34 @@ function insertComment(){
       });
       }
    }
+//댓글 글자수 카운터
+$(function() {
+    var maxLength = 300;
+
+    function updateInputCount() {
+        var textLength = $('textarea').val().length;
+        var count = maxLength - textLength;
+        $('span.input-counter').text(count+"/300");
+        if (count <= 0) {
+            $('span.input-counter').addClass('disabled');
+            alert("입력범위를 초과하였습니다");
+            $("#bayCommentContent").val('');
+            $('input#input-submit').prop('disabled', true);
+        } else {
+            $('span.input-counter').removeClass('disabled');
+            $('input#input-submit').prop('disabled', false);
+        }
+    }
+
+    $('textarea')
+        .focus(updateInputCount)
+        .blur(updateInputCount)
+        .keypress(updateInputCount);
+    window.setInterval(updateInputCount, 500);
+
+    updateInputCount();
+});
+// 댓글 리스트 출력
 function selectData(num){
 	var sessionId = $("#sessionId").val();
 	$.ajax({
@@ -71,10 +101,10 @@ function selectData(num){
             $(".commentList").empty();
 			$.each(data, function(index, item){ 
 				a += '<div class="commentArea row" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
-                a += '<div id="bayCommentNo" class="commentInfo'+item.bayCommentNo+'  col-sm-10 text-left">'+'댓글번호 : '+item.bayCommentNo+' / 작성자 : '+item.id+'</div>';
+                a += '<div id="bayCommentNo" class="commentInfo'+item.bayCommentNo+'  col-sm-10 text-left">'+'작성자 : '+item.id+' / '+item.bayCommentRegdate+'</div>';
                 if(item.id == sessionId){
-                	a += '<div><a  style="cursor:pointer" id="updateComment" class="col-sm-1 text-right" onclick="formUpdate('+item.bayCommentNo+',\''+item.bayCommentContent+'\');"> 수정 </a>';
-                	a += '<a  style="cursor:pointer" id="deleteComment" class="col-sm-1 text-right" data-value='+item.bayCommentNo+'> 삭제 </a></div>';
+                	a += '<div><a id="updateComment" class="col-sm-1 text-right" onclick="formUpdate('+item.bayCommentNo+',\''+item.bayCommentContent+'\');"> 수정 </a>';
+                	a += '<a id="deleteComment" class="col-sm-1 text-right" data-value='+item.bayCommentNo+'> 삭제 </a></div>';
                 }
                 a += '<div id ="commentContent'+item.bayCommentNo+'" class="commentContent'+item.bayCommentNo+' col-sm-10 text-left"> <p> 내용 : '+item.bayCommentContent +'</p>';
                 a += '</div></div>';
@@ -104,7 +134,7 @@ function commentUpdate(bayCommentNo){
 	$.ajax({
         type : 'post',
         data:{bayCommentNo:bayCommentNo, bayCommentContent:updateContent},
-        url : 'updateComment.do',
+        url : 'updateQnaComment.do',
         dateType:'json',
         cache:false,
         timeout:30000,
@@ -112,7 +142,7 @@ function commentUpdate(bayCommentNo){
         	selectData(bayPostNo);
         },
         error:function(){
-			alert('댓글 수정시 네트워크 오류!');
+			alert('댓글 내용을 작성 해 주세요!');
 		}
     });
 }
