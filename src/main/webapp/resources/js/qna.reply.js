@@ -73,8 +73,8 @@ function selectData(num){
 				a += '<div class="commentArea row" style="border-bottom:1px solid darkgray; margin-bottom: 15px;">';
                 a += '<div id="bayCommentNo" class="commentInfo'+item.bayCommentNo+'  col-sm-10 text-left">'+'댓글번호 : '+item.bayCommentNo+' / 작성자 : '+item.id+'</div>';
                 if(item.id == sessionId){
-                	a += '<div><a id="updateComment" class="col-sm-1 text-right" onclick="formUpdate('+item.bayCommentNo+',\''+item.bayCommentContent+'\');"> 수정 </a>';
-                	a += '<a id="deleteComment" class="col-sm-1 text-right" data-value='+item.bayCommentNo+'> 삭제 </a></div>';
+                	a += '<div><a  style="cursor:pointer" id="updateComment" class="col-sm-1 text-right" onclick="formUpdate('+item.bayCommentNo+',\''+item.bayCommentContent+'\');"> 수정 </a>';
+                	a += '<a  style="cursor:pointer" id="deleteComment" class="col-sm-1 text-right" data-value='+item.bayCommentNo+'> 삭제 </a></div>';
                 }
                 a += '<div id ="commentContent'+item.bayCommentNo+'" class="commentContent'+item.bayCommentNo+' col-sm-10 text-left"> <p> 내용 : '+item.bayCommentContent +'</p>';
                 a += '</div></div>';

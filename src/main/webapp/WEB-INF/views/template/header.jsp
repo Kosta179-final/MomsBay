@@ -172,6 +172,8 @@ $(document).ready(function(){
 					</ul>
 				</div>
 			</div>
+			<%--
+			<!-- 검색기능 제거함 -->
 			<!-- 카테고리별 검색 -->
 			<form id="conditionSearchFrom">
 			<div class="col-sm-5">
@@ -189,8 +191,7 @@ $(document).ready(function(){
 					<button class="btn searchform fa fa-search" type="button" id="btn_search"></button>
 				</div>
 			</div>
-			</form>
-			<!-- //카테고리별 검색 -->
+			</form> --%>
 		</div>
 	</div>
 </div>

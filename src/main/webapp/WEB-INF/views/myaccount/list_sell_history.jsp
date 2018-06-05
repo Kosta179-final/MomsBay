@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script type="text/javascript">
 	function detail(tradePostNo){
 		var url = "${pageContext.request.contextPath}";
@@ -41,11 +42,11 @@
 					<c:if test="${!empty listVO.list}">
 						<c:forEach items="${listVO.list}" var="list" varStatus="cc">
 							<tr onclick="detail(${list.tradePostVO.tradePostNo})">
-								<td>${cc.count}</td>
+								<td>${cc.count}.</td>
 								<td>${list.status}</td>
 								<td>${list.tradePostVO.tradeId}</td>
 								<td>${list.tradePostVO.title}</td>
-								<td>${list.tradePostVO.price}</td>
+								<td><fmt:formatNumber value="${list.tradePostVO.price}" pattern="#,###.##"/></td>
 								<td>${list.tradePostVO.tradeType}</td>
 								<td>${list.regdate}</td>
 							</tr>

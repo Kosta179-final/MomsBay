@@ -38,7 +38,7 @@ $(document).ready(function(){
  });
 </script>
 
-	<div class="left-sidebar" style="height: 452px;">
+	<div class="left-sidebar text-center" style="height: 452px;">
 		<h2>My Page</h2>
 		<div class="panel-group category-products" id="accordian">
 			

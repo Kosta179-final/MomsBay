@@ -18,12 +18,14 @@
 	  	현재 페이지에 대한 메뉴 표시를 위한 css 설정
 	  */
 		var requestUrl=location.href;
-	 	var page=requestUrl.indexOf('/trade/detail_');
 	 	var categoryNo=-1;
 	 	
-		if(page!=-1){ // 거래 게시글 상세 페이지 일때
+		if(requestUrl.indexOf('/trade/detail_')!=-1){ // 거래 게시글 상세 페이지 일때
 			categoryNo='${requestScope.tradePostVO.categoryNo}';
-		} else{ // 거래 게시글 목록 페이지 일때
+		} else if(requestUrl.indexOf('applyBuyView.do')!=-1){ // 거래 게시글 팝니다 페이지 일때
+			var strIndex=requestUrl.indexOf('categoryNo=');
+			categoryNo='${requestScope.tradePostVO.categoryNo}';
+		} else if(requestUrl.indexOf('trade/list_')!=-1){ // 거래 게시글 목록 페이지 일때
 			var strIndex=requestUrl.indexOf('categoryNo=');
 			categoryNo=requestUrl.substr(strIndex+11);
 		}

@@ -32,51 +32,62 @@
 <section id="cart_items">
 	<div class="container-fluid text-center">
 			<div class="left-sidebar">
-				<h2 class="active"><strong style="color: grey;">상품 정보</strong></h2>
+				<h2 class="active"><strong style="color: grey;">결제 정보</strong></h2>
 			</div>
-			<table class="table table-borderless">
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					제목</th><td>${requestScope.tradePostVO.title}</td>
-				</tr>
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					작성자</th><td>${requestScope.tradePostVO.memberVO.name}</td>
-				</tr>
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					가격</th><td><fmt:formatNumber value="${requestScope.tradePostVO.price}" pattern="#,###.##"/>원</td>
-				</tr>
-			</table><br>
-			<div class="left-sidebar">
-				<h2 class="active"><strong style="color: grey;">신청자 정보</strong></h2>
+			<div class="row">
+				<div class="col-sm-6">
+					<table class="table table-borderless">
+						<tr>
+							<th align="left" style="width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							제목</th><td>${requestScope.tradePostVO.title}</td>
+						</tr>
+						<tr>
+							<th align="left" style="width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							작성자</th><td>${requestScope.tradePostVO.memberVO.name}&nbsp;(${requestScope.tradePostVO.memberVO.id})</td>
+						</tr>
+						<tr>
+							<th align="left" style="width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							가격</th><td><fmt:formatNumber value="${requestScope.tradePostVO.price}" pattern="#,###.##"/>원</td>
+						</tr>
+						<tr>
+							<th align="left" style="width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							주소</th><td>${requestScope.tradePostVO.memberVO.address} ${requestScope.tradePostVO.memberVO.address2}</td>
+						</tr>
+						<tr>
+							<th align="left" style="width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							전화번호</th><td>${requestScope.tradePostVO.memberVO.tel}</td>
+						</tr>
+						<tr>
+							<th align="left" style="width: 150px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							이메일</th><td>${requestScope.tradePostVO.memberVO.email}</td>
+						</tr>
+					</table>
+				</div>
+				<div class="col-sm-6">
+						<div class="row">
+							<table>
+								<tr>
+									<th style="font-size: 30px; padding-left: 40px;">결제 포인트 : <fmt:formatNumber value="${requestScope.tradePostVO.price}" pattern="#,###.##"/></th>
+								</tr>
+								<tr><td><hr><%-- 공란 줄 --%></td></tr>
+							</table>
+						</div>
+						<div class="row">
+							<table>
+								<tr>
+									<th style="width: 170px; padding-left: 55px;">현재 포인트</th><td><fmt:formatNumber value="${nowPoint}" pattern="#,###.##"/>&nbsp;&nbsp;point</td>
+								</tr>
+								<tr>
+									<th style="width: 170px; padding-left: 55px;">거래 포인트</th><td>-&nbsp;&nbsp;<fmt:formatNumber value="${requestScope.tradePostVO.price}" pattern="#,###.##"/>&nbsp;&nbsp;point</td>
+								</tr>
+								<tr>
+									<th style="width: 170px; padding-left: 55px;">거래 후 포인트</th><td><fmt:formatNumber value="${nowPoint - requestScope.tradePostVO.price}" pattern="#,###.##"/>&nbsp;&nbsp;point</td>
+								</tr>
+							</table>
+						</div>
+				</div>
 			</div>
-			<table class="table table-borderless">
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					신청자</th><td>${requestScope.tradePostVO.tradeId}</td>
-				</tr>
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					주소</th><td>${sessionScope.member.address} ${sessionScope.member.address2}</td>
-				</tr>
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					전화번호</th><td>${sessionScope.member.tel}</td>
-				</tr>
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					이메일</th><td>${sessionScope.member.email}</td>
-				</tr>
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					현재 포인트</th><td><fmt:formatNumber value="${nowPoint}" pattern="#,###.##"/>&nbsp;&nbsp;point</td>
-				</tr>
-				<tr>
-					<th align="left">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					거래 후 포인트</th><td><fmt:formatNumber value="${nowPoint - requestScope.tradePostVO.price}" pattern="#,###.##"/>&nbsp;&nbsp;point</td>
-				</tr>
-			</table>
+			<br>
 	</div>
 </section>
 <div class="btn-group">

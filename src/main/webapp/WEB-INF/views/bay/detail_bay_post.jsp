@@ -46,15 +46,15 @@
     <input type="hidden" value="${requestScope.pvo.bayPostNo}" name="bayPostNo"> 
 <table  class="table">
 	<tr>
-			<td>글번호 ${requestScope.pvo.bayPostNo }</td>
-			<td>제목: ${requestScope.pvo.title} </td>
-			<td>작성자:  ${requestScope.pvo.memberVO.id }</td>
-			<td>조회수:  ${requestScope.pvo.hits }</td>
-			<td>${requestScope.pvo.regdate }</td>
+			<td>글번호 : ${requestScope.pvo.bayPostNo }</td>
+			<td>제목 : ${requestScope.pvo.title} </td>
+			<td>작성자 :  ${requestScope.pvo.memberVO.id }</td>
+			<td>조회수 : ${requestScope.pvo.hits }</td>
+			<td>작성일 : ${requestScope.pvo.regdate }</td>
 		</tr>		
 		<tr>
 			<td colspan="5" class="content">
-			<pre>${requestScope.pvo.content}</pre>
+			<pre style="text-align: left;">${requestScope.pvo.content}</pre>
 			</td>
 		</tr>
 		
