@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <script src="http://dmaps.daum.net/map_js_init/postcode.v2.js"></script>
 <script>
 	function modifyInfo() {
@@ -21,22 +21,22 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><b  style="font-size: 15px;">아이디</b>&nbsp;${member.id }</td>
+						<td style="width: 170px;"><b  style="font-size: 15px;">아이디</b></td><td>&nbsp;${member.id }</td>
 					</tr>
 					<tr>
-						<td><b  style="font-size: 15px;">현재 포인트</b>&nbsp;${currentPoint}</td>
+						<td style="width: 170px;"><b  style="font-size: 15px;">현재 포인트</b></td><td>&nbsp;<fmt:formatNumber value="${currentPoint}" pattern="#,###.##"/></td>
 					</tr>
 					<tr>
-						<td><b  style="font-size: 15px;">이메일</b>&nbsp;${member.email }</td>
+						<td style="width: 170px;"><b  style="font-size: 15px;">이메일</b></td><td>&nbsp;${member.email }</td>
 					</tr>
 					<tr>
-						<td><b  style="font-size: 15px;">연락처</b>&nbsp;${member.tel }</td>
+						<td style="width: 170px;"><b  style="font-size: 15px;">연락처</b></td><td>&nbsp;${member.tel }</td>
 					</tr>
 					<tr>
-						<td><b  style="font-size: 15px;">주소</b>&nbsp;${member.address }</td>
+						<td style="width: 170px;"><b  style="font-size: 15px;">주소</b></td><td>&nbsp;${member.address }</td>
 					</tr>
 					<tr>
-						<td><b  style="font-size: 15px;">상세주소</b>&nbsp;${member.address2 }</td>
+						<td style="width: 170px;"><b  style="font-size: 15px;">상세주소</b></td><td>&nbsp;${member.address2 }</td>
 					</tr>
 				</tbody>
 			</table>
@@ -49,19 +49,22 @@
 				<c:forEach items="${member.list}" var="children">
 					<div class="append_div">
 						<form style="padding-bottom: 2px">
-							<input type="hidden" value="${member.id }">
-							<hr>
-							<label><b>생년월일&nbsp;</b></label> <input type="text"
-								readonly="readonly" name="birth"
-								style="width: 100px; height: 30px;" value="${children.birth }">
-							<c:if test="${children.gender eq 'male'}">
-								<input type="text" readonly="readonly" name="gender"
-									style="width: 100px; height: 30px;" value="남아">
-							</c:if>
-							<c:if test="${children.gender eq 'female'}">
-								<input type="text" readonly="readonly" name="gender"
-									style="width: 100px; height: 30px;" value="여아">
-							</c:if>
+							<input type="hidden" value="${member.id }"><br>
+							<table class="table table-hover">
+								<tr>
+									<td><b  style="font-size: 15px;">성별</b></td>
+									<td>
+										<c:if test="${children.gender eq 'male'}">
+											<span>남아</span>
+										</c:if>
+										<c:if test="${children.gender eq 'female'}">
+											<span>여아</span>
+										</c:if>
+									</td>
+									<td><b  style="font-size: 15px;">생년월일</b></td>
+									<td>${children.birth}</td>
+								</tr>
+							</table>
 							<!--  <input type="button" class="btn btn-warning rmv" value="삭제하기"  name="childDelBtn"> -->
 						</form>
 					</div>

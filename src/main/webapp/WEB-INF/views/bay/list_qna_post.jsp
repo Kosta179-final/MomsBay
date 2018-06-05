@@ -6,6 +6,11 @@
 		location.href="add_qna_post.do?boardTypeNo=${requestScope.boardTypeNo}";
 	}
 </script>
+<style>
+td.boardList{
+	
+}
+</style>
 <section id="cart_items">
 		<div class="container">
 			<div class="breadcrumbs">
@@ -22,7 +27,7 @@
 							<td class="description">제목</td>
 							<td class="quantity">작성자</td>
 							<td class="price">작성일</td>
-							<td class="hit">HIT</td>
+							<td class="price">조회수</td>
 						</tr>
 					</thead>
 					<tbody>
@@ -32,13 +37,15 @@
 								<td class="cart_description">
 								<c:choose>
 									<c:when test="${sessionScope.member!=null }">
-									<a href="detail_qna_post.do?bayPostNo=${qvo.bayPostNo}">[${qvo.subjectVO.subject}] &nbsp;${qvo.title}</a>
+									<span>
+										<a href="detail_qna_post.do?bayPostNo=${qvo.bayPostNo}">[${qvo.subjectVO.subject}] &nbsp;${qvo.title}</a>
+									</span>
 									</c:when>
 									<c:otherwise>
 										[${qvo.subjectVO.subject}] &nbsp; ${qvo.title}
 									</c:otherwise>
 									</c:choose>
-									</td>
+								</td>
 								<td class="cart_quantity">${qvo.memberVO.id}</td>
 				 				<td class="cart_price">${qvo.regdate}</td>
 				 				<td class="hit">${qvo.hits }</td>
@@ -69,7 +76,7 @@
 			<div class="row">
 					<div class="pull-right">
 					<c:if test="${sessionScope.member!=null }">
-						<button name="button" class="btn btn-primary" onclick="addQnaPost()">글쓰기</button><br>
+						<button name="button" class="btn btn-info5" onclick="addQnaPost()">글쓰기</button><br>
 					</c:if>
 					</div>
 			</div>

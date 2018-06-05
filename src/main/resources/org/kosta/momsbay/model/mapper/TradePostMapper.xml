@@ -30,6 +30,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		<result column="name" property="memberVO.name"/>
 		<result column="id" property="memberVO.id"/>
 		<result column="grade" property="memberVO.grade"/>
+		<result column="address" property="memberVO.address"/>
+		<result column="address2" property="memberVO.address2"/>
+		<result column="tel" property="memberVO.tel"/>
+		<result column="email" property="memberVO.email"/>
 	</resultMap>
 	
 	<select id="getTradePostList" resultMap="tradePostRM" parameterType="map">
@@ -69,7 +73,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	
 	<select id="findTradePostByTradePostNo" parameterType="int" resultMap="tradePostRM">
 		SELECT tp.trade_post_no, tp.category_no, tp.title, tp.content, tp.suggest_content, tp.board_type_no,
-		tp.regdate,tp.pick_count, tp.price, tp.id, bm.name, ts.status, mg.grade, tp.trade_id
+		tp.regdate,tp.pick_count, tp.price, tp.id, bm.name, ts.status, mg.grade, tp.trade_id, bm.address, bm.address2, bm.tel, bm.email
 		FROM trade_post tp, bay_member bm, trade_status ts, member_grade mg
 		WHERE tp.id=bm.id AND tp.trade_status_no=ts.trade_status_no 
 		AND tp.trade_post_no=#{value} AND bm.member_grade_no=mg.member_grade_no

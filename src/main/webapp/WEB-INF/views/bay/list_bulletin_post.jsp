@@ -17,7 +17,7 @@
 		<div class="table-responsive cart_info">
 				<table class="table table-hover">
 					<thead>
-						<tr class="cart_menu">							
+						<tr class="cart_menu text-center">							
 							<td class="price">글 번호</td>
 							<td class="description">제목</td>
 							<td class="quantity">작성자</td>
@@ -27,23 +27,23 @@
 					</thead>
 					<tbody>
 					<c:forEach var="pv" items="${requestScope.alvo.list }">
-								<tr>
-								<td class="cart_price">${pv.bayPostNo}</td>
-								<td class="cart_description">
-									<c:choose>
-									<c:when test="${sessionScope.member!=null }">
-									<a href="detail_bay.do?bayPostNo=${pv.bayPostNo }">[${pv.subjectVO.subject}]&nbsp;${pv.title}</a>
-									</c:when>
-									<c:otherwise>
-										[${pv.subjectVO.subject}]&nbsp;${pv.title}
-									</c:otherwise>
-									</c:choose>
-									</td>
-								<td class="cart_quantity">${pv.memberVO.name}</td>
-				 				<td class="cart_price">${pv.regdate }</td>
-				 				<td class="cart_price">${pv.hits }</td>
-							</tr>
-							</c:forEach>
+						<tr>
+							<td class="cart_price text-center">${pv.bayPostNo}</td>
+							<td class="cart_description">
+								<c:choose>
+								<c:when test="${sessionScope.member!=null }">
+								<a href="detail_bay.do?bayPostNo=${pv.bayPostNo }">[${pv.subjectVO.subject}]&nbsp;${pv.title}</a>
+								</c:when>
+								<c:otherwise>
+									[${pv.subjectVO.subject}]&nbsp;${pv.title}
+								</c:otherwise>
+								</c:choose>
+							</td>
+							<td class="cart_quantity">${pv.memberVO.id}</td>
+			 				<td class="cart_price">${pv.regdate }</td>
+			 				<td class="cart_price">${pv.hits }</td>
+						</tr>
+					</c:forEach>
 						<c:forEach var="pvo" items="${requestScope.lvo.list}">
 							<tr>
 								<td class="cart_price">${pvo.bayPostNo}</td>
@@ -57,7 +57,7 @@
 									</c:otherwise>
 									</c:choose>
 									</td>
-								<td class="cart_quantity">${pvo.memberVO.name}</td>
+								<td class="cart_quantity">${pvo.memberVO.id}</td>
 				 				<td class="cart_price">${pvo.regdate }</td>
 				 				<td class="cart_price">${pvo.hits }</td>
 							</tr>
@@ -68,7 +68,7 @@
 			<div class="row">
 					<div class="pull-right">
 					<c:if test="${sessionScope.member!=null }">
-						<button name="button" class="btn btn-primary" onclick="addPost()">글쓰기</button><br>
+						<button name="button" class="btn btn-info5" onclick="addPost()">글쓰기</button><br>
 					</c:if>
 					</div>
 			</div>

@@ -18,12 +18,14 @@
 	  	현재 페이지에 대한 메뉴 표시를 위한 css 설정
 	  */
 		var requestUrl=location.href;
-	 	var page=requestUrl.indexOf('/trade/detail_');
 	 	var categoryNo=-1;
 	 	
-		if(page!=-1){ // 거래 게시글 상세 페이지 일때
+		if(requestUrl.indexOf('/trade/detail_')!=-1){ // 거래 게시글 상세 페이지 일때
 			categoryNo='${requestScope.tradePostVO.categoryNo}';
-		} else{ // 거래 게시글 목록 페이지 일때
+		} else if(requestUrl.indexOf('applyBuyView.do')!=-1){ // 거래 게시글 팝니다 페이지 일때
+			var strIndex=requestUrl.indexOf('categoryNo=');
+			categoryNo='${requestScope.tradePostVO.categoryNo}';
+		} else if(requestUrl.indexOf('trade/list_')!=-1){ // 거래 게시글 목록 페이지 일때
 			var strIndex=requestUrl.indexOf('categoryNo=');
 			categoryNo=requestUrl.substr(strIndex+11);
 		}
@@ -38,7 +40,7 @@
 		}
    });
 </script>
-   <div class="left-sidebar">
+   <div class="left-sidebar" style="height: 500px;">
       <h2>카테고리</h2>
       <div class="panel-group category-products" id="accordian">
          <!--category-productsr-->
@@ -84,28 +86,20 @@
             <div class="panel-heading">
                <h4 class="panel-title">
                   <a data-toggle="collapse" data-parent="#accordian" href="#c">
-                     <span class="pull-right"><i class="fa fa-plus"></i></span> 목욕/위생
+                     <span class="pull-right"><i class="fa fa-plus"></i></span> 목욕/위생/기타
                   </a>
                </h4>
             </div>
             <div id="c" class="panel-collapse collapse">
                <div class="panel-body">
                   <ul>
-                     <li><a id="category_no8"href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=8">물티슈</a></li>
-                     <li><a id="category_no9"href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=9">욕조/탕 온도계/샴푸캡</a></li>
+                     <li><a id="category_no8"href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=8">목욕/위생</a></li>
+                     <li><a id="category_no9"href="${pageContext.request.contextPath}/trade/list_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=9">기타</a></li>
                   </ul>
                </div>
             </div>
          </div>
       </div>
       <!--/category-products-->
-
-      <div class="shipping text-center">
-         <!-- 광고  -->
-         <img
-            src="${pageContext.request.contextPath}/resources/images/home/shipping.jpg"
-            alt="" />
-      </div>
-      <!--/shipping-->
 
    </div>

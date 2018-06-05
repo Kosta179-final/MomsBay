@@ -100,7 +100,7 @@
 			</div> --%>
 			<div class="row" align="left">
 				<div class="col-sm-12">
-					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${pvo.memberVO.id}</span>
+					<span>작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${requestScope.pvo.memberVO.name}&nbsp;(${requestScope.pvo.memberVO.id})</span>
 						<c:if test="${sessionScope.member.id != requestScope.pvo.memberVO.id && !empty member}">
 							<button id="message_btn" class="fa fa-envelope"></button>
 						</c:if>

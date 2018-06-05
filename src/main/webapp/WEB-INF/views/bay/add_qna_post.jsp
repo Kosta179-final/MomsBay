@@ -113,10 +113,12 @@ $(document).ready(function() {
 			]
 		} );
 	</script>
+			<br>
 			<input type="hidden" name="memberVO.id" value="${sessionScope.member.id}">
 			<input type="hidden" name="boardTypeNo" value="${requestScope.boardTypeNo}">
-			<input type="submit" id="add_btn" class="btn btn-primary" value="작성">
-			<input type="reset" class="btn btn-primary" id="resetBtn" value="취소">
+			<input type="submit" id="add_btn" class="btn btn-info3" value="작성">
+			<input type="reset" class="btn btn-info3" id="resetBtn" value="취소">
 		</form>
 	</div>
 </div>
+<br>

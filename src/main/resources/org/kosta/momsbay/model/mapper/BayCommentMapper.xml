@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Sql Mapper -->
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.kosta.momsbay.model.mapper.BayCommentMapper">
+	<insert id="addComment" parameterType="bayCommentVO">
+		<selectKey keyProperty="bayCommentNo" resultType="int" order="BEFORE">
+			SELECT bay_comment_seq.nextval FROM dual
+		</selectKey>
+		INSERT INTO bay_comment(bay_comment_no,bay_comment_content,bay_comment_regdate,id,bay_post_no)
+		VALUES(#{bayCommentNo},#{bayCommentContent},sysdate,#{id},#{bayPostNo})
+	</insert>
+	
+	<select id="getBayCommentList" parameterType="map" resultType="bayCommentVO">
+		SELECT bay_comment_no, bay_comment_content,bay_comment_regdate,id
+		FROM bay_comment
+		WHERE bay_post_no = #{bayPostNo}
+		ORDER BY bay_comment_no desc
+	</select>
+	
+	<update id="updateComment" parameterType="bayCommentVO">
+		UPDATE bay_comment SET bay_comment_content=#{bayCommentContent}
+		WHERE bay_comment_no=#{bayCommentNo}
+	</update>
+	
+	<delete id="deleteComment">
+		DELETE FROM bay_comment WHERE bay_comment_no=#{bayCommentNo}
+	</delete>
+	
+</mapper>

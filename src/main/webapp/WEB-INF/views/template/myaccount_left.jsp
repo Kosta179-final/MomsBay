@@ -38,7 +38,7 @@ $(document).ready(function(){
  });
 </script>
 
-	<div class="left-sidebar" style="margin-bottom: 30px;">
+	<div class="left-sidebar text-center" style="height: 452px;">
 		<h2>My Page</h2>
 		<div class="panel-group category-products" id="accordian">
 			
@@ -103,11 +103,4 @@ $(document).ready(function(){
 
 		<!--/category-products-->
 
-		<div class="shipping text-center">
-			<!-- 광고  -->
-			<img
-				src="${pageContext.request.contextPath}/resources/images/home/shipping.jpg"
-				alt="" />
-		</div>
-		<!--/shipping-->
 	</div>

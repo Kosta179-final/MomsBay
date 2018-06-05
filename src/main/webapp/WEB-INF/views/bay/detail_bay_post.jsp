@@ -4,6 +4,7 @@
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="${pageContext.request.contextPath}/resources/js/bulletin.reply.js"></script>   
       <script type="text/javascript">
     $(document).ready(function(){
     	$("#deleteBtn").click(function(){ 
@@ -45,15 +46,15 @@
     <input type="hidden" value="${requestScope.pvo.bayPostNo}" name="bayPostNo"> 
 <table  class="table">
 	<tr>
-			<td>글번호 ${requestScope.pvo.bayPostNo }</td>
-			<td>제목: ${requestScope.pvo.title} </td>
-			<td>작성자:  ${requestScope.pvo.memberVO.id }</td>
-			<td>조회수:  ${requestScope.pvo.hits }</td>
-			<td>${requestScope.pvo.regdate }</td>
+			<td>글번호 : ${requestScope.pvo.bayPostNo }</td>
+			<td>제목 : ${requestScope.pvo.title} </td>
+			<td>작성자 :  ${requestScope.pvo.memberVO.id }</td>
+			<td>조회수 : ${requestScope.pvo.hits }</td>
+			<td>작성일 : ${requestScope.pvo.regdate }</td>
 		</tr>		
 		<tr>
 			<td colspan="5" class="content">
-			<pre>${requestScope.pvo.content}</pre>
+			<pre style="text-align: left;">${requestScope.pvo.content}</pre>
 			</td>
 		</tr>
 		
@@ -70,6 +71,20 @@
 			 </tr>
 	</table>
 	</form>
+	  		<label for="content">comment</label>
+  			<input type="hidden" id="sessionId" value="${sessionScope.member.id }"/>
+  			<form method="post" id="write_commentForm">
+  				<div class="input-group" style="margin-bottom: 15px;">
+  					<input type="hidden" name="bayPostNo" id="bayPostNo" value="${requestScope.pvo.bayPostNo }"/>
+  					<input type="hidden" id="sessionId" name="id" value="${sessionScope.member.id }"/>
+  					<textarea rows="1" cols="100" name="bayCommentContent" id="bayCommentContent" maxlength="300" class="form-control rep-content" required="required" placeholder="내용을 입력해주세요"></textarea>
+  					<span class="input-group-btn">
+  						<button class="btn btn-default" type="button" id="insert">등록</button>
+  					</span>
+  					<span class="input-counter"></span>
+  				</div>
+  			</form>
+  			<div class="commentList"></div>
     </div>
   </div>
 </div>

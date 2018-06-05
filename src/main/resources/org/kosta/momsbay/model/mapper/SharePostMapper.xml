@@ -38,6 +38,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		     , content
 		     , regdate
 		     , id
+		     , name
 		     , category_no
 		     , board_type_no 
 		     , trade_status_no 
@@ -48,6 +49,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  			 		  , n.content
 	  			 		  , to_char(n.regdate,'yyyy-mm-dd')as regdate
 	  			 		  , b.id
+	  			 		  , b.name
 	  			 		  , n.category_no
 	  			 		  , n.board_type_no
 	  			 		  , n.trade_status_no
@@ -70,9 +72,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 </select>
 <!-- 나눔(교환) 게시글 상세보기 -->
 <select id="findDetailSharePost" parameterType="int" resultMap="sharePostRM">
-	SELECT none_trade_post_no, title, content, regdate, id, category_no, board_type_no, trade_status_no 
-	FROM none_trade_post 
-	WHERE none_trade_post_no=#{value}
+	SELECT n.none_trade_post_no, n.title, n.content, n.regdate, n.id, b.name, n.category_no, n.board_type_no, n.trade_status_no 
+	FROM none_trade_post n, bay_member b
+	WHERE n.id=b.id AND none_trade_post_no=#{value} 
 </select>
 <!-- 나눔(교환) 게시글 수정 -->
 <update id="updateSharePost" parameterType="sharePostVO">

@@ -25,7 +25,7 @@ $(document).ready(function(){
 	
  });
 </script>
-	<div class="left-sidebar" style="margin-bottom: 30px;">
+	<div class="left-sidebar" style="margin-top: 65px; height: 500px;">
 		<h2>Message</h2>
 		<div class="panel-group category-products" id="accordian">
 			<!--category-productsr-->
@@ -71,11 +71,4 @@ $(document).ready(function(){
 		</div>
 		<!--/category-products-->
 
-		<div class="shipping text-center">
-			<!-- 광고  -->
-			<img
-				src="${pageContext.request.contextPath}/resources/images/home/shipping.jpg"
-				alt="" />
-		</div>
-		<!--/shipping-->
 	</div>
