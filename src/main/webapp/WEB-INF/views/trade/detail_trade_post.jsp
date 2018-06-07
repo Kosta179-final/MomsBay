@@ -7,6 +7,14 @@
 <link href="${pageContext.request.contextPath}/resources/css/image-magnify.css" rel="stylesheet">
 <script src='${pageContext.request.contextPath}/resources/js/jquery.zoom.js'></script>
 <script type="text/javascript">
+	
+	function dataForm(tradeId, memberVOId, url,	tradePostNo){
+		$("#trade").attr("action", url);
+		$("#tradeId").attr("value",tradeId);
+		$("#memberVOId").attr("value",memberVOId);
+		$("#tradePostNo").attr("value",tradePostNo);
+		$("#trade").submit();
+	}
 	$(document).ready(function(){
 		/*메세지 보내기*/
 		$("#message_btn").click(function(){
@@ -14,124 +22,6 @@
 		});
 		
 		$('.zoom').zoom();
-		$("#cancelTransactionFromPublisher").click(function(){
-			if(confirm("거래를 취소하시겠습니까?")){
-				var tradeId = "${requestScope.tradePostVO.tradeId}";
-				var memberVOId = "${sessionScope.member.id}";
-				var url = "${pageContext.request.contextPath}";
-				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-				$("#trade").attr("action", url+"/trade/cancelTransaction.do");
-				$("#tradeId").attr("value",tradeId);
-				$("#memberVOId").attr("value",memberVOId);
-				$("#tradePostNo").attr("value",tradePostNo);
-				$("#trade").submit();
-			}
-		});
-		
-		$("#cancelTransactionFromApplicant").click(function(){
-			if(confirm("거래를 취소하시겠습니까?")){
-				var tradeId = "${sessionScope.member.id}";
-				var memberVOId = "${requestScope.tradePostVO.memberVO.id}";
-				var url = "${pageContext.request.contextPath}";
-				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-				$("#trade").attr("action", url+"/trade/cancelTransaction.do");
-				$("#tradeId").attr("value",tradeId);
-				$("#memberVOId").attr("value",memberVOId);
-				$("#tradePostNo").attr("value",tradePostNo);
-				$("#trade").submit();
-			}
-		});
-		
-		$("#cancelTransaction").click(function(){
-			if(confirm("거래를 취소하시겠습니까?")){
-				var url = "${pageContext.request.contextPath}";
-				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-				$("#trade").attr("action", url+"/trade/cancelTransaction2.do");
-				$("#tradePostNo").attr("value",tradePostNo);
-				$("#trade").submit();
-			}
-		});
-		
-		$("#applyBuyView").click(function(){
-				var url = "${pageContext.request.contextPath}";
-				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-				$("#trade").attr("action", url+"/trade/applyBuyView.do");
-				$("#tradePostNo").attr("value",tradePostNo);
-				$("#trade").submit();
-		});
-		
-		$("#applySellView").click(function(){
-			var url = "${pageContext.request.contextPath}";
-			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-			$("#trade").attr("action", url+"/trade/applySellView.do");
-			$("#tradePostNo").attr("value",tradePostNo);
-			$("#trade").submit();
-		});
-		
-		$("#updateTradePostView").click(function(){
-			var url = "${pageContext.request.contextPath}";
-			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-			$("#trade").attr("action", url+"/trade/updateTradePostView.do");
-			$("#tradePostNo").attr("value",tradePostNo);
-			$("#trade").submit();
-		});
-		
-		$("#deleteTradePost").click(function(){
-			var url = "${pageContext.request.contextPath}";
-			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-			$("#trade").attr("action", url+"/trade/deleteTradePost.do");
-			$("#tradePostNo").attr("value",tradePostNo);
-			$("#trade").submit();
-		});
-		
-		$("#updateDeliveryTradeHistory").click(function(){
-			if(confirm("물품배송을 완료하였습니까?")){
-				var url = "${pageContext.request.contextPath}";
-				var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-				var memberVOId = "${requestScope.tradePostVO.memberVO.id}";
-				$("#trade").attr("action", url+"/trade/updateDeliveryTradeHistory.do");
-				$("#memberVOId").attr("value",memberVOId);
-				$("#tradePostNo").attr("value",tradePostNo);
-				$("#trade").submit();
-			}
-		});
-		
-		$("#completeTransaction").click(function(){
-			var url = "${pageContext.request.contextPath}";
-			var tradeId = "${requestScope.tradePostVO.tradeId}";
-			var memberVOId = "${requestScope.tradePostVO.memberVO.id}";
-			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-			$("#trade").attr("action", url+"/trade/completeTransaction.do");
-			$("#memberVOId").attr("value",memberVOId);
-			$("#tradeId").attr("value",tradeId);
-			$("#tradePostNo").attr("value",tradePostNo);
-			$("#rating").attr("value",$(".star-input b").text());
-			$("#trade").submit();
-		});
-		
-		$("#deposit").click(function(){
-			var url = "${pageContext.request.contextPath}";
-			var tradeId = "${requestScope.tradePostVO.memberVO.id}";
-			var memberVOId = "${requestScope.tradePostVO.tradeId}";
-			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-			$("#trade").attr("action", url+"/trade/deposit.do");
-			$("#memberVOId").attr("value",memberVOId);
-			$("#tradeId").attr("value",tradeId);
-			$("#tradePostNo").attr("value",tradePostNo);
-			$("#trade").submit();
-		});
-		
-		$("#completeTransaction2").click(function(){
-			var url = "${pageContext.request.contextPath}";
-			var memberVOId = "${requestScope.tradePostVO.tradeId}";
-			var tradeId = "${requestScope.tradePostVO.memberVO.id}";
-			var tradePostNo = "${requestScope.tradePostVO.tradePostNo}";
-			$("#trade").attr("action", url+"/trade/completeTransaction.do");
-			$("#memberVOId").attr("value",memberVOId);
-			$("#tradeId").attr("value",tradeId);
-			$("#tradePostNo").attr("value",tradePostNo);
-			$("#trade").submit();
-		});
 		
 		/* 목록으로 돌아가기 */
 		$("#listBtn").click(function() {
@@ -234,8 +124,9 @@
 							<div class="btn-group">
 							<c:choose>
 								<c:when test="${requestScope.historyStatus eq '거래중'}">
-									<span><button type="button" id="applyBuyView" class="btn btn-info3">입금하기</button></span>
-									<span><button type="button" id="cancelTransaction" class="btn btn-info3">거래취소</button></span>
+
+									<span><button type="button" onclick="dataForm('${requestScope.tradePostVO.memberVO.id}','${requestScope.tradePostVO.tradeId}','${pageContext.request.contextPath}/trade/deposit.do','${requestScope.tradePostVO.tradePostNo}')" class="btn btn-info3">입금하기</button></span>
+									<span><button type="button" onclick="dataForm('','','${pageContext.request.contextPath}/trade/cancelTransaction2.do','${requestScope.tradePostVO.tradePostNo}')" class="btn btn-info3">거래취소</button></span>
 								</c:when>
 								<c:when test="${requestScope.historyStatus eq '물품배송'}">
 									<span><button type="button" class="btn btn-info3" data-toggle="modal" data-target="#myModal">거래완료</button></span>
@@ -255,7 +146,7 @@
 						<%-- 신청이 없으면 --%>
 						<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 							<div class="btn-group">
-								<span><button type="button" id="applySellView" class="btn btn-info3">거래신청</button></span>
+								<span><button type="button" onclick="dataForm('','','${pageContext.request.contextPath}/trade/applySellView.do','${requestScope.tradePostVO.tradePostNo}')" class="btn btn-info3">거래신청</button></span>
 							</div>
 						</c:when>
 						<%-- 신청이 있으면 --%>
@@ -266,10 +157,10 @@
 									<div class="btn-group">
 										<c:choose>
 											<c:when test="${requestScope.historyStatus eq '거래중'}">
-												<span><button type="button" id="cancelTransaction" class="btn btn-info3">거래취소</button></span>
+												<span><button type="button" class="btn btn-info3">거래중</button></span>
 											</c:when>
 											<c:when test="${requestScope.historyStatus eq '입금완료'}">
-												<span><button type="button" id="updateDeliveryTradeHistory" class="btn btn-info3">물품배송</button></span>
+												<span><button type="button" onclick="dataForm('','${requestScope.tradePostVO.memberVO.id}','${pageContext.request.contextPath}/trade/updateDeliveryTradeHistory.do','${requestScope.tradePostVO.tradePostNo}')" class="btn btn-info3">물품배송</button></span>
 											</c:when>
 											<c:otherwise>
 												<span><%-- 신청자는 거래 완료된 게시물 상세페이지에 버튼 사라지고 제목에 거래완료 라벨 생성된다. --%></span>
@@ -281,7 +172,7 @@
 								<c:otherwise>
 									<c:choose>
 										<c:when test="${requestScope.historyStatus eq '물품배송' or requestScope.historyStatus eq '입금완료'}">
-											<span><button type="button" class="btn btn-info3" id="completeTransaction">거래중</button></span>
+											<span><button type="button" class="btn btn-info3" onclick="dataForm('${requestScope.tradePostVO.tradeId}','${requestScope.tradePostVO.memberVO.id}','${pageContext.request.contextPath}/trade/completeTransaction.do','${requestScope.tradePostVO.tradePostNo}')">거래중</button></span>
 										</c:when>
 										<c:otherwise>
 											<span><%-- 비회원은 거래완료 된 상세페이지에서 버튼이 보이지 않는다. --%></span>
@@ -318,8 +209,7 @@
 									<span><button type="button" class="btn btn-info3">배송완료</button></span>
 								</c:when>
 								<c:otherwise>
-									<span><button type="button" id="updateDeliveryTradeHistory" class="btn btn-info3">물품배송</button></span>
-									<span><button type="button" id="cancelTransactionFromPublisher" class="btn btn-info3">거래취소</button></span>
+									<span><button type="button" onclick="dataForm('','${requestScope.tradePostVO.memberVO.id}','${pageContext.request.contextPath}/trade/updateDeliveryTradeHistory.do','${requestScope.tradePostVO.tradePostNo}')" class="btn btn-info3">물품배송</button></span>
 								</c:otherwise>
 							</c:choose>
 						</div>
@@ -332,7 +222,7 @@
 					<%-- 신청이 없으면 --%>
 					<c:when test="${requestScope.tradePostVO.tradeId eq NULL}">
 						<div class="btn-group">
-							<span><button type="button" id="applyBuyView" class="btn btn-info3">거래신청</button></span>
+							<span><button type="button" onclick="dataForm('','','${pageContext.request.contextPath}/trade/applyBuyView.do','${requestScope.tradePostVO.tradePostNo}')" class="btn btn-info3">거래신청</button></span>
 						</div>
 					</c:when>
 					<%-- 신청이 있으면 --%>
@@ -349,7 +239,7 @@
 										<span><button type="button" class="btn btn-info3" data-toggle="modal" data-target="#myModal">거래완료</button></span>
 									</c:when>
 									<c:otherwise>
-										<span><button type="button" class="btn btn-info3" id="cancelTransactionFromApplicant">거래취소</button></span>
+										<span><button type="button" class="btn btn-info3">거래중</button></span>
 									</c:otherwise>
 								</c:choose>
 								</div>
@@ -408,10 +298,10 @@
 			<div align="center">
 				<div class="row">
 					<div class="col-sm-5" style="padding-right: 6px;">
-						<button name="button" class="btn btn-info2 pull-right" id="updateTradePostView">글수정</button>
+						<button name="button" class="btn btn-info2 pull-right" onclick="dataForm('','','${pageContext.request.contextPath}/trade/updateTradePostView.do','${requestScope.tradePostVO.tradePostNo}')">글수정</button>
 					</div>
 					<div class="col-sm-1" style="padding-left: 0px; padding-right: 0px;">
-						<button name="button" class="btn btn-info3 pull-left" id="deleteTradePost">글삭제</button>
+						<button name="button" class="btn btn-info3 pull-left" onclick="dataForm('','','${pageContext.request.contextPath}/trade/deleteTradePost.do','${requestScope.tradePostVO.tradePostNo}')">글삭제</button>
 					</div>
 					<div class="col-sm-6" style="padding-left: 3px;">
 						<button type="button" name="button" class="btn btn-info6 pull-left" id="listBtn">목록으로</button>
@@ -470,7 +360,7 @@
 
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="completeTransaction">완료</button>
+				<button type="button" class="btn btn-default" onclick="dataForm('${requestScope.tradePostVO.tradeId}','${requestScope.tradePostVO.memberVO.id}','${pageContext.request.contextPath}/trade/completeTransaction.do','${requestScope.tradePostVO.tradePostNo}')">완료</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 			</div>
 		</div>
