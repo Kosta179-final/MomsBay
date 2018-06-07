@@ -4,6 +4,12 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <link href="${pageContext.request.contextPath}/resources/css/list-image-hover.css" rel="stylesheet">
 <script type="text/javascript">
+	$(document).ready(function(){
+		if (performance.navigation.type != 1) {
+			location.reload();
+		}
+	})
+	
    function addTradePost(){
       location.href="${pageContext.request.contextPath}/trade/add_trade_post.do?boardTypeNo=${requestScope.boardTypeNo}&categoryNo=${requestScope.categoryNo}";
    }
