@@ -194,7 +194,7 @@ $(document).ready(function(){
             <span id="pwdCheck"></span><br>
             
             <label for="email"><b>이메일</b></label> <br>
-            <input type="email" autocomplete="email" maxlength="10"  placeholder="ex)admin@naver.com" name="email" id="email" required class="form-control"> 
+            <input type="email" autocomplete="email" maxlength="30"  placeholder="ex)admin@naver.com" name="email" id="email" required class="form-control"> 
             <input type="button" id="emailCheckbtn" value="중복체크" class="btn-link"> 
             <span id="emailCheck"></span><br>
             

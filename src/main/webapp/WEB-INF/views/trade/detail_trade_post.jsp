@@ -8,6 +8,11 @@
 <script src='${pageContext.request.contextPath}/resources/js/jquery.zoom.js'></script>
 <script type="text/javascript">
 	$(document).ready(function(){
+		/*메세지 보내기*/
+		$("#message_btn").click(function(){
+			location.href='${pageContext.request.contextPath}/message/add_message_form.do?receiveId=${pvo.memberVO.id}';
+		});
+		
 		$('.zoom').zoom();
 		$("#cancelTransactionFromPublisher").click(function(){
 			if(confirm("거래를 취소하시겠습니까?")){
