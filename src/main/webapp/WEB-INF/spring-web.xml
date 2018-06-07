@@ -60,8 +60,6 @@
 			<mvc:exclude-mapping path="/admin/*.do"/>
 			<mvc:exclude-mapping path="/bay/list_bulletin_post.do"/>
 			<mvc:exclude-mapping path="/bay/list_qna_post.do"/>
-			<mvc:exclude-mapping path="/bay/detail_bay.do"/>
-			<mvc:exclude-mapping path="/bay/detail_qna_post.do"/>
 			<mvc:exclude-mapping path="/bay/getPostDetailNoHit.do"/>
 			<mvc:exclude-mapping path="/bay/getQnaDetailNoHit.do"/>
 			
