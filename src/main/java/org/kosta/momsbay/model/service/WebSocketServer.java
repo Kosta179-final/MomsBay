@@ -1,4 +1,4 @@
-package org.kosta.momsbay.model.common;
+package org.kosta.momsbay.model.service;
 
 import java.io.IOException;
 import java.util.Collections;
